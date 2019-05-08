@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+
+<project basedir="." default="deploy" name="demo">
+  <property name="compress.dir" value="compressed"/>
+  <target name="clean">
+    <delete dir="${compress.dir}"/>
+  </target>
+  <target name="compress-web">
+    <mkdir dir="${compress.dir}"/>
+    <antcall target="cp"/>
+  </target>
+  <target name="cp">
+    <mkdir dir="${compress.dir}"/>
+    <copy todir="${compress.dir}" overwrite="true">
+      <fileset dir="dist">
+        <exclude name="build.xml"/>
+        <exclude name=".git"/>
+        <exclude name=".svn"/>
+        <exclude name="${compress.dir}"/>
+      </fileset>
+    </copy>
+  </target>
+  <target name="build">
+    <exec executable="bash" failonerror="true">
+      <arg line="./deploy/release.sh"/>
+    </exec>
+  </target>
+  <target name="deploy">
+    <echo message="begin auto deploy......"/>
+    <antcall target="clean"/>
+    <antcall target="build"/>
+    <antcall target="compress-web"/>
+  </target>
+</project>
