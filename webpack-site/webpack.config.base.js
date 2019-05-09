@@ -14,11 +14,11 @@ const extractCSS =
 
 // 减少路径书写
 function resolve(dir) {
-  return path.join(__dirname, '../' + dir)
+  return path.join(__dirname, '../site/' + dir)
 }
 
 // 网站图标配置
-const favicon = resolve('favicon.ico')
+const favicon = resolve('../favicon.ico')
 
 // 指定以__base64为后缀的svg转为base64
 const svgBase64Reg = /__base64\.(svg)(\?.*)?$/
@@ -32,17 +32,17 @@ const config = {
     extensions: ['.js', '.vue', '.scss', '.css'],
     // 取路径别名，方便在业务代码中import
     alias: {
-      site: resolve('site/'),
-      common: resolve('site/common/'),
-      ajax: resolve('site/common/js/ajax/'),
-      utils: resolve('site/common/js/utils/'),
-      views: resolve('site/views/'),
-      components: resolve('site/components/'),
-      componentsBase: resolve('site/componentsBase/'),
-      directives: resolve('site/directives/'),
-      filters: resolve('site/filters/'),
-      mixins: resolve('site/mixins/'),
-      plugins: resolve('site/plugins/')
+      site: resolve('/'),
+      common: resolve('/common/'),
+      ajax: resolve('/common/js/ajax/'),
+      utils: resolve('/common/js/utils/'),
+      views: resolve('/views/'),
+      components: resolve('/components/'),
+      componentsBase: resolve('/componentsBase/'),
+      directives: resolve('/directives/'),
+      filters: resolve('/filters/'),
+      mixins: resolve('/mixins/'),
+      plugins: resolve('/plugins/')
     }
   },
   // loaders处理
@@ -109,7 +109,7 @@ const config = {
       },
       {
         test: /\.js$/,
-        include: [resolve('site')],
+        include: [resolve('/')],
         loader: [
           'babel-loader',
           'eslint-loader'

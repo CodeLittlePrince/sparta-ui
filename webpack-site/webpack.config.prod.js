@@ -32,7 +32,7 @@ const config = Object.assign(webpackConfigBase.config, {
   // You should configure your server to disallow access to the Source Map file for normal users!
   // devtool: 'source-map', // 因为需要PE支持，暂时先不生成吧
   entry: {
-    app: webpackConfigBase.resolve('site/index.js'),
+    app: webpackConfigBase.resolve('index.js'),
     /*
       webpack v4默认其实在spitChunks已经有这个功能了，
       但是因为babel-polyfill的动态加入，
@@ -44,7 +44,7 @@ const config = Object.assign(webpackConfigBase.config, {
     vendors: vendors
   },
   output: {
-    path: webpackConfigBase.resolve('dist'),
+    path: webpackConfigBase.resolve('../dist'),
     // publicPath: 'https://cdn.self.com'
     publicPath: CDN,
     filename: 'static/js/[name].[contenthash:8].js',
@@ -85,7 +85,7 @@ const config = Object.assign(webpackConfigBase.config, {
     new HtmlWebpackPlugin({
       appVersion,
       filename: 'index.html',
-      template: webpackConfigBase.resolve('site/index.html'),
+      template: webpackConfigBase.resolve('index.html'),
       minify: {
         removeComments: true,
         collapseWhitespace: true,
@@ -98,7 +98,7 @@ const config = Object.assign(webpackConfigBase.config, {
       // 复制favicon到dist
       {
         from: webpackConfigBase.favicon,
-        to: webpackConfigBase.resolve('dist/')
+        to: webpackConfigBase.resolve('../dist/')
       }
     ]),
     // 定义全局常量

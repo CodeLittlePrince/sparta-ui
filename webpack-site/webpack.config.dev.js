@@ -11,7 +11,7 @@ const config = Object.assign(webpackConfigBase.config, {
   devtool: 'eval-source-map', // 定位会有问题，还是用eval-source-map好了
   // 入口
   entry: {
-    app: [webpackConfigBase.resolve('site/index.js')]
+    app: [webpackConfigBase.resolve('index.js')]
   },
   // 输出
   output: {
@@ -26,7 +26,7 @@ const config = Object.assign(webpackConfigBase.config, {
     // html 模板插件
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: webpackConfigBase.resolve('site/index.html')
+      template: webpackConfigBase.resolve('index.html')
     }),
     // 复制文件
     new CopyWebpackPlugin([
