@@ -1,0 +1,19 @@
+// 多倍屏背景图
+@mixin bg-image($url, $format: 'png') {
+  background-image: url($url + "." + $format);
+  // https://github.com/postcss/autoprefixer/issues/521
+  @media (min-resolution: 2dppx) and (max-resolution: 3dppx) {
+    background-image: url($url + "@2x." + $format);
+  }
+  @media (min-resolution: 3dppx) {
+    background-image: url($url + "@3x." + $format);
+  }
+}
+
+// 不换行
+@mixin ellipsis() {
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

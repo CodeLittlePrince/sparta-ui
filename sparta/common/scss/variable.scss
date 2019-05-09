@@ -1,0 +1,78 @@
+/* Transition
+-------------------------- */
+$transition-all: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+$transition-fade: opacity 300ms cubic-bezier(0.23, 1, 0.32, 1);
+$transition-fade-linear: opacity 200ms linear;
+$transition-md-fade: transform 300ms cubic-bezier(0.23, 1, 0.32, 1), opacity 300ms cubic-bezier(0.23, 1, 0.32, 1);
+$transition-border-base: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+$transition-color-base: color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+/* Colors
+-------------------------- */
+$color-primary: #409eff;
+$color-success: #67c23a;
+$color-warning: #e6a23c;
+$color-danger: #f56c6c;
+$color-info: #909399;
+$color-text-placeholder: #c7cbd1;
+
+/* Scrollbar
+-------------------------- */
+$scrollbar-background: #f5f5f5;
+$scrollbar-track-color: #f5f5f5;
+$scrollbar-thumb-color: #d7d9df;
+
+/* Button
+-------------------------- */
+$button-background-primary: #fdc;
+$button-color-hover: #1382f1;
+$button-color-click: #1675d4;
+
+/* Checkbox
+-------------------------- */
+$checkbox-background-primary: #fdc;
+$checkbox-color-hover: #1382f1;
+$checkbox-color-click: #1675d4;
+
+/* Input
+-------------------------- */
+$input-background-primary: #fdc;
+$input-color-hover: #1382f1;
+$input-color-click: #1675d4;
+
+/* Option
+-------------------------- */
+$opiton-color: #606266;
+$opiton-color-disabled: #c0c4cc;
+
+/* Radio
+-------------------------- */
+$radio-background-primary: #fdc;
+$radio-color-hover: #1382f1;
+$radio-color-click: #1675d4;
+
+/* Select
+-------------------------- */
+$select-background: #fff;
+$select-background-disabled: #f5f7fa;
+$select-input-border-color: #dcdfe6;
+$select-input-border-color-disabled: #c0c4cc;
+$select-input-border-color-hover: #c0c4cc;
+$select-input-border-color-click: #409eff;
+$select-input-font-color: #606266;
+$select-dropdown-item-color: #fff;
+$select-dropdown-item-color-hover: #f5f7fa;
+$select-dropdown-border-color: #e4e7ed;
+
+/* Tag
+-------------------------- */
+$tag-background: rgba($color: $color-primary, $alpha: 0.1);
+$tag-border-color: rgba($color: $color-primary, $alpha: 0.2);
+$tag-background--success: rgba($color: $color-success, $alpha: 0.1);
+$tag-border-color--success: rgba($color: $color-success, $alpha: 0.2);
+$tag-background--warning: rgba($color: $color-warning, $alpha: 0.1);
+$tag-border-color--warning: rgba($color: $color-warning, $alpha: 0.2);
+$tag-background--info: rgba($color: $color-info, $alpha: 0.1);
+$tag-border-color--info: rgba($color: $color-info, $alpha: 0.2);
+$tag-background--danger: rgba($color: $color-danger, $alpha: 0.1);
+$tag-border-color--danger: rgba($color: $color-danger, $alpha: 0.2);

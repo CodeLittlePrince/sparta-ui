@@ -21,5 +21,18 @@ const config = Object.assign(webpackConfigBase.config, {
     webpackConfigBase.VueLoaderPluginInstance
   ]
 })
+// 编译css
+config.module.rules.push({
+  test: /\.(css|scss)$/,
+  use: [
+    'vue-style-loader',
+    'css-loader',
+    'postcss-loader',
+    'sass-loader'
+  ]
+})
+
+// no need for app entry during tests
+delete config.entry
 
 module.exports = config

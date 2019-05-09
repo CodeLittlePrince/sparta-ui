@@ -1,0 +1,43 @@
+@import "./variable.scss";
+
+body, html {
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+*::-ms-clear {
+  display: none;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  background-color: $scrollbar-background;
+  &-track {
+    border-radius: 10px;
+    background-color: $scrollbar-track-color;
+  }
+  &-thumb {
+    border-radius: 10px;
+    background-color: $scrollbar-thumb-color;
+  }
+}
+
+a {
+  color: #7e8c8d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+button {
+  outline: none;
+}
+
+input::placeholder {
+  color: $color-text-placeholder;
+}

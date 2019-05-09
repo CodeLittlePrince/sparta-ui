@@ -11,7 +11,8 @@ module.exports = {
           ]
         },
         'modules': false,
-        'useBuiltIns': 'usage'
+        'useBuiltIns': 'usage',
+        'corejs': '2'
       }
     ]
   ],
@@ -22,5 +23,8 @@ module.exports = {
     ['@babel/plugin-proposal-class-properties', { 'loose': true }]
   ],
   'env': {
+    'test': {
+      'plugins': [ 'istanbul' ]
+    }
   }
 }
