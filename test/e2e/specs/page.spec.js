@@ -16,18 +16,18 @@ describe('pages', () => {
       .viewport(1200, 600)
       .goto(url || 'http://0.0.0.0:8080')
       .wait('h1')
-      .click('a[href="#/pageA"]')
+      .click('a[href="#/components"]')
       .wait(() => {
-        return location.hash === '#/pageA'
+        return location.hash === '#/components'
       })
-      .click('a[href="#/pageB"]')
+      .click('a[href="#/"]')
       .wait(() => {
-        return location.hash === '#/pageB'
+        return location.hash === '#/'
       })
       .evaluate(() => location.hash)
       .end()
       .then(hash => {
-        expect(hash).to.equal('#/pageB')
+        expect(hash).to.equal('#/')
         done()
       })
   })

@@ -1,4 +1,5 @@
 node_modules/
 dist/
+lib/
 test/unit/coverage
 .DS_Store

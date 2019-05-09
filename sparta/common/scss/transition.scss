@@ -1,24 +1,24 @@
 @import "./variable.scss";
 
-.ev-zoom-in-top-enter-active,
-.ev-zoom-in-top-leave-active {
+.sp-zoom-in-top-enter-active,
+.sp-zoom-in-top-leave-active {
   opacity: 1;
   transform: scaleY(1);
   transition: $transition-md-fade;
   transform-origin: center top;
 }
-.ev-zoom-in-top-enter,
-.ev-zoom-in-top-leave-active {
+.sp-zoom-in-top-enter,
+.sp-zoom-in-top-leave-active {
   opacity: 0;
   transform: scaleY(0);
 }
 
-.ev-zoom-in-center-enter-active,
-.ev-zoom-in-center-leave-active {
+.sp-zoom-in-center-enter-active,
+.sp-zoom-in-center-leave-active {
   transition: all 0.3s cubic-bezier(0.55, 0, 0.1, 1);
 }
-.ev-zoom-in-center-enter,
-.ev-zoom-in-center-leave-active {
+.sp-zoom-in-center-enter,
+.sp-zoom-in-center-leave-active {
   opacity: 0;
   transform: scaleX(0);
 }

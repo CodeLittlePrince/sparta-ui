@@ -1,7 +1,7 @@
-import EvCheckbox from './src'
+import SpCheckbox from './src'
 
-EvCheckbox.install = Vue => {
-  Vue.component(EvCheckbox.name, EvCheckbox)
+SpCheckbox.install = Vue => {
+  Vue.component(SpCheckbox.name, SpCheckbox)
 }
 
-export default EvCheckbox
+export default SpCheckbox

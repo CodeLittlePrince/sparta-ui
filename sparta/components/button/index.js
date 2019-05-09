@@ -1,7 +1,7 @@
-import EvButton from './src'
+import SpButton from './src'
 
-EvButton.install = Vue => {
-  Vue.component(EvButton.name, EvButton)
+SpButton.install = Vue => {
+  Vue.component(SpButton.name, SpButton)
 }
 
-export default EvButton
+export default SpButton

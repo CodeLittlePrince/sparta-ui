@@ -1,7 +1,7 @@
-import EvInput from './src'
+import SpInput from './src'
 
-EvInput.install = Vue => {
-  Vue.component(EvInput.name, EvInput)
+SpInput.install = Vue => {
+  Vue.component(SpInput.name, SpInput)
 }
 
-export default EvInput
+export default SpInput

@@ -1,7 +1,7 @@
 <template>
   <li
     v-show="visiable"
-    class="ev-option"
+    class="sp-option"
     :class="{
       'is-selected': isSelect,
       'is-disabled': disabled,
@@ -15,14 +15,14 @@
     </slot>
     <i
       v-show="selected"
-      class="ev-icon-tick"
+      class="sp-icon-tick"
     >V</i>
   </li>
 </template>
 
 <script>
 export default {
-  name: 'EvOption',
+  name: 'SpOption',
   inject: ['evSelect'],
   props: {
     label: {
@@ -96,7 +96,7 @@ export default {
 @import "~scss/variable.scss";
 $option-height: 34px;
 
-.ev-option {
+.sp-option {
   position: relative;
   font-size: 14px;
   padding: 0 20px;
@@ -121,7 +121,7 @@ $option-height: 34px;
     color: $opiton-color-disabled;
     cursor: not-allowed;
   }
-  .ev-icon-tick {
+  .sp-icon-tick {
     position: absolute;
     right: 20px;
     top: 50%;

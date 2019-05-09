@@ -1,13 +1,13 @@
 <template>
-  <transition name="ev-zoom-in-center">
+  <transition name="sp-zoom-in-center">
     <span
-      class="ev-tag"
-      :class="`ev-tag--${type}`"
+      class="sp-tag"
+      :class="`sp-tag--${type}`"
     >
       <slot></slot>
       <i
         v-if="closable"
-        class="ev-icon-close"
+        class="sp-icon-close"
         @click="handleClose"
       >X</i>
     </span>
@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: 'EvTag',
+  name: 'SpTag',
   props: {
     type: {
       type: String,
@@ -41,7 +41,7 @@ export default {
 <style lang="scss" scoped>
 @import "~scss/variable.scss";
 
-.ev-tag {
+.sp-tag {
   display: inline-block;
   padding: 0 10px;
   height: 32px;
@@ -53,7 +53,7 @@ export default {
   background-color: $tag-background;
   white-space: nowrap;
   box-sizing: border-box;
-  .ev-icon-close {
+  .sp-icon-close {
     display: inline-block;
     border-radius: 50%;
     text-align: center;
@@ -76,7 +76,7 @@ export default {
     color: $color-success;
     background-color: $tag-background--success;
     border-color: $tag-border-color--success;
-    .ev-icon-close {
+    .sp-icon-close {
       color: $color-success;
       &:hover {
         background-color: $color-success;
@@ -87,7 +87,7 @@ export default {
     color: $color-warning;
     background-color: $tag-background--warning;
     border-color: $tag-border-color--warning;
-    .ev-icon-close {
+    .sp-icon-close {
       color: $color-warning;
       &:hover {
         background-color: $color-warning;
@@ -98,7 +98,7 @@ export default {
     color: $color-info;
     background-color: $tag-background--info;
     border-color: $tag-border-color--info;
-    .ev-icon-close {
+    .sp-icon-close {
       color: $color-info;
       &:hover {
         background-color: $color-info;
@@ -109,7 +109,7 @@ export default {
     color: $color-danger;
     background-color: $tag-background--danger;
     border-color: $tag-border-color--danger;
-    .ev-icon-close {
+    .sp-icon-close {
       color: $color-danger;
       &:hover {
         background-color: $color-danger;

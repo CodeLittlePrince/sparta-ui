@@ -1,10 +1,10 @@
 <template>
-  <div class="ev-radio">{{ text }}</div>
+  <div class="sp-radio">{{ text }}</div>
 </template>
 
 <script>
 export default {
-  name: 'EvRadio',
+  name: 'SpRadio',
   props: {
     text: {
       type: String,
@@ -17,7 +17,7 @@ export default {
 <style lang="scss">
 @import "~scss/variable.scss";
 
-.ev-radio {
+.sp-radio {
   font-size: 20px;
   i {
     font-size: 12px;

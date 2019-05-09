@@ -1,5 +1,5 @@
 <template>
-  <div class="ev-select-dropdown">
+  <div class="sp-select-dropdown">
     <slot></slot>
   </div>
 </template>
@@ -9,7 +9,7 @@ import dom from '@/common/js/dom'
 import PopManage from '@/model/PopManage'
 
 export default {
-  name: 'EvSelectDropdown',
+  name: 'SpSelectDropdown',
   mounted() {
     this.register()
     this.$nextTick(this.appendToBody)
@@ -63,7 +63,7 @@ export default {
 </script>
 
 <style lang="scss">
-.ev-select-dropdown {
+.sp-select-dropdown {
   position: absolute;
 }
 </style>

@@ -1,7 +1,7 @@
-import EvRadio from './src'
+import SpRadio from './src'
 
-EvRadio.install = Vue => {
-  Vue.component(EvRadio.name, EvRadio)
+SpRadio.install = Vue => {
+  Vue.component(SpRadio.name, SpRadio)
 }
 
-export default EvRadio
+export default SpRadio

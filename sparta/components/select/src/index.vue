@@ -1,12 +1,12 @@
 <template>
   <div
-    class="ev-select"
+    class="sp-select"
     :class="{ isFocus, cursorPoiner, 'is-disabled': disabled }"
     @click="handleSelfClick"
   >
     <div
-      ref="ev-select-input-box"
-      class="ev-select-input-box"
+      ref="sp-select-input-box"
+      class="sp-select-input-box"
       :style="`height: ${selectInputBoxHeight}`"
       @mouseover="isHover = true"
       @mouseout="isHover = false"
@@ -14,28 +14,28 @@
       <!-- 多选情况 -->
       <template v-if="multiple">
         <div
-          ref="ev-tag-box"
+          ref="sp-tag-box"
           :style="`width: ${tagBoxWidth}`"
-          class="ev-tag-box"
+          class="sp-tag-box"
           @click="focusSelectInput"
         >
           <transition-group
-            name="ev-zoom-in-center"
+            name="sp-zoom-in-center"
             @after-leave="updateTagboxHeight"
           >
-            <ev-tag
+            <sp-tag
               v-for="tag in selected"
               :key="tag.label"
               closable
               @close="handleTagClose(tag, $event)"
-            >{{ tag.label }}</ev-tag>
+            >{{ tag.label }}</sp-tag>
           </transition-group>
         </div>
       </template>
       <!-- 非多选情况-->
       <p
         v-show="inputText === ''"
-        class="ev-select-input-placeholder"
+        class="sp-select-input-placeholder"
         @click="focusSelectInput"
       >
         {{ placeholder }}
@@ -43,7 +43,7 @@
       <input
         ref="selectInput"
         v-model="inputText"
-        class="ev-select-input"
+        class="sp-select-input"
         type="text"
         :readonly="readonly"
         :disabled="disabled"
@@ -59,50 +59,50 @@
       >
       <!-- 后缀icon -->
       <div
-        ref="ev-select-suffix"
-        class="ev-select-suffix"
+        ref="sp-select-suffix"
+        class="sp-select-suffix"
         @click="handleSuffixClick($event)"
       >
         <i
           v-show="showClearIcon && !multiple"
-          class="ev-icon-close"
+          class="sp-icon-close"
         >x</i>
         <i
           v-show="!showClearIcon"
-          class="ev-icon-arrow-down"
+          class="sp-icon-arrow-down"
         >v</i>
       </div>
     </div>
     <!-- 下拉 -->
-    <ev-select-dropdown ref="ev-select-dropdown">
-      <transition name="ev-zoom-in-top">
+    <sp-select-dropdown ref="sp-select-dropdown">
+      <transition name="sp-zoom-in-top">
         <ul
           v-show="visiable"
           ref="dropdown"
-          class="ev-select-list"
+          class="sp-select-list"
         >
           <slot></slot>
           <!-- 无数据情况 -->
           <li
-            v-show="!hasEvOptions || (hasEvOptions && evOptionsAllInVisiable)"
-            class="ev-option is-disabled ev-select-list-emptyText"
+            v-show="!hasSpOptions || (hasSpOptions && evOptionsAllInVisiable)"
+            class="sp-option is-disabled sp-select-list-emptyText"
             @click.stop
           >{{ emptyText }}</li>
         </ul>
       </transition>
-    </ev-select-dropdown>
+    </sp-select-dropdown>
   </div>
 </template>
 
 <script>
-import EvSelectDropdown from './select-dropdown'
-import EvTag from '@/components/tag/src'
+import SpSelectDropdown from './select-dropdown'
+import SpTag from '@/components/tag/src'
 
 export default {
-  name: 'EvSelect',
+  name: 'SpSelect',
   components: {
-    'ev-select-dropdown': EvSelectDropdown,
-    'ev-tag': EvTag
+    'sp-select-dropdown': SpSelectDropdown,
+    'sp-tag': SpTag
   },
   provide() {
     return {
@@ -171,7 +171,7 @@ export default {
     showClearIcon() {
       return this.clearable && this.inputText !== '' && this.isHover
     },
-    hasEvOptions() {
+    hasSpOptions() {
       return this.evOptions && this.evOptions.length
     }
   },
@@ -243,19 +243,19 @@ export default {
       }
     },
     setTagboxWidth() {
-      this.tagBoxWidth = `${parseFloat(window.getComputedStyle(this.$refs['ev-tag-box'].parentNode).width) - 38}px`
+      this.tagBoxWidth = `${parseFloat(window.getComputedStyle(this.$refs['sp-tag-box'].parentNode).width) - 38}px`
     },
     updateTagboxHeight() {
       if (this.selected.length) {
         this.$nextTick(() => {
           // 更新容器的高度
-          const style = window.getComputedStyle(this.$refs['ev-tag-box'])
+          const style = window.getComputedStyle(this.$refs['sp-tag-box'])
           const height = parseFloat(style.height) + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom)
           this.selectInputBoxHeight = `${height + 2}px`
-          this.$refs['ev-select-suffix'].style.height = height + 'px'
-          this.$refs['ev-select-suffix'].style.lineHeight = height + 'px'
+          this.$refs['sp-select-suffix'].style.height = height + 'px'
+          this.$refs['sp-select-suffix'].style.lineHeight = height + 'px'
           // 更新dropdown的位置
-          this.$refs['ev-select-dropdown'].updateTop(height + 2)
+          this.$refs['sp-select-dropdown'].updateTop(height + 2)
         })
       }
     },
@@ -437,7 +437,7 @@ export default {
 @import "~scss/variable.scss";
 $select-height: 40px;
 
-.ev-select {
+.sp-select {
   font-size: 14px;
   line-height: 0;
   position: relative;
@@ -464,7 +464,7 @@ $select-height: 40px;
     font-size: inherit;
     transition: $transition-border-base;
     overflow: hidden;
-    .ev-select-input {
+    .sp-select-input {
       width: 100%;
       -webkit-appearance: none;
       outline: none;
@@ -491,11 +491,11 @@ $select-height: 40px;
     &:hover {
       border-color: $select-input-border-color-hover;
     }
-    .ev-tag-box {
+    .sp-tag-box {
       position: absolute;
       padding-bottom: 3px;
     }
-    .ev-tag {
+    .sp-tag {
       margin-left: 3px;
       margin-top: 3px;
     }

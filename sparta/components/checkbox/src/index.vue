@@ -1,10 +1,10 @@
 <template>
-  <div class="ev-checkbox">{{ text }}</div>
+  <div class="sp-checkbox">{{ text }}</div>
 </template>
 
 <script>
 export default {
-  name: 'EvCheckbox',
+  name: 'SpCheckbox',
   props: {
     text: {
       type: String,
@@ -17,7 +17,7 @@ export default {
 <style lang="scss">
 @import "~scss/variable.scss";
 
-.ev-checkbox {
+.sp-checkbox {
   font-size: 20px;
   i {
     font-size: 12px;

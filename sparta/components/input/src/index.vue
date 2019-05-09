@@ -1,10 +1,10 @@
 <template>
-  <div class="ev-input">{{ text }}</div>
+  <div class="sp-input">{{ text }}</div>
 </template>
 
 <script>
 export default {
-  name: 'EvInput',
+  name: 'SpInput',
   props: {
     text: {
       type: String,
@@ -17,7 +17,7 @@ export default {
 <style lang="scss">
 @import "~scss/variable.scss";
 
-.ev-input {
+.sp-input {
   font-size: 20px;
   i {
     font-size: 12px;

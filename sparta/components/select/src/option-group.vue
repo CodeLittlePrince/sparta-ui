@@ -1,8 +1,8 @@
 <template>
-  <ul class="ev-option-group">
-    <li class="ev-option-group-title">标题</li>
+  <ul class="sp-option-group">
+    <li class="sp-option-group-title">标题</li>
     <li>
-      <ul class="ev-option-group-content">
+      <ul class="sp-option-group-content">
         <slot></slot>
       </ul>
     </li>
@@ -11,12 +11,12 @@
 
 <script>
 export default {
-  name: 'EvOptionGroup'
+  name: 'SpOptionGroup'
 }
 </script>
 
 <style lang="scss">
-.ev-option-group {
+.sp-option-group {
   padding: 0;
   margin: 0;
   &-title {

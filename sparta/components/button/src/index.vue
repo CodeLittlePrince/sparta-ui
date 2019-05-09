@@ -1,14 +1,14 @@
 <template>
   <button
-    class="ev-button"
-    :class="`ev-button--${type}`"
+    class="sp-button"
+    :class="`sp-button--${type}`"
     @click="handleClick"
   >{{ text }}</button>
 </template>
 
 <script>
 export default {
-  name: 'EvButton',
+  name: 'SpButton',
   props: {
     type: {
       type: String,
@@ -37,7 +37,7 @@ export default {
 <style lang="scss">
 @import "~scss/variable.scss";
 
-.ev-button {
+.sp-button {
   color: $color-primary;
   font-size: 20px;
   i {

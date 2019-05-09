@@ -1,7 +1,7 @@
-import EvTag from './src'
+import SpTag from './src'
 
-EvTag.install = Vue => {
-  Vue.component(EvTag.name, EvTag)
+SpTag.install = Vue => {
+  Vue.component(SpTag.name, SpTag)
 }
 
-export default EvTag
+export default SpTag

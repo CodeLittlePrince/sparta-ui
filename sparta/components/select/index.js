@@ -1,7 +1,7 @@
-import EvSelect from './src'
+import SpSelect from './src'
 
-EvSelect.install = Vue => {
-  Vue.component(EvSelect.name, EvSelect)
+SpSelect.install = Vue => {
+  Vue.component(SpSelect.name, SpSelect)
 }
 
-export default EvSelect
+export default SpSelect
