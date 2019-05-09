@@ -96,7 +96,7 @@
 
 <script>
 import SpSelectDropdown from './select-dropdown'
-import SpTag from '@/components/tag/src'
+import SpTag from 'sparta/components/tag/src'
 
 export default {
   name: 'SpSelect',
@@ -434,7 +434,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~scss/variable.scss";
+@import "~sparta/common/scss/variable.scss";
 $select-height: 40px;
 
 .sp-select {

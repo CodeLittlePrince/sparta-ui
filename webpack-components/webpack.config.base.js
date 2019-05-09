@@ -17,7 +17,7 @@ const config = {
     extensions: ['.js', '.vue', '.scss', '.css'],
     // 取路径别名，方便在业务代码中import
     alias: {
-      '@': resolve('/'),
+      sparta: resolve('/'),
       common: resolve('common'),
       scss: resolve('common/scss'),
       directives: resolve('directives'),

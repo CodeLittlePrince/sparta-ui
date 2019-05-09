@@ -33,12 +33,12 @@ const config = {
     // 取路径别名，方便在业务代码中import
     alias: {
       site: resolve('/'),
+      sparta: resolve('../sparta/'),
       common: resolve('/common/'),
       ajax: resolve('/common/js/ajax/'),
       utils: resolve('/common/js/utils/'),
       views: resolve('/views/'),
       components: resolve('/components/'),
-      componentsBase: resolve('/componentsBase/'),
       directives: resolve('/directives/'),
       filters: resolve('/filters/'),
       mixins: resolve('/mixins/'),
@@ -109,7 +109,7 @@ const config = {
       },
       {
         test: /\.js$/,
-        include: [resolve('/')],
+        exclude: /node_modules/,
         loader: [
           'babel-loader',
           'eslint-loader'

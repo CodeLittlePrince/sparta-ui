@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import dom from '@/common/js/dom'
-import PopManage from '@/model/PopManage'
+import dom from 'sparta/common/js/dom'
+import PopManage from 'sparta/model/PopManage'
 
 export default {
   name: 'SpSelectDropdown',
