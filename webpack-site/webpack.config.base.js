@@ -29,11 +29,12 @@ const svgBase64Reg = /__base64\.(svg)(\?.*)?$/
 const config = {
   resolve: {
     // 扩展名，比如import 'app.vue'，扩展后只需要写成import 'app'就可以了
-    extensions: ['.js', '.vue', '.scss', '.css'],
+    extensions: ['.js', '.vue', '.scss', '.css', '.md'],
     // 取路径别名，方便在业务代码中import
     alias: {
       site: resolve('/'),
       sparta: resolve('../sparta/'),
+      doc: resolve('../doc/'),
       common: resolve('/common/'),
       ajax: resolve('/common/js/ajax/'),
       utils: resolve('/common/js/utils/'),
@@ -119,6 +120,20 @@ const config = {
         test: /\.vue$/,
         exclude: /node_modules/,
         loader: 'vue-loader'
+      },
+      {
+        test: /\.md$/,
+        use: [
+          {
+            loader: 'vue-loader'
+          },
+          {
+            loader: 'vue-markdown-loader/lib/markdown-compiler',
+            options: {
+              raw: true
+            }
+          }
+        ]
       }
     ]
   }

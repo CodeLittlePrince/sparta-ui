@@ -5,36 +5,23 @@
         组件库来啦！
         <span>- by 咻</span>
       </h1>
-      <sp-select v-model="value2">
-        <sp-option
-          v-for="item in list2"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-          :disabled="item.value === 2"
-        ></sp-option>
-      </sp-select>
       <a
         href="https://github.com/CodeLittlePrince/blog"
         target="__blank"
       >
         <div class="cover"></div>
       </a>
+      <ButtonDoc />
     </div>
   </div>
 </template>
 
 <script>
+import ButtonDoc from 'doc/button'
+
 export default {
-  data() {
-    return {
-      list2: [
-        { label: 'Tony', value: 1 },
-        { label: 'Bob', value: 2 },
-        { label: 'Jack', value: 3 }
-      ],
-      value2: 0
-    }
+  components: {
+    ButtonDoc
   }
 }
 </script>
