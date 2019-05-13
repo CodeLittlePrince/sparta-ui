@@ -1,4 +1,6 @@
 import Vue from 'vue'
-import nav from './nav'
+import Nav from './nav'
+import CodeView from './code-view'
 
-Vue.component('c-nav', nav)
+Vue.component('c-nav', Nav)
+Vue.component('c-code-view', CodeView)

@@ -1,5 +1,7 @@
 ### 你好
 
+::: demo AAAA
+```html
 <template>
   <sp-button :type="type"></sp-button>
 </template>
@@ -8,8 +10,10 @@
 export default{
   data(){
     return {
-      type: 'default'
+      type: 'primary'
     }
   }
 }
 </script>
+```
+:::

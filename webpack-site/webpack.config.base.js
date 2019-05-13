@@ -130,7 +130,28 @@ const config = {
           {
             loader: 'vue-markdown-loader/lib/markdown-compiler',
             options: {
-              raw: true
+              raw: true,
+              preprocess (markdownIt, source) {
+                markdownIt.use(require('markdown-it-container'), 'demo', {
+                  validate (params) {
+                    return params.trim().match(/^demo\s+(.*)$/)
+                  },
+                
+                  render (tokens, idx) {
+                    const m = tokens[idx].info.trim().match(/^demo\s+(.*)$/)
+                
+                    if (tokens[idx].nesting === 1) {
+                      const desc = m[1] || ''
+                      const content = tokens[idx + 1].content
+                      return `<c-code-view desc="${ desc }">
+                          <template slot="code">${content}</template>
+                        `
+                    }
+                    return '</c-code-view>\n'
+                  }
+                })
+                return markdownIt.render(source)
+              }
             }
           }
         ]

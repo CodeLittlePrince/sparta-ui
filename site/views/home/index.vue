@@ -1,16 +1,6 @@
 <template>
   <div class="home">
     <div class="content jello">
-      <h1>
-        组件库来啦！
-        <span>- by 咻</span>
-      </h1>
-      <a
-        href="https://github.com/CodeLittlePrince/blog"
-        target="__blank"
-      >
-        <div class="cover"></div>
-      </a>
       <ButtonDoc />
     </div>
   </div>
