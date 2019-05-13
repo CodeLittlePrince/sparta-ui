@@ -69,7 +69,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .c-code-view {
   .c-code-view-box {
     border: 1px solid #dbdbdb;
@@ -127,21 +127,21 @@ export default {
   .segment {
     padding-top: 10px;
     background-color: #fafafa;
-    > p {
-      padding-top: 0;
-      padding-bottom: 0;
-    }
     .code {
       background-color: #282c34;
       box-sizing: border-box;
-      padding: 30px;
+      padding: 10px;
+      pre {
+        background-color: #282c34;
+        margin-bottom: 0;
+      }
     }
   }
   .segment-enter-active {
     transition: all 0.2s;
   }
   .segment-enter {
-    transform: translateY(-100%);
+    opacity: 0;
   }
 }
 </style>

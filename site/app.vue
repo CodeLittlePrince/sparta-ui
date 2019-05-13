@@ -1,6 +1,6 @@
 <template>
   <div>
     <c-nav></c-nav>
-    <router-view></router-view>
+    <router-view class="markdown-body"></router-view>
   </div>
 </template>
