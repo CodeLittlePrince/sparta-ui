@@ -158,7 +158,8 @@ const config = {
                 
                     if (tokens[idx].nesting === 1) {
                       const desc = m[1] || ''
-                      const content = tokens[idx + 1].content
+                      let content = tokens[idx + 1].content
+                      content = content.replace(/<script>(.|\n)*?<\/script>/g, '')
                       return `<c-code-view desc="${desc}">
                         <template slot="demo">${content}</template>
                       `

@@ -1,5 +1,5 @@
 # Select 选择器
----
+
 ### 基础用法
 适用广泛的基础单选（支持键盘控制）
 
@@ -15,6 +15,7 @@
     ></sp-option>
   </sp-select>
 </template>
+
 <script>
 export default{
   data(){
@@ -258,7 +259,7 @@ export default{
           value: 'Wangfujing',
           label: '王府井'
         }]
-       }, {
+        }, {
         label: '上海',
         options: [{
           value: 'Lujiazui',
@@ -346,3 +347,101 @@ export default{
 |---------- |-------- |---------- |
 | close  | modal 关闭的回调 | — |
 | show  | modal 打开的回调 | — |
+
+<script>
+export default{
+  data(){
+    return {
+      list1: [
+        { label: 'Tom', value: 1 },
+        { label: 'Jerry', value: 2 },
+        { label: 'Kitty', value: 3 },
+        { label: 'Adam', value: 4 },
+        { label: 'Bob', value: 5 },
+        { label: 'Cancy', value: 6 },
+        { label: 'David', value: 7 },
+        { label: 'Evan', value: 8 },
+        { label: 'Franky', value: 9 },
+        { label: 'Jerry', value: 10 },
+        { label: 'Kitty', value: 11 },
+        { label: 'Kathy', value: 12 }
+      ],
+      value1: 9,
+      list2: [
+        { label: 'Tony', value: 1 },
+        { label: 'Bob', value: 2 },
+        { label: 'Jack', value: 3 }
+      ],
+      value2: 0,
+      list3: [
+        { label: 'cat', value: 1 },
+        { label: 'dog', value: 2 },
+        { label: 'pig', value: 3 }
+      ],
+      value3: 0,
+      list4: [
+        { label: 'cat', value: 1 },
+        { label: 'dog', value: 2 },
+        { label: 'pig', value: 3 },
+        { label: 'citty', value: 4 }
+      ],
+      value4: 0,
+      list5: [
+        { label: '北京', value: 'beijing' },
+        { label: '上海', value: 'shanghai' },
+        { label: '杭州', value: 'hangzhou' }
+      ],
+      value5: '',
+      list6: [{
+        label: '北京',
+        options: [{
+          value: 'Sanlitun',
+          label: '三里屯'
+        }, {
+          value: 'Wangfujing',
+          label: '王府井'
+        }]
+       }, {
+        label: '上海',
+        options: [{
+          value: 'Lujiazui',
+          label: '陆家嘴'
+        }, {
+          value: 'Nanjinglu',
+          label: '南京路'
+        }]
+      }],
+      value6: '',
+      list7: [
+        { label: '音乐', value: 'music' },
+        { label: '电影', value: 'movie' },
+        { label: '绘画', value: 'drawing' }
+      ],
+      value7: []
+    }
+  },
+  watch: {
+    value1(val) {
+      console.log(val)
+    },
+    value2(val) {
+      console.log(val)
+    },
+    value3(val) {
+      console.log(val)
+    },
+    value4(val) {
+      console.log(val)
+    },
+    value5(val) {
+      console.log(val)
+    },
+    value6(val) {
+      console.log(val)
+    },
+    value7(val) {
+      console.log(val)
+    }
+  }
+}
+</script>
