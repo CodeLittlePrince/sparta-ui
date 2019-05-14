@@ -1,26 +1,46 @@
-<template>
-  <div class="sp-row">{{ text }}</div>
-</template>
-
 <script>
 export default {
-  name: 'SpRadio',
+  name: 'SpRow',
+  componentName: 'SpRow',
+
   props: {
-    text: {
+    tag: {
       type: String,
-      default: ''
+      default: 'div'
+    },
+    gutter: Number
+  },
+
+  computed: {
+    style() {
+      const ret = {}
+
+      if (this.gutter) {
+        ret.marginLeft = `-${this.gutter / 2}px`
+        ret.marginRight = ret.marginLeft
+      }
+
+      return ret
     }
+  },
+
+  render(h) {
+    return h(this.tag, {
+      class: [
+        'sp-row'
+      ],
+      style: this.style
+    }, this.$slots.default)
   }
 }
 </script>
 
 <style lang="scss">
-@import "~sparta/common/scss/variable.scss";
+@import "sparta/common/scss/mixin.scss";
 
 .sp-row {
-  font-size: 20px;
-  i {
-    font-size: 12px;
-  }
+  position: relative;
+  box-sizing: border-box;
+  @include clearfix();
 }
 </style>

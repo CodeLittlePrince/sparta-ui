@@ -1,4 +1,5 @@
 import './common/scss'
+import Row from './components/row'
 import Col from './components/col'
 import Button from './components/button'
 import Checkbox from './components/checkbox'
@@ -10,6 +11,7 @@ import Select from './components/select'
 import Tag from './components/tag'
 
 const components = [
+  Row,
   Col,
   Button,
   Checkbox,
@@ -33,6 +35,7 @@ Sparta.install = Vue => {
 export default Sparta
 // 按需引入支持
 export {
+  Row,
   Col,
   Button,
   Checkbox,
