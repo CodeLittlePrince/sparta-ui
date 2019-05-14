@@ -4,7 +4,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const VueLoaderPluginInstance = new VueLoaderPlugin()
 const hljs = require('highlight.js')
-const cheerio = require('cheerio')
 
 const extractCSS =
   new MiniCssExtractPlugin(
@@ -140,7 +139,7 @@ const config = {
                 const htmlEndIndex = str.indexOf('</template>') + 11
                 const template = str.slice(htmlStartIndex, htmlEndIndex)
                 const scriptStartIndex = str.indexOf('<script>')
-                const scriptEndIndex = str.indexOf('</script>') + 8
+                const scriptEndIndex = str.indexOf('</script>') + 9
                 const script = str.slice(scriptStartIndex, scriptEndIndex)
                 rst = hljs.highlight('html', template, true).value +
                   '</br>' +
