@@ -160,13 +160,6 @@ const config = {
                     if (tokens[idx].nesting === 1) {
                       const desc = m[1] || ''
                       const content = tokens[idx + 1].content
-                      // let text = markdownIt.utils.escapeHtml(JSON.stringify(content))
-                      
-                      // console.log(content)
-                      // let html = hljs.highlight('html', content, true).value
-                      // console.log('xxxx')
-                      // console.log(html)
-                      // 将text html化
                       return `<c-code-view desc="${desc}">
                         <template slot="demo">${content}</template>
                       `

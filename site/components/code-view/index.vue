@@ -14,7 +14,7 @@
           <p
             v-if="desc"
             class="desc"
-          ></p>
+          >{{ desc }}</p>
           <div class="code">
             <slot></slot>
           </div>
