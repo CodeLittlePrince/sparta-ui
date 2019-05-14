@@ -159,7 +159,7 @@ const config = {
                     if (tokens[idx].nesting === 1) {
                       const desc = m[1] || ''
                       let content = tokens[idx + 1].content
-                      content = content.replace(/<script>(.|\n)*?<\/script>/g, '')
+                      content = content.replace(/<script>(.|\n)*?<\/script>/g, '') // 解决md中script上下文唯一导致取值问题
                       return `<c-code-view desc="${desc}">
                         <template slot="demo">${content}</template>
                       `
