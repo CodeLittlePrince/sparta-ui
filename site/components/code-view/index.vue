@@ -3,7 +3,7 @@
     <div class="c-code-view-box">
       <div class="demo">
         <div class="demo-content">
-          <slot name="code"></slot>
+          <slot name="demo"></slot>
         </div>
       </div>
       <transition name="segment">
@@ -14,7 +14,6 @@
           <p
             v-if="desc"
             class="desc"
-            v-html="desc"
           ></p>
           <div class="code">
             <slot></slot>
@@ -39,7 +38,7 @@
 export default {
   name: 'CCodeView',
   props: {
-    info: {
+    text: {
       type: String,
       default: ''
     },

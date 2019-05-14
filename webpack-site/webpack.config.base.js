@@ -3,6 +3,8 @@ const isProduction = process.env.NODE_ENV === 'production'
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const VueLoaderPluginInstance = new VueLoaderPlugin()
+const hljs = require('highlight.js')
+const cheerio = require('cheerio')
 
 const extractCSS =
   new MiniCssExtractPlugin(
@@ -131,6 +133,21 @@ const config = {
             loader: 'vue-markdown-loader/lib/markdown-compiler',
             options: {
               raw: true,
+              // 自定义highlight逻辑
+              highlight (str) {
+                let rst = ''
+                const htmlStartIndex = str.indexOf('<template>')
+                const htmlEndIndex = str.indexOf('</template>') + 11
+                const template = str.slice(htmlStartIndex, htmlEndIndex)
+                const scriptStartIndex = str.indexOf('<script>')
+                const scriptEndIndex = str.indexOf('</script>') + 8
+                const script = str.slice(scriptStartIndex, scriptEndIndex)
+                rst = hljs.highlight('html', template, true).value +
+                  '</br>' +
+                  '</br>' +
+                  hljs.highlight('js', script, true).value
+                return rst
+              },
               preprocess (markdownIt, source) {
                 markdownIt.use(require('markdown-it-container'), 'demo', {
                   validate (params) {
@@ -143,9 +160,16 @@ const config = {
                     if (tokens[idx].nesting === 1) {
                       const desc = m[1] || ''
                       const content = tokens[idx + 1].content
-                      return `<c-code-view desc="${ desc }">
-                          <template slot="code">${content}</template>
-                        `
+                      // let text = markdownIt.utils.escapeHtml(JSON.stringify(content))
+                      
+                      // console.log(content)
+                      // let html = hljs.highlight('html', content, true).value
+                      // console.log('xxxx')
+                      // console.log(html)
+                      // 将text html化
+                      return `<c-code-view desc="${desc}">
+                        <template slot="demo">${content}</template>
+                      `
                     }
                     return '</c-code-view>\n'
                   }

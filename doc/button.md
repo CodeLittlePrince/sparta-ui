@@ -1,14 +1,14 @@
 # Button 按钮
----
 
 :::demo 我就是一个小小的demo
 ```html
 <template>
   <sp-button :type="type">click</sp-button>
 </template>
+
 <script>
-export default{
-  data(){
+export default {
+  data() {
     return {
       type: 'primary'
     }
