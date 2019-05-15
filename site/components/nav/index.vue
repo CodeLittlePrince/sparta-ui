@@ -3,10 +3,10 @@
     <div class="clearfix">
       <h1 class="logo">Sparta</h1>
       <ul class="menu">
-        <li class="rubberBand">
+        <li>
           <router-link to="/">首页</router-link>
         </li>
-        <li class="rubberBand">
+        <li>
           <router-link to="/components">组件</router-link>
         </li>
       </ul>

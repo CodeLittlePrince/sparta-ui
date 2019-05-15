@@ -1,6 +1,7 @@
 import './common/scss'
 import Row from './components/row'
 import Col from './components/col'
+import Menu from './components/menu'
 import Button from './components/button'
 import Checkbox from './components/checkbox'
 import Input from './components/input'
@@ -13,6 +14,7 @@ import Tag from './components/tag'
 const components = [
   Row,
   Col,
+  Menu,
   Button,
   Checkbox,
   Input,
@@ -37,6 +39,7 @@ export default Sparta
 export {
   Row,
   Col,
+  Menu,
   Button,
   Checkbox,
   Input,

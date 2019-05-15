@@ -1,17 +1,54 @@
 <template>
   <div class="home">
-    <div class="content jello">
-      <SelectDoc />
+    <div class="content">
+      <sp-menu
+        :data="menuData"
+        :default-open="defaultOpen"
+        @select="handleMenuSelect"
+        @open="handleMenuOpen"
+        @close="handleMenuClose"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import SelectDoc from 'doc/select'
 
 export default {
-  components: {
-    SelectDoc
+  data() {
+    return {
+      defaultOpen: '2-1',
+      menuData: [
+        {
+          title: '标题1',
+          link: '/1',
+          index: '1'
+        },
+        {
+          title: '标题2',
+          link: '/2',
+          index: '2',
+          child: [
+            {
+              title: '标题2-1',
+              link: '/2-1',
+              index: '2-1'
+            }
+          ]
+        }
+      ]
+    }
+  },
+  methods: {
+    handleMenuSelect(index) {
+      console.log(`menu select: ${index}`)
+    },
+    handleMenuClose(index) {
+      console.log(`menu close: ${index}`)
+    },
+    handleMenuOpen(index) {
+      console.log(`menu open: ${index}`)
+    }
   }
 }
 </script>
