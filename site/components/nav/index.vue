@@ -21,6 +21,7 @@
     position: relative;
     z-index: 10;
     max-width: 100%;
+    height: 70px;
     background: #fff;
     box-shadow: 0 2px 8px #f0f1f2;
     .content {
@@ -40,8 +41,9 @@
     }
     .logo {
       float: left;
+      margin-top: 14px;
       font-size: 30px;
-      margin-top: 12px;
+      font-weight: 300;
       &::before {
         content: '';
         display: inline-block;
@@ -56,12 +58,16 @@
     .menu {
       font-size: 0;
       float: right;
+      line-height: 70px;
       li {
         font-size: 24px;
         text-align: center;
         display: inline-block;
-        padding: 20px;
+        padding: 0 20px;
         animation-duration: 1.5s;
+        a {
+          font-weight: 300;
+        }
       }
     }
   }
