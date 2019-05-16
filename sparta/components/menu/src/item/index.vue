@@ -1,19 +1,19 @@
 <template>
   <div
-    class="sp-file-tree-item"
-    :class="{ parentIsPage }"
+    class="sp-menu-item"
+    :class="[{ parentIsPage }, `sp-menu-item--${theme}`]"
     :index="data[indexKey]"
   >
     <div
-      class="sp-file-tree-item__text"
+      class="sp-menu-item__text"
       :class="{ active: isActive }"
-      :style="{ 'padding-left': `${(deep - 1) * indent}px`, 'padding-right': hasChild ? '30px': '20px'}"
+      :style="{ 'padding-left': `${deep * indent}px`, 'padding-right': hasChild ? '30px': '20px'}"
       @click="_handleSelect($event, hasChild)"
     >
       <!-- 折叠按钮 -->
       <div
         v-if="parentIsPage"
-        class="sp-file-tree-item__text__collapse"
+        class="sp-menu-item__text__collapse"
       >
         <i
           v-show="isOpen && hasChild"
@@ -26,14 +26,16 @@
           @click="_handleOpen($event)"
         />
       </div>
-      <i
-        v-if="!hasChild"
-        class="sp-icon-document"
-      />
-      <i
-        v-else
-        class="sp-icon-message"
-      />
+      <template v-if="theme === 'file'">
+        <i
+          v-if="!hasChild"
+          class="sp-icon-document"
+        />
+        <i
+          v-else
+          class="sp-icon-message"
+        />
+      </template>
       <!-- 标题 -->
       {{ data[titleKey] }}
       <!-- 上下箭头 -->
@@ -43,13 +45,15 @@
         :class="{ active: isOpen }"
       ></i>
     </div>
-    <transition-group name="sp-fade">
+    <transition-group name="sp-slide-fade-in-top">
       <template v-if="data">
-        <sp-file-tree-item
+        <sp-menu-item
           v-for="item in data[childKey]"
           v-show="isOpen"
           :key="item[indexKey]"
           :data="item"
+          :theme="theme"
+          :unique="unique"
           :parent-is-page="parentIsPage"
           :deep="deep + 1"
           :active-index="activeIndexSelf"
@@ -67,11 +71,22 @@
 import tool from 'sparta/common/js/tool'
 
 export default {
-  name: 'SpFileTreeItem',
+  name: 'SpMenuItem',
   props: {
     data: {
       type: [Array, Object],
       default: () => []
+    },
+    theme: {
+      type: String,
+      default: 'common',
+      validator(val) {
+        return ['common', 'file'].indexOf(val) > -1
+      }
+    },
+    unique: {
+      type: Boolean,
+      default: false
     },
     parentIsPage: {
       type: Boolean,
@@ -119,7 +134,7 @@ export default {
     isActive() {
       return this.activeIndexSelf === this.data[this.indexKey]
     },
-    // 是否open该条目
+    // 是否该条目已打开
     isOpen() {
       return -1 < this.openedIndexes.indexOf(this.data[this.indexKey])
     },
@@ -156,18 +171,26 @@ export default {
      */
     _handleClose(e) {
       e.stopPropagation()
-      const openIndex = this.openedIndexes.indexOf(this.data[this.indexKey])
-      this.$emit('close', this.data[this.indexKey], openIndex, tool.deepClone(this.data))
+      this.$emit('close', this.data[this.indexKey], tool.deepClone(this.data))
     },
     /**
      * 切换折叠
      */
     _toggleCollapse(e) {
       e.stopPropagation()
+      // 切换折叠
       if (this.isOpen) {
         this._handleClose(e)
       } else {
         this._handleOpen(e)
+      }
+      // 如果unique为true，则需要收起同级的菜单项目
+      if (this.unique) {
+        this.$parent.$children.forEach(vc => {
+          if (vc !== this) {
+            this.$emit('close', vc.data.index, tool.deepClone(vc.data))
+          }
+        })
       }
     },
     /**
@@ -180,18 +203,19 @@ export default {
     _handleOpenSelf(index, itemData) {
       this.$emit('open', index, itemData)
     },
-    _handleCloseSelf(index, position, itemData) {
-      this.$emit('close', index, position, itemData)
+    _handleCloseSelf(index, itemData) {
+      this.$emit('close', index, itemData)
     }
   }
 }
 </script>
 
 <style lang="scss">
-@import "sparta/common/scss/transition.scss";
-@import "sparta/common/scss/mixin.scss";
+@import "sparta/common/scss/transition";
+@import "sparta/common/scss/mixin";
+@import "sparta/common/scss/variable";
 
-.sp-file-tree-item {
+.sp-menu-item {
   user-select: none;
   white-space: nowrap;
   cursor: pointer;
@@ -203,8 +227,12 @@ export default {
     position: relative;
     padding: 16px 20px;
     transition: all 0.2s;
-    &:hover, &.active {
+    &:hover {
       color: #409eff;
+    }
+    &.active {
+      color: #409eff;
+      background-color: $color-primary-light-9;
     }
     &__collapse {
       display: inline-block;

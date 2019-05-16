@@ -6,7 +6,7 @@ import Header from './components/header'
 import Footer from './components/footer'
 import Aside from './components/aside'
 import Main from './components/main'
-import FileTree from './components/file-tree'
+import Menu from './components/menu'
 import Button from './components/button'
 import Checkbox from './components/checkbox'
 import Input from './components/input'
@@ -24,7 +24,7 @@ const components = [
   Footer,
   Aside,
   Main,
-  FileTree,
+  Menu,
   Button,
   Checkbox,
   Input,
@@ -54,7 +54,7 @@ export {
   Footer,
   Aside,
   Main,
-  FileTree,
+  Menu,
   Button,
   Checkbox,
   Input,

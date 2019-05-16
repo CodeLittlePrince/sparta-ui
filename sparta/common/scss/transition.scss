@@ -23,9 +23,26 @@
   transform: scaleX(0);
 }
 
+.sp-slide-fade-in-top-enter-active {
+  transform: scaleY(1);
+  transition: $transition-md-fade;
+  transform-origin: top;
+}
+.sp-slide-fade-in-top-leave-active {
+  transform: scaleY(1);
+  transform-origin: top;
+}
+.sp-slide-fade-in-top-enter,
+.sp-slide-fade-in-top-leave-active {
+  transform: scaleY(0);
+  height: 0;
+  width: 0;
+  opacity: 0;
+}
+
 .sp-fade-enter-active,
 .sp-fade-leave-active {
-  transition: opacity 0.2s;
+  transition: $transition-fade;
 }
 .sp-fade-enter,
 .sp-fade-leave-active {

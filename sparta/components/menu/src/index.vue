@@ -1,9 +1,14 @@
 <template>
-  <div class="sp-file-tree">
-    <sp-file-tree-item
+  <div
+    class="sp-menu"
+    :class="`sp-menu--${theme}`"
+  >
+    <sp-menu-item
       v-for="item in data"
       :key="item.index"
       :data="item"
+      :theme="theme"
+      :unique="unique"
       :parent-is-page="parentIsPage"
       :active-index="activeIndex"
       :opened-indexes="openedIndexes"
@@ -14,21 +19,32 @@
       @select="_handleSelect"
       @open="_handleOpen"
       @close="_handleClose"
-    ></sp-file-tree-item>
+    ></sp-menu-item>
   </div>
 </template>
 
 <script>
-import SpFileTreeItem from './item'
+import SpMenuItem from './item'
 export default {
-  name: 'SpFileTree',
+  name: 'SpMenu',
   components: {
-    SpFileTreeItem
+    SpMenuItem
   },
   props: {
     data: {
       type: Array,
       default: () => []
+    },
+    theme: {
+      type: String,
+      default: 'common',
+      validator(val) {
+        return ['common', 'file'].indexOf(val) > -1
+      }
+    },
+    unique: {
+      type: Boolean,
+      default: false
     },
     parentIsPage: {
       type: Boolean,
@@ -117,8 +133,11 @@ export default {
       }
       this.$emit('open', index, itemData)
     },
-    _handleClose(index, position, itemData) {
-      this.openedIndexes.splice(position, 1)
+    _handleClose(index, itemData) {
+      const position = this.openedIndexes.indexOf(index)
+      if (position > -1) {
+        this.openedIndexes.splice(position, 1)
+      }
       this.$emit('close', index, itemData)
     }
   }
@@ -126,9 +145,9 @@ export default {
 </script>
 
 <style lang="scss">
-.sp-file-tree {
+.sp-menu {
   width: 100%;
   box-sizing: border-box;
-  overflow: auto;
+  overflow: hidden;
 }
 </style>

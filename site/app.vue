@@ -11,11 +11,12 @@
         class="app--split"
         width="250px"
       >
-        <sp-file-tree
+        <sp-menu
           :indent="20"
           :data="menuData"
           :default-open="defaultOpen"
           :parent-is-page="false"
+          unique
           @select="handleMenuSelect"
           @open="handleMenuOpen"
           @close="handleMenuClose"
@@ -30,37 +31,11 @@
 </template>
 
 <script>
+import menuConfig from 'site/config/menu'
+
 export default {
   data() {
-    return {
-      defaultOpen: '2-1',
-      menuData: [
-        {
-          title: '标题1',
-          link: '/1',
-          index: '1'
-        },
-        {
-          title: '标题2',
-          link: '/2',
-          index: '2',
-          child: [
-            {
-              title: '标题2-1',
-              link: '/2-1',
-              index: '2-1',
-              child: [
-                {
-                  title: '标题2-1-1',
-                  link: '/2-1-1',
-                  index: '2-1-1'
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
+    return menuConfig
   },
   methods: {
     handleMenuSelect(index, itemData) {
