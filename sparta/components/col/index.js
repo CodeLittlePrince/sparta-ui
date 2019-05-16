@@ -1,7 +1,7 @@
-import SpCol from './src'
+import Col from './src'
 
-SpCol.install = Vue => {
-  Vue.component(SpCol.name, SpCol)
+Col.install = Vue => {
+  Vue.component(Col.name, Col)
 }
 
-export default SpCol
+export default Col

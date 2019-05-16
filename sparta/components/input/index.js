@@ -1,7 +1,7 @@
-import SpInput from './src'
+import Input from './src'
 
-SpInput.install = Vue => {
-  Vue.component(SpInput.name, SpInput)
+Input.install = Vue => {
+  Vue.component(Input.name, Input)
 }
 
-export default SpInput
+export default Input

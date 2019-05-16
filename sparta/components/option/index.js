@@ -1,7 +1,7 @@
-import SpOption from '../select/src/option'
+import Option from '../select/src/option'
 
-SpOption.install = Vue => {
-  Vue.component(SpOption.name, SpOption)
+Option.install = Vue => {
+  Vue.component(Option.name, Option)
 }
 
-export default SpOption
+export default Option

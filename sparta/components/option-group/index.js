@@ -1,7 +1,7 @@
-import SpOptionGroup from '../select/src/option-group'
+import OptionGroup from '../select/src/option-group'
 
-SpOptionGroup.install = Vue => {
-  Vue.component(SpOptionGroup.name, SpOptionGroup)
+OptionGroup.install = Vue => {
+  Vue.component(OptionGroup.name, OptionGroup)
 }
 
-export default SpOptionGroup
+export default OptionGroup

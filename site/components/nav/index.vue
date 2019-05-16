@@ -1,6 +1,6 @@
 <template>
   <div class="c-nav">
-    <div class="clearfix">
+    <div class="clearfix content">
       <h1 class="logo">Sparta</h1>
       <ul class="menu">
         <li>
@@ -23,6 +23,10 @@
     max-width: 100%;
     background: #fff;
     box-shadow: 0 2px 8px #f0f1f2;
+    .content {
+      width: 1200px;
+      margin: 0 auto;
+    }
     .clearfix {
       zoom: 1;
       &::before,
@@ -36,9 +40,18 @@
     }
     .logo {
       float: left;
-      line-height: 68px;
-      font-size: 24px;
-      padding-left: 20px;
+      font-size: 30px;
+      margin-top: 12px;
+      &::before {
+        content: '';
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        background-image: url('~site/common/img/logo.svg');
+        background-size: contain;
+        vertical-align: middle;
+        margin-right: 10px;
+      }
     }
     .menu {
       font-size: 0;

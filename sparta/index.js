@@ -1,7 +1,12 @@
 import './common/scss'
 import Row from './components/row'
 import Col from './components/col'
-import Menu from './components/menu'
+import Layout from './components/layout'
+import Header from './components/header'
+import Footer from './components/footer'
+import Aside from './components/aside'
+import Main from './components/main'
+import FileTree from './components/file-tree'
 import Button from './components/button'
 import Checkbox from './components/checkbox'
 import Input from './components/input'
@@ -14,7 +19,12 @@ import Tag from './components/tag'
 const components = [
   Row,
   Col,
-  Menu,
+  Layout,
+  Header,
+  Footer,
+  Aside,
+  Main,
+  FileTree,
   Button,
   Checkbox,
   Input,
@@ -39,7 +49,12 @@ export default Sparta
 export {
   Row,
   Col,
-  Menu,
+  Layout,
+  Header,
+  Footer,
+  Aside,
+  Main,
+  FileTree,
   Button,
   Checkbox,
   Input,

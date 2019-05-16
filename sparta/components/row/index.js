@@ -1,7 +1,7 @@
-import SpRow from './src'
+import Row from './src'
 
-SpRow.install = Vue => {
-  Vue.component(SpRow.name, SpRow)
+Row.install = Vue => {
+  Vue.component(Row.name, Row)
 }
 
-export default SpRow
+export default Row

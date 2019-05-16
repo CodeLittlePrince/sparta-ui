@@ -1,7 +1,7 @@
-import SpSelect from './src'
+import Select from './src'
 
-SpSelect.install = Vue => {
-  Vue.component(SpSelect.name, SpSelect)
+Select.install = Vue => {
+  Vue.component(Select.name, Select)
 }
 
-export default SpSelect
+export default Select

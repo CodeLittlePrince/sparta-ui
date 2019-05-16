@@ -1,16 +1,16 @@
 <template>
   <div
-    class="sp-menu-item"
+    class="sp-file-tree-item"
     :index="data[indexKey]"
   >
     <div
-      class="sp-menu-item__text"
+      class="sp-file-tree-item__text"
       :class="{ active: isActive }"
-      :style="`padding-left: ${deep * indent}px`"
+      :style="{ 'padding-left': `${(deep - 1) * indent}px`, 'padding-right': hasChild ? '30px': '20px'}"
       @click="_handleSelect"
     >
       <!-- 折叠按钮 -->
-      <div class="sp-menu-item__text__collapse">
+      <div class="sp-file-tree-item__text__collapse">
         <i
           v-show="isOpen && hasChild"
           class="sp-icon-minus"
@@ -22,8 +22,6 @@
           @click="_handleOpen($event)"
         />
       </div>
-      <!-- 文件夹和文件图标 -->
-      <!-- 图标来源：http://www.iconfont.cn/collections/detail?spm=a313x.7781069.0.da5a778a4&cid=6377 -->
       <i
         v-if="!hasChild"
         class="sp-icon-document"
@@ -43,7 +41,7 @@
     </div>
     <transition-group name="sp-fade">
       <template v-if="data">
-        <sp-menu-item
+        <sp-file-tree-item
           v-for="item in data[childKey]"
           v-show="isOpen"
           :key="item[indexKey]"
@@ -62,7 +60,7 @@
 
 <script>
 export default {
-  name: 'SpMenuItem',
+  name: 'SpFileTreeItem',
   props: {
     data: {
       type: [Array, Object],
@@ -165,12 +163,15 @@ export default {
 
 <style lang="scss">
 @import "sparta/common/scss/transition.scss";
+@import "sparta/common/scss/mixin.scss";
 
-.sp-menu-item {
+.sp-file-tree-item {
   user-select: none;
   white-space: nowrap;
   cursor: default;
   &__text {
+    @include ellipsis();
+    position: relative;
     padding: 16px 20px;
     transition: all 0.2s;
     &:hover, &.active {
@@ -190,7 +191,9 @@ export default {
       vertical-align: text-top;
     }
     .sp-icon-arrow-down {
-      margin-left: 2px;
+      position: absolute;
+      right: 10px;
+      top: 22px;
       transition: transform 0.2s;
       &.active {
         transform: rotate(180deg);

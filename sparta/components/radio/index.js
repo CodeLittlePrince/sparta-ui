@@ -1,7 +1,7 @@
-import SpRadio from './src'
+import Radio from './src'
 
-SpRadio.install = Vue => {
-  Vue.component(SpRadio.name, SpRadio)
+Radio.install = Vue => {
+  Vue.component(Radio.name, Radio)
 }
 
-export default SpRadio
+export default Radio

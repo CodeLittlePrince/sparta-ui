@@ -1,9 +1,6 @@
 <template>
-  <div
-    class="sp-menu"
-    :style="{ width: width }"
-  >
-    <sp-menu-item
+  <div class="sp-file-tree">
+    <sp-file-tree-item
       v-for="item in data"
       :key="item.index"
       :data="item"
@@ -16,22 +13,18 @@
       @select="_handleSelect"
       @open="_handleOpen"
       @close="_handleClose"
-    ></sp-menu-item>
+    ></sp-file-tree-item>
   </div>
 </template>
 
 <script>
-import SpMenuItem from './item'
+import SpFileTreeItem from './item'
 export default {
-  name: 'SpMenu',
+  name: 'SpFileTree',
   components: {
-    SpMenuItem
+    SpFileTreeItem
   },
   props: {
-    width: {
-      type: String,
-      default: '240px'
-    },
     data: {
       type: Array,
       default: () => []
@@ -127,15 +120,10 @@ export default {
 }
 </script>
 
-
 <style lang="scss">
-.sp-menu {
-  padding: 0 6px;
+.sp-file-tree {
+  width: 100%;
   box-sizing: border-box;
-  width: 240px !important;
   overflow: auto;
-  position: fixed;
-  bottom: 0;
-  top: 159px;
 }
 </style>
