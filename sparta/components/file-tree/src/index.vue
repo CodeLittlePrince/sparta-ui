@@ -4,6 +4,7 @@
       v-for="item in data"
       :key="item.index"
       :data="item"
+      :parent-is-page="parentIsPage"
       :active-index="activeIndex"
       :opened-indexes="openedIndexes"
       :title-key="titleKey"
@@ -28,6 +29,10 @@ export default {
     data: {
       type: Array,
       default: () => []
+    },
+    parentIsPage: {
+      type: Boolean,
+      default: true
     },
     titleKey: {
       type: String,

@@ -15,6 +15,7 @@
           :indent="20"
           :data="menuData"
           :default-open="defaultOpen"
+          :parent-is-page="false"
           @select="handleMenuSelect"
           @open="handleMenuOpen"
           @close="handleMenuClose"

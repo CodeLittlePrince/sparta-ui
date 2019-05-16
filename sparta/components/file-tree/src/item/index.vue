@@ -1,16 +1,20 @@
 <template>
   <div
     class="sp-file-tree-item"
+    :class="{ parentIsPage }"
     :index="data[indexKey]"
   >
     <div
       class="sp-file-tree-item__text"
       :class="{ active: isActive }"
       :style="{ 'padding-left': `${(deep - 1) * indent}px`, 'padding-right': hasChild ? '30px': '20px'}"
-      @click="_handleSelect"
+      @click="_handleSelect($event, hasChild)"
     >
       <!-- 折叠按钮 -->
-      <div class="sp-file-tree-item__text__collapse">
+      <div
+        v-if="parentIsPage"
+        class="sp-file-tree-item__text__collapse"
+      >
         <i
           v-show="isOpen && hasChild"
           class="sp-icon-minus"
@@ -46,6 +50,7 @@
           v-show="isOpen"
           :key="item[indexKey]"
           :data="item"
+          :parent-is-page="parentIsPage"
           :deep="deep + 1"
           :active-index="activeIndexSelf"
           :opened-indexes="openedIndexes"
@@ -67,6 +72,10 @@ export default {
     data: {
       type: [Array, Object],
       default: () => []
+    },
+    parentIsPage: {
+      type: Boolean,
+      default: true
     },
     titleKey: {
       type: String,
@@ -128,8 +137,12 @@ export default {
     /**
      * 点击条目处理
      */
-    _handleSelect() {
-      this.$emit('select', this.data[this.indexKey], tool.deepClone(this.data))
+    _handleSelect(e, hasChild) {
+      if (this.parentIsPage || !hasChild) {
+        this.$emit('select', this.data[this.indexKey], tool.deepClone(this.data))
+      } else {
+        this._toggleCollapse(e)
+      }
     },
     /**
      * 展开条目
@@ -145,6 +158,17 @@ export default {
       e.stopPropagation()
       const openIndex = this.openedIndexes.indexOf(this.data[this.indexKey])
       this.$emit('close', this.data[this.indexKey], openIndex, tool.deepClone(this.data))
+    },
+    /**
+     * 切换折叠
+     */
+    _toggleCollapse(e) {
+      e.stopPropagation()
+      if (this.isOpen) {
+        this._handleClose(e)
+      } else {
+        this._handleOpen(e)
+      }
     },
     /**
      * 因为menu-item是递归组件，所以emit需要处理自身
@@ -170,7 +194,10 @@ export default {
 .sp-file-tree-item {
   user-select: none;
   white-space: nowrap;
-  cursor: default;
+  cursor: pointer;
+  .parentIsPage {
+    cursor: default;
+  }
   &__text {
     @include ellipsis();
     position: relative;
@@ -195,7 +222,8 @@ export default {
     .sp-icon-arrow-down {
       position: absolute;
       right: 10px;
-      top: 22px;
+      top: 50%;
+      margin-top: -8px;
       transition: transform 0.2s;
       &.active {
         transform: rotate(180deg);
