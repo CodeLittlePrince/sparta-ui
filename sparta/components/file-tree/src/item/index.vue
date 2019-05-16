@@ -59,6 +59,8 @@
 </template>
 
 <script>
+import tool from 'sparta/common/js/tool'
+
 export default {
   name: 'SpFileTreeItem',
   props: {
@@ -127,14 +129,14 @@ export default {
      * 点击条目处理
      */
     _handleSelect() {
-      this.$emit('select', this.data[this.indexKey])
+      this.$emit('select', this.data[this.indexKey], tool.deepClone(this.data))
     },
     /**
      * 展开条目
      */
     _handleOpen(e) {
       e.stopPropagation()
-      this.$emit('open', this.data[this.indexKey])
+      this.$emit('open', this.data[this.indexKey], tool.deepClone(this.data))
     },
     /**
      * 折叠条目
@@ -142,20 +144,20 @@ export default {
     _handleClose(e) {
       e.stopPropagation()
       const openIndex = this.openedIndexes.indexOf(this.data[this.indexKey])
-      this.$emit('close', this.data[this.indexKey], openIndex)
+      this.$emit('close', this.data[this.indexKey], openIndex, tool.deepClone(this.data))
     },
     /**
      * 因为menu-item是递归组件，所以emit需要处理自身
      */
-    _handleSelectSelf(index) {
+    _handleSelectSelf(index, itemData) {
       this.activeIndexSelf = index
-      this.$emit('select', index)
+      this.$emit('select', index, itemData)
     },
-    _handleOpenSelf(index) {
-      this.$emit('open', index)
+    _handleOpenSelf(index, itemData) {
+      this.$emit('open', index, itemData)
     },
-    _handleCloseSelf(index, position) {
-      this.$emit('close', index, position)
+    _handleCloseSelf(index, position, itemData) {
+      this.$emit('close', index, position, itemData)
     }
   }
 }

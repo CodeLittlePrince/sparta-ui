@@ -102,19 +102,19 @@ export default {
     /**
      * 一些事件处理器
      */
-    _handleSelect(index) {
+    _handleSelect(index, itemData) {
       this.activeIndex = index
-      this.$emit('select', index)
+      this.$emit('select', index, itemData)
     },
-    _handleOpen(index) {
+    _handleOpen(index, itemData) {
       if (this.openedIndexes.indexOf(index) === -1) {
         this.openedIndexes.push(index)
       }
-      this.$emit('open', index)
+      this.$emit('open', index, itemData)
     },
-    _handleClose(index, position) {
+    _handleClose(index, position, itemData) {
       this.openedIndexes.splice(position, 1)
-      this.$emit('close', index)
+      this.$emit('close', index, itemData)
     }
   }
 }

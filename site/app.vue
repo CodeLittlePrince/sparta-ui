@@ -62,14 +62,14 @@ export default {
     }
   },
   methods: {
-    handleMenuSelect(index) {
-      console.log(`menu select: ${index}`)
+    handleMenuSelect(index, itemData) {
+      console.log(`menu select: ${index}`, itemData)
     },
-    handleMenuClose(index) {
-      console.log(`menu close: ${index}`)
+    handleMenuClose(index, itemData) {
+      console.log(`menu close: ${index}`, itemData)
     },
-    handleMenuOpen(index) {
-      console.log(`menu open: ${index}`)
+    handleMenuOpen(index, itemData) {
+      console.log(`menu open: ${index}`, itemData)
     }
   }
 }
