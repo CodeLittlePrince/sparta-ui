@@ -133,19 +133,25 @@ const config = {
             options: {
               raw: true,
               // 自定义highlight逻辑
-              highlight (str) {
-                let rst = ''
-                const htmlStartIndex = str.indexOf('<template>')
-                const htmlEndIndex = str.indexOf('</template>') + 11
-                const template = str.slice(htmlStartIndex, htmlEndIndex)
-                const scriptStartIndex = str.indexOf('<script>')
-                const scriptEndIndex = str.indexOf('</script>') + 9
-                const script = str.slice(scriptStartIndex, scriptEndIndex)
-                rst = hljs.highlight('html', template, true).value +
-                  '</br>' +
-                  '</br>' +
-                  hljs.highlight('js', script, true).value
-                return rst
+              highlight (str, lang) {
+                if (lang === 'vue') {
+                  let rst = ''
+                  const htmlStartIndex = str.indexOf('<template>')
+                  const htmlEndIndex = str.indexOf('</template>') + 11
+                  const template = str.slice(htmlStartIndex, htmlEndIndex)
+                  const scriptStartIndex = str.indexOf('<script>')
+                  const scriptEndIndex = str.indexOf('</script>') + 9
+                  const script = str.slice(scriptStartIndex, scriptEndIndex)
+                  rst = hljs.highlight('html', template, true).value +
+                    '</br>' +
+                    '</br>' +
+                    hljs.highlight('js', script, true).value
+                  return rst
+                } else if (!(lang && hljs.getLanguage(lang))) {
+                  return ''
+                } else {
+                  return hljs.highlight(lang, str, true).value
+                }
               },
               preprocess (markdownIt, source) {
                 markdownIt.use(require('markdown-it-container'), 'demo', {

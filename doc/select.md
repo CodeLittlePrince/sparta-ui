@@ -4,7 +4,7 @@
 适用广泛的基础单选（支持键盘控制）
 
 :::demo `v-model`的值为当前被选中的`sp-option`的 value 属性值
-```html
+```vue
 <template>
   <sp-select v-model="value1">
     <sp-option
@@ -51,7 +51,7 @@ export default{
 选择器不可用状态
 
 :::demo 为`sp-select`设置`disabled`属性，则整个选择器不可用
-```html
+```vue
 <template>
   <sp-select disabled>
   </sp-select>
@@ -63,7 +63,7 @@ export default{
 禁止下拉中的选项
 
 :::demo 在`sp-option`中，设定`disabled`值为 true，即可禁用该选项
-```html
+```vue
 <template>
   <sp-select v-model="value2">
     <sp-option
@@ -102,7 +102,7 @@ export default{
 包含清空按钮，可将选择器清空
 
 :::demo 为`sp-select`设置`clearable`属性，则可将选择器清空。需要注意的是，clearable属性仅适用于单选。
-```html
+```vue
 <template>
   <sp-select
     v-model="value3"
@@ -143,7 +143,7 @@ export default{
 可以利用搜索功能快速查找选项
 
 :::demo 为sp-select添加filterable属性即可启用搜索功能。默认情况下，Select 会找出所有label属性包含输入值的选项。如果希望使用其他的搜索逻辑，可以通过传入一个filter-method来实现。filter-method为一个Function，它会在输入值发生变化时调用，参数为当前输入值。
-```html
+```vue
 <template>
   <sp-select
     v-model="value4"
@@ -185,7 +185,7 @@ export default{
 可以自定义备选项
 
 :::demo 将自定义的 HTML 模板插入`sp-option`的 slot 中即可
-```html
+```vue
 <template>
   <sp-select v-model="value5">
     <sp-option
@@ -226,7 +226,7 @@ export default{
 备选项进行分组展示
 
 :::demo 使用`sp-option-group`对备选项进行分组，它的label属性为分组名
-```html
+```vue
 <template>
   <sp-select v-model="value6">
     <sp-option-group
@@ -286,7 +286,7 @@ export default{
 适用性较广的基础多选，用 Tag 展示已选项
 
 :::demo 为`sp-select`设置`multiple`属性即可启用多选，此时`v-model`的值为当前选中值所组成的数组。
-```html
+```vue
 <template>
   <sp-select
     v-model="value7"
