@@ -13,6 +13,7 @@
       :active-index="activeIndex"
       :opened-indexes="openedIndexes"
       :title-key="titleKey"
+      :group-key="groupKey"
       :child-key="childKey"
       :index-key="indexKey"
       :indent="indent"
@@ -54,6 +55,10 @@ export default {
       type: String,
       default: 'title'
     },
+    groupKey: {
+      type: String,
+      default: 'group'
+    },
     childKey: {
       type: String,
       default: 'child'
@@ -69,6 +74,10 @@ export default {
     defaultOpen: {
       type: String,
       default: ''
+    },
+    openAll: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -95,7 +104,62 @@ export default {
      * 初始化菜单
      */
     _initMenu() {
-      this._computeParents(this.data)
+      this._computeOpenItems(this.data)
+      // this._computeParents(this.data)
+    },
+    _computeOpenItems(child) {
+      for (let i = 0, len = child.length; i < len; i++) {
+        /* 如果openAll为true，则打开所有含有子项的条目 */
+        if (hasChild && this.openAll) {
+          this.openedIndexes.push(child[i][this.indexKey])
+          break
+        }
+
+        /* 如果设置了defaultOpen，则将其、以及父菜单都打开 */
+        // 如果该index不在openedIndexes中，且为父菜单，则推入openedIndexes
+        if (
+          this.defaultOpen.startsWith(child[i][this.indexKey]) &&
+          this.openedIndexes.indexOf(child[i][this.indexKey]) === -1
+        ) {
+          this.openedIndexes.push(child[i][this.indexKey])
+        }
+
+        const hasChild = child[i][this.childKey] && child[i][this.childKey].length
+        /* 打开所有为group的条目 */
+        // 如果该index不在openedIndexes中，且为group类型，则推入openedIndexes
+        if (hasChild && child[i][this.groupKey]) {
+          this.openedIndexes.push(child[i][this.indexKey])
+        }
+      }
+      // 为了触发openedIndexes
+      this.openedIndexes.push('')
+      this.openedIndexes.splice(-1, 1)
+      // 递归
+      for (let i = 0, len = child.length; i < len; i++) {
+        if (child[i][this.childKey]) {
+          this._computeOpenItems(child[i][this.childKey])
+        }
+      }
+    },
+    /**
+     * 打开所有为group的条目
+     */
+    _openAllGroupItems(child) {
+      for (let i = 0, len = child.length; i < len; i++) {
+        // 如果该index不在openedIndexes中，且为group类型，则推入openedIndexes
+        if (child[i][this.childKey] && child[i][this.groupKey]) {
+          this.openedIndexes.push(child[i][this.indexKey])
+        }
+      }
+      // 为了触发openedIndexes
+      this.openedIndexes.push('')
+      this.openedIndexes.splice(-1, 1)
+      // 递归
+      for (let i = 0, len = child.length; i < len; i++) {
+        if (child[i][this.childKey]) {
+          this._openAllGroupItems(child[i][this.childKey])
+        }
+      }
     },
     /**
      * 如果设置了defaultOpen，则将其、以及父菜单都打开
@@ -148,6 +212,7 @@ export default {
 .sp-menu {
   width: 100%;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow-x: hidden;
+  font-size: 16px;
 }
 </style>

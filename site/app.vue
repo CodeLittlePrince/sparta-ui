@@ -12,11 +12,11 @@
         width="250px"
       >
         <sp-menu
+          open-all
           :indent="20"
           :data="menuData"
           :default-open="defaultOpen"
           :parent-is-page="false"
-          unique
           @select="handleMenuSelect"
           @open="handleMenuOpen"
           @close="handleMenuClose"

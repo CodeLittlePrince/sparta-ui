@@ -6,9 +6,9 @@
   >
     <div
       class="sp-menu-item__text"
-      :class="{ active: isActive }"
+      :class="{ active: isActive, group: data[groupKey] }"
       :style="{ 'padding-left': `${deep * indent}px`, 'padding-right': hasChild ? '30px': '20px'}"
-      @click="_handleSelect($event, hasChild)"
+      @click="_handleSelect($event, hasChild, !!data[groupKey])"
     >
       <!-- 折叠按钮 -->
       <div
@@ -37,10 +37,10 @@
         />
       </template>
       <!-- 标题 -->
-      {{ data[titleKey] }}
+      {{ data[groupKey] ? data[groupKey] : data[titleKey] }}
       <!-- 上下箭头 -->
       <i
-        v-if="hasChild"
+        v-if="hasChild && !data[groupKey]"
         class="sp-icon-arrow-down"
         :class="{ active: isOpen }"
       ></i>
@@ -95,6 +95,10 @@ export default {
     titleKey: {
       type: String,
       default: 'title'
+    },
+    groupKey: {
+      type: String,
+      default: 'group'
     },
     childKey: {
       type: String,
@@ -152,7 +156,11 @@ export default {
     /**
      * 点击条目处理
      */
-    _handleSelect(e, hasChild) {
+    _handleSelect(e, hasChild, isGroupType) {
+      // 如果该项为group类型，则不做任何处理
+      if (isGroupType) {
+        return
+      }
       if (this.parentIsPage || !hasChild) {
         this.$emit('select', this.data[this.indexKey], tool.deepClone(this.data))
       } else {
@@ -233,6 +241,11 @@ export default {
     &.active {
       color: #409eff;
       background-color: $color-primary-light-9;
+    }
+    &.group {
+      color: $color-info;
+      font-size: 14px;
+      cursor: default;
     }
     &__collapse {
       display: inline-block;

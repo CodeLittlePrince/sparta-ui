@@ -1,6 +1,6 @@
 <template>
   <div class="c-nav">
-    <div class="clearfix content">
+    <sp-row class="content">
       <h1 class="logo">Sparta</h1>
       <ul class="menu">
         <li>
@@ -10,7 +10,7 @@
           <router-link to="/components">组件</router-link>
         </li>
       </ul>
-    </div>
+    </sp-row>
   </div>
 </template>
 
@@ -21,23 +21,11 @@
     position: relative;
     z-index: 10;
     max-width: 100%;
-    height: 70px;
     background: #fff;
     box-shadow: 0 2px 8px #f0f1f2;
     .content {
       width: 1200px;
       margin: 0 auto;
-    }
-    .clearfix {
-      zoom: 1;
-      &::before,
-      &::after {
-        content: '';
-        display: table;
-      }
-      &::after {
-        clear: both;
-      }
     }
     .logo {
       float: left;
@@ -58,9 +46,9 @@
     .menu {
       font-size: 0;
       float: right;
-      line-height: 70px;
       li {
         font-size: 24px;
+        line-height: 70px;
         text-align: center;
         display: inline-block;
         padding: 0 20px;

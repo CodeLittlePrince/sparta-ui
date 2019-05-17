@@ -1,56 +1,49 @@
 export default {
-  defaultOpen: '1',
+  defaultOpen: '2-1',
   menuData: [
     {
-      title: '标题1',
-      link: '/1',
+      title: '介绍',
+      link: '/introduce',
       index: '1'
     },
     {
-      title: '标题2',
-      link: '/2',
+      title: '开发指南',
       index: '2',
       child: [
         {
-          title: '标题2-1',
-          link: '/2-1',
-          index: '2-1',
-          child: [
-            {
-              title: '标题2-1-1',
-              link: '/2-1-1',
-              index: '2-1-1'
-            }
-          ]
+          title: '安装',
+          link: '/install',
+          index: '2-1'
         },
         {
-          title: '标题2-2',
-          link: '/2-2',
-          index: '2-2',
-          child: [
-            {
-              title: '标题2-2-1',
-              link: '/2-2-1',
-              index: '2-2-1'
-            }
-          ]
+          title: '快速上手',
+          link: '/quickstart',
+          index: '2-2'
         }
       ]
     },
     {
-      title: '标题3',
-      link: '/3',
+      title: '组件',
       index: '3',
       child: [
         {
-          title: '标题3-1',
-          link: '/3-1',
           index: '3-1',
+          group: '通用',
           child: [
             {
-              title: '标题3-1-1',
-              link: '/3-1-1',
+              title: 'Color 色彩',
+              link: '/color',
               index: '3-1-1'
+            },
+            {
+              title: 'Icon 图标',
+              link: '/icon',
+              index: '3-1-2'
+            },
+            {
+              title: 'Button 按钮',
+              link: '/button',
+              index: '3-1-3'
             }
           ]
         }
