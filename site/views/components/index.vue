@@ -16,38 +16,26 @@
         :default-open="defaultOpen"
         :parent-is-page="false"
         @select="handleMenuSelect"
-        @open="handleMenuOpen"
-        @close="handleMenuClose"
       />
     </sp-aside>
     <!-- 右边内容 -->
     <sp-main class="components--main">
       <!-- doc展示区 -->
-      <install-doc></install-doc>
+      <router-view />
     </sp-main>
   </sp-layout>
 </template>
 
 <script>
 import menuConfig from 'site/config/menu'
-import InstallDoc from 'doc/install'
 
 export default {
-  components: {
-    InstallDoc
-  },
   data() {
     return menuConfig
   },
   methods: {
-    handleMenuSelect(index, itemData) {
-      console.log(`menu select: ${index}`, itemData)
-    },
-    handleMenuClose(index, itemData) {
-      console.log(`menu close: ${index}`, itemData)
-    },
-    handleMenuOpen(index, itemData) {
-      console.log(`menu open: ${index}`, itemData)
+    handleMenuSelect(index, { link }) {
+      this.$router.push(`/components${link}`)
     }
   }
 }
