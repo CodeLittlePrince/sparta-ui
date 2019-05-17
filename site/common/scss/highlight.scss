@@ -1,15 +1,13 @@
-.hljs-name {
-  color: #e2777a;
+.language-vue {
+  color: #fff;
+  font-size: 15px !important;
+  line-height: 1.4 !important;
 }
 
-.hljs-keyword {
-  color: #cc99cd;
+.hljs-name, .hljs-string, .hljs-number, .hljs-keyword, .hljs-built_in {
+  color: #42b983;
 }
-.hljs-tag {
-  color: #ccc;
-}
-.language-html {
+
+.hljs-attr {
   color: #f08d49;
-  font-size: 16px;
-  line-height: 1.4;
 }

@@ -17,7 +17,12 @@ routes = [
   {
     path: '/components',
     component: Components,
-    children: []
+    children: [
+      {
+        path: '',
+        redirect: 'install'
+      }
+    ]
   }
 ]
 

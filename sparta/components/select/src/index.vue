@@ -66,11 +66,11 @@
         <i
           v-show="showClearIcon && !multiple"
           class="sp-icon-close"
-        >x</i>
+        />
         <i
           v-show="!showClearIcon"
           class="sp-icon-arrow-down"
-        >v</i>
+        />
       </div>
     </div>
     <!-- 下拉 -->

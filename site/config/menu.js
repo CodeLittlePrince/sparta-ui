@@ -46,6 +46,17 @@ export default {
               index: '3-1-3'
             }
           ]
+        },
+        {
+          index: '3-2',
+          group: '数据录入',
+          child: [
+            {
+              title: 'Select 选择器',
+              link: '/select',
+              index: '3-2-1'
+            }
+          ]
         }
       ]
     }
