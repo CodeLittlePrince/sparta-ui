@@ -4,10 +4,15 @@
   line-height: 1.4 !important;
 }
 
-.hljs-name, .hljs-string, .hljs-number, .hljs-keyword, .hljs-built_in {
+.hljs-name,
+.hljs-string,
+.hljs-number,
+.hljs-keyword,
+.hljs-built_in,
+.hljs-selector-tag {
   color: #42b983;
 }
 
-.hljs-attr {
+.hljs-attr, .hljs-selector-class {
   color: #f08d49;
 }
