@@ -137,15 +137,29 @@ const config = {
                 if (lang === 'vue') {
                   let rst = ''
                   const htmlStartIndex = str.indexOf('<template>')
-                  const htmlEndIndex = str.indexOf('</template>') + 11
-                  const template = str.slice(htmlStartIndex, htmlEndIndex)
+                  // 加html
+                  const hasHtml = htmlStartIndex > -1
+                  if (hasHtml) {
+                    const htmlEndIndex = str.indexOf('</template>') + 11
+                    const html = str.slice(htmlStartIndex, htmlEndIndex)
+                    rst = hljs.highlight('html', html, true).value + '</br>'
+                  }
+                  // 加js
                   const scriptStartIndex = str.indexOf('<script>')
-                  const scriptEndIndex = str.indexOf('</script>') + 9
-                  const script = str.slice(scriptStartIndex, scriptEndIndex)
-                  rst = hljs.highlight('html', template, true).value +
-                    '</br>' +
-                    '</br>' +
-                    hljs.highlight('js', script, true).value
+                  const hasScript = scriptStartIndex > -1
+                  if (hasScript) {
+                    const scriptEndIndex = str.indexOf('</script>') + 9
+                    const script = str.slice(scriptStartIndex, scriptEndIndex)
+                    rst += '</br>' + hljs.highlight('js', script, true).value + '</br>'
+                  }
+                  // 加css
+                  const styleStartIndex = str.indexOf('<style>')
+                  const hasStyle = styleStartIndex > -1
+                  if (hasStyle) {
+                    const styleEndIndex = str.indexOf('</style>') + 8
+                    const style = str.slice(styleStartIndex, styleEndIndex)
+                    rst += '</br>' + hljs.highlight('css', style, true).value + '</br>'
+                  }
                   return rst
                 } else if (!(lang && hljs.getLanguage(lang))) {
                   return ''
