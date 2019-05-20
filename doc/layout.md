@@ -11,12 +11,13 @@
 :::demo Layout和Header Asider Main Footer搭配
 ```vue
 <template>
+  <!-- example-1 -->
   <sp-layout class="md-layout-wrap">
     <sp-header>header</sp-header>
     <sp-main>main</sp-main>
     <sp-footer>footer</sp-footer>
   </sp-layout>
-
+  <!-- example-2 -->
   <sp-layout class="md-layout-wrap">
     <sp-header>header</sp-header>
     <sp-layout>
@@ -25,7 +26,7 @@
     </sp-layout>
     <sp-footer>footer</sp-footer>
   </sp-layout>
-  
+  <!-- example-3 -->
   <sp-layout class="md-layout-wrap">
     <sp-header>header</sp-header>
     <sp-layout>
@@ -34,7 +35,6 @@
     </sp-layout>
     <sp-footer>footer</sp-footer>
   </sp-layout>
-
 </template>
 
 ```

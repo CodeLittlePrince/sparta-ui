@@ -10,6 +10,7 @@ $transition-color-base: color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
 /* Colors
 -------------------------- */
 $color-white: #fff;
+$color-black: #000;
 $color-primary: #409eff;
 $color-primary-light-1: mix($color-white, $color-primary, 10%);
 $color-primary-light-2: mix($color-white, $color-primary, 20%);
@@ -27,17 +28,94 @@ $color-danger: #f56c6c;
 $color-info: #909399;
 $color-text-placeholder: #c7cbd1;
 
+$color-success-light: mix($color-white, $color-success, 80%);
+$color-warning-light: mix($color-white, $color-warning, 80%);
+$color-danger-light: mix($color-white, $color-danger, 80%);
+$color-info-light: mix($color-white, $color-info, 80%);
+
+$color-success-lighter: mix($color-white, $color-success, 90%);
+$color-warning-lighter: mix($color-white, $color-warning, 90%);
+$color-danger-lighter: mix($color-white, $color-danger, 90%);
+$color-info-lighter: mix($color-white, $color-info, 90%);
+
+$color-text-primary: #303133;
+$color-text-regular: #606266;
+$color-text-secondary: #909399;
+$color-text-placeholder: #c0c4cc;
+
 /* Scrollbar
 -------------------------- */
 $scrollbar-background: #f5f5f5;
 $scrollbar-track-color: #f5f5f5;
 $scrollbar-thumb-color: #d7d9df;
 
+/* Border
+-------------------------- */
+$border-width-base: 1px;
+$border-style-base: solid;
+$border-color-base: #dcdfe6;
+$border-color-light: #e4e7ed;
+$border-color-lighter: #ebeef5;
+$border-color-extra-light: #f2f6fc;
+$border-color-hover: $color-text-placeholder;
+$border-base: $border-width-base $border-style-base $border-color-base;
+$border-radius-base: 4px;
+$border-radius-small: 2px;
+$border-radius-circle: 100%;
+
 /* Button
 -------------------------- */
-$button-background-primary: #fdc;
-$button-color-hover: #1382f1;
-$button-color-click: #1675d4;
+$button-font-size: 14px;
+$button-font-weight: 500;
+$button-border-radius: 4px;
+$button-padding-vertical: 12px;
+$button-padding-horizontal: 20px;
+
+$button-medium-font-size: 14px;
+$button-medium-border-radius: 4px;
+$button-medium-padding-vertical: 10px;
+$button-medium-padding-horizontal: 20px;
+
+$button-small-font-size: 12px;
+$button-small-border-radius: 3px;
+$button-small-padding-vertical: 9px;
+$button-small-padding-horizontal: 15px;
+
+$button-mini-font-size: 12px;
+$button-mini-border-radius: 3px;
+$button-mini-padding-vertical: 7px;
+$button-mini-padding-horizontal: 15px;
+
+$button-default-color: $color-text-regular;
+$button-default-fill: $color-white;
+$button-default-border: $border-color-base;
+
+$button-disabled-color: $color-text-placeholder;
+$button-disabled-fill: $color-white;
+$button-disabled-border: $border-color-lighter;
+
+$button-primary-border: $color-primary;
+$button-primary-color: $color-white;
+$button-primary-fill: $color-primary;
+
+$button-success-border: $color-success;
+$button-success-color: $color-white;
+$button-success-fill: $color-success;
+
+$button-warning-border: $color-warning;
+$button-warning-color: $color-white;
+$button-warning-fill: $color-warning;
+
+$button-danger-border: $color-danger;
+$button-danger-color: $color-white;
+$button-danger-fill: $color-danger;
+
+$button-info-border: $color-info;
+$button-info-color: $color-white;
+$button-info-fill: $color-info;
+
+$button-hover-tint-percent: 20%;
+$button-active-shade-percent: 10%;
 
 /* Checkbox
 -------------------------- */
@@ -91,10 +169,10 @@ $tag-border-color--danger: rgba($color: $color-danger, $alpha: 0.2);
 
 /* Break-point
 -------------------------- */
-$sm: 768px !default;
-$md: 992px !default;
-$lg: 1200px !default;
-$xl: 1920px !default;
+$sm: 768px;
+$md: 992px;
+$lg: 1200px;
+$xl: 1920px;
 
 $breakpoints: (
   'xs' : (max-width: $sm),

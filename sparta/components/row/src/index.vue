@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "sparta/common/scss/mixin.scss";
+@import "sparta/common/scss/mixin";
 
 .sp-row {
   position: relative;

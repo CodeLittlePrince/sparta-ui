@@ -8,6 +8,7 @@ import Aside from './components/aside'
 import Main from './components/main'
 import Menu from './components/menu'
 import Button from './components/button'
+import ButtonGroup from './components/button-group'
 import Checkbox from './components/checkbox'
 import Input from './components/input'
 import OptionGroup from './components/option-group'
@@ -26,6 +27,7 @@ const components = [
   Main,
   Menu,
   Button,
+  ButtonGroup,
   Checkbox,
   Input,
   OptionGroup,
@@ -56,6 +58,7 @@ export {
   Main,
   Menu,
   Button,
+  ButtonGroup,
   Checkbox,
   Input,
   OptionGroup,

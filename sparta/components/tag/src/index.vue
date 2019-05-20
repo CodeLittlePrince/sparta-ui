@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~sparta/common/scss/variable.scss";
+@import "~sparta/common/scss/variable";
 
 .sp-tag {
   display: inline-block;

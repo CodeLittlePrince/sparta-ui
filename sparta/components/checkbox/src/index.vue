@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~sparta/common/scss/variable.scss";
+@import "~sparta/common/scss/variable";
 
 .sp-checkbox {
   font-size: 20px;

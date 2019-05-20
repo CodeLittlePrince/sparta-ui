@@ -14,7 +14,8 @@
           <p
             v-if="desc"
             class="desc"
-          >{{ desc }}</p>
+            v-html="desc"
+          />
           <div class="code">
             <slot></slot>
           </div>
@@ -127,13 +128,17 @@ export default {
     padding-top: 10px;
     background-color: #fafafa;
     .code {
-      background-color: #282c34;
+      background-color: #333;
       box-sizing: border-box;
       padding: 10px;
       pre {
-        background-color: #282c34;
+        background-color: #333;
         margin-bottom: 0;
       }
+    }
+    p > p {
+      padding: 0;
+      margin: 0;
     }
   }
   .segment-enter-active {

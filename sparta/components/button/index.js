@@ -1,7 +1,8 @@
-import Button from './src'
+import SpButton from './src/button'
 
-Button.install = Vue => {
-  Vue.component(Button.name, Button)
+/* istanbul ignore next */
+SpButton.install = function(Vue) {
+  Vue.component(SpButton.name, SpButton)
 }
 
-export default Button
+export default SpButton

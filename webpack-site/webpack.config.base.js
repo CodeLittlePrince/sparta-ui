@@ -177,7 +177,8 @@ const config = {
                     const m = tokens[idx].info.trim().match(/^demo\s+(.*)$/)
                 
                     if (tokens[idx].nesting === 1) {
-                      const desc = m[1] || ''
+                      let desc = m[1] || ''
+                      desc = markdownIt.render(desc)
                       let content = tokens[idx + 1].content
                       content = content.replace(/<script>(.|\n)*?<\/script>/g, '') // 解决md中script上下文唯一导致取值问题
                       return `<c-code-view desc="${desc}">

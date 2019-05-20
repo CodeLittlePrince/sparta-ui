@@ -73,7 +73,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "sparta/common/scss/mixin.scss";
+@import "sparta/common/scss/mixin";
 
 [class*="sp-col-"] {
   float: left;
