@@ -132,37 +132,25 @@
 - `hidden-xl-only` - 当视口在 `xl` 尺寸时隐藏
 
 
-### Attributes
-| 参数      | 说明    | 类型      | 可选值       | 默认值   |
-|---------- |-------- |---------- |-------------  |-------- |
-| list | 设置 table 数据源 | array | — | [] |
-| emptyText | 设置 table 没有数据时候的默认文案| string | — | '无相关数据' |
-| loading | 设置 table 是否处于加载，如果是则会出现loading bar | boolean | — | false |
-| cellEmptyText | 设置单元格没有数据的默认文案 | string | — | '--' |
-| cellEmptyText | 设置单元格没有数据的默认文案 | string | — | '--' |
-| formatter | 设置单元格数据格式化方法 | function | — | — |
+### Row Attributes
+| 参数      | 说明          | 类型      | 可选值                           | 默认值  |
+|---------- |-------------- |---------- |--------------------------------  |-------- |
+| gutter | 栅格间隔 | number | — | 0 |
+| tag | 自定义元素标签 | string | * | div |
 
-### Slot
-| name | 说明 |
-|------|--------|
-| — | modal 的内容 |
-| foot | modal 按钮操作区的内容 |
-
-### Events
-| 事件名称      | 说明    | 回调参数      |
-|---------- |-------- |---------- |
-| close  | modal 关闭的回调 | — |
-| show  | modal 打开的回调 | — |
-
-<script>
-export default{
-  data(){
-    return {
-      type: 'primary'
-    }
-  }
-}
-</script>
+### Col Attributes
+| 参数      | 说明          | 类型      | 可选值                           | 默认值  |
+|---------- |-------------- |---------- |--------------------------------  |-------- |
+| span | 栅格占据的列数 | number | — | 24 |
+| offset | 栅格左侧的间隔格数 | number | — | 0 |
+| push |  栅格向右移动格数 | number | — | 0 |
+| pull |  栅格向左移动格数 | number | — | 0 |
+| xs | `<768px` 响应式栅格数或者栅格属性对象 | number/object (例如： {span: 4, offset: 4}) | — | — |
+| sm | `≥768px` 响应式栅格数或者栅格属性对象 | number/object (例如： {span: 4, offset: 4}) | — | — |
+| md | `≥992px` 响应式栅格数或者栅格属性对象 | number/object (例如： {span: 4, offset: 4}) | — | — |
+| lg | `≥1200px` 响应式栅格数或者栅格属性对象 | number/object (例如： {span: 4, offset: 4}) | — | — |
+| xl | `≥1920px` 响应式栅格数或者栅格属性对象 | number/object (例如： {span: 4, offset: 4}) | — | — |
+| tag | 自定义元素标签 | string | * | div |
 
 <style>
   .sp-row {
