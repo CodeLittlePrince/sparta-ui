@@ -31,9 +31,38 @@ import menuConfig from 'site/config/menu'
 
 export default {
   data() {
-    return menuConfig
+    return {
+      menuData: menuConfig.menuData,
+      defaultOpen: ''
+    }
+  },
+  mounted() {
+    this.setDefaultOpen()
   },
   methods: {
+    setDefaultOpen() {
+      const path = this.$route.path
+      if (path.length > 12) {
+        this.defaultOpen = this.findIndexByName(path.slice(11), menuConfig.menuData)
+      } else {
+        this.defaultOpen = menuConfig.defaultOpen
+      }
+    },
+    findIndexByName(name, menuData) {
+      let rst = ''
+      for (let i = 0; i < menuData.length; i++) {
+        const item = menuData[i]
+        if (item.link === name) {
+          return item.index
+        } else if (item.child && item.child.length) {
+          rst = this.findIndexByName(name, item.child)
+          if (rst) {
+            return rst
+          }
+        }
+      }
+      return rst
+    },
     handleMenuSelect(index, { link }) {
       this.$router.push(`/components${link}`)
     }
@@ -43,6 +72,7 @@ export default {
 
 <style lang="scss">
 .components {
+  padding-bottom: 50px;
   &--split {
     border-right: 1px solid #eee;
   }

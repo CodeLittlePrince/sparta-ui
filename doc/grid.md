@@ -153,30 +153,26 @@
 | tag | 自定义元素标签 | string | * | div |
 
 <style>
-  .sp-row {
+  .components--main .sp-row {
     margin-bottom: 20px;
     &:last-child {
       margin-bottom: 0;
     }
   }
-  .sp-col {
+  .components--main .sp-col {
     border-radius: 4px;
   }
-  .bg-purple-dark {
+  .components--main  .bg-purple-dark {
     background: #99a9bf;
   }
-  .bg-purple {
+  .components--main  .bg-purple {
     background: #d3dce6;
   }
-  .bg-purple-light {
+  .components--main .bg-purple-light {
     background: #e5e9f2;
   }
-  .grid-content {
+  .components--main .grid-content {
     border-radius: 4px;
     min-height: 36px;
-  }
-  .row-bg {
-    padding: 10px 0;
-    background-color: #f9fafc;
   }
 </style>

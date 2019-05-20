@@ -1,6 +1,6 @@
 <template>
   <header
-    class="el-header"
+    class="sp-header"
     :style="{ height }"
   >
     <slot></slot>
