@@ -49,7 +49,7 @@ export default {
     },
     parentIsPage: {
       type: Boolean,
-      default: true
+      default: false
     },
     titleKey: {
       type: String,
@@ -105,14 +105,14 @@ export default {
      */
     _initMenu() {
       this._computeOpenItems(this.data)
-      // this._computeParents(this.data)
     },
     _computeOpenItems(child) {
       for (let i = 0, len = child.length; i < len; i++) {
+        const hasChild = child[i][this.childKey] && child[i][this.childKey].length
+        
         /* 如果openAll为true，则打开所有含有子项的条目 */
         if (hasChild && this.openAll) {
           this.openedIndexes.push(child[i][this.indexKey])
-          break
         }
 
         /* 如果设置了defaultOpen，则将其、以及父菜单都打开 */
@@ -124,7 +124,6 @@ export default {
           this.openedIndexes.push(child[i][this.indexKey])
         }
 
-        const hasChild = child[i][this.childKey] && child[i][this.childKey].length
         /* 打开所有为group的条目 */
         // 如果该index不在openedIndexes中，且为group类型，则推入openedIndexes
         if (hasChild && child[i][this.groupKey]) {

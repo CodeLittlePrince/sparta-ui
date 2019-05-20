@@ -49,5 +49,8 @@ export default {
   &--main {
     padding: 0 20px;
   }
+  &.markdown-body table th {
+    min-width: 150px;
+  }
 }
 </style>

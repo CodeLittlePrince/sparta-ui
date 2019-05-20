@@ -16,7 +16,7 @@
     <i
       v-show="selected"
       class="sp-icon-tick"
-    >V</i>
+    />
   </li>
 </template>
 

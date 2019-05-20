@@ -9,7 +9,7 @@
         v-if="closable"
         class="sp-icon-close"
         @click="handleClose"
-      >X</i>
+      />
     </span>
   </transition>
 </template>

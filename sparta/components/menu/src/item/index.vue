@@ -1,12 +1,12 @@
 <template>
   <div
     class="sp-menu-item"
-    :class="[{ parentIsPage }, `sp-menu-item--${theme}`]"
+    :class="[`sp-menu-item--${theme}`]"
     :index="data[indexKey]"
   >
     <div
       class="sp-menu-item__text"
-      :class="{ active: isActive, group: data[groupKey] }"
+      :class="{ parentIsPage: hasChild && parentIsPage, active: isActive, group: data[groupKey] }"
       :style="{ 'padding-left': `${deep * indent}px`, 'padding-right': hasChild ? '30px': '20px'}"
       @click="_handleSelect($event, hasChild, !!data[groupKey])"
     >
@@ -90,7 +90,7 @@ export default {
     },
     parentIsPage: {
       type: Boolean,
-      default: true
+      default: false
     },
     titleKey: {
       type: String,

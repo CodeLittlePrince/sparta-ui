@@ -1,5 +1,5 @@
 export default {
-  defaultOpen: '2-1',
+  defaultOpen: '1',
   menuData: [
     {
       title: '介绍',
@@ -23,38 +23,49 @@ export default {
       ]
     },
     {
-      title: '组件',
+      title: '导航',
       index: '3',
       child: [
         {
-          index: '3-1',
+          title: '菜单',
+          link: '/menu',
+          index: '3-1'
+        }
+      ]
+    },
+    {
+      title: '组件',
+      index: '4',
+      child: [
+        {
+          index: '4-1',
           group: '通用',
           child: [
             {
               title: 'Color 色彩',
               link: '/color',
-              index: '3-1-1'
+              index: '4-1-1'
             },
             {
               title: 'Icon 图标',
               link: '/icon',
-              index: '3-1-2'
+              index: '4-1-2'
             },
             {
               title: 'Button 按钮',
               link: '/button',
-              index: '3-1-3'
+              index: '4-1-4'
             }
           ]
         },
         {
-          index: '3-2',
+          index: '4-2',
           group: '数据录入',
           child: [
             {
               title: 'Select 选择器',
               link: '/select',
-              index: '3-2-1'
+              index: '4-2-1'
             }
           ]
         }

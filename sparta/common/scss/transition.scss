@@ -25,7 +25,7 @@
 
 .sp-slide-fade-in-top-enter-active {
   transform: scaleY(1);
-  transition: $transition-md-fade;
+  transition: $transition-all;
   transform-origin: top;
 }
 .sp-slide-fade-in-top-leave-active {
@@ -36,7 +36,6 @@
 .sp-slide-fade-in-top-leave-active {
   transform: scaleY(0);
   height: 0;
-  width: 0;
   opacity: 0;
 }
 
