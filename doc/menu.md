@@ -298,6 +298,75 @@ export default {
 ```
 :::
 
+### 分组
+条目可按分组展示
+
+:::demo 通过data中的`group`属性设置
+```vue
+<template>
+  <sp-menu
+    open-all
+    :indent="20"
+    :data="menuData5"
+  />
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      menuData5: [
+        {
+          title: 'menu1',
+          link: '/menu1',
+          index: '1'
+        },
+        {
+          title: 'menu2',
+          index: '2',
+          child: [
+            {
+              group: 'item2-1',
+              index: '2-1',
+              child: [
+                {
+                  title: 'item2-1',
+                  link: '/item2-1-1',
+                  index: '2-1-1'
+                },
+                {
+                  title: 'item2-1',
+                  link: '/item2-1-2',
+                  index: '2-1-2'
+                }
+              ]
+            },
+            {
+              group: 'item2-2',
+              index: '2-2',
+              child: [
+                {
+                  title: 'item2-2',
+                  link: '/item2-2-1',
+                  index: '2-2-1'
+                },
+                {
+                  title: 'item2-2',
+                  link: '/item2-2-2',
+                  index: '2-2-2'
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+</script>
+```
+:::
+
 ### Attributes
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
@@ -451,6 +520,51 @@ export default {
               title: 'item3',
               link: '/item3-1',
               index: '3-1'
+            }
+          ]
+        }
+      ],
+      menuData5: [
+        {
+          title: 'menu1',
+          link: '/menu1',
+          index: '1'
+        },
+        {
+          title: 'menu2',
+          index: '2',
+          child: [
+            {
+              group: 'item2-1',
+              index: '2-1',
+              child: [
+                {
+                  title: 'item2-1',
+                  link: '/item2-1-1',
+                  index: '2-1-1'
+                },
+                {
+                  title: 'item2-1',
+                  link: '/item2-1-2',
+                  index: '2-1-2'
+                }
+              ]
+            },
+            {
+              group: 'item2-2',
+              index: '2-2',
+              child: [
+                {
+                  title: 'item2-2',
+                  link: '/item2-2-1',
+                  index: '2-2-1'
+                },
+                {
+                  title: 'item2-2',
+                  link: '/item2-2-2',
+                  index: '2-2-2'
+                }
+              ]
             }
           ]
         }

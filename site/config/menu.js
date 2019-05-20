@@ -23,17 +23,6 @@ export default {
       ]
     },
     {
-      title: '导航',
-      index: '3',
-      child: [
-        {
-          title: '菜单',
-          link: '/menu',
-          index: '3-1'
-        }
-      ]
-    },
-    {
       title: '组件',
       index: '4',
       child: [
@@ -59,13 +48,40 @@ export default {
           ]
         },
         {
+          group: '布局',
           index: '4-2',
+          child: [
+            {
+              title: 'Grid 栅格',
+              link: '/grid',
+              index: '4-2-1'
+            },
+            {
+              title: 'Layout 布局',
+              link: '/layout',
+              index: '4-2-2'
+            }
+          ]
+        },
+        {
+          group: '导航',
+          index: '4-3',
+          child: [
+            {
+              title: 'Menu 菜单',
+              link: '/menu',
+              index: '4-3-1'
+            }
+          ]
+        },
+        {
           group: '数据录入',
+          index: '4-4',
           child: [
             {
               title: 'Select 选择器',
               link: '/select',
-              index: '4-2-1'
+              index: '4-4-1'
             }
           ]
         }
