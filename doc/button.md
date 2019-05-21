@@ -179,11 +179,13 @@
 
 
 <style>
-  .components--main .md-demo-button .sp-row .sp-button{
-    margin-left: 10px;
-    margin-bottom: 10px;
-  }
-  .components--main .md-demo-button .sp-icon--right {
-    margin-left: 5px;
+  .components--main {
+    .md-demo-button .sp-row .sp-button{
+      margin-left: 10px;
+      margin-bottom: 10px;
+    }
+    .md-demo-button .sp-icon--right {
+      margin-left: 5px;
+    }
   }
 </style>

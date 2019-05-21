@@ -1,53 +1,53 @@
 # Grid 栅格
 通过基础的 24 分栏，迅速简便地创建布局。
 
-### 基础布局
-使用单一分栏创建基础的栅格布局。
+### 基础栅格
+从堆叠到水平排列。
 
-:::demo 通过 row 和 col 组件，并通过 col 组件的 span 属性我们就可以自由地组合布局。
+:::demo 使用单一的一组 `row` 和 `col` 栅格组件，就可以创建一个基本的栅格系统，所有列`Col`必须放在 `Row` 内。
 ```vue
 <template>
   <sp-row>
-    <sp-col :span="24"><div class="grid-content bg-purple-dark"></div></sp-col>
+    <sp-col :span="24"><div class="grid-content bg-blue-dark">col-24</div></sp-col>
   </sp-row>
   <sp-row>
-    <sp-col :span="12"><div class="grid-content bg-purple"></div></sp-col>
-    <sp-col :span="12"><div class="grid-content bg-purple-light"></div></sp-col>
+    <sp-col :span="12"><div class="grid-content bg-blue">col-12</div></sp-col>
+    <sp-col :span="12"><div class="grid-content bg-blue-light">col-12</div></sp-col>
   </sp-row>
   <sp-row>
-    <sp-col :span="8"><div class="grid-content bg-purple"></div></sp-col>
-    <sp-col :span="8"><div class="grid-content bg-purple-light"></div></sp-col>
-    <sp-col :span="8"><div class="grid-content bg-purple"></div></sp-col>
+    <sp-col :span="8"><div class="grid-content bg-blue">col-8</div></sp-col>
+    <sp-col :span="8"><div class="grid-content bg-blue-light">col-8</div></sp-col>
+    <sp-col :span="8"><div class="grid-content bg-blue">col-8</div></sp-col>
   </sp-row>
   <sp-row>
-    <sp-col :span="6"><div class="grid-content bg-purple"></div></sp-col>
-    <sp-col :span="6"><div class="grid-content bg-purple-light"></div></sp-col>
-    <sp-col :span="6"><div class="grid-content bg-purple"></div></sp-col>
-    <sp-col :span="6"><div class="grid-content bg-purple-light"></div></sp-col>
+    <sp-col :span="6"><div class="grid-content bg-blue">col-6</div></sp-col>
+    <sp-col :span="6"><div class="grid-content bg-blue-light">col-6</div></sp-col>
+    <sp-col :span="6"><div class="grid-content bg-blue">col-6</div></sp-col>
+    <sp-col :span="6"><div class="grid-content bg-blue-light">col-6</div></sp-col>
   </sp-row>
   <sp-row>
-    <sp-col :span="4"><div class="grid-content bg-purple"></div></sp-col>
-    <sp-col :span="4"><div class="grid-content bg-purple-light"></div></sp-col>
-    <sp-col :span="4"><div class="grid-content bg-purple"></div></sp-col>
-    <sp-col :span="4"><div class="grid-content bg-purple-light"></div></sp-col>
-    <sp-col :span="4"><div class="grid-content bg-purple"></div></sp-col>
-    <sp-col :span="4"><div class="grid-content bg-purple-light"></div></sp-col>
+    <sp-col :span="4"><div class="grid-content bg-blue">col-4</div></sp-col>
+    <sp-col :span="4"><div class="grid-content bg-blue-light">col-4</div></sp-col>
+    <sp-col :span="4"><div class="grid-content bg-blue">col-4</div></sp-col>
+    <sp-col :span="4"><div class="grid-content bg-blue-light">col-4</div></sp-col>
+    <sp-col :span="4"><div class="grid-content bg-blue">col-4</div></sp-col>
+    <sp-col :span="4"><div class="grid-content bg-blue-light">col-4</div></sp-col>
   </sp-row>
 </template>
 ```
 :::
 
-### 分栏间隔
+### 区块间隔
 分栏之间存在间隔。
 
 :::demo Row 组件 提供 `gutter` 属性来指定每一栏之间的间隔，默认间隔为 0。
 ```vue
 <template>
   <sp-row :gutter="20">
-    <sp-col :span="6"><div class="grid-content bg-purple"></div></sp-col>
-    <sp-col :span="6"><div class="grid-content bg-purple"></div></sp-col>
-    <sp-col :span="6"><div class="grid-content bg-purple"></div></sp-col>
-    <sp-col :span="6"><div class="grid-content bg-purple"></div></sp-col>
+    <sp-col :span="6"><div class="grid-content bg-blue">col-6</div></sp-col>
+    <sp-col :span="6"><div class="grid-content bg-blue">col-6</div></sp-col>
+    <sp-col :span="6"><div class="grid-content bg-blue">col-6</div></sp-col>
+    <sp-col :span="6"><div class="grid-content bg-blue">col-6</div></sp-col>
   </sp-row>
 </template>
 ```
@@ -60,19 +60,19 @@
 ```vue
 <template>
   <sp-row :gutter="20">
-    <sp-col :span="16"><div class="grid-content bg-purple"></div></sp-col>
-    <sp-col :span="8"><div class="grid-content bg-purple"></div></sp-col>
+    <sp-col :span="16"><div class="grid-content bg-blue">col-16</div></sp-col>
+    <sp-col :span="8"><div class="grid-content bg-blue">col-8</div></sp-col>
   </sp-row>
   <sp-row :gutter="20">
-    <sp-col :span="8"><div class="grid-content bg-purple"></div></sp-col>
-    <sp-col :span="8"><div class="grid-content bg-purple"></div></sp-col>
-    <sp-col :span="4"><div class="grid-content bg-purple"></div></sp-col>
-    <sp-col :span="4"><div class="grid-content bg-purple"></div></sp-col>
+    <sp-col :span="8"><div class="grid-content bg-blue">col-8</div></sp-col>
+    <sp-col :span="8"><div class="grid-content bg-blue">col-8</div></sp-col>
+    <sp-col :span="4"><div class="grid-content bg-blue">col-4</div></sp-col>
+    <sp-col :span="4"><div class="grid-content bg-blue">col-4</div></sp-col>
   </sp-row>
   <sp-row :gutter="20">
-    <sp-col :span="4"><div class="grid-content bg-purple"></div></sp-col>
-    <sp-col :span="16"><div class="grid-content bg-purple"></div></sp-col>
-    <sp-col :span="4"><div class="grid-content bg-purple"></div></sp-col>
+    <sp-col :span="4"><div class="grid-content bg-blue">col-4</div></sp-col>
+    <sp-col :span="16"><div class="grid-content bg-blue">col-16</div></sp-col>
+    <sp-col :span="4"><div class="grid-content bg-blue">col-4</div></sp-col>
   </sp-row>
 </template>
 ```
@@ -85,15 +85,15 @@
 ```vue
 <template>
   <sp-row :gutter="20">
-    <sp-col :span="6"><div class="grid-content bg-purple"></div></sp-col>
-    <sp-col :span="6" :offset="6"><div class="grid-content bg-purple"></div></sp-col>
+    <sp-col :span="6"><div class="grid-content bg-blue">col-6</div></sp-col>
+    <sp-col :span="6" :offset="6"><div class="grid-content bg-blue">col-6 col-offset-6</div></sp-col>
   </sp-row>
   <sp-row :gutter="20">
-    <sp-col :span="6" :offset="6"><div class="grid-content bg-purple"></div></sp-col>
-    <sp-col :span="6" :offset="6"><div class="grid-content bg-purple"></div></sp-col>
+    <sp-col :span="6" :offset="6"><div class="grid-content bg-blue">col-6 col-offset-6</div></sp-col>
+    <sp-col :span="6" :offset="6"><div class="grid-content bg-blue">col-6 col-offset-6</div></sp-col>
   </sp-row>
   <sp-row :gutter="20">
-    <sp-col :span="12" :offset="6"><div class="grid-content bg-purple"></div></sp-col>
+    <sp-col :span="12" :offset="6"><div class="grid-content bg-blue">col-12 col-offset-6</div></sp-col>
   </sp-row>
 </template>
 ```
@@ -106,10 +106,10 @@
 ```vue
 <template>
   <sp-row :gutter="10">
-    <sp-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"><div class="grid-content bg-purple"></div></sp-col>
-    <sp-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"><div class="grid-content bg-purple-light"></div></sp-col>
-    <sp-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"><div class="grid-content bg-purple"></div></sp-col>
-    <sp-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"><div class="grid-content bg-purple-light"></div></sp-col>
+    <sp-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"><div class="grid-content bg-blue">col</div></sp-col>
+    <sp-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"><div class="grid-content bg-blue-light">col</div></sp-col>
+    <sp-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"><div class="grid-content bg-blue"></div></sp-col>
+    <sp-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"><div class="grid-content bg-blue-light">col</div></sp-col>
   </sp-row>
 </template>
 ```
@@ -153,26 +153,31 @@
 | tag | 自定义元素标签 | string | * | div |
 
 <style>
-  .components--main .sp-row {
-    margin-bottom: 20px;
-    &:last-child {
-      margin-bottom: 0;
+  .components--main {
+    .sp-row {
+      margin-bottom: 20px;
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
-  }
-  .components--main .sp-col {
-    border-radius: 4px;
-  }
-  .components--main  .bg-purple-dark {
-    background: #99a9bf;
-  }
-  .components--main  .bg-purple {
-    background: #d3dce6;
-  }
-  .components--main .bg-purple-light {
-    background: #e5e9f2;
-  }
-  .components--main .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
+    .sp-col {
+      border-radius: 4px;
+    }
+     .bg-blue-dark {
+      background: rgba(0, 160, 233, 0.7);
+    }
+     .bg-blue {
+      background: rgb(0, 160, 233);
+    }
+    .bg-blue-light {
+      background: rgba(0, 160, 233, 0.4);
+    }
+    .grid-content {
+      border-radius: 4px;
+      min-height: 36px;
+      color: #fff;
+      line-height: 36px;
+      text-align: center;
+    }
   }
 </style>
