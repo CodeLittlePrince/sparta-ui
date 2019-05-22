@@ -1,4 +1,4 @@
-import dom from '@/common/js/dom'
+import dom from 'sparta/common/js/utils/dom'
 
 describe('dom', () => {
   it('getElementCoords', () => {

@@ -79,9 +79,14 @@ export default {
           index: '4-4',
           child: [
             {
+              title: 'Checkbox 多选框',
+              link: '/checkbox',
+              index: '4-4-1'
+            },
+            {
               title: 'Select 选择器',
               link: '/select',
-              index: '4-4-1'
+              index: '4-4-2'
             }
           ]
         }

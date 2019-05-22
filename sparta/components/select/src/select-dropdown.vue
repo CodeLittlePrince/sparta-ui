@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import dom from 'sparta/common/js/dom'
+import dom from 'sparta/common/js/utils/dom'
 import PopManage from 'sparta/model/PopManage'
 
 export default {

@@ -95,7 +95,7 @@ export default {
     cursor: pointer;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    transition: all 1s;
+    transition: all 0.2s;
     box-shadow: 0 0 8px 0 rgba(232, 237, 250, 0.6), 0 2px 4px 0 rgba(232, 237, 250, 0.5);
     &:hover {
       font-size: 16px;
@@ -126,13 +126,12 @@ export default {
   }
   .segment {
     padding-top: 10px;
-    background-color: #fafafa;
     .code {
-      background-color: #333;
+      background-color: #f7f7f7;
       box-sizing: border-box;
       padding: 10px;
       pre {
-        background-color: #333;
+        background-color: #f7f7f7;
         margin-bottom: 0;
       }
     }

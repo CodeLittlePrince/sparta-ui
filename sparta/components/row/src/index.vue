@@ -1,7 +1,6 @@
 <script>
 export default {
   name: 'SpRow',
-  componentName: 'SpRow',
 
   props: {
     tag: {

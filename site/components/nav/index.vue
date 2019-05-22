@@ -24,8 +24,7 @@
     background: #fff;
     box-shadow: 0 2px 8px #f0f1f2;
     .content {
-      width: 1200px;
-      margin: 0 auto;
+      padding: 0 20px;
     }
     .logo {
       float: left;

@@ -10,6 +10,7 @@ import Menu from './components/menu'
 import Button from './components/button'
 import ButtonGroup from './components/button-group'
 import Checkbox from './components/checkbox'
+import CheckboxGroup from './components/checkbox-group'
 import Input from './components/input'
 import OptionGroup from './components/option-group'
 import Option from './components/option'
@@ -29,6 +30,7 @@ const components = [
   Button,
   ButtonGroup,
   Checkbox,
+  CheckboxGroup,
   Input,
   OptionGroup,
   Option,
@@ -60,6 +62,7 @@ export {
   Button,
   ButtonGroup,
   Checkbox,
+  CheckboxGroup,
   Input,
   OptionGroup,
   Option,

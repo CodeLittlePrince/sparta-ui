@@ -1,13 +1,10 @@
 <template>
   <!-- 主体 -->
-  <sp-layout
-    class="components"
-    width="1200px"
-  >
+  <sp-layout class="components">
     <!-- 左侧菜单 -->
     <sp-aside
       class="components--split"
-      width="250px"
+      width="300px"
     >
       <sp-menu
         open-all

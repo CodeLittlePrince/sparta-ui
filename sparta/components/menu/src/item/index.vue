@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import tool from 'sparta/common/js/tool'
+import tool from 'sparta/common/js/utils/tool'
 
 export default {
   name: 'SpMenuItem',

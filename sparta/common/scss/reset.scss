@@ -41,3 +41,8 @@ button {
 input::placeholder {
   color: $color-text-placeholder;
 }
+
+::selection {
+  background: $color-primary;
+  color: $color-white;
+}

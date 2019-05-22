@@ -44,7 +44,10 @@ export default {
   props: {
     type: {
       type: String,
-      default: 'default'
+      default: 'default',
+      validator(val) {
+        return [ 'default', 'primary', 'success', 'warning', 'danger', 'info', 'text'].indexOf(val) > -1
+      }
     },
     size: String,
     icon: {
@@ -68,7 +71,7 @@ export default {
       return (this.spFormItem || {}).spFormItemSize
     },
     buttonSize() {
-      return this.size || this._spFormItemSize || (this.$ELEMENT || {}).size
+      return this.size || this._spFormItemSize || ''
     },
     buttonDisabled() {
       return this.disabled || (this.spForm || {}).disabled
