@@ -87,6 +87,11 @@ export default {
               title: 'Select 选择器',
               link: '/select',
               index: '4-4-2'
+            },
+            {
+              title: 'Input 输入框',
+              link: '/input',
+              index: '4-4-3'
             }
           ]
         }

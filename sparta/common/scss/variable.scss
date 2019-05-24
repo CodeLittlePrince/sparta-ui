@@ -121,28 +121,39 @@ $button-active-shade-percent: 10%;
 -------------------------- */
 $checkbox-background: #fff;
 $checkbox-background-disabled: #f5f5f5;
-$checkbox-color-hover: #1382f1;
-$checkbox-color-click: #1675d4;
+$checkbox-color-hover: $color-primary-light-5;
+$checkbox-color-click: $color-primary;
 $checkbox-border-color: #d9d9d9;
 $checkbox-checkmark-color: #fff;
 $checkbox-checkmark-color-disabled: rgba(0, 0, 0, 0.2);
 
 /* Input
 -------------------------- */
-$input-background-primary: #fdc;
-$input-color-hover: #1382f1;
-$input-color-click: #1675d4;
+$input-color: $color-text-regular;
+$input-background: #fff;
+$input-background-disabled: #f5f7fa;
+$input-box-shadow-focus: 0 0 0 2px $color-primary-light-8;
+$input-border-radus: 4px;
+
+$input-medium-font-size: 14px;
+$input-medium-height: 36px;
+
+$input-small-font-size: 13px;
+$input-small-height: 32px;
+
+$input-mini-font-size: 12px;
+$input-mini-height: 28px;
 
 /* Option
 -------------------------- */
-$opiton-color: #606266;
+$opiton-color: $color-text-regular;
 $opiton-color-disabled: #c0c4cc;
 
 /* Radio
 -------------------------- */
 $radio-background-primary: #fdc;
-$radio-color-hover: #1382f1;
-$radio-color-click: #1675d4;
+$radio-color-hover: $color-primary-light-5;
+$radio-color-click: $color-primary;
 
 /* Select
 -------------------------- */
@@ -151,8 +162,8 @@ $select-background-disabled: #f5f7fa;
 $select-input-border-color: #dcdfe6;
 $select-input-border-color-disabled: #c0c4cc;
 $select-input-border-color-hover: #c0c4cc;
-$select-input-border-color-click: #409eff;
-$select-input-font-color: #606266;
+$select-input-border-color-click: $color-primary;
+$select-input-font-color: $color-text-regular;
 $select-dropdown-item-color: #fff;
 $select-dropdown-item-color-hover: #f5f7fa;
 $select-dropdown-border-color: #e4e7ed;

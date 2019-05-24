@@ -108,7 +108,7 @@
   <sp-row :gutter="10">
     <sp-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"><div class="grid-content bg-blue">col</div></sp-col>
     <sp-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"><div class="grid-content bg-blue-light">col</div></sp-col>
-    <sp-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"><div class="grid-content bg-blue"></div></sp-col>
+    <sp-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"><div class="grid-content bg-blue">col</div></sp-col>
     <sp-col :xs="8" :sm="6" :md="4" :lg="3" :xl="1"><div class="grid-content bg-blue-light">col</div></sp-col>
   </sp-row>
 </template>

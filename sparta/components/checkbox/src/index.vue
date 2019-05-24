@@ -8,8 +8,6 @@
         { 'is-checked': isChecked }
       ]"
       role="checkbox"
-      :aria-checked="indeterminate ? 'mixed': isChecked"
-      :aria-disabled="isDisabled"
     >
       <input
         v-if="trueLabel || falseLabel"
@@ -37,7 +35,6 @@
           'is-checked': isChecked,
           'is-indeterminate': indeterminate,
         }"
-        aria-checked="mixed"
       />
     </span>
     <span v-if="$slots.default || label">
@@ -157,13 +154,8 @@ export default {
       this.dispatch('SpFormItem', 'sp.form.change', value)
     }
   },
-  created() {
+  mounted() {
     this.checked && this.addToStore()
-  },
-  mounted() { // 为indeterminate元素 添加aria-controls 属性
-    if (this.indeterminate) {
-      this.$el.setAttribute('aria-controls', this.controls)
-    }
   },
   methods: {
     addToStore() {

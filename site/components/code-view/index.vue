@@ -113,7 +113,7 @@ export default {
     margin-top: 10px;
   }
   .desc {
-    padding: 20px;
+    padding: 10px;
     box-sizing: border-box;
     border: 1px solid #ebebeb;
     border-radius: 3px;

@@ -1,4 +1,4 @@
-import PopManage from '@/model/PopManage'
+import PopManage from 'sparta/model/PopManage'
 
 const pm = new PopManage()
 

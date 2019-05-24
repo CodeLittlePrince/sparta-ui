@@ -2,10 +2,7 @@
   <!-- 主体 -->
   <sp-layout class="components">
     <!-- 左侧菜单 -->
-    <sp-aside
-      class="components--split"
-      width="300px"
-    >
+    <div class="components--split">
       <sp-menu
         open-all
         :indent="20"
@@ -14,12 +11,12 @@
         :parent-is-page="false"
         @select="handleMenuSelect"
       />
-    </sp-aside>
+    </div>
     <!-- 右边内容 -->
-    <sp-main class="components--main">
+    <div class="components--main">
       <!-- doc展示区 -->
       <router-view />
-    </sp-main>
+    </div>
   </sp-layout>
 </template>
 
@@ -71,10 +68,24 @@ export default {
 .components {
   padding-bottom: 50px;
   &--split {
+    position: fixed;
+    width: 300px;
+    top: 70px;
+    bottom: 0;
+    left: 0;
     border-right: 1px solid #eee;
+    &:hover {
+      overflow-y: auto;
+    }
   }
   &--main {
-    padding: 0 20px;
+    position: fixed;
+    right: 0;
+    top: 70px;
+    bottom: 0;
+    left: 300px;
+    padding: 0 20px 50px;
+    overflow-y: auto;
   }
   &.markdown-body table th {
     min-width: 150px;
