@@ -252,56 +252,6 @@ export default {
 :::
 
 
-<script>
-  export default {
-    data() {
-      return {
-        value1: '',
-        input1: '',
-        input2: '',
-        input3: '',
-        input4: '',
-        value2: '',
-        input5: '',
-        input6: '',
-        input7: '',
-        input8: '',
-        textarea1: '',
-        textarea2: '',
-        input9: '',
-        input10: '',
-        input11: '',
-        select: ''
-      }
-    },
-    watch: {
-      value1(val) {
-        console.log(val)
-      }
-    }
-  }
-</script>
-
-<style>
-.components--main {
-  .demo-input-size {
-    .sp-input {
-      margin-right: 15px;
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
-  .sp-input, .sp-textarea {
-    width: 300px;
-    .sp-select {
-      width: 100px;
-    }
-  }
-}
-</style>
-
-
 ### Input Attributes
 
 | 参数          | 说明            | 类型            | 可选值                 | 默认值   |
@@ -352,3 +302,53 @@ export default {
 | focus | 使 input 获取焦点 | — |
 | blur | 使 input 失去焦点 | — |
 | select | 选中 input 中的文字 | — |
+
+
+<script>
+  export default {
+    data() {
+      return {
+        value1: '',
+        input1: '',
+        input2: '',
+        input3: '',
+        input4: '',
+        value2: '',
+        input5: '',
+        input6: '',
+        input7: '',
+        input8: '',
+        textarea1: '',
+        textarea2: '',
+        input9: '',
+        input10: '',
+        input11: '',
+        select: ''
+      }
+    },
+    watch: {
+      value1(val) {
+        console.log(val)
+      }
+    }
+  }
+</script>
+
+<style>
+.components--main {
+  .demo-input-size {
+    .sp-input {
+      margin-right: 15px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  .sp-input, .sp-textarea {
+    width: 300px;
+    .sp-select {
+      width: 100px;
+    }
+  }
+}
+</style>

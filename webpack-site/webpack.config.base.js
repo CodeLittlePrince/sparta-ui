@@ -140,7 +140,12 @@ const config = {
                   // 加html
                   const hasHtml = htmlStartIndex > -1
                   if (hasHtml) {
-                    const htmlEndIndex = str.indexOf('</template>') + 11
+                    const reg = /<\/template>/g
+                    let htmlEndIndex = 0
+                    let match = {}
+                    while ((match = reg.exec(str)) != null) {
+                      htmlEndIndex = match.index + 11
+                    }
                     const html = str.slice(htmlStartIndex, htmlEndIndex)
                     rst = hljs.highlight('html', html, true).value + '</br>'
                   }
