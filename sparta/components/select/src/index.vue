@@ -2,6 +2,7 @@
   <div
     class="sp-select"
     :class="{ isFocus, cursorPoiner, 'is-disabled': disabled }"
+    :style="`width: ${width}px;`"
     @click="handleSelfClick"
   >
     <div
@@ -48,14 +49,15 @@
         :readonly="readonly"
         :disabled="disabled"
         autocomplete="off"
+        :style="`height: ${selectInputBoxHeight}`"
         @input="handleInputSelectInput"
         @focus="handleFocusSelectInput"
         @blur="handleBlurSelectInput"
         @keydown.down.prevent="navigateOptions('next')"
         @keydown.up.prevent="navigateOptions('prev')"
         @keydown.enter.prevent="handleInputEnter"
-        @keydown.tab="visiable = false"
-        @keydown.esc.stop.prevent="visiable = false"
+        @keydown.tab="visible = false"
+        @keydown.esc.stop.prevent="visible = false"
       >
       <!-- 后缀icon -->
       <div
@@ -74,10 +76,12 @@
       </div>
     </div>
     <!-- 下拉 -->
-    <sp-select-dropdown ref="sp-select-dropdown">
+    <sp-select-dropdown
+      ref="sp-select-dropdown"
+      v-model="visible"
+    >
       <transition name="sp-zoom-in-top">
         <ul
-          v-show="visiable"
           ref="dropdown"
           class="sp-select-list"
         >
@@ -95,6 +99,7 @@
 </template>
 
 <script>
+import Emitter from 'sparta/common/js/mixins/emitter'
 import SpSelectDropdown from './select-dropdown'
 import SpTag from 'sparta/components/tag/src'
 
@@ -109,7 +114,12 @@ export default {
       'evSelect': this
     }
   },
+  mixins: [Emitter],
   props: {
+    width:  {
+      type: [String, Number],
+      default: 240
+    },
     value: {
       type: [Array, Number, String, Boolean, Object],
       default: undefined
@@ -145,7 +155,7 @@ export default {
   },
   data() {
     return {
-      visiable: false,
+      visible: false,
       isFocus: false,
       isHover: false,
       canNotFocus: true,
@@ -166,7 +176,7 @@ export default {
       return this.evOptions.every(option => option.disabled)
     },
     evOptionsAllInVisiable() {
-      return this.evOptions.every(option => !option.visiable)
+      return this.evOptions.every(option => !option.visible)
     },
     showClearIcon() {
       return this.clearable && this.inputText !== '' && this.isHover
@@ -181,11 +191,16 @@ export default {
         option.hover = val === index
       })
     },
-    visiable(val) {
+    // 监控下拉是否显示
+    visible(val) {
       if (val) {
         if (this.value !== undefined) {
           this.$nextTick(() => this.scrollToView())
         }
+        // 为了每次弹出dropdown，都会根据处的环境做适应
+        this.broadcast('SpSelectDropdown', 'updatePopper')
+      } else {
+        this.broadcast('SpSelectDropdown', 'destroyPopper')
       }
     },
     selected(val) {
@@ -202,9 +217,9 @@ export default {
         })
         for (let i = 0, len = this.evOptions.length; i < len; i++) {
           if (hasSameLabel || (this.evOptions[i].label.indexOf(val) !== -1)) {
-            this.evOptions[i].visiable = true
+            this.evOptions[i].visible = true
           } else {
-            this.evOptions[i].visiable = false
+            this.evOptions[i].visible = false
           }
         }
       }
@@ -254,8 +269,9 @@ export default {
           this.selectInputBoxHeight = `${height + 2}px`
           this.$refs['sp-select-suffix'].style.height = height + 'px'
           this.$refs['sp-select-suffix'].style.lineHeight = height + 'px'
-          // 更新dropdown的位置
-          this.$refs['sp-select-dropdown'].updateTop(height + 2)
+          this.$nextTick(() => {
+            this.broadcast('SpSelectDropdown', 'updatePopper')
+          })
         })
       }
     },
@@ -264,7 +280,7 @@ export default {
      */
     handleSelfClick() {
       if (!this.disabled) {
-        this.visiable = !this.visiable
+        this.visible = !this.visible
       }
     },
     /**
@@ -273,7 +289,7 @@ export default {
     handleOtherAreaClick(e) {
       if (!this.$el.contains(e.target)){
         this.isFocus = false
-        this.visiable = false
+        this.visible = false
       }
     },
     /**
@@ -300,13 +316,13 @@ export default {
       } else if (hoverItem) {
         this.$emit('input', hoverItem.value)
         this.inputText = hoverItem.label
-        this.visiable = false
+        this.visible = false
       }
       this.focusSelectInput()
     },
     handleInputSelectInput() {
       if (this.inputText !== '') {
-        this.visiable = true
+        this.visible = true
       }
     },
     handleFocusSelectInput() {
@@ -315,7 +331,7 @@ export default {
         // 如果filterable开启，并且用户输入为空，则展示所有条目
         if (this.filterable && this.inputText.length === 0) {
           for (let i = 0, len = this.evOptions.length; i < len; i++) {
-            this.evOptions[i].visiable = true
+            this.evOptions[i].visible = true
           }
         }
       }
@@ -343,7 +359,7 @@ export default {
         this.$emit('input', undefined)
         this.inputText = ''
         this.$refs.selectInput.blur()
-        this.visiable = false
+        this.visible = false
         e.stopPropagation()
       } else {
         this.focusSelectInput()
@@ -374,8 +390,8 @@ export default {
      * 通过键盘的上下键(up/down)控制hover的位置
      */
     navigateOptions(direction) {
-      if (!this.visiable) {
-        this.visiable = true
+      if (!this.visible) {
+        this.visible = true
         return
       }
       if (this.evOptions.length === 0) return
@@ -394,7 +410,7 @@ export default {
         }
         const option = this.evOptions[this.evOptionHoverIndex]
         // 如果遇到disabled或者不可见条目，跳过
-        if (option.disabled || !option.visiable) {
+        if (option.disabled || !option.visible) {
           this.navigateOptions(direction)
         }
         this.$nextTick(() => this.scrollToView())
@@ -442,7 +458,6 @@ $select-height: 40px;
   line-height: 0;
   position: relative;
   display: inline-block;
-  width: 240px;
   margin: 0;
   padding: 0;
   &.is-disabled, &.is-disabled &-input-box input {

@@ -1,6 +1,6 @@
 <template>
   <li
-    v-show="visiable"
+    v-show="visible"
     class="sp-option"
     :class="{
       'is-selected': isSelect,
@@ -42,7 +42,7 @@ export default {
     return {
       hover: false,
       selected: false,
-      visiable: true
+      visible: true
     }
   },
   computed: {
@@ -62,7 +62,7 @@ export default {
       if (!this.evSelect.multiple) {
         this.evSelect.$emit('input', value)
         this.evSelect.inputText = label
-        this.evSelect.visiable = false
+        this.evSelect.visible = false
       } else if (this.evSelect.multiple) {
       // 多选情况，将选择的值加入tag
         const valueIndex = this.evSelect.value.indexOf(value)
@@ -84,7 +84,7 @@ export default {
       if (this.disabled) {
         return
       }
-      if (this.evSelect.visiable) { // 这句if防止收起动画的时候，鼠标也会hover带条目上
+      if (this.evSelect.visible) { // 这句if防止收起动画的时候，鼠标也会hover带条目上
         this.evSelect.evOptionHoverIndex = this.evSelect.evOptions.indexOf(this)
       }
     }

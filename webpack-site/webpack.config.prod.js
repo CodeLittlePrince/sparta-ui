@@ -48,7 +48,8 @@ const config = Object.assign(webpackConfigBase.config, {
     // publicPath: 'https://cdn.self.com'
     publicPath: CDN,
     filename: 'static/js/[name].[contenthash:8].js',
-    chunkFilename: 'static/js/[name].[contenthash:8].js'
+    chunkFilename: 'static/js/[name].[contenthash:8].js',
+    globalObject: 'this'
   },
   optimization: {
     // 分割文件

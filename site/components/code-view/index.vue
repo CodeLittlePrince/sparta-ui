@@ -8,7 +8,7 @@
       </div>
       <transition name="segment">
         <div
-          v-if="visiable"
+          v-if="visible"
           class="segment"
         >
           <p
@@ -50,14 +50,14 @@ export default {
   },
   data() {
     return {
-      visiable: false,
+      visible: false,
       codeTextBtn: '显示代码'
     }
   },
   methods: {
     handleToggleShow() {
-      this.visiable = !this.visiable
-      this.codeTextBtn = this.visiable ? '隐藏代码' : '显示代码'
+      this.visible = !this.visible
+      this.codeTextBtn = this.visible ? '隐藏代码' : '显示代码'
     },
     runCode() {
       window.onlineCode = this.info
