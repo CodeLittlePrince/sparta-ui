@@ -170,16 +170,17 @@ $select-dropdown-border-color: #e4e7ed;
 
 /* Tag
 -------------------------- */
-$tag-background: rgba($color: $color-primary, $alpha: 0.1);
-$tag-border-color: rgba($color: $color-primary, $alpha: 0.2);
-$tag-background--success: rgba($color: $color-success, $alpha: 0.1);
-$tag-border-color--success: rgba($color: $color-success, $alpha: 0.2);
-$tag-background--warning: rgba($color: $color-warning, $alpha: 0.1);
-$tag-border-color--warning: rgba($color: $color-warning, $alpha: 0.2);
-$tag-background--info: rgba($color: $color-info, $alpha: 0.1);
-$tag-border-color--info: rgba($color: $color-info, $alpha: 0.2);
-$tag-background--danger: rgba($color: $color-danger, $alpha: 0.1);
-$tag-border-color--danger: rgba($color: $color-danger, $alpha: 0.2);
+$tag-background: $color-primary;
+$tag-border-color: $color-primary;
+$tag-background--success: $color-success;
+$tag-border-color--success: $color-success;
+$tag-background--warning: $color-warning;
+$tag-border-color--warning: $color-warning;
+$tag-background--info: $color-info;
+$tag-border-color--info: $color-info;
+$tag-background--danger: $color-danger;
+$tag-border-color--danger: $color-danger;
+// $tag-background: rgba($color: $color-primary, $alpha: 0.1);
 
 
 /* Break-point

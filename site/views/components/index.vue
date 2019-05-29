@@ -90,5 +90,8 @@ export default {
   &.markdown-body table th {
     min-width: 150px;
   }
+  &.markdown-body hr {
+    display: none;
+  }
 }
 </style>

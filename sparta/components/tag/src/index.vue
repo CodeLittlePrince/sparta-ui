@@ -38,18 +38,17 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "~sparta/common/scss/variable";
 
 .sp-tag {
   display: inline-block;
   padding: 0 10px;
-  height: 32px;
-  line-height: 30px;
-  font-size: 12px;
+  height: 24px;
+  line-height: 24px;
+  font-size: 14px;
   border-radius: 4px;
-  color: $color-primary;
-  border: 1px solid $tag-border-color;
+  color: $color-white;
   background-color: $tag-background;
   white-space: nowrap;
   box-sizing: border-box;
@@ -58,63 +57,30 @@ export default {
     border-radius: 50%;
     text-align: center;
     position: relative;
-    font-size: 12px;
+    font-size: 14px;
     height: 16px;
     width: 16px;
     line-height: 16px;
     vertical-align: middle;
-    top: -1px;
     right: -5px;
-    color: $color-primary;
+    color: $color-white;
     cursor: pointer;
-    &:hover {
-      background-color: $color-primary;
-      color: #fff;
-    }
   }
   &--success {
-    color: $color-success;
     background-color: $tag-background--success;
     border-color: $tag-border-color--success;
-    .sp-icon-close {
-      color: $color-success;
-      &:hover {
-        background-color: $color-success;
-      }
-    }
   }
   &--warning {
-    color: $color-warning;
     background-color: $tag-background--warning;
     border-color: $tag-border-color--warning;
-    .sp-icon-close {
-      color: $color-warning;
-      &:hover {
-        background-color: $color-warning;
-      }
-    }
   }
   &--info {
-    color: $color-info;
     background-color: $tag-background--info;
     border-color: $tag-border-color--info;
-    .sp-icon-close {
-      color: $color-info;
-      &:hover {
-        background-color: $color-info;
-      }
-    }
   }
   &--danger {
-    color: $color-danger;
     background-color: $tag-background--danger;
     border-color: $tag-border-color--danger;
-    .sp-icon-close {
-      color: $color-danger;
-      &:hover {
-        background-color: $color-danger;
-      }
-    }
   }
 }
 </style>

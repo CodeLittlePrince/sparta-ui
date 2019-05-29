@@ -94,6 +94,17 @@ export default {
               index: '4-4-3'
             }
           ]
+        },
+        {
+          group: '数据展示',
+          index: '4-5',
+          child: [
+            {
+              title: 'Tag 标签',
+              link: '/tag',
+              index: '4-5-1'
+            }
+          ]
         }
       ]
     }
