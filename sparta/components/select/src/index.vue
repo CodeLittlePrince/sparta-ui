@@ -8,7 +8,6 @@
     <div
       ref="sp-select-input-box"
       class="sp-select-input-box"
-      :style="`height: ${selectInputBoxHeight}`"
       @mouseover="isHover = true"
       @mouseout="isHover = false"
     >
@@ -45,11 +44,11 @@
         ref="selectInput"
         v-model="inputText"
         class="sp-select-input"
+        :style="{ height: selectInputBoxHeight }"
         type="text"
         :readonly="readonly"
         :disabled="disabled"
         autocomplete="off"
-        :style="`height: ${selectInputBoxHeight}`"
         @input="handleInputSelectInput"
         @focus="handleFocusSelectInput"
         @blur="handleBlurSelectInput"
@@ -82,6 +81,7 @@
     >
       <transition name="sp-zoom-in-top">
         <ul
+          v-show="visible"
           ref="dropdown"
           class="sp-select-list"
         >
@@ -164,8 +164,8 @@ export default {
       evOptions: [],
       evOptionHoverIndex: -1,
       selected: [],
-      selectInputBoxHeight: '40px',
-      tagBoxWidth: 'auto'
+      tagBoxWidth: 'auto',
+      selectInputBoxHeight: '38px'
     }
   },
   computed: {
@@ -266,7 +266,7 @@ export default {
           // 更新容器的高度
           const style = window.getComputedStyle(this.$refs['sp-tag-box'])
           const height = parseFloat(style.height) + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom)
-          this.selectInputBoxHeight = `${height + 2}px`
+          this.selectInputBoxHeight = `${height}px`
           this.$refs['sp-select-suffix'].style.height = height + 'px'
           this.$refs['sp-select-suffix'].style.lineHeight = height + 'px'
           this.$nextTick(() => {
@@ -460,6 +460,7 @@ $select-height: 40px;
   display: inline-block;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
   &.is-disabled, &.is-disabled &-input-box input {
     background-color: $select-background-disabled;
     color: $select-input-border-color-disabled;
@@ -511,6 +512,8 @@ $select-height: 40px;
       padding-bottom: 3px;
     }
     .sp-tag {
+      height: 32px;
+      line-height: 32px;
       margin-left: 3px;
       margin-top: 3px;
     }

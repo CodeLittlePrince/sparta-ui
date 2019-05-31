@@ -2,7 +2,7 @@
   <div
     v-show="value"
     class="sp-select-dropdown"
-    :style="{ minWidth: minWidth }"
+    :style="{ minWidth }"
   >
     <slot></slot>
   </div>

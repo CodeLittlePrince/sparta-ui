@@ -74,9 +74,7 @@ export default {
     bottom: 0;
     left: 0;
     border-right: 1px solid #eee;
-    &:hover {
-      overflow-y: auto;
-    }
+    overflow-y: auto;
   }
   &--main {
     position: fixed;

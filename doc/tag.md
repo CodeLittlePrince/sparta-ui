@@ -78,12 +78,6 @@ export default{
 |---------- |-------- |---------- |
 | close  | 关闭 Tag 时触发的事件 | — |
 
-<style>
-  .sp-tag {
-    margin-right: 5px;
-  }
-</style>
-
 <script>
 export default{
   data() {
@@ -102,3 +96,9 @@ export default{
   }
 }
 </script>
+
+<style>
+  .sp-tag {
+    margin-right: 5px;
+  }
+</style>

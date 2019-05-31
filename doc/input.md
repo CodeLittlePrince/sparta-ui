@@ -226,7 +226,13 @@ export default {
       v-model="input11"
       class="input-with-select"
       style="width: 600px;">
-      <sp-select v-model="select" slot="prepend" placeholder="请选择">
+      <sp-select
+        v-model="select"
+        width="100"
+        height="36px"
+        slot="prepend"
+        placeholder="请选择"
+      >
         <sp-option label="餐厅名" value="1"></sp-option>
         <sp-option label="订单号" value="2"></sp-option>
         <sp-option label="用户电话" value="3"></sp-option>
@@ -344,11 +350,11 @@ export default {
       }
     }
   }
-  .sp-input, .sp-textarea {
+  .sp-input {
+    width: 200px;
+  }
+  .sp-textarea {
     width: 300px;
-    .sp-select {
-      width: 100px;
-    }
   }
 }
 </style>

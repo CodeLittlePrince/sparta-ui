@@ -578,3 +578,11 @@ export default {
   }
 }
 </script>
+
+<style>
+.components--main {
+  .sp-menu {
+    width: 400px;
+  }
+}
+</style>

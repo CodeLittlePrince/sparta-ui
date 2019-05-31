@@ -52,6 +52,7 @@ export default {
   background-color: $tag-background;
   white-space: nowrap;
   box-sizing: border-box;
+  font-weight: bold;
   .sp-icon-close {
     display: inline-block;
     border-radius: 50%;
@@ -65,6 +66,7 @@ export default {
     right: -5px;
     color: $color-white;
     cursor: pointer;
+    font-weight: bold;
   }
   &--success {
     background-color: $tag-background--success;

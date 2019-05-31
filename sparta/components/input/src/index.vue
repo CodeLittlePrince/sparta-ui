@@ -594,15 +594,21 @@ export default {
     &:focus {
       outline: none;
     }
-    .sp-select,
+
     .sp-button {
       display: inline-block;
-      margin: -10px -20px;
+      margin: -5px -20px;
+    }
+
+    .sp-select {
+      display: inline-block;
+      margin: -5px -20px;
+      top: 5px;
     }
 
     button.sp-button,
-    div.sp-select .sp-input__inner,
-    div.sp-select:hover .sp-input__inner {
+    div.sp-select .sp-select-input-box,
+    div.sp-select:hover .sp-select-input-box {
       border-color: transparent;
       background-color: transparent;
       color: inherit;
