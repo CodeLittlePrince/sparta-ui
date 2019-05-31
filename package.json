@@ -4,6 +4,7 @@
   "description": "网易金融PC组件库",
   "main": "index.js",
   "scripts": {
+    "cz": "commitizen init cz-conventional-changelog --save --save-exact",
     "mock": "nodemon -q ./server/index.js --kill-others",
     "watch": "nodemon -q --watch webpack-site/dev.js webpack-site/dev.js",
     "dev": "npm run watch",
@@ -19,19 +20,24 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint"
+      "pre-commit": "npm run lint",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "author": "codelittleprince",
   "license": "MIT",
   "devDependencies": {
+    "@commitlint/cli": "^7.6.1",
+    "@commitlint/config-conventional": "^7.6.0",
     "@vue/server-test-utils": "^1.0.0-beta.29",
     "@vue/test-utils": "^1.0.0-beta.29",
     "babel-plugin-istanbul": "^5.1.4",
     "boom": "^7.2.0",
     "chai": "^4.2.0",
     "chalk": "^2.4.1",
+    "commitizen": "^3.1.1",
     "concurrently": "^3.6.1",
+    "cz-conventional-changelog": "^2.1.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "husky": "^1.1.2",
     "karma": "^3.0.0",
@@ -110,5 +116,10 @@
     "webpack": "^4.23.1",
     "webpack-cli": "^3.1.2",
     "webpackbar": "^3.2.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
