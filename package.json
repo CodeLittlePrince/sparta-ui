@@ -4,7 +4,6 @@
   "description": "网易金融PC组件库",
   "main": "index.js",
   "scripts": {
-    "cz": "commitizen init cz-conventional-changelog --save --save-exact",
     "mock": "nodemon -q ./server/index.js --kill-others",
     "watch": "nodemon -q --watch webpack-site/dev.js webpack-site/dev.js",
     "dev": "npm run watch",
@@ -16,7 +15,9 @@
     "online": "cross-env NODE_ENV=production ONLINE=active webpack -p --progress --colors --config webpack-site/webpack.config.prod.js",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "eslint ./site/ ./sparta/ --ext .vue,.js",
-    "lint:css": "stylelint \"./site/**/*.(vue|scss)\" --syntax scss"
+    "lint:css": "stylelint \"./site/**/*.(vue|scss)\" --syntax scss",
+    "commit": "git-cz",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -p"
   },
   "husky": {
     "hooks": {
@@ -35,10 +36,10 @@
     "boom": "^7.2.0",
     "chai": "^4.2.0",
     "chalk": "^2.4.1",
-    "commitizen": "^3.1.1",
     "concurrently": "^3.6.1",
-    "cz-conventional-changelog": "^2.1.0",
+    "conventional-changelog-cli": "^2.0.21",
     "friendly-errors-webpack-plugin": "^1.7.0",
+    "git-cz": "^3.0.1",
     "husky": "^1.1.2",
     "karma": "^3.0.0",
     "karma-chrome-launcher": "^2.2.0",
@@ -116,10 +117,5 @@
     "webpack": "^4.23.1",
     "webpack-cli": "^3.1.2",
     "webpackbar": "^3.2.0"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   }
 }
