@@ -86,13 +86,17 @@ export default {
       set(val) {
         if (this.isGroup) {
           this.isLimitExceeded = false;
-          (this._checkboxGroup.min !== undefined &&
+          (
+            this._checkboxGroup.min !== undefined &&
               val.length < this._checkboxGroup.min &&
-              (this.isLimitExceeded = true));
+              (this.isLimitExceeded = true)
+          );
 
-          (this._checkboxGroup.max !== undefined &&
+          (
+            this._checkboxGroup.max !== undefined &&
               val.length > this._checkboxGroup.max &&
-              (this.isLimitExceeded = true))
+              (this.isLimitExceeded = true)
+          )
 
           this.isLimitExceeded === false &&
             this.dispatch('SpCheckboxGroup', 'input', [val])
@@ -190,104 +194,104 @@ export default {
 <style lang="scss">
 @import "~sparta/common/scss/variable";
 
-.sp-checkbox-wrapper {
-  font-size: 14px;
-  .sp-checkbox {
-    position: relative;
-    box-sizing: border-box;
+.sp-checkbox {
+  position: relative;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  top: -0.09em;
+  display: inline-block;
+  line-height: 1;
+  white-space: nowrap;
+  outline: none;
+  cursor: pointer;
+
+  &-wrapper {
+    font-size: 14px;
+  }
+
+  & + span {
+    padding-right: 8px;
+    padding-left: 8px;
+    cursor: pointer;
+  }
+
+  &-input {
+    opacity: 0;
+  }
+
+  &-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
     width: 16px;
     height: 16px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    top: -0.09em;
-    display: inline-block;
-    line-height: 1;
-    white-space: nowrap;
-    vertical-align: middle;
-    outline: none;
-    cursor: pointer;
+    background-color: $checkbox-background;
+    border: 1px solid $checkbox-border-color;
+    border-radius: 2px;
+    transition: all 0.3s;
 
-    & + span {
-      padding-right: 8px;
-      padding-left: 8px;
-      cursor: pointer;
-    }
-
-    &-input {
+    &::after {
+      content: "";
+      position: absolute;
+      top: 18%;
+      left: 54%;
+      display: inline-block;
+      height: 6px;
+      width: 9px;
+      border-left: 2px solid $checkbox-checkmark-color;
+      border-bottom: 2px solid $checkbox-checkmark-color;
+      box-sizing: border-box;
+      transform: rotate(-45deg) scale(1) translate(-50%, -50%);
+      transition: $transition-all;
       opacity: 0;
     }
 
-    &-inner {
-      position: absolute;
-      top: 0;
-      left: 0;
-      display: block;
-      width: 16px;
-      height: 16px;
-      background-color: $checkbox-background;
-      border: 1px solid $checkbox-border-color;
-      border-radius: 2px;
-      transition: all 0.3s;
-
-      &::after {
-        content: "";
-        position: absolute;
-        top: 20%;
-        left: 54%;
-        display: inline-block;
-        height: 6px;
-        width: 9px;
-        border-left: 2px solid $checkbox-checkmark-color;
-        border-bottom: 2px solid $checkbox-checkmark-color;
-        box-sizing: border-box;
-        transform: rotate(-45deg) scale(1) translate(-50%, -50%);
-        transition: $transition-all;
-        opacity: 0;
-      }
-
-      &.is-indeterminate::after {
-        width: 8px;
-        height: 8px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        opacity: 1;
-        border: none;
-        background-color: $color-primary;
-      }
-
-      &:hover {
-        border-color: $color-primary;
-      }
+    &.is-indeterminate::after {
+      width: 8px;
+      height: 8px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 1;
+      border: none;
+      background-color: $color-primary;
     }
 
-    &-input:focus + span {
+    &:hover {
       border-color: $color-primary;
     }
+  }
 
-    &.is-checked {
-      .sp-checkbox-inner {
-        background-color: $color-primary;
-        border-color: $color-primary;
-        &::after {
-          opacity: 1;
-        }
+  &-input:focus + span {
+    border-color: $color-primary;
+  }
+
+  &.is-checked {
+    .sp-checkbox-inner {
+      background-color: $color-primary;
+      border-color: $color-primary;
+      &::after {
+        opacity: 1;
       }
     }
+  }
 
-    &.is-disabled {
+  &.is-disabled {
+    cursor: not-allowed;
+    .sp-checkbox-inner {
+      background-color: $checkbox-background-disabled;
+      border-color: $checkbox-border-color;
+      &::after {
+        border-color: $checkbox-checkmark-color-disabled;
+      }
+    }
+    & + span {
       cursor: not-allowed;
-      .sp-checkbox-inner {
-        background-color: $checkbox-background-disabled;
-        border-color: $checkbox-border-color;
-        &::after {
-          border-color: $checkbox-checkmark-color-disabled;
-        }
-      }
-      & + span {
-        cursor: not-allowed;
-      }
     }
   }
 }

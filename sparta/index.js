@@ -15,6 +15,7 @@ import Input from './components/input'
 import OptionGroup from './components/option-group'
 import Option from './components/option'
 import Radio from './components/radio'
+import RadioGroup from './components/radio-group'
 import Select from './components/select'
 import Tag from './components/tag'
 
@@ -35,6 +36,7 @@ const components = [
   OptionGroup,
   Option,
   Radio,
+  RadioGroup,
   Select,
   Tag
 ]

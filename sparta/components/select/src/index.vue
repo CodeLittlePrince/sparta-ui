@@ -71,6 +71,7 @@
         <i
           v-show="!showClearIcon"
           class="sp-icon-arrow-down"
+          :class="{'rotate': visible}"
         />
       </div>
     </div>
@@ -516,6 +517,10 @@ $select-height: 40px;
       line-height: 32px;
       margin-left: 3px;
       margin-top: 3px;
+    }
+    .sp-icon-arrow-down.rotate {
+      transition: $transition-all;
+      transform: rotate(-180deg);
     }
   }
   &.cursorPoiner {

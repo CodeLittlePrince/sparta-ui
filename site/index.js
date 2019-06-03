@@ -1,7 +1,7 @@
+import 'common/scss'
 import Vue from 'vue'
 import './plugins'
 import './components'
-import 'common/scss'
 import router from './router'
 import App from './app'
 import Sparta from 'sparta'

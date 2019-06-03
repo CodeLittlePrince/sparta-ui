@@ -92,6 +92,11 @@ export default {
               title: 'Input 输入框',
               link: '/input',
               index: '4-4-3'
+            },
+            {
+              title: 'Radio 单选框',
+              link: '/radio',
+              index: '4-4-4'
             }
           ]
         },
