@@ -32,11 +32,15 @@ export default {
   },
   mounted() {
     this.setDefaultOpen()
-    window.addEventListener('hashchange', (e) => {
-      console.log(e)
+    // 浏览器前进后退，需要去点亮对应的题目
+    window.addEventListener('hashchange', () => {
+      this.setDefaultOpen()
     })
   },
   methods: {
+    /**
+     * 设置点亮条目
+     */
     setDefaultOpen() {
       const path = this.$route.path
       if (path.length > 12) {
