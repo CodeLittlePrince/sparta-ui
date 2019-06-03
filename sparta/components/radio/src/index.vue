@@ -11,7 +11,6 @@
       <input
         v-model="model"
         type="radio"
-        :checked="checked"
         :disabled="disabled"
         :value="label"
         @change="handleChange"

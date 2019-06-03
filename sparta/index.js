@@ -69,6 +69,7 @@ export {
   OptionGroup,
   Option,
   Radio,
+  RadioGroup,
   Select,
   Tag
 }
