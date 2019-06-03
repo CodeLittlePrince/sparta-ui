@@ -134,6 +134,7 @@ export default {
   }
 
   & [class*="sp-icon-"] {
+    font-weight: bold;
     & + span {
       margin-left: 5px;
     }

@@ -32,6 +32,9 @@ export default {
   },
   mounted() {
     this.setDefaultOpen()
+    window.addEventListener('hashchange', (e) => {
+      console.log(e)
+    })
   },
   methods: {
     setDefaultOpen() {

@@ -21,9 +21,9 @@
 ```vue
 <template>
   <div class="demo-icon">
-    <i class="sp-icon-edit"></i>
-    <i class="sp-icon-share"></i>
-    <i class="sp-icon-delete"></i>
+    <i class="sp-icon-picture-outline"></i>
+    <i class="sp-icon-goods"></i>
+    <i class="sp-icon-date"></i>
     <sp-button type="primary" icon="sp-icon-search">搜索</sp-button>
   </div>
 </template>
@@ -61,7 +61,7 @@
     }
     .icon-list li {
       float: left;
-      width: 16.66%;
+      width: 10%;
       text-align: center;
       height: 120px;
       line-height: 120px;

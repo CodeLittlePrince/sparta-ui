@@ -42,25 +42,21 @@ Input 输入框
   <div class="demo-input-size">
     <sp-input
       placeholder="default input"
-      suffix-icon="sp-icon-date"
       v-model="input1">
     </sp-input>
     <sp-input
       size="medium"
       placeholder="medium input"
-      suffix-icon="sp-icon-date"
       v-model="input2">
     </sp-input>
     <sp-input
       size="small"
       placeholder="small input"
-      suffix-icon="sp-icon-date"
       v-model="input3">
     </sp-input>
     <sp-input
       size="mini"
       placeholder="mini input"
-      suffix-icon="sp-icon-date"
       v-model="input4">
     </sp-input>
   </div>

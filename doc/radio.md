@@ -43,7 +43,6 @@ export default{
   >苹果</sp-radio>
   <sp-radio
     label="banana"
-    v-model="value1"
     disabled
   >香蕉</sp-radio>
 </template>
