@@ -7,6 +7,8 @@ import Footer from './components/footer'
 import Aside from './components/aside'
 import Main from './components/main'
 import Menu from './components/menu'
+import Dropdown from './components/dropdown'
+import DropdownItem from './components/dropdown-item'
 import Button from './components/button'
 import ButtonGroup from './components/button-group'
 import Checkbox from './components/checkbox'
@@ -28,6 +30,8 @@ const components = [
   Aside,
   Main,
   Menu,
+  Dropdown,
+  DropdownItem,
   Button,
   ButtonGroup,
   Checkbox,
@@ -61,6 +65,8 @@ export {
   Aside,
   Main,
   Menu,
+  Dropdown,
+  DropdownItem,
   Button,
   ButtonGroup,
   Checkbox,

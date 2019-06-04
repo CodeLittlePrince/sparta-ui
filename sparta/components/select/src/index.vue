@@ -89,7 +89,7 @@
           <slot></slot>
           <!-- 无数据情况 -->
           <li
-            v-show="!hasSpOptions || (hasSpOptions && evOptionsAllInVisiable)"
+            v-show="!hasSpOptions || (hasSpOptions && spOptionsAllInVisiable)"
             class="sp-option is-disabled sp-select-list-emptyText"
             @click.stop
           >{{ emptyText }}</li>
@@ -112,7 +112,7 @@ export default {
   },
   provide() {
     return {
-      'evSelect': this
+      'spSelect': this
     }
   },
   mixins: [Emitter],
@@ -162,7 +162,7 @@ export default {
       canNotFocus: true,
       cursorPoiner: !this.disabled,
       inputText: this.value && this.value.length ? ' ' : '',
-      evOptions: [],
+      spOptions: [],
       evOptionHoverIndex: -1,
       selected: [],
       tagBoxWidth: 'auto',
@@ -173,22 +173,22 @@ export default {
     readonly() {
       return (!this.isFocus || this.canNotFocus) && !this.filterable
     },
-    evOptionsAllDisabled() {
-      return this.evOptions.every(option => option.disabled)
+    spOptionsAllDisabled() {
+      return this.spOptions.every(option => option.disabled)
     },
-    evOptionsAllInVisiable() {
-      return this.evOptions.every(option => !option.visible)
+    spOptionsAllInVisiable() {
+      return this.spOptions.every(option => !option.visible)
     },
     showClearIcon() {
       return this.clearable && this.inputText !== '' && this.isHover
     },
     hasSpOptions() {
-      return this.evOptions && this.evOptions.length
+      return this.spOptions && this.spOptions.length
     }
   },
   watch: {
     evOptionHoverIndex(val) {
-      this.evOptions.forEach((option, index) => {
+      this.spOptions.forEach((option, index) => {
         option.hover = val === index
       })
     },
@@ -213,14 +213,14 @@ export default {
       // 如果filterable开启，并且focus，根据用户输入过滤（搜索）相关的条目
       if (this.filterable && this.isFocus) {
         // 如果用户输入刚好可以在条目中找到，则展示所有的条目
-        const hasSameLabel = this.evOptions.some(item => {
+        const hasSameLabel = this.spOptions.some(item => {
           return item.label === val
         })
-        for (let i = 0, len = this.evOptions.length; i < len; i++) {
-          if (hasSameLabel || (this.evOptions[i].label.indexOf(val) !== -1)) {
-            this.evOptions[i].visible = true
+        for (let i = 0, len = this.spOptions.length; i < len; i++) {
+          if (hasSameLabel || (this.spOptions[i].label.indexOf(val) !== -1)) {
+            this.spOptions[i].visible = true
           } else {
-            this.evOptions[i].visible = false
+            this.spOptions[i].visible = false
           }
         }
       }
@@ -297,21 +297,21 @@ export default {
      * 通过键盘的Enter键选定条目
      */
     handleInputEnter() {
-      if (this.filterable && this.evOptionsAllInVisiable) {
+      if (this.filterable && this.spOptionsAllInVisiable) {
         return
       }
-      const hoverItem = this.evOptions[this.evOptionHoverIndex]
+      const hoverItem = this.spOptions[this.evOptionHoverIndex]
       if (hoverItem && this.multiple) {
         const valueIndex = this.value.indexOf(hoverItem.value)
         // 将选择的值加入tag
         if (valueIndex !== -1) {
           this.selected.splice(valueIndex, 1)
           this.value.splice(valueIndex, 1)
-          this.evOptions[this.evOptionHoverIndex].selected = false
+          this.spOptions[this.evOptionHoverIndex].selected = false
         } else {
           this.selected.push({ label: hoverItem.label, value: hoverItem.value })
           this.value.push(hoverItem.value)
-          this.evOptions[this.evOptionHoverIndex].selected = true
+          this.spOptions[this.evOptionHoverIndex].selected = true
         }
         this.updateTagboxHeight()
       } else if (hoverItem) {
@@ -331,8 +331,8 @@ export default {
         this.isFocus = true
         // 如果filterable开启，并且用户输入为空，则展示所有条目
         if (this.filterable && this.inputText.length === 0) {
-          for (let i = 0, len = this.evOptions.length; i < len; i++) {
-            this.evOptions[i].visible = true
+          for (let i = 0, len = this.spOptions.length; i < len; i++) {
+            this.spOptions[i].visible = true
           }
         }
       }
@@ -342,7 +342,7 @@ export default {
       // 如果filterable开启了，用户输入的值在options中不存在的话，清空
       if (this.filterable) {
         let matchedItem = null
-        this.evOptions.forEach(item => {
+        this.spOptions.forEach(item => {
           if (item.label === this.inputText) {
             matchedItem = item
           }
@@ -372,9 +372,9 @@ export default {
       this.selected.splice(this.selected.indexOf(tag), 1)
       let values = this.selected.map(item => item.value)
       // 取消点亮对应的option
-      for (let i = 0, len = this.evOptions.length; i < len; i++) {
-        if (this.evOptions[i].value === tag.value) {
-          this.evOptions[i].selected = false
+      for (let i = 0, len = this.spOptions.length; i < len; i++) {
+        if (this.spOptions[i].value === tag.value) {
+          this.spOptions[i].selected = false
           break
         }
       }
@@ -395,21 +395,21 @@ export default {
         this.visible = true
         return
       }
-      if (this.evOptions.length === 0) return
-      if (!this.evOptionsAllDisabled && !this.evOptionsAllInVisiable) {
+      if (this.spOptions.length === 0) return
+      if (!this.spOptionsAllDisabled && !this.spOptionsAllInVisiable) {
         // 上下切换
         if (direction === 'next') {
           this.evOptionHoverIndex++
-          if (this.evOptionHoverIndex === this.evOptions.length) {
+          if (this.evOptionHoverIndex === this.spOptions.length) {
             this.evOptionHoverIndex = 0
           }
         } else if (direction === 'prev') {
           this.evOptionHoverIndex--
           if (this.evOptionHoverIndex < 0) {
-            this.evOptionHoverIndex = this.evOptions.length - 1
+            this.evOptionHoverIndex = this.spOptions.length - 1
           }
         }
-        const option = this.evOptions[this.evOptionHoverIndex]
+        const option = this.spOptions[this.evOptionHoverIndex]
         // 如果遇到disabled或者不可见条目，跳过
         if (option.disabled || !option.visible) {
           this.navigateOptions(direction)
@@ -550,9 +550,9 @@ $select-height: 40px;
     padding: 5px 0;
     border: 1px solid $select-dropdown-border-color;
     border-radius: 4px;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: $flot-box-shadow-box;
     box-sizing: border-box;
-    background-color: $select-dropdown-item-color;
+    background-color: $select-dropdown-item-background;
     &-emptyText {
       text-align: center;
     }

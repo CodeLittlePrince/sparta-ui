@@ -46,7 +46,7 @@ export default {
       type: String,
       default: 'default',
       validator(val) {
-        return [ 'default', 'primary', 'success', 'warning', 'danger', 'info', 'text'].indexOf(val) > -1
+        return ['default', 'primary', 'success', 'warning', 'danger', 'info', 'text'].indexOf(val) > -1
       }
     },
     size: String,

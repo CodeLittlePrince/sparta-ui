@@ -42,6 +42,10 @@ $color-text-regular: #606266;
 $color-text-secondary: #909399;
 $color-text-placeholder: #c0c4cc;
 
+/* Shadow
+-------------------------- */
+$flot-box-shadow-box: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
 /* Scrollbar
 -------------------------- */
 $scrollbar-background: #f5f5f5;
@@ -168,9 +172,21 @@ $select-input-border-color-disabled: #c0c4cc;
 $select-input-border-color-hover: #c0c4cc;
 $select-input-border-color-click: $color-primary;
 $select-input-font-color: $color-text-regular;
-$select-dropdown-item-color: #fff;
-$select-dropdown-item-color-hover: #f5f7fa;
+$select-dropdown-item-background: #fff;
+$select-dropdown-item-background-hover: #f5f7fa;
 $select-dropdown-border-color: #e4e7ed;
+
+/* Dropdown
+-------------------------- */
+$dropdown-background: #fff;
+$dropdown-background-disabled: #f5f7fa;
+$dropdown-item-color-hover: $color-primary;
+$dropdown-item-background: #fff;
+$dropdown-item-background-hover: #f5f7fa;
+$dropdown-border-radius: 4px;
+$dropdown-border-color: #e4e7ed;
+$dropdown-color: $color-text-regular;
+$dropdown-color-disabled: #c0c4cc;
 
 /* Tag
 -------------------------- */

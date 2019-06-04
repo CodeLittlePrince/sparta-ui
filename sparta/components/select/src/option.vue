@@ -23,7 +23,7 @@
 <script>
 export default {
   name: 'SpOption',
-  inject: ['evSelect'],
+  inject: ['spSelect'],
   props: {
     label: {
       type: [String, Number],
@@ -47,11 +47,11 @@ export default {
   },
   computed: {
     isSelect() {
-      return this.evSelect.multiple ? this.selected : this.evSelect.value === this.value
+      return this.spSelect.multiple ? this.selected : this.spSelect.value === this.value
     }
   },
   created() {
-    this.evSelect.evOptions.push(this)
+    this.spSelect.spOptions.push(this)
   },
   methods: {
     handleClick(value, label) {
@@ -59,33 +59,33 @@ export default {
         return
       }
       // 单选情况，select做处理
-      if (!this.evSelect.multiple) {
-        this.evSelect.$emit('input', value)
-        this.evSelect.inputText = label
-        this.evSelect.visible = false
-      } else if (this.evSelect.multiple) {
+      if (!this.spSelect.multiple) {
+        this.spSelect.$emit('input', value)
+        this.spSelect.inputText = label
+        this.spSelect.visible = false
+      } else if (this.spSelect.multiple) {
       // 多选情况，将选择的值加入tag
-        const valueIndex = this.evSelect.value.indexOf(value)
+        const valueIndex = this.spSelect.value.indexOf(value)
         if (valueIndex !== -1) {
-          this.evSelect.selected.splice(valueIndex, 1)
-          this.evSelect.value.splice(valueIndex, 1)
+          this.spSelect.selected.splice(valueIndex, 1)
+          this.spSelect.value.splice(valueIndex, 1)
           this.selected = false
         } else {
-          this.evSelect.selected.push({ label, value })
-          this.evSelect.value.push(value)
+          this.spSelect.selected.push({ label, value })
+          this.spSelect.value.push(value)
           this.selected = true
         }
         // 更新select的高度
-        this.evSelect.updateTagboxHeight()
+        this.spSelect.updateTagboxHeight()
       }
-      this.evSelect.focusSelectInput()
+      this.spSelect.focusSelectInput()
     },
     handleMouseover() {
       if (this.disabled) {
         return
       }
-      if (this.evSelect.visible) { // 这句if防止收起动画的时候，鼠标也会hover带条目上
-        this.evSelect.evOptionHoverIndex = this.evSelect.evOptions.indexOf(this)
+      if (this.spSelect.visible) { // 这句if防止收起动画的时候，鼠标也会hover带条目上
+        this.spSelect.evOptionHoverIndex = this.spSelect.spOptions.indexOf(this)
       }
     }
   }
@@ -111,7 +111,7 @@ $option-height: 34px;
   transition: background-color 0.1s;
   cursor: pointer;
   &.is-hover {
-    background-color: $select-dropdown-item-color-hover;
+    background-color: $select-dropdown-item-background-hover;
   }
   &.is-selected {
     color: $color-primary;

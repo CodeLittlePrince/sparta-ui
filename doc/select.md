@@ -232,6 +232,7 @@ export default{
     <sp-option-group
       v-for="group in list6"
       :key="group.label"
+      :title="group.label"
     >
       <sp-option
         v-for="item in group.options"

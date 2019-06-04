@@ -10,14 +10,16 @@
 :::demo 通过`v-model`绑定变量
 ```vue
 <template>
-  <sp-radio
-    label="apple"
-    v-model="value1"
-  >苹果</sp-radio>
-  <sp-radio
-    label="banana"
-    v-model="value1"
-  >香蕉</sp-radio>
+  <div class="sp-radio-demo">
+    <sp-radio
+      label="apple"
+      v-model="value1"
+    >苹果</sp-radio>
+    <sp-radio
+      label="banana"
+      v-model="value1"
+    >香蕉</sp-radio>
+  </div>
 </template>
 
 <script>
@@ -86,8 +88,10 @@ export default{
 </script>
 
 <style>
-.sp-radio-wrapper {
-  margin-right: 10px;
+.sp-radio-demo {
+  .sp-radio-wrapper {
+    margin-right: 10px;
+  }
 }
 </style>
 

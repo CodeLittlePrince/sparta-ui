@@ -71,6 +71,11 @@ export default {
               title: 'Menu 菜单',
               link: '/menu',
               index: '4-3-1'
+            },
+            {
+              title: 'Dropdown 下拉菜单',
+              link: '/dropdown',
+              index: '4-3-2'
             }
           ]
         },

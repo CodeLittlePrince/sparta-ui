@@ -1,8 +1,11 @@
 <template>
   <div
     v-show="value"
-    class="sp-select-dropdown"
+    class="sp-dropdown-item-wrap"
     :style="{ minWidth }"
+    @click="handleClick"
+    @mouseenter="handleMouseenter"
+    @mouseleave="handleMouseleave"
   >
     <slot></slot>
   </div>
@@ -12,31 +15,28 @@
 import Popper from 'sparta/common/js/mixins/vue-popper'
 
 export default {
-  name: 'SpSelectDropdown',
+  name: 'SpDropdownItemWrap',
 
   mixins: [Popper],
 
   props: {
     placement: {
       type: String,
-      default: 'bottom'
+      default: 'bottom-start'
     },
-
     boundariesPadding: {
       default: 0
     },
-
     visibleArrow: {
       type: Boolean,
       default: false
     },
-
     appendToBody: {
       type: Boolean,
       default: true
     }
   },
-  
+
   data() {
     return {
       minWidth: ''
@@ -44,15 +44,25 @@ export default {
   },
 
   mounted() {
-    this.referenceElm = this.$parent.$refs.selectInput
+    this.referenceElm = this.$parent.$refs.dropdown
     this.popperElm = this.$el
-    // 根据父元素设置宽度
-    this.minWidth = this.$parent.$el.getBoundingClientRect().width + 'px'
-    // 监听select的事件（那边会广播下发）
+    // 监听dropdown的事件（那边会广播下发）
     this.$on('updatePopper', () => {
       if (this.$parent.visible) this.updatePopper()
     })
     this.$on('destroyPopper', this.destroyPopper)
+  },
+
+  methods: {
+    handleMouseenter() {
+      this.$emit('mouseenter')
+    },
+    handleMouseleave() {
+      this.$emit('mouseleave')
+    },
+    handleClick() {
+      this.$emit('click')
+    }
   }
 }
 </script>
