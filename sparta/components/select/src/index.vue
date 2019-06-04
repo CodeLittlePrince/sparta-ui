@@ -514,9 +514,10 @@ $select-height: 40px;
     }
     .sp-tag {
       height: 32px;
-      line-height: 32px;
       margin-left: 3px;
       margin-top: 3px;
+      padding-top: 10px;
+      box-sizing: border-box;
     }
     .sp-icon-arrow-down.rotate {
       transition: $transition-all;

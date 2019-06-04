@@ -43,16 +43,13 @@ export default {
 
 .sp-tag {
   display: inline-block;
-  padding: 0 10px;
-  height: 24px;
-  line-height: 24px;
+  padding: 3px 10px;
   font-size: 14px;
   border-radius: 4px;
   color: $color-white;
   background-color: $tag-background;
   white-space: nowrap;
   box-sizing: border-box;
-  font-weight: bold;
   .sp-icon-close {
     display: inline-block;
     border-radius: 50%;
@@ -61,7 +58,6 @@ export default {
     font-size: 14px;
     height: 16px;
     width: 16px;
-    line-height: 16px;
     vertical-align: middle;
     right: -5px;
     color: $color-white;
