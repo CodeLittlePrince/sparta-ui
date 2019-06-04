@@ -3,3 +3,4 @@ dist/
 lib/
 test/unit/coverage
 .DS_Store
+.idea
