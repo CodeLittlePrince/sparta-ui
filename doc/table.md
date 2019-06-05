@@ -63,10 +63,14 @@ export default{
 
 ### 带选择的表格
 
-:::demo 手动添加一个`el-table-column`，设type属性为`selection`即可。
+:::demo 设置`sp-table`属性`selection`为true。
 ```vue
 <template>
-  <sp-table :list="tableList1">
+  <sp-table
+    :list="tableList1"
+    selection
+    @selection-change="handleSelectionChange"
+  >
     <sp-table-column
       :ellipsis="true"
       prop="name"
@@ -97,13 +101,13 @@ export default{
     return {
       tableList1: [
         {
-          name: 'Steven Jobs',
+          name: '番茄炒西红柿',
           withdrawing: '20.00',
           tag: 'yo'
         },
         {
-          name: 'Steven Jobs',
-          withdrawing: '20.00',
+          name: '土豆炖马铃薯',
+          withdrawing: '30.00',
           tag: 'yo'
         }
       ]
@@ -112,6 +116,9 @@ export default{
   methods: {
     formatter(cell) {
       return cell + '元'
+    },
+    handleSelectionChange(data) {
+      console.log(data)
     }
   }
 }
@@ -120,7 +127,7 @@ export default{
 :::
 
 
-### Attributes
+### Table Attributes
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
 | list | 设置 table 数据源 | array | — | [] |
@@ -129,6 +136,12 @@ export default{
 | cellEmptyText | 设置单元格没有数据的默认文案 | string | — | '--' |
 | cellEmptyText | 设置单元格没有数据的默认文案 | string | — | '--' |
 | formatter | 设置单元格数据格式化方法 | function | — | — |
+| selection | 带选择的表格 | boolean | — | false |
+
+### Table Events
+| 事件名称      | 说明    | 回调参数      |
+|---------- |-------- |---------- |
+| selection-change  | checkbox选择触发 | selection（选中了数据数组） |
 
 ### Table-column Attributes
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
@@ -151,13 +164,13 @@ export default{
     return {
       tableList1: [
         {
-          name: 'Steven Jobs',
+          name: '番茄炒西红柿',
           withdrawing: '20.00',
           tag: 'yo'
         },
         {
-          name: 'Steven Jobs',
-          withdrawing: '20.00',
+          name: '土豆炖马铃薯',
+          withdrawing: '30.00',
           tag: 'yo'
         }
       ]
@@ -166,6 +179,9 @@ export default{
   methods: {
     formatter(cell) {
       return cell + '元'
+    },
+    handleSelectionChange(data) {
+      console.log(data)
     }
   }
 }

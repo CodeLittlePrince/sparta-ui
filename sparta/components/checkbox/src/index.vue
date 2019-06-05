@@ -1,7 +1,6 @@
 <template>
   <label class="sp-checkbox-wrapper">
     <span
-      :id="id"
       class="sp-checkbox"
       :class="[
         { 'is-disabled': isDisabled },
@@ -65,9 +64,7 @@ export default {
     disabled: Boolean,
     checked: Boolean,
     trueLabel: [String, Number],
-    falseLabel: [String, Number],
-    id: String, /* 当indeterminate为真时，为controls提供相关连的checkbox的id，表明元素间的控制关系*/
-    controls: String /* 当indeterminate为真时，为controls提供相关连的checkbox的id，表明元素间的控制关系*/
+    falseLabel: [String, Number]
   },
   data() {
     return {

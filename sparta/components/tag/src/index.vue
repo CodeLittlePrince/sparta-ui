@@ -17,6 +17,7 @@
 <script>
 export default {
   name: 'SpTag',
+
   props: {
     type: {
       type: String,
@@ -30,6 +31,7 @@ export default {
       default: false
     }
   },
+  
   methods: {
     handleClose(e) {
       this.$emit('close', e)

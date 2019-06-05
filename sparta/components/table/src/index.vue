@@ -5,6 +5,10 @@
       <table>
         <colgroup>
           <col
+            v-if="selection"
+            width="60px"
+          >
+          <col
             v-for="(item, index) in children"
             :key="index"
             :width="item.componentOptions.propsData.width"
@@ -12,6 +16,14 @@
         </colgroup>
         <thead>
           <tr>
+            <th v-if="selection">
+              <sp-checkbox
+                v-if="selection"
+                v-model="checkAll"
+                :indeterminate="isIndeterminate"
+                @change="handleCheckAllChange"
+              />
+            </th>
             <th
               v-for="(item, index) in children"
               :key="index"
@@ -26,6 +38,10 @@
       <table v-if="list && list.length && !loading">
         <colgroup>
           <col
+            v-if="selection"
+            width="60px"
+          >
+          <col
             v-for="(item, index) in children"
             :key="index"
             :width="item.componentOptions.propsData.width"
@@ -36,6 +52,14 @@
             v-for="(item, rIndex) in list"
             :key="rIndex"
           >
+            <td v-if="selection">
+              <div class="sp-table-cell">
+                <sp-checkbox
+                  v-model="checkedList[rIndex]"
+                  @change="handleCheck(rIndex, $event)"
+                />
+              </div>
+            </td>
             <td
               v-for="(tdItem, cIndex ) in children"
               :key="cIndex"
@@ -45,8 +69,7 @@
                 :list="list"
                 :c-index="cIndex"
                 :r-index="rIndex"
-              >
-              </sp-table-cell>
+              ></sp-table-cell>
             </td>
           </tr>
         </tbody>
@@ -76,8 +99,14 @@
 </template>
 
 <script>
+import SpCheckbox from '../../checkbox'
+
 export default {
   name: 'SpTable',
+
+  components: {
+    SpCheckbox
+  },
 
   props: {
     list: {
@@ -95,15 +124,23 @@ export default {
     cellEmptyText: {
       type: String,
       default: '--'
+    },
+    selection: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  data() {
+    return {
+      checkAll: false,
+      isIndeterminate: false,
+      checkedIndexs: [],
+      checkedList: []
     }
   },
 
   computed: {
-    colNum() {
-      return this.data && this.data.length ?
-        Object.keys(this.data[0]).length :
-        0
-    },
     children() {
       return this.$slots.default.filter(item => {
         return /SpTableColumn/.test(item.tag)
@@ -112,7 +149,67 @@ export default {
     isIe9() {
       return navigator.appVersion.indexOf('MSIE 9.0') > -1
     }
-  }
+  },
+
+  mounted() {
+    if (this.selection) {
+      this.initCheckedList()
+    }
+  },
+  
+  methods: {
+    initCheckedList() {
+      let len = this.list.length
+      while(len) {
+        len--
+        this.checkedList[len] = false
+      }
+    },
+    emitChange() {
+      // 过滤出打勾了的值给上层
+      const result = []
+      this.checkedList.forEach((isChecked, index) => {
+        if (isChecked) {
+          result.push(this.list[index])
+        }
+      })
+      this.$emit('selection-change', result)
+    },
+    /**
+     * 全选单选框点击
+     */
+    handleCheckAllChange(isChecked) {
+      let len = this.list.length
+      while(len) {
+        len--
+        this.checkedList[len] = isChecked
+      }
+      this.isIndeterminate = false
+      this.emitChange()
+    },
+    /**
+     * 单选框单独点击
+     */
+    handleCheck(index, isChecked) {
+      // 更新checkedList
+      this.checkedList[index] = isChecked
+      // 处理checkbox的关联
+      const checkedAccount = this.checkedList.filter(item => {
+        return item
+      }).length
+      if (checkedAccount === this.list.length) {
+        this.checkAll = true
+        this.isIndeterminate = false
+      } else if (0 < checkedAccount && checkedAccount < this.list.length) {
+        this.isIndeterminate = true
+        this.checkAll = false
+      } else {
+        this.isIndeterminate = false
+        this.checkAll = false
+      }
+      this.emitChange()
+    }
+  },
 }
 </script>
 
