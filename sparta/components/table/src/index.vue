@@ -223,8 +223,9 @@ export default {
   &__head {
     padding: 15px 24px;
     text-align: left;
-    color: $color-text-secondary;
-    border-bottom: $border-base;
+    color: $table-thead-color;
+    border-bottom: $table-border;
+    background-color: $table-background;
     th {
       text-align: left; /* 为了IE */
       &:first-child {
@@ -235,15 +236,16 @@ export default {
   &__body {
     padding: 0 24px;
     text-align: left;
+    color: $table-tbody-color;
     tr {
-      border-bottom: $border-base;
+      border-bottom: $table-border;
       &:last-child {
         border-bottom: none;
       }
       td {
         vertical-align: middle;
         line-height: 1.2;
-        padding: 28px 0;
+        padding: 15px 0;
         &:first-child {
           .sp-table-cell {
             padding-left: 16px;

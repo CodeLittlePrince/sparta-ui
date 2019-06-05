@@ -201,6 +201,14 @@ $tag-border-color--info: $color-info;
 $tag-background--danger: $color-danger;
 $tag-border-color--danger: $color-danger;
 
+/* Table
+-------------------------- */
+$table-background: #fafafa;
+$table-border: $border-base;
+$table-thead-color: $color-text-primary;
+$table-tbody-color: $color-text-regular;
+
+
 /* Break-point
 -------------------------- */
 $sm: 768px;
