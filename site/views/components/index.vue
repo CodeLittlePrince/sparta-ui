@@ -43,6 +43,7 @@ export default {
      */
     setDefaultOpen() {
       const path = this.$route.path
+      // path长度大于12的话证明是组件元件页面
       if (path.length > 12) {
         this.defaultOpen = this.findIndexByName(path.slice(11), menuConfig.menuData)
       } else {
@@ -65,6 +66,7 @@ export default {
       return rst
     },
     handleMenuSelect(index, { link }) {
+      this.defaultOpen = index
       this.$router.push(`/components${link}`)
     }
   }
