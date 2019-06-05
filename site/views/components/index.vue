@@ -13,7 +13,7 @@
       />
     </div>
     <!-- 右边内容 -->
-    <div class="components--main">
+    <div class="components--main markdown-body">
       <!-- doc展示区 -->
       <router-view />
     </div>

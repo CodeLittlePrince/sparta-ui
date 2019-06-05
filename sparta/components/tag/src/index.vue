@@ -43,7 +43,9 @@ export default {
 
 .sp-tag {
   display: inline-block;
-  padding: 3px 10px;
+  padding: 0 10px;
+  height: 24px;
+  line-height: 24px;
   font-size: 14px;
   border-radius: 4px;
   color: $color-white;
@@ -56,8 +58,9 @@ export default {
     text-align: center;
     position: relative;
     font-size: 14px;
-    height: 16px;
     width: 16px;
+    height: 14px;
+    line-height: 14px;
     vertical-align: middle;
     right: -5px;
     color: $color-white;

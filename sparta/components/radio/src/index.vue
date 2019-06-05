@@ -94,6 +94,7 @@ export default {
 
   &-text {
     font-size: $radio-font-size;
+    margin-left: 3px;
   }
 
   &-wrapper {

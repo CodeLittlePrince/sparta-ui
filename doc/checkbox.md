@@ -102,13 +102,15 @@ checkbox 不可用。
 :::demo `indeterminate` 属性用以表示 `checkbox` 的不确定状态，一般用于实现全选的效果
 ```vue
 <template>
-  <sp-checkbox
-    :indeterminate="isIndeterminate"
-    v-model="checkAll"
-    @change="handleCheckAllChange"
-  >
-    全选
-  </sp-checkbox>
+  <div>
+    <sp-checkbox
+      :indeterminate="isIndeterminate"
+      v-model="checkAll"
+      @change="handleCheckAllChange"
+    >
+      全选
+    </sp-checkbox>
+  </div>
   </br>
   <sp-checkbox-group
     v-model="checkedCities"

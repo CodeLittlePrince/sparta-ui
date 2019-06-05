@@ -20,6 +20,9 @@ import Radio from './components/radio'
 import RadioGroup from './components/radio-group'
 import Select from './components/select'
 import Tag from './components/tag'
+import Table from './components/table'
+import TableCell from './components/table-cell'
+import TableColumn from './components/table-column'
 
 const components = [
   Row,
@@ -42,7 +45,10 @@ const components = [
   Radio,
   RadioGroup,
   Select,
-  Tag
+  Tag,
+  Table,
+  TableCell,
+  TableColumn
 ]
 
 let Sparta = {}
@@ -77,5 +83,8 @@ export {
   Radio,
   RadioGroup,
   Select,
-  Tag
+  Tag,
+  Table,
+  TableCell,
+  TableColumn
 }

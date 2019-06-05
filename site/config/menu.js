@@ -113,6 +113,11 @@ export default {
               title: 'Tag 标签',
               link: '/tag',
               index: '4-5-1'
+            },
+            {
+              title: 'Table 表格',
+              link: '/table',
+              index: '4-5-2'
             }
           ]
         }

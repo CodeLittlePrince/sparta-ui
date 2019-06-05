@@ -5,6 +5,6 @@
       <c-nav />
     </sp-header>
     <!-- 主体 -->
-    <router-view class="markdown-body" />
+    <router-view />
   </sp-layout>
 </template>

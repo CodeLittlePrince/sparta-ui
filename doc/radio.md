@@ -39,14 +39,16 @@ export default{
 :::demo 通过设置`disabled`禁用
 ```vue
 <template>
-  <sp-radio
-    label="apple"
-    disabled
-  >苹果</sp-radio>
-  <sp-radio
-    label="banana"
-    disabled
-  >香蕉</sp-radio>
+  <div class="sp-radio-demo">
+    <sp-radio
+      label="apple"
+      disabled
+    >苹果</sp-radio>
+    <sp-radio
+      label="banana"
+      disabled
+    >香蕉</sp-radio>
+  </div>
 </template>
 ```
 :::
@@ -55,12 +57,15 @@ export default{
 :::demo 只需要在`group`用v-model来做数据绑定
 ```vue
 <template>
-  <p>单选组:</p>
-  <sp-radio-group v-model="value2">
-    <sp-radio label="apple">苹果</sp-radio>
-    <sp-radio label="banana">香蕉</sp-radio>
-    <sp-radio label="pear">梨</sp-radio>
-  </sp-radio-group>
+  <div class="sp-radio-demo">
+    <p>单选组:</p>
+    </br>
+    <sp-radio-group v-model="value2">
+      <sp-radio label="apple">苹果</sp-radio>
+      <sp-radio label="banana">香蕉</sp-radio>
+      <sp-radio label="pear">梨</sp-radio>
+    </sp-radio-group>
+  </div>
 </template>
 
 <script>
@@ -75,6 +80,21 @@ export default{
 ```
 :::
 
+### Radio Attributes
+| 参数      | 说明    | 类型      | 可选值       | 默认值   |
+|---------- |-------- |---------- |-------------  |-------- |
+| label     | Radio 的 value   | string / number / boolean | — | — |
+| disabled  | 是否禁用    | boolean   | — | false   |
+
+### Radio Events
+| 事件名称 | 说明 | 回调参数 |
+|---------- |-------- |---------- |
+| change  | 绑定值变化时触发的事件 | 选中的 Radio label 值 |
+
+### Radio-group Events
+| 事件名称 | 说明 | 回调参数 |
+|---------- |-------- |---------- |
+| change  | 绑定值变化时触发的事件 |  选中的 Radio label 值  |
 
 <script>
 export default{
@@ -94,19 +114,3 @@ export default{
   }
 }
 </style>
-
-### Radio Attributes
-| 参数      | 说明    | 类型      | 可选值       | 默认值   |
-|---------- |-------- |---------- |-------------  |-------- |
-| label     | Radio 的 value   | string / number / boolean | — | — |
-| disabled  | 是否禁用    | boolean   | — | false   |
-
-### Radio Events
-| 事件名称 | 说明 | 回调参数 |
-|---------- |-------- |---------- |
-| change  | 绑定值变化时触发的事件 | 选中的 Radio label 值 |
-
-### Radio-group Events
-| 事件名称 | 说明 | 回调参数 |
-|---------- |-------- |---------- |
-| change  | 绑定值变化时触发的事件 |  选中的 Radio label 值  |
