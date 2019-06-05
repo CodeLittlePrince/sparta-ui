@@ -1,6 +1,6 @@
 <template>
   <ul class="sp-option-group">
-    <li class="sp-option-group-title">{{ title }}</li>
+    <li class="sp-option-group-title">{{ label }}</li>
     <li>
       <ul class="sp-option-group-content">
         <slot></slot>
@@ -14,7 +14,7 @@ export default {
   name: 'SpOptionGroup',
 
   props: {
-    title: {
+    label: {
       type: String,
       default: ''
     }

@@ -232,7 +232,7 @@ export default{
     <sp-option-group
       v-for="group in list6"
       :key="group.label"
-      :title="group.label"
+      :label="group.label"
     >
       <sp-option
         v-for="item in group.options"
@@ -327,27 +327,36 @@ export default{
 ```
 :::
 
-### Attributes
-| 参数      | 说明    | 类型      | 可选值       | 默认值   |
-|---------- |-------- |---------- |-------------  |-------- |
-| list | 设置 table 数据源 | array | — | [] |
-| emptyText | 设置 table 没有数据时候的默认文案| string | — | '无相关数据' |
-| loading | 设置 table 是否处于加载，如果是则会出现loading bar | boolean | — | false |
-| cellEmptyText | 设置单元格没有数据的默认文案 | string | — | '--' |
-| cellEmptyText | 设置单元格没有数据的默认文案 | string | — | '--' |
-| formatter | 设置单元格数据格式化方法 | function | — | — |
+### Select Attributes
+| 参数      | 说明          | 类型      | 可选值                           | 默认值  |
+|---------- |-------------- |---------- |--------------------------------  |-------- |
+| width | 设置宽度 | string/number | — | 240 |
+| multiple | 是否多选 | boolean | — | false |
+| disabled | 是否禁用 | boolean | — | false |
+| clearable | 是否可以清空选项 | boolean | — | false |
+| placeholder | 占位符 | string | — | 请选择 |
+| filterable | 是否可搜索 | boolean | — | false |
+| filter-method | 自定义搜索方法 | function | — | — |
+| emptyText | 过滤时候没有匹配值的文案 | string | — | 请选择 |
 
-### Slot
-| name | 说明 |
-|------|--------|
-| — | modal 的内容 |
-| foot | modal 按钮操作区的内容 |
 
-### Events
-| 事件名称      | 说明    | 回调参数      |
-|---------- |-------- |---------- |
-| close  | modal 关闭的回调 | — |
-| show  | modal 打开的回调 | — |
+### Select Slots
+|   name  | 说明     |
+|---------|---------|
+|    —    | Option 组件列表 |
+
+### Option Group Attributes
+| 参数      | 说明          | 类型      | 可选值                           | 默认值  |
+|---------- |-------------- |---------- |--------------------------------  |-------- |
+| label | 分组的组名 | string | — | — |
+
+### Option Attributes
+| 参数      | 说明          | 类型      | 可选值                           | 默认值  |
+|---------- |-------------- |---------- |--------------------------------  |-------- |
+| label | 选项文案 | string/number | — | — |
+| value | 选项的值 | array/number/string/boolean/object | — | — |
+| disabled | 是否禁用该选项 | boolean | — | false |
+
 
 <script>
 export default{
