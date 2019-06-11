@@ -23,6 +23,10 @@ class PopManage {
     PopManage.id --
     delete PopManage.popInstances[this.id]
   }
+  zIndexIncrease() {
+    PopManage.id ++
+    this.zIndex ++
+  }
   nextZIndex() {
     return this.zIndex + 1
   }

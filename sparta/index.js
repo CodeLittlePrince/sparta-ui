@@ -48,7 +48,7 @@ const components = [
   Tag,
   Table,
   TableCell,
-  TableColumn
+  TableColumn,
 ]
 
 let Sparta = {}
@@ -86,5 +86,5 @@ export {
   Tag,
   Table,
   TableCell,
-  TableColumn
+  TableColumn,
 }

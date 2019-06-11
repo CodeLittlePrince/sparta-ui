@@ -120,6 +120,17 @@ export default {
               index: '4-5-2'
             }
           ]
+        },
+        {
+          group: '反馈',
+          index: '5-1',
+          child: [
+            {
+              title: 'Modal 模态弹窗',
+              link: '/modal',
+              index: '5-1-1'
+            }
+          ]
         }
       ]
     }

@@ -4,7 +4,7 @@ import popper from '../utils/popper'
 const PopperJS = Vue.prototype.$isServer ? function() {} : popper
 const stop = e => e.stopPropagation()
 
-const popManage = new PopManage()
+let popManage = null
 
 export default {
   props: {
@@ -106,7 +106,8 @@ export default {
       if (typeof options.onUpdate === 'function') {
         this.popperJS.onUpdate(options.onUpdate)
       }
-      this.popperJS._popper.style.zIndex = popManage.nextZIndex()
+      popManage = new PopManage()
+      this.popperJS._popper.style.zIndex = popManage.getZIndex()
       this.popperElm.addEventListener('click', stop)
     },
 
@@ -115,7 +116,7 @@ export default {
       if (popperJS) {
         popperJS.update()
         if (popperJS._popper) {
-          popperJS._popper.style.zIndex = popManage.nextZIndex()
+          popperJS._popper.style.zIndex = popManage.getZIndex()
         }
       } else {
         this.createPopper()
