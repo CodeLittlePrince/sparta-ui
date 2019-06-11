@@ -23,6 +23,7 @@ import Tag from './components/tag'
 import Table from './components/table'
 import TableCell from './components/table-cell'
 import TableColumn from './components/table-column'
+import Modal from './components/modal'
 
 const components = [
   Row,
@@ -49,6 +50,7 @@ const components = [
   Table,
   TableCell,
   TableColumn,
+  Modal
 ]
 
 let Sparta = {}
@@ -87,4 +89,5 @@ export {
   Table,
   TableCell,
   TableColumn,
+  Modal
 }
