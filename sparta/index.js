@@ -24,6 +24,7 @@ import Table from './components/table'
 import TableCell from './components/table-cell'
 import TableColumn from './components/table-column'
 import Modal from './components/modal'
+import Toast from './components/toast'
 
 const components = [
   Row,
@@ -59,7 +60,13 @@ Sparta.install = Vue => {
     Vue.component(component.name, component)
     Sparta[component.name] = component.name
   })
+
+  Vue.prototype.$error = Toast('error')
+  Vue.prototype.$success = Toast('success')
+  Vue.prototype.$warning = Toast('warning')
+  Vue.prototype.$info = Toast('info')
 }
+
 
 // 整体引入
 export default Sparta

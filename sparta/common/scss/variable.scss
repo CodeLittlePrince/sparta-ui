@@ -217,6 +217,19 @@ $modal-head-font-size: 14px;
 $modal-icon-font-size: 18px;
 $modal-icon-color: #666;
 
+/* Toast
+-------------------------- */
+$toast-font-size: 14px;
+$toast-color-info: $color-info;
+$toast-color-success: $color-success;
+$toast-color-error: $color-danger;
+$toast-color-warning: $color-warning;
+$toast-background-info: #ecf3ff;
+$toast-background-success: #eeffef;
+$toast-background-error: #ffefef;
+$toast-background-warning: #fff6eb;
+$toast-border-raduis: $border-radius-base;
+
 /* Break-point
 -------------------------- */
 $sm: 768px;

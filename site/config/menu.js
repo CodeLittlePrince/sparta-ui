@@ -129,6 +129,11 @@ export default {
               title: 'Modal 模态弹窗',
               link: '/modal',
               index: '5-1-1'
+            },
+            {
+              title: 'Toast 全局提示',
+              link: '/toast',
+              index: '5-1-2'
             }
           ]
         }

@@ -18,7 +18,7 @@
               class="sp-modal__head__close"
               @click="modalValue = false"
             >
-              <i class="sparta-icons sp-icon-close"></i>
+              <i class="sp-icon-close"></i>
             </div>
           </div>
           <!-- body -->

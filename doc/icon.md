@@ -73,6 +73,7 @@
       margin-right: -1px;
       margin-bottom: -1px;
       vertical-align: middle;
+      margin-top: 0;
       span {
         display: inline-block;
         line-height: normal;
