@@ -76,6 +76,11 @@ export default {
               title: 'Dropdown 下拉菜单',
               link: '/dropdown',
               index: '4-3-2'
+            },
+            {
+              title: 'Pagination 分页',
+              link: '/pagination',
+              index: '4-3-3'
             }
           ]
         },

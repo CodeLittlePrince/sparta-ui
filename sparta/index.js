@@ -25,6 +25,7 @@ import TableCell from './components/table-cell'
 import TableColumn from './components/table-column'
 import Tabs from './components/tabs'
 import TabPane from './components/tab-pane'
+import Pagination from './components/pagination'
 import Modal from './components/modal'
 import Toast from './components/toast'
 
@@ -55,6 +56,7 @@ const components = [
   TableColumn,
   Tabs,
   TabPane,
+  Pagination,
   Modal
 ]
 
@@ -102,5 +104,6 @@ export {
   TableColumn,
   Tabs,
   TabPane,
+  Pagination,
   Modal
 }

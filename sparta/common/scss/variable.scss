@@ -220,6 +220,20 @@ $tabs-item-border-color-active: $color-primary;
 $tabs-item-font-weight-active: 500;
 $tabs-item-color-disabled: rgba(0, 0, 0, 0.25);
 
+/* Pagination
+-------------------------- */
+$pagination-item-background: #fff;
+$pagination-item-prev-next-background: #f0f3f7;
+$pagination-item-font-size: 14px;
+$pagination-item-height: 36px;
+$pagination-border-radius: 2px;
+$pagination-background: #fff;
+$pagination-item-color: $color-primary;
+$pagination-background--is-disabled: #e0e7f1;
+$pagination-item-color--is-checked: #fff;
+$pagination-background--is-checked: $color-primary;
+$pagination-border-color--is-checked: $color-primary;
+
 /* Modal
 -------------------------- */
 $modal-background: #fff;
