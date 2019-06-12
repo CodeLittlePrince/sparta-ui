@@ -281,7 +281,11 @@ export default {
      */
     handleSelfClick() {
       if (!this.disabled) {
-        this.visible = !this.visible
+        // 原本可以在点击自身的时候切换下拉显示隐藏状态
+        // 但是IE9上聚焦就会触发input事件
+        // input又会影响下拉显示状态，input事件又在click前触发
+        // 导致显示Bug，因此，暂时降低体验处理
+        this.visible = true
       }
     },
     /**
@@ -322,7 +326,10 @@ export default {
       this.focusSelectInput()
     },
     handleInputSelectInput() {
-      if (this.inputText !== '') {
+      if (
+        this.inputText !== '' &&
+        !this.readonly // 解决IE9上鬼畜bug
+      ) {
         this.visible = true
       }
     },
@@ -452,7 +459,6 @@ export default {
 
 <style lang="scss">
 @import "~sparta/common/scss/variable";
-$select-height: 40px;
 
 .sp-select {
   font-size: 14px;
