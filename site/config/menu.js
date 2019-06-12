@@ -118,6 +118,11 @@ export default {
               title: 'Table 表格',
               link: '/table',
               index: '4-5-2'
+            },
+            {
+              title: 'Tabs 标签页',
+              link: '/tabs',
+              index: '4-5-3'
             }
           ]
         },

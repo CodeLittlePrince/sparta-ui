@@ -208,6 +208,17 @@ $table-border: $border-base;
 $table-thead-color: $color-text-primary;
 $table-tbody-color: $color-text-regular;
 
+/* Tabs
+-------------------------- */
+$tabs-height: 40px;
+$tabs-font-size: 14px;
+$tabs-border-bottom: 2px solid transparent;
+$tabs-line-color: #eee;
+$tabs-item-color-active: $color-primary;
+$tabs-item-border-color-active: $color-primary;
+$tabs-item-font-weight-active: 500;
+$tabs-item-color-disabled: rgba(0, 0, 0, 0.25);
+
 /* Modal
 -------------------------- */
 $modal-background: #fff;

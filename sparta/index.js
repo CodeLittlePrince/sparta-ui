@@ -23,6 +23,8 @@ import Tag from './components/tag'
 import Table from './components/table'
 import TableCell from './components/table-cell'
 import TableColumn from './components/table-column'
+import Tabs from './components/tabs'
+import TabPane from './components/tab-pane'
 import Modal from './components/modal'
 import Toast from './components/toast'
 
@@ -51,6 +53,8 @@ const components = [
   Table,
   TableCell,
   TableColumn,
+  Tabs,
+  TabPane,
   Modal
 ]
 
@@ -96,5 +100,7 @@ export {
   Table,
   TableCell,
   TableColumn,
+  Tabs,
+  TabPane,
   Modal
 }
