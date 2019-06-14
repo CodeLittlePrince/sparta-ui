@@ -127,10 +127,10 @@ export default {
   inheritAttrs: false,
 
   inject: {
-    elForm: {
+    spForm: {
       default: ''
     },
-    elFormItem: {
+    spFormItem: {
       default: ''
     }
   },
@@ -182,14 +182,14 @@ export default {
   },
 
   computed: {
-    _elFormItemSize() {
-      return (this.elFormItem || {}).elFormItemSize
+    _spFormItemSize() {
+      return (this.spFormItem || {}).spFormItemSize
     },
     validateState() {
-      return this.elFormItem ? this.elFormItem.validateState : ''
+      return this.spFormItem ? this.spFormItem.validateState : ''
     },
     needStatusIcon() {
-      return this.elForm ? this.elForm.statusIcon : false
+      return this.spForm ? this.spForm.statusIcon : false
     },
     validateIcon() {
       return {
@@ -202,17 +202,17 @@ export default {
       return Object.assign({}, this.textareaCalcStyle, { resize: this.resize })
     },
     inputSize() {
-      return this.size || this._elFormItemSize || (this.$ELEMENT || {}).size
+      return this.size
     },
     inputDisabled() {
-      return this.disabled || (this.elForm || {}).disabled
+      return this.disabled || (this.spForm || {}).disabled
     },
     showClear() {
       return this.clearable &&
-          !this.inputDisabled &&
-          !this.readonly &&
-          this.currentValue !== '' &&
-          (this.focused || this.hovering)
+        !this.inputDisabled &&
+        !this.readonly &&
+        this.currentValue !== '' &&
+        (this.focused || this.hovering)
     }
   },
 
@@ -267,10 +267,12 @@ export default {
 
       this.textareaCalcStyle = calcTextareaHeight(this.$refs.textarea, minRows, maxRows)
     },
+
     handleFocus(event) {
       this.focused = true
       this.$emit('focus', event)
     },
+
     handleComposition(event) {
       if (event.type === 'compositionend') {
         this.isOnComposition = false
@@ -288,15 +290,18 @@ export default {
         }
       }
     },
+
     handleInput(event) {
       const value = event.target.value
       this.setCurrentValue(value)
       if (this.isOnComposition) return
       this.$emit('input', value)
     },
+
     handleChange(event) {
       this.$emit('change', event.target.value)
     },
+
     setCurrentValue(value) {
       if (this.isOnComposition && value === this.valueBeforeComposition) return
       this.currentValue = value
@@ -306,6 +311,7 @@ export default {
         this.dispatch('SpFormItem', 'sp.form.change', [value])
       }
     },
+
     calcIconOffset(place) {
       let elList = [].slice.call(this.$el.querySelectorAll(`.sp-input__${place}`) || [])
       if (!elList.length) return
@@ -329,10 +335,12 @@ export default {
         el.removeAttribute('style')
       }
     },
+
     updateIconOffset() {
       this.calcIconOffset('prefix')
       this.calcIconOffset('suffix')
     },
+
     clear() {
       this.$emit('input', '')
       this.$emit('change', '')
@@ -420,7 +428,7 @@ export default {
     background-color: #fff;
     background-image: none;
     border-radius: $input-border-radus;
-    border: $border-base;
+    border: $input-border-color;
     box-sizing: border-box;
     color: $input-color;
     display: inline-block;
@@ -437,7 +445,7 @@ export default {
     }
 
     &:hover {
-      border-color: $color-primary-light-2;
+      border-color: $input-border-color-hover;
     }
 
     &:focus {

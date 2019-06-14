@@ -135,7 +135,10 @@ $checkbox-checkmark-color-disabled: rgba(0, 0, 0, 0.2);
 $input-color: $color-text-regular;
 $input-background: #fff;
 $input-background-disabled: #f5f7fa;
+$input-border-color: $border-base;
+$input-border-color-hover: #c0c4cc;
 $input-box-shadow-focus: 0 0 0 2px $color-primary-light-8;
+$input-box-shadow-focus-error: 0 0 0 2px $color-danger-light;
 $input-border-radus: 4px;
 
 $input-medium-font-size: 14px;
@@ -171,11 +174,21 @@ $select-background-disabled: #f5f7fa;
 $select-input-border-color: #dcdfe6;
 $select-input-border-color-disabled: #c0c4cc;
 $select-input-border-color-hover: #c0c4cc;
-$select-input-border-color-click: $color-primary;
+$select-input-box-shadow-focus: 0 0 0 2px $color-primary-light-8;
+$select-input-border-color-focus: $color-primary;
+$select-input-box-shadow-focus-error: 0 0 0 2px $color-danger-light;
+$select-input-border-color-focus-error: $color-danger;
 $select-input-font-color: $color-text-regular;
 $select-dropdown-item-background: #fff;
 $select-dropdown-item-background-hover: #f5f7fa;
 $select-dropdown-border-color: #e4e7ed;
+
+/* Form
+-------------------------- */
+$form-item-require-star: #f5222d;
+$form-item-error-color: #f5222d;
+$form-item-error-font-size: 12px;
+
 
 /* Dropdown
 -------------------------- */

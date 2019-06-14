@@ -106,16 +106,20 @@ import SpTag from 'sparta/components/tag/src'
 
 export default {
   name: 'SpSelect',
+
   components: {
     'sp-select-dropdown': SpSelectDropdown,
     'sp-tag': SpTag
   },
+
   provide() {
     return {
       'spSelect': this
     }
   },
+
   mixins: [Emitter],
+
   props: {
     width:  {
       type: [String, Number],
@@ -152,8 +156,13 @@ export default {
     multiple: {
       type: Boolean,
       default: false
+    },
+    validateEvent: {
+      type: Boolean,
+      default: true
     }
   },
+
   data() {
     return {
       visible: false,
@@ -166,9 +175,11 @@ export default {
       evOptionHoverIndex: -1,
       selected: [],
       tagBoxWidth: 'auto',
-      selectInputBoxHeight: '38px'
+      selectInputBoxHeight: '38px',
+      currentValue: this.value
     }
   },
+
   computed: {
     readonly() {
       return (!this.isFocus || this.canNotFocus) && !this.filterable
@@ -186,7 +197,11 @@ export default {
       return this.spOptions && this.spOptions.length
     }
   },
+
   watch: {
+    value(val) {
+      this.setCurrentValue(val)
+    },
     evOptionHoverIndex(val) {
       this.spOptions.forEach((option, index) => {
         option.hover = val === index
@@ -195,13 +210,17 @@ export default {
     // 监控下拉是否显示
     visible(val) {
       if (val) {
-        if (this.value !== undefined) {
+        if (this.currentValue !== undefined) {
           this.$nextTick(() => this.scrollToView())
         }
         // 为了每次弹出dropdown，都会根据处的环境做适应
         this.broadcast('SpSelectDropdown', 'updatePopper')
       } else {
         this.broadcast('SpSelectDropdown', 'destroyPopper')
+      }
+      // 触发form的校验
+      if (this.validateEvent && !val) {
+        this.dispatch('SpFormItem', 'sp.form.change', [this.currentValue])
       }
     },
     selected(val) {
@@ -226,6 +245,7 @@ export default {
       }
     }
   },
+  
   mounted() {
     if (this.disabled) {
       return
@@ -242,6 +262,7 @@ export default {
     }
     document.removeEventListener('click', this.handleOtherAreaClick)
   },
+
   methods: {
     /**
      * 设置默认label和evOptionHoverIndex
@@ -258,9 +279,11 @@ export default {
         }
       }
     },
+
     setTagboxWidth() {
       this.tagBoxWidth = `${parseFloat(window.getComputedStyle(this.$refs['sp-tag-box'].parentNode).width) - 38}px`
     },
+    
     updateTagboxHeight() {
       if (this.selected.length) {
         this.$nextTick(() => {
@@ -274,6 +297,17 @@ export default {
             this.broadcast('SpSelectDropdown', 'updatePopper')
           })
         })
+      }
+    },
+    
+    setCurrentValue(val) {
+      this.currentValue = val
+      if (this.validateEvent) {
+        this.dispatch('SpFormItem', 'sp.form.change', [val])
+      }
+      // 恢复文案
+      if (!val) {
+        this.inputText = ''
       }
     },
     /**
@@ -306,15 +340,15 @@ export default {
       }
       const hoverItem = this.spOptions[this.evOptionHoverIndex]
       if (hoverItem && this.multiple) {
-        const valueIndex = this.value.indexOf(hoverItem.value)
+        const valueIndex = this.currentValue.indexOf(hoverItem.value)
         // 将选择的值加入tag
         if (valueIndex !== -1) {
           this.selected.splice(valueIndex, 1)
-          this.value.splice(valueIndex, 1)
+          this.currentValue.splice(valueIndex, 1)
           this.spOptions[this.evOptionHoverIndex].selected = false
         } else {
           this.selected.push({ label: hoverItem.label, value: hoverItem.value })
-          this.value.push(hoverItem.value)
+          this.currentValue.push(hoverItem.value)
           this.spOptions[this.evOptionHoverIndex].selected = true
         }
         this.updateTagboxHeight()
@@ -325,6 +359,7 @@ export default {
       }
       this.focusSelectInput()
     },
+
     handleInputSelectInput() {
       if (
         this.inputText !== '' &&
@@ -333,6 +368,7 @@ export default {
         this.visible = true
       }
     },
+
     handleFocusSelectInput() {
       if (!this.disabled) {
         this.isFocus = true
@@ -344,6 +380,7 @@ export default {
         }
       }
     },
+
     handleBlurSelectInput() {
       this.isFocus = false
       // 如果filterable开启了，用户输入的值在options中不存在的话，清空
@@ -361,7 +398,12 @@ export default {
           this.$emit('input', undefined)
         }
       }
+      // 触发form的校验
+      if (this.validateEvent && !this.isFocus) {
+        this.dispatch('SpFormItem', 'sp.form.blur', [this.currentValue])
+      }
     },
+
     handleSuffixClick(e) {
       if (this.showClearIcon) {
         this.$emit('input', undefined)
@@ -373,6 +415,7 @@ export default {
         this.focusSelectInput()
       }
     },
+
     handleTagClose(tag, e) {
       e.stopPropagation()
       // 去除当前tag
@@ -464,15 +507,17 @@ export default {
   font-size: 14px;
   line-height: 0;
   position: relative;
-  display: inline-block;
+  display: block;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
   &.is-disabled, &.is-disabled &-input-box input {
     background-color: $select-background-disabled;
     color: $select-input-border-color-disabled;
     cursor: not-allowed;
   }
+
   &-input-box {
     position: relative;
     width: 100%;
@@ -487,6 +532,7 @@ export default {
     font-size: inherit;
     transition: $transition-border-base;
     overflow: hidden;
+
     .sp-select-input {
       width: 100%;
       -webkit-appearance: none;
@@ -499,6 +545,7 @@ export default {
       border-radius: 4px;
       color: inherit;
       font-size: inherit;
+
       &-placeholder {
         position: absolute;
         left: 0;
@@ -511,33 +558,41 @@ export default {
         color: $color-text-placeholder;
       }
     }
+
     &:hover {
       border-color: $select-input-border-color-hover;
     }
+
     .sp-tag-box {
       position: absolute;
       padding-bottom: 3px;
     }
+
     .sp-tag {
       height: 32px;
       line-height: 32px;
       margin-left: 3px;
       margin-top: 3px;
     }
+
     .sp-icon-arrow-down.rotate {
       transition: $transition-all;
       transform: rotate(180deg);
     }
   }
+
   &.cursorPoiner {
     cursor: pointer;
     input {
       cursor: pointer;
     }
   }
+
   &.isFocus &-input-box {
-    border-color: $select-input-border-color-click;
+    border-color: $select-input-border-color-focus;
+    box-shadow: $select-input-box-shadow-focus;
   }
+
   &-suffix {
     position: absolute;
     top: 0;
@@ -548,6 +603,7 @@ export default {
     text-align: center;
     user-select: none;
   }
+
   &-list {
     max-height: 274px;
     height: 100%;
@@ -559,6 +615,7 @@ export default {
     box-shadow: $flot-box-shadow-box;
     box-sizing: border-box;
     background-color: $select-dropdown-item-background;
+
     &-emptyText {
       text-align: center;
     }

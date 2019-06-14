@@ -14,8 +14,6 @@ import Emitter from 'sparta/common/js/mixins/emitter'
 export default {
   name: 'SpCheckboxGroup',
 
-  componentName: 'SpCheckboxGroup',
-
   mixins: [Emitter],
 
   inject: {
@@ -34,17 +32,9 @@ export default {
     textColor: String
   },
 
-  computed: {
-    _spFormItemSize() {
-      return (this.spFormItem || {}).spFormItemSize
-    },
-    checkboxGroupSize() {
-      return this.size || this._spFormItemSize || (this.$ELEMENT || {}).size
-    }
-  },
-
   watch: {
     value(value) {
+      console.log('xxx', value)
       this.dispatch('SpFormItem', 'sp.form.change', [value])
     }
   }

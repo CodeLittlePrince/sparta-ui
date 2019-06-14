@@ -19,6 +19,8 @@ import Option from './components/option'
 import Radio from './components/radio'
 import RadioGroup from './components/radio-group'
 import Select from './components/select'
+import Form from './components/form'
+import FormItem from './components/form-item'
 import Tag from './components/tag'
 import Table from './components/table'
 import TableCell from './components/table-cell'
@@ -50,6 +52,8 @@ const components = [
   Radio,
   RadioGroup,
   Select,
+  Form,
+  FormItem,
   Tag,
   Table,
   TableCell,
@@ -98,6 +102,8 @@ export {
   Radio,
   RadioGroup,
   Select,
+  Form,
+  FormItem,
   Tag,
   Table,
   TableCell,

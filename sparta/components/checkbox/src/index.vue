@@ -6,7 +6,6 @@
         { 'is-disabled': isDisabled },
         { 'is-checked': isChecked }
       ]"
-      role="checkbox"
     >
       <input
         v-if="trueLabel || falseLabel"
@@ -48,7 +47,9 @@ import Emitter from 'sparta/common/js/mixins/emitter'
 
 export default {
   name: 'SpCheckbox',
+
   mixins: [Emitter],
+
   inject: {
     SpForm: {
       default: ''
@@ -57,6 +58,7 @@ export default {
       default: ''
     }
   },
+  
   props: {
     value: {},
     label: {},
@@ -66,12 +68,14 @@ export default {
     trueLabel: [String, Number],
     falseLabel: [String, Number]
   },
+
   data() {
     return {
       selfModel: false,
       isLimitExceeded: false
     }
   },
+
   computed: {
     model: {
       get() {
@@ -135,29 +139,21 @@ export default {
 
     isDisabled() {
       return this.isGroup
-        ? this._checkboxGroup.disabled || this.disabled || (this.elForm || {}).disabled
-        : this.disabled || (this.elForm || {}).disabled
-    },
-
-    _elFormItemSize() {
-      return (this.elFormItem || {}).elFormItemSize
-    },
-
-    checkboxSize() {
-      const temCheckboxSize = this.size || this._elFormItemSize || (this.$ELEMENT || {}).size
-      return this.isGroup
-        ? this._checkboxGroup.checkboxGroupSize || temCheckboxSize
-        : temCheckboxSize
+        ? this._checkboxGroup.disabled || this.disabled || (this.spForm || {}).disabled
+        : this.disabled || (this.spForm || {}).disabled
     }
   },
+
   watch: {
     value(value) {
       this.dispatch('SpFormItem', 'sp.form.change', value)
     }
   },
+
   mounted() {
     this.checked && this.addToStore()
   },
+  
   methods: {
     addToStore() {
       if (
@@ -169,6 +165,7 @@ export default {
         this.model = this.trueLabel || true
       }
     },
+
     handleChange(ev) {
       if (this.isLimitExceeded) return
       let value

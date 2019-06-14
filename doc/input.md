@@ -10,10 +10,12 @@ Input 输入框
 :::demo 简单使用，input的宽度默认是100%，如需改变，可加父容器或样式覆盖。
 ```vue
 <template>
-  <sp-input
-    v-model="value1"
-    placeholder="basic usage"
-  />
+  <div class="sp-input-demo">
+    <sp-input
+      v-model="value1"
+      placeholder="basic usage"
+    />
+  </div>
 </template>
 
 <script>
@@ -39,7 +41,7 @@ Input 输入框
 :::demo 通过`size`设置组件大小
 ```vue
 <template>
-  <div class="demo-input-size">
+  <div class="sp-input-demo">
     <sp-input
       placeholder="default input"
       v-model="input1">
@@ -81,10 +83,14 @@ export default {
 
 :::demo 通过 `disabled` 属性设置禁用
 ```vue
-<sp-input
-  placeholder="请输入内容"
-  disabled>
-</sp-input>
+<template>
+  <div class="sp-input-demo">
+    <sp-input
+      placeholder="请输入内容"
+      disabled>
+    </sp-input>
+  </div>
+</template>
 ```
 :::
 
@@ -92,11 +98,13 @@ export default {
 :::demo 使用`clearable`属性即可得到一个可清空的输入框
 ```vue
 <template>
-  <sp-input
-    v-model="value2"
-    placeholder="clearable"
-    clearable
-  />
+  <div class="sp-input-demo">
+    <sp-input
+      v-model="value2"
+      placeholder="clearable"
+      clearable
+    />
+  </div>
 </template>
 
 <script>
@@ -115,7 +123,7 @@ export default {
 :::demo 可以通过 prefix-icon 和 suffix-icon 属性在 input 组件首部和尾部增加显示图标，也可以通过 slot 来放置图标。
 ```vue
 <template>
-  <div class="demo-input-suffix">
+  <div class="demo-input-suffix sp-input-demo">
     属性方式：
     <sp-input
       placeholder="请选择日期"
@@ -172,19 +180,21 @@ export default {
 :::demo 通过`type="textarea"`
 ```vue
 <template>
-  <sp-input
-    type="textarea"
-    autosize
-    placeholder="请输入内容"
-    v-model="textarea1">
-  </sp-input>
-  <div style="margin: 20px 0;"/>
-  <sp-input
-    type="textarea"
-    :autosize="{ minRows: 2, maxRows: 4}"
-    placeholder="请输入内容"
-    v-model="textarea2">
-  </sp-input>
+  <div class="sp-input-demo">
+    <sp-input
+      type="textarea"
+      autosize
+      placeholder="请输入内容"
+      v-model="textarea1">
+    </sp-input>
+    <div style="margin: 20px 0;"/>
+    <sp-input
+      type="textarea"
+      :autosize="{ minRows: 2, maxRows: 4}"
+      placeholder="请输入内容"
+      v-model="textarea2">
+    </sp-input>
+  </div>
 </template>
 
 <script>
@@ -206,35 +216,37 @@ export default {
 :::demo 可通过 `slot` 来指定在 `input` 中前置或者后置内容。
 ```vue
 <template>
-  <div>
-    <sp-input placeholder="请输入内容" v-model="input9">
-      <template slot="prepend">Http://</template>
-    </sp-input>
-  </div>
-  <div style="margin-top: 15px;">
-    <sp-input placeholder="请输入内容" v-model="input10">
-      <template slot="append">.com</template>
-    </sp-input>
-  </div>
-  <div style="margin-top: 15px;">
-    <sp-input
-      placeholder="请输入内容"
-      v-model="input11"
-      class="input-with-select"
-      style="width: 600px;">
-      <sp-select
-        v-model="select"
-        width="100"
-        height="36px"
-        slot="prepend"
-        placeholder="请选择"
-      >
-        <sp-option label="餐厅名" value="1"></sp-option>
-        <sp-option label="订单号" value="2"></sp-option>
-        <sp-option label="用户电话" value="3"></sp-option>
-      </sp-select>
-      <sp-button slot="append" icon="sp-icon-search"></sp-button>
-    </sp-input>
+  <div class="sp-input-demo">
+    <div>
+      <sp-input placeholder="请输入内容" v-model="input9">
+        <template slot="prepend">Http://</template>
+      </sp-input>
+    </div>
+    <div style="margin-top: 15px;">
+      <sp-input placeholder="请输入内容" v-model="input10">
+        <template slot="append">.com</template>
+      </sp-input>
+    </div>
+    <div style="margin-top: 15px;">
+      <sp-input
+        placeholder="请输入内容"
+        v-model="input11"
+        class="input-with-select"
+        style="width: 600px;">
+        <sp-select
+          v-model="select"
+          width="100"
+          height="36px"
+          slot="prepend"
+          placeholder="请选择"
+        >
+          <sp-option label="餐厅名" value="1"></sp-option>
+          <sp-option label="订单号" value="2"></sp-option>
+          <sp-option label="用户电话" value="3"></sp-option>
+        </sp-select>
+        <sp-button slot="append" icon="sp-icon-search"></sp-button>
+      </sp-input>
+    </div>
   </div>
 </template>
 
@@ -337,17 +349,13 @@ export default {
 </script>
 
 <style>
-.components--main {
-  .demo-input-size {
-    .sp-input {
-      margin-right: 15px;
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
+.sp-input-demo {
   .sp-input {
+    margin-right: 15px;
     width: 200px;
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
   .sp-textarea {
     width: 300px;

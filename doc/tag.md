@@ -98,7 +98,9 @@ export default{
 </script>
 
 <style>
+.components--main {
   .sp-tag {
     margin-right: 5px;
   }
+}
 </style>

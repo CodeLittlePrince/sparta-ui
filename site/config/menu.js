@@ -107,6 +107,11 @@ export default {
               title: 'Radio 单选框',
               link: '/radio',
               index: '4-4-4'
+            },
+            {
+              title: 'Form 表单',
+              link: '/form',
+              index: '4-4-5'
             }
           ]
         },
