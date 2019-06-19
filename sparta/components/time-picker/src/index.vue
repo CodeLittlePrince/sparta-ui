@@ -203,9 +203,20 @@ export default {
           return false
         }
       }
-      if (this.needSecond && len === 3) {
+      if (
+        this.needSecond &&
+        len === 3 &&
+        (-1 < +pieces[0] && +pieces[0] < 24) &&
+        (-1 < +pieces[1] && +pieces[1] < 60) &&
+        (-1 < +pieces[2] && +pieces[2] < 60)
+      ) {
         return true
-      } else if ((!this.needSecond) && len === 2) {
+      } else if (
+        (!this.needSecond) &&
+        len === 2 &&
+        (-1 < +pieces[0] && +pieces[0] < 24) &&
+        (-1 < +pieces[1] && +pieces[1] < 60)
+      ) {
         return true
       } else {
         return false
@@ -267,7 +278,11 @@ export default {
      * 清除不符合格式的值
      */
     handleInputBlur() {
-      if (!this._valiate()) {
+      if ((!this._valiate()) ||
+        this.hourIndex === -1 ||
+        this.minuteIndex === -1 ||
+        this.secondIndex === -1
+      ) {
         this.$emit('input', '')
         this.model = ''
       }

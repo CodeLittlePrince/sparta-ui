@@ -75,7 +75,19 @@ export default {
       })
       // 监听activeIndex变化了
       this.$on('IndexChange', () => {
-        this.isSelect = this.SpTimePickerPane.activeIndex == this.index
+        if (!this.disabled) {
+          this.isSelect = this.SpTimePickerPane.activeIndex == this.index
+        } else if (this.SpTimePickerPane.activeIndex == this.index) {
+          if (this.type === 'hour' ) {
+            this.SpTimePicker.hourIndex = -1
+          }
+          if (this.type === 'minute') {
+            this.SpTimePicker.minuteIndex = -1
+          }
+          if (this.type === 'second') {
+            this.SpTimePicker.secondIndex = -1
+          }
+        }
       })
     },
 
