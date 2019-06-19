@@ -109,9 +109,14 @@ export default {
               index: '4-4-4'
             },
             {
+              title: 'TimePicker 时间选择框',
+              link: '/time-picker',
+              index: '4-4-5'
+            },
+            {
               title: 'Form 表单',
               link: '/form',
-              index: '4-4-5'
+              index: '4-4-6'
             }
           ]
         },

@@ -15,7 +15,7 @@
             v-if="desc"
             class="desc"
             v-html="desc"
-          />
+          ></p>
           <div class="code">
             <slot></slot>
           </div>

@@ -19,6 +19,7 @@ import Option from './components/option'
 import Radio from './components/radio'
 import RadioGroup from './components/radio-group'
 import Select from './components/select'
+import TimePicker from './components/time-picker'
 import Form from './components/form'
 import FormItem from './components/form-item'
 import Tag from './components/tag'
@@ -52,6 +53,7 @@ const components = [
   Radio,
   RadioGroup,
   Select,
+  TimePicker,
   Form,
   FormItem,
   Tag,
@@ -102,6 +104,7 @@ export {
   Radio,
   RadioGroup,
   Select,
+  TimePicker,
   Form,
   FormItem,
   Tag,

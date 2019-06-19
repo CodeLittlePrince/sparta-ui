@@ -222,6 +222,20 @@ $table-border: $border-base;
 $table-thead-color: $color-text-primary;
 $table-tbody-color: $color-text-regular;
 
+/* TimePicker
+-------------------------- */
+$time-picker-border: $border-base;
+$time-picker-border-radius: 4px;
+$time-picker-pane-border: $border-base;
+$time-picker-pane-background: #fff;
+$time-picker-pane-width: 52px; 
+$time-picker-pane-max-height: 200px;
+$time-picker-option-font-size: 14px;
+$time-picker-option-height: 32px;
+$time-picker-option-color: $color-text-regular;
+$time-picker-option-color--is-selected: $color-primary;
+$time-picker-option-color--is-disabled: #c0c4cc;
+
 /* Tabs
 -------------------------- */
 $tabs-height: 40px;

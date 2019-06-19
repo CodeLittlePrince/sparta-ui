@@ -468,7 +468,7 @@ export default {
       }
     },
     /**
-     * 将hover的条目滚入可见区域
+     * 将点亮的条目滚入可见区域
      */
     scrollToView() {
       const dropdown = this.$refs.dropdown
@@ -488,7 +488,7 @@ export default {
         // 3 index在视窗之中 dropdownTop
         if (indexOptionTop - dropdownHeight - dropdownTop > 0) {
           offset = indexOptionTop - dropdownHeight + parseInt(dropdownStyle.paddingTop)
-        } else if (dropdownTop - indexOptionTop >= 0) {
+        } else if (dropdownTop - indexOptionTop  + stepDistance >= 0) {
           offset = indexOptionTop - stepDistance + parseInt(dropdownStyle.paddingBottom)
         } else {
           offset = dropdownTop

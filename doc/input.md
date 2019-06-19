@@ -123,7 +123,7 @@ export default {
 :::demo 可以通过 prefix-icon 和 suffix-icon 属性在 input 组件首部和尾部增加显示图标，也可以通过 slot 来放置图标。
 ```vue
 <template>
-  <div class="demo-input-suffix sp-input-demo">
+  <div class="sp-input-demo">
     属性方式：
     <sp-input
       placeholder="请选择日期"
@@ -137,7 +137,7 @@ export default {
     </sp-input>
   </div>
   <div style="margin: 20px 0;"/>
-  <div class="demo-input-suffix">
+  <div class="sp-input-demo">
     slot 方式：
     <sp-input
       placeholder="请选择日期"
