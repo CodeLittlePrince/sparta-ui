@@ -1,5 +1,5 @@
 <template>
-  <label class="sp-checkbox-wrapper">
+  <label class="sp-checkbox-wrap">
     <span
       class="sp-checkbox"
       :class="[
@@ -203,7 +203,7 @@ export default {
   outline: none;
   cursor: pointer;
 
-  &-wrapper {
+  &-wrap {
     font-size: 14px;
   }
 

@@ -114,9 +114,14 @@ export default {
               index: '4-4-5'
             },
             {
+              title: 'DatePicker 日期选择框',
+              link: '/date-picker',
+              index: '4-4-6'
+            },
+            {
               title: 'Form 表单',
               link: '/form',
-              index: '4-4-6'
+              index: '4-4-7'
             }
           ]
         },

@@ -229,12 +229,35 @@ $time-picker-border-radius: 4px;
 $time-picker-pane-border: $border-base;
 $time-picker-pane-background: #fff;
 $time-picker-pane-width: 52px; 
-$time-picker-pane-max-height: 200px;
+$time-picker-pane-max-height: 192px;
 $time-picker-option-font-size: 14px;
 $time-picker-option-height: 32px;
 $time-picker-option-color: $color-text-regular;
 $time-picker-option-color--is-selected: $color-primary;
 $time-picker-option-color--is-disabled: #c0c4cc;
+
+/* DatePicker
+-------------------------- */
+$date-picker-color: $color-text-primary;
+$date-picker-border: $border-base;
+$date-picker-border-radius: 4px;
+$date-picker-pane-border: $border-base;
+$date-picker-pane-background: #fff;
+$date-picker-pane-width: 280px; 
+$date-picker-pane__header-height: 40px;
+$date-picker-pane__header-icon-color: rgba(0, 0, 0, 0.3);
+$date-picker-pane__header-color: $color-text-primary;
+$date-picker-pane__header-a-hover-color: $color-primary;
+$date-picker-pane__header-border: 1px solid #e8e8e8;
+$date-picker-pane__cell--is-disabled-color: $color-text-secondary;
+$date-picker-pane__cell--is-checked-background: $color-primary;
+$date-picker-pane__cell--is-checked-color: #fff;
+$date-picker-pane__cell--is-checked-border-radius: 4px;
+$date-picker-pane__cell--is-today-background: $color-primary-light-7;
+$date-picker-pane__cell--is-today-border-radius: 4px;
+$date-picker-pane__cell--is-ln-month-color: rgba(0, 0, 0, 0.3);
+$date-picker-pane__cell-background-hover: #f5f7fa;
+$date-picker-pane__cell-color-hover: $color-primary;
 
 /* Tabs
 -------------------------- */

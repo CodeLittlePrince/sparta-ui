@@ -3,7 +3,7 @@
     <transition name="sp-modal-fade">
       <div
         v-show="visible"
-        class="sp-modal-wrapper"
+        class="sp-modal-wrap"
         :style="`z-index: ${modalWrapperZIndex}`"
       >
         <div
@@ -129,7 +129,7 @@ export default {
 @import "~sparta/common/scss/variable";
 
 .sp-modal {
-  &-wrapper {
+  &-wrap {
     position: fixed;
     top: 0;
     right: 0;

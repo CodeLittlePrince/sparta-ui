@@ -61,7 +61,9 @@ export default {
     this.$on('updatePopper', () => {
       if (this.$parent.visible) {
         // 更新Popper
-        this.updatePopper()
+        this.$nextTick(() => {
+          this.updatePopper()
+        })
       }
     })
     this.$on('destroyPopper', this.destroyPopper)

@@ -20,6 +20,7 @@
     >
       <transition name="sp-zoom-in-top">
         <div
+          v-show="visible"
           class="sp-time-picker__dropdown__box"
         >
           <!-- 时 -->
@@ -70,9 +71,9 @@
 <script>
 import tool from '../tool'
 import Emitter from 'sparta/common/js/mixins/emitter'
-import SpTimePickerDropdown from './time-picker-dropdown'
-import SpTimePickerPane from './time-picker-pane'
-import SpTimePickerOption from './time-picker-option'
+import SpTimePickerDropdown from './dropdown'
+import SpTimePickerPane from './pane'
+import SpTimePickerOption from './option'
 
 export default {
   name: 'SpTimePicker',
@@ -292,7 +293,7 @@ export default {
      * 点击其他区域触发事件
      */
     handleOtherAreaClick(e) {
-      if (!this.$el.contains(e.target)){
+      if (!this.$el.contains(e.target) && e.target != document.body){
         this.isFocus = false
         this.visible = false
       }

@@ -102,14 +102,12 @@
 <script>
 import Emitter from 'sparta/common/js/mixins/emitter'
 import SpSelectDropdown from './select-dropdown'
-import SpTag from 'sparta/components/tag/src'
 
 export default {
   name: 'SpSelect',
 
   components: {
-    'sp-select-dropdown': SpSelectDropdown,
-    'sp-tag': SpTag
+    'sp-select-dropdown': SpSelectDropdown
   },
 
   provide() {

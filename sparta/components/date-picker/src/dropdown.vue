@@ -1,7 +1,7 @@
 <template>
   <div
     v-show="value"
-    class="sp-select-dropdown"
+    class="sp-date-picker-dropdown"
     :style="{ minWidth }"
   >
     <slot></slot>
@@ -10,11 +10,18 @@
 
 <script>
 import Popper from 'sparta/common/js/mixins/vue-popper'
+import Emitter from 'sparta/common/js/mixins/emitter'
 
 export default {
-  name: 'SpSelectDropdown',
+  name: 'SpDatePickerDropdown',
+  
+  provide() {
+    return {
+      'SpDatePickerDropdown': this
+    }
+  },
 
-  mixins: [Popper],
+  mixins: [Popper, Emitter],
 
   props: {
     placement: {
@@ -24,11 +31,6 @@ export default {
 
     boundariesPadding: {
       default: 0
-    },
-
-    visibleArrow: {
-      type: Boolean,
-      default: false
     },
 
     appendToBody: {
@@ -43,15 +45,21 @@ export default {
     }
   },
 
+  watch: {
+    value(val) {
+      if (val) {
+        this.broadcast('SpDatePickerPane', 'updateScroll')
+      }
+    }
+  },
+
   mounted() {
-    this.referenceElm = this.$parent.$refs.selectInput
+    this.referenceElm = this.$parent.$refs.spDatePicker
     this.popperElm = this.$el
     // 根据父元素设置宽度
     // 监听select的事件（那边会广播下发）
     this.$on('updatePopper', () => {
       if (this.$parent.visible) {
-        // Popper有可能并不是一开始就出现在dom里的，所以放在更新时候
-        this.minWidth = this.$parent.$el.getBoundingClientRect().width + 'px'
         // 更新Popper
         this.$nextTick(() => {
           this.updatePopper()

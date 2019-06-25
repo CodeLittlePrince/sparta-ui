@@ -14,6 +14,7 @@
     ]"
     @mouseenter="hovering = true"
     @mouseleave="hovering = false"
+    @click="handleSpInputClick"
   >
     <template v-if="type !== 'textarea'">
       <!-- 前置元素 -->
@@ -74,7 +75,7 @@
           <i
             v-else
             class="sp-input__icon sp-icon-circle-close sp-input__clear"
-            @click="clear"
+            @click.stop="handleClear"
           ></i>
         </span>
         <i
@@ -268,6 +269,11 @@ export default {
       this.textareaCalcStyle = calcTextareaHeight(this.$refs.textarea, minRows, maxRows)
     },
 
+    handleSpInputClick(e) {
+      e.stopPropagation()
+      this.$emit('click')
+    },
+
     handleFocus(event) {
       this.focused = true
       this.$emit('focus', event)
@@ -341,12 +347,12 @@ export default {
       this.calcIconOffset('suffix')
     },
 
-    clear() {
+    handleClear() {
       this.$emit('input', '')
       this.$emit('change', '')
       this.$emit('clear')
       this.setCurrentValue('')
-      this.focus()
+      // this.focus()
     }
   }
 }
@@ -415,8 +421,8 @@ export default {
     color: $color-text-placeholder;
     font-size: 14px;
     line-height: 16px;
-    cursor: pointer;
     transition: $transition-all;
+    cursor: pointer;
 
     &:hover {
       color: $color-text-secondary;

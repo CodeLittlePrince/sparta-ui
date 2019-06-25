@@ -1,6 +1,6 @@
 <template>
   <label
-    class="sp-radio-wrapper"
+    class="sp-radio-wrap"
     :class="[
       { 'is-disabled': disabled },
       { 'is-checked': checked },
@@ -97,7 +97,7 @@ export default {
     margin-left: 3px;
   }
 
-  &-wrapper {
+  &-wrap {
     position: relative;
     cursor: pointer;
     color: $radio-color;
@@ -138,7 +138,7 @@ export default {
     }
   }
 
-  &-wrapper.is-checked &__inner {
+  &-wrap.is-checked &__inner {
     border-color: $color-primary;
 
     &::after {
@@ -147,12 +147,12 @@ export default {
     }
   }
 
-  &-wrapper.is-disabled &__inner {
+  &-wrap.is-disabled &__inner {
     border-color: $radio-border-color-disabled;
     background-color: $radio-background-color-disabled;
   }
 
-  &-wrapper.is-disabled {
+  &-wrap.is-disabled {
     color: $radio-color-disabled;
   }
 }

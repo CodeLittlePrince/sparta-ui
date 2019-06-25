@@ -109,7 +109,7 @@ export default{
 
 <style>
 .sp-radio-demo {
-  .sp-radio-wrapper {
+  .sp-radio-wrap {
     margin-right: 10px;
   }
 }
