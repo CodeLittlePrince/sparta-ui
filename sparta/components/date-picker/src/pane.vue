@@ -102,7 +102,9 @@
                 'is-last-month-cell': item.lastMonth,
                 'is-next-month-cell': item.nextMonth,
                 'is-today': `${SpDatePicker.calYear}-${SpDatePicker.calMonth}-${item.value}` ===
-                  `${SpDatePicker.todayYear}-${+SpDatePicker.todayMonth}-${+SpDatePicker.todayDay}`,
+                  `${SpDatePicker.todayYear}-${+SpDatePicker.todayMonth}-${+SpDatePicker.todayDay}` &&
+                  !item.lastMonth &&
+                  !item.nextMonth,
                 'is-disabled': item.disabled,
                 'is-checked':
                   `${SpDatePicker.calYear}-${SpDatePicker.calMonth}-${item.value}` ===
