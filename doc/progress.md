@@ -50,6 +50,7 @@
     <sp-progress type="circle" :percentage="80" color="#8e71c7"></sp-progress>
     <sp-progress type="circle" :percentage="100" status="success"></sp-progress>
     <sp-progress type="circle" :percentage="50" status="exception"></sp-progress>
+    <sp-progress type="circle" :percentage="100" status="text">Done</sp-progress>
   </div>
 </template>
 ```

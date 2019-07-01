@@ -14,6 +14,7 @@
     aria-valuemin="0"
     aria-valuemax="100"
   >
+    <!-- 线形进度条 -->
     <div
       v-if="type === 'line'"
       class="sp-progress-bar"
@@ -33,6 +34,7 @@
         </div>
       </div>
     </div>
+    <!-- 环形进度条 -->
     <div
       v-else
       class="sp-progress-circle"
@@ -62,17 +64,20 @@
       class="sp-progress__text"
       :style="{fontSize: progressTextSize + 'px'}"
     >
-      <template v-if="!status">{{ percentage }}%</template>
+      <slot v-if="$slots.default"></slot>
+      <template v-else-if="!status">{{ percentage }}%</template>
       <i
         v-else
         :class="iconClass"
       ></i>
+      
     </div>
   </div>
 </template>
 <script>
 export default {
   name: 'SpProgress',
+
   props: {
     type: {
       type: String,
@@ -109,6 +114,7 @@ export default {
       default: ''
     }
   },
+
   computed: {
     barStyle() {
       const style = {}
@@ -116,18 +122,22 @@ export default {
       style.backgroundColor = this.color
       return style
     },
+
     relativeStrokeWidth() {
       return (this.strokeWidth / this.width * 100).toFixed(1)
     },
+
     trackPath() {
       const radius = parseInt(50 - parseFloat(this.relativeStrokeWidth) / 2, 10)
 
       return `M 50 50 m 0 -${radius} a ${radius} ${radius} 0 1 1 0 ${radius * 2} a ${radius} ${radius} 0 1 1 0 -${radius * 2}`
     },
+
     perimeter() {
       const radius = 50 - parseFloat(this.relativeStrokeWidth) / 2
       return 2 * Math.PI * radius
     },
+
     circlePathStyle() {
       const perimeter = this.perimeter
       return {
@@ -136,6 +146,7 @@ export default {
         transition: 'stroke-dashoffset 0.6s ease 0s, stroke 0.6s ease'
       }
     },
+
     stroke() {
       let ret
       if (this.color) {
@@ -154,6 +165,7 @@ export default {
       }
       return ret
     },
+
     iconClass() {
       if (this.type === 'line') {
         return this.status === 'success' ? 'sp-icon-circle-check' : 'sp-icon-circle-close'
@@ -161,6 +173,7 @@ export default {
         return this.status === 'success' ? 'sp-icon-check' : 'sp-icon-close'
       }
     },
+
     progressTextSize() {
       return this.type === 'line'
         ? 12 + this.strokeWidth * 0.4
