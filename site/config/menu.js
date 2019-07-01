@@ -119,9 +119,14 @@ export default {
               index: '4-4-6'
             },
             {
+              title: 'Upload 上传',
+              link: '/upload',
+              index: '4-4-7'
+            },
+            {
               title: 'Form 表单',
               link: '/form',
-              index: '4-4-7'
+              index: '4-4-8'
             }
           ]
         },
