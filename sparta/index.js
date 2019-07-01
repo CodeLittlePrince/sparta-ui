@@ -21,6 +21,7 @@ import RadioGroup from './components/radio-group'
 import Select from './components/select'
 import TimePicker from './components/time-picker'
 import DatePicker from './components/date-picker'
+import Progress from './components/progress'
 import Upload from './components/upload'
 import Form from './components/form'
 import FormItem from './components/form-item'
@@ -57,6 +58,7 @@ const components = [
   Select,
   TimePicker,
   DatePicker,
+  Progress,
   Upload,
   Form,
   FormItem,
@@ -110,6 +112,7 @@ export {
   Select,
   TimePicker,
   DatePicker,
+  Progress,
   Upload,
   Form,
   FormItem,

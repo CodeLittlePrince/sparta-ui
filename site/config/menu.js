@@ -164,6 +164,11 @@ export default {
               title: 'Toast 全局提示',
               link: '/toast',
               index: '5-1-2'
+            },
+            {
+              title: 'Progress 进度条',
+              link: '/progress',
+              index: '5-1-3'
             }
           ]
         }
