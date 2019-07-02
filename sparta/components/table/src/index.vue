@@ -89,7 +89,7 @@
         class="sp-table__loading"
       >
         <i
-          v-if="!isIe9"
+          v-if="!isIE9"
           class="sp-icon-loading"
         ></i>
         加载中...
@@ -146,7 +146,7 @@ export default {
         return /SpTableColumn/.test(item.tag)
       })
     },
-    isIe9() {
+    isIE9() {
       return navigator.appVersion.indexOf('MSIE 9.0') > -1
     }
   },

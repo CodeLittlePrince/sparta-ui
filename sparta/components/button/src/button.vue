@@ -18,7 +18,7 @@
     @click="handleClick"
   >
     <i
-      v-if="loading && !isIe9"
+      v-if="loading && !isIE9"
       class="sp-icon-loading"
     />
     <i
@@ -76,7 +76,7 @@ export default {
     buttonDisabled() {
       return this.disabled || (this.spForm || {}).disabled
     },
-    isIe9() {
+    isIE9() {
       return navigator.appVersion.indexOf('MSIE 9.0') > -1
     }
   },
