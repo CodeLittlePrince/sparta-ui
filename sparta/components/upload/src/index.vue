@@ -302,10 +302,7 @@ export default {
     handleRemoveItem(index) {
       const file = this.uploadFiles.splice(index, 1)
       this._abort(file[0])
-      const rst = this._getSuccessUploadFiles()
-      this.$emit('input', rst)
-      this.$emit('change', rst)
-      this.dispatch('SpFormItem', 'sp.form.change', rst)
+      this._emitChange()
     },
 
     /**
@@ -367,10 +364,7 @@ export default {
           res = this.processResult(res)
           file.url = res
           file.status = 'success'
-          const rst = this._getSuccessUploadFiles()
-          this.$emit('input', rst)
-          this.$emit('change', rst)
-          this.dispatch('SpFormItem', 'sp.form.change', rst)
+          this._emitChange()
           delete this.request[uid]
         },
         onError: err => {
@@ -513,10 +507,7 @@ export default {
         // 处理数据 。。。
         this.uploadFiles[index].url = this.processResult(JSON.parse(resData))
         this.uploadFiles[index].status = 'success'
-        const rst = this._getSuccessUploadFiles()
-        this.$emit('input', rst)
-        this.$emit('change', rst)
-        this.dispatch('SpFormItem', 'sp.form.change', rst)
+        this._emitChange()
       } catch (e) {
         this.uploadFiles[index].status = 'fail'
       }
@@ -524,6 +515,13 @@ export default {
       setTimeout(function(){
         document.body.removeChild(form)
       }, 0)
+    },
+
+    _emitChange() {
+      const rst = this._getSuccessUploadFiles()
+      this.$emit('input', rst)
+      this.$emit('change', rst)
+      this.dispatch('SpFormItem', 'sp.form.change', rst)
     },
 
     _parsePercentage(val) {
