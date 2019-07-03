@@ -4,6 +4,7 @@
       ref="reference"
       class="sp-upload__input"
       type="file"
+      :name="name"
       :multiple="multiple"
       :accept="accept"
       @change="handleChange"
@@ -16,6 +17,7 @@
           plain
           class="sp-upload-file__btn"
           icon="sp-icon-upload"
+          :disabled="disabled"
           @click="handleSelect"
         >
           <slot>上传文件</slot>
@@ -23,7 +25,7 @@
         <ul class="sp-upload-file__show">
           <li
             v-for="(item, index) in uploadFiles"
-            :key="item.url"
+            :key="item.uid"
             class="sp-upload-file__item"
             :class="{'is-error': item.status === 'fail'}"
           >
@@ -34,21 +36,25 @@
               :href="item.url"
               target="_blank"
             >{{ item.name }}</a>
+            <!-- 文件名 -->
             <span
               v-else
               class="sp-upload-file__item-name"
             >
               {{ item.name }}
             </span>
+            <!-- 删除按钮 -->
             <i
               class="sp-icon-close"
               @click="handleRemoveItem(index)"
             ></i>
-            <div
+            <!-- IE9情况显示 -->
+            <span
               v-if="item.status !== 'success' && item.status !== 'fail' && isIE9"
-            >上传中...</div>
+            >上传中...</span>
+            <!-- IE10+显示进度条 -->
             <sp-progress
-              v-if="item.status !== 'success' && item.status !== 'fail' && !isIE9"
+              v-if="item.percentage && item.status !== 'success' && item.status !== 'fail' && !isIE9"
               type="line"
               :percentage="_parsePercentage(item.percentage)"
             />
@@ -63,22 +69,33 @@
         <ul class="sp-upload-picture__show">
           <li
             v-for="(item, index) in uploadFiles"
-            :key="item.url"
+            :key="item.uid"
             class="sp-upload-picture__item"
             :class="{'is-error': item.status === 'fail'}"
           >
             <div class="sp-upload-picture__item-info">
               <img
-                v-if="item.status === 'success'"
-                :src="isIE9 ? item.url : item.urlBase64"
+                v-if="item.status === 'success' && (item.type === 'image' || isIE9)"
+                :src="(isIE9 || !item.urlBase64) ? item.url : item.urlBase64"
                 alt=""
               >
+              <!-- 不是图片的文件兼容 -->
+              <div
+                v-if="item.status === 'success' && item.type !== 'image' && !isIE9"
+                class="sp-upload-picture__item-info-file"
+              >
+                <i class="sp-icon-picture-outline"></i>
+                <div class="sp-upload-picture__item-info-name">
+                  {{ item.name }}
+                </div>
+              </div>
               <!-- 上传中 -->
               <div
                 v-if="item.status !== 'success' && item.status !== 'fail' && isIE9"
+                class="sp-upload-picture__item-info-ie9"
               >上传中...</div>
               <sp-progress
-                v-if="item.status !== 'success' && item.status !== 'fail' && !isIE9"
+                v-if="item.percentage && item.status !== 'success' && item.status !== 'fail' && !isIE9"
                 type="circle"
                 :width="86"
                 :percentage="_parsePercentage(item.percentage)"
@@ -86,9 +103,10 @@
               <!-- 上传错误 -->
               <div
                 v-if="item.status === 'fail' && isIE9"
+                class="sp-upload-picture__item-info-ie9 is-error"
               >上传失败</div>
               <sp-progress
-                v-if="item.status === 'fail' && !isIE9"
+                v-if="item.percentage && item.status === 'fail' && !isIE9"
                 type="circle"
                 :percentage="100"
                 :width="86"
@@ -107,17 +125,19 @@
               ></i>
             </span>
           </li>
+          <!-- 上传图片按钮 -->
+          <li
+            v-show="showUploadBtn"
+            class="sp-upload-picture__btn"
+            :class="{'is-disabled': disabled}"
+            :disabled="disabled"
+            @click="handleSelect"
+          >
+            <div class="sp-icon-plus-box"><i class="sp-icon-plus"></i></div>
+            <slot>上传图片</slot>
+          </li>
         </ul>
-        <!-- 上传文件按钮 -->
-        <sp-button
-          v-show="showUploadBtn"
-          plain
-          class="sp-upload-picture__btn"
-          @click="handleSelect"
-        >
-          <div><i class="sp-icon-plus"></i></div>
-          <slot>上传图片</slot>
-        </sp-button>
+        
       </div>
     </template>
   </div>
@@ -135,6 +155,10 @@ export default {
   },
 
   props: {
+    disabled: {
+      type: Boolean,
+      default: false
+    },
     multiple: {
       type: Boolean,
       default: false
@@ -197,6 +221,10 @@ export default {
       type: Function,
       default: function() {}
     },
+    beforeRemove: {
+      type: Function,
+      default: function() {}
+    },
     onExceed: {
       type: Function,
       default: function() {}
@@ -220,32 +248,57 @@ export default {
     }
   },
 
-  mounted() {
-    if (this.isIE9) {
-      // 为了IE9的时候无刷新上传，使用iframe方式
-      this._createIframe()
+  watch: {
+    files(val) {
+      this.uploadFiles = val
     }
   },
-  
+
+  mounted() {
+    this._initUploadFilesData()
+  },
+
   methods: {
     handleSelect() {
-      this.$refs.reference.click()
+      if (!this.disabled) {
+        this.$refs.reference.click()
+      }
     },
     
     /**
      * 选取文件以后操作
      */
     handleChange(e) {
-      const files = e.target.files
-      if (files) {
-        this._uploadFiles(files)
+      if (this.isIE9) {
+        this._uploadByIframe()
+      } else {
+        const files = e.target.files
+        if (files) {
+          this._uploadFiles(files)
+        }
       }
     },
 
     handleRemoveItem(index) {
       const file = this.uploadFiles.splice(index, 1)
       this._abort(file[0])
-      this.$emit('change', JSON.parse(JSON.stringify(this.uploadFiles)))
+      const rst = this._getSuccessUploadFiles()
+      this.$emit('change', rst)
+    },
+
+    /**
+     * 初始化files的状态
+     */
+    _initUploadFilesData() {
+      setTimeout(() => {
+        this.uploadFiles = this.files.map(item => {
+          item.status = 'success'
+          item.type = 'image'
+          item.percentage = 100
+          item.uid = Date.now() + this.uidIndex++
+          return item
+        })
+      }, 0)
     },
 
     _uploadFiles(files) {
@@ -260,14 +313,13 @@ export default {
       if (!this.multiple) { postFiles = postFiles.slice(0, 1) }
 
       if (postFiles.length === 0) return
-
       postFiles.forEach(rawFile => {
         this._onStart(rawFile)
-        this._upload(rawFile)
+        this._uploadByXHR(rawFile)
       })
     },
 
-    _upload(rawFile) {
+    _uploadByXHR(rawFile) {
       // 清理之前数据
       this.$refs.reference.value = null
 
@@ -350,10 +402,11 @@ export default {
         name: rawFile.name,
         size: rawFile.size,
         percentage: 0,
-        raw: rawFile
+        raw: rawFile,
+        type: rawFile.type.startsWith('image') ? 'image' : 'file'
       }
       // 预显示
-      if (this.type === 'picture') {
+      if (this.type === 'picture' && !this.isIE9) {
         try {
           file.urlBase64 = URL.createObjectURL(rawFile)
         } catch (err) {
@@ -380,23 +433,67 @@ export default {
       return rst
     },
 
-    _createIframe() {
+    _uploadByIframe() {
       // IE9只能通过form方式上传文件，但要做到无刷新上传，就得借助iframe
+      // this.$refs.reference.value
+      let namePieces = this.$refs.reference.value.split('\\')
+      const file = {
+        uid: Date.now() + this.uidIndex++,
+        status: 'ready',
+        name: namePieces[namePieces.length - 1]
+      }
+      this.uploadFiles.push(file)
       const now = Date.now()
       let hiddenframe = document.createElement('iframe')
       let hiddenform = document.createElement('form')
+      const input = this.$refs.reference
+      let inputClone = input.cloneNode()
       const iframeId = 'x-upload-iframe' + now
       const formId = 'x-upload-form' + now
-      hiddenframe.name = this.name
-      hiddenframe.id = iframeId
+
+      input.parentNode.insertBefore(inputClone, input)
+
+      hiddenframe.src = 'javascript:void(0);'
+      hiddenframe.name = iframeId
       hiddenframe.setAttribute('style', 'width:0;height:0;display:none')
+
       hiddenform.id = formId
       hiddenform.setAttribute('style', 'width:0;height:0;display:none')
-      document.body.appendChild(hiddenframe)
-      document.body.appendChild(hiddenform)
+      hiddenform.target = hiddenframe.name
+      hiddenform.action = this.action
+      hiddenform.method = 'post'
+      hiddenform.enctype = 'multipart/form-data'
 
-      const form = document.getElementById(hiddenform.id)
-      form.target = hiddenframe.name
+      document.body.appendChild(hiddenform)
+      hiddenform.appendChild(input)
+      hiddenform.appendChild(hiddenframe)
+
+      hiddenframe.addEventListener('load', () => {
+        this._iframeUpload(hiddenform, hiddenframe, file)
+      })
+
+      hiddenform.submit()
+    },
+
+    _iframeUpload(form, iframe, file) {
+      // 获取iframe的内容，即服务返回的数据
+      // 🔥服务端返回的数据必须为text/plain或者text/html，否则会各种报错
+      // 如果resData解析不了说明上传失败
+      const index = this.uploadFiles.indexOf(file)
+      try {
+        const resData = iframe.contentDocument.body.textContent || iframe.contentWindow.document.body.textContent
+        // 处理数据 。。。
+        this.uploadFiles[index].url = this.processResult(JSON.parse(resData))
+        this.uploadFiles[index].status = 'success'
+        const rst = this._getSuccessUploadFiles()
+        this.$emit('change', rst)
+      } catch (e) {
+        this.uploadFiles[index].status = 'fail'
+      }
+      //删除form
+      setTimeout(function(){
+        document.body.removeChild(form)
+      }, 0)
     },
 
     _parsePercentage(val) {
@@ -419,7 +516,6 @@ export default {
   &-file {
     &__item {
       position: relative;
-      height: 22px;
       margin-top: 8px;
       font-size: 14px;
       transition: $transition-all;
@@ -480,7 +576,6 @@ export default {
 
     &__show {
       @include clearfix();
-      float: left;
     }
 
     &__item {
@@ -520,6 +615,34 @@ export default {
           display: inline-block;
           transition: $transition-all;
         }
+
+        &-ie9 {
+          font-size: 14px;
+          color: $upload-file__item-color;
+          text-align: center;
+          line-height: 84px;
+          &.is-error {
+            color: $color-danger;
+          }
+        }
+
+        &-file {
+          text-align: center;
+        }
+
+        .sp-icon-picture-outline {
+          margin-top: 15px;
+          font-size: 24px;
+          color: $color-primary;
+        }
+
+        &-name {
+          margin-top: 10px;
+          width: 100%;
+          @include ellipsis();
+          font-size: 14px;
+          text-align: center;
+        }
       }
 
       &-actions {
@@ -550,27 +673,45 @@ export default {
     }
 
     &__btn {
-      display: table;
+      display: table-cell;
       width: 104px;
       height: 104px;
       margin-right: 8px;
       margin-bottom: 8px;
       text-align: center;
       vertical-align: middle;
-      background-color: #fafafa;
-      border: 1px dashed #d9d9d9;
-      border-radius: 4px;
+      background-color: $upload-picture__btn-background;
+      border: $upload-picture__btn-border;
+      border-radius: $upload-picture__btn-border-radius;
       transition: $transition-all;
+      font-size: $upload-picture__btn-font-size;
       cursor: pointer;
+      box-sizing: border-box;
+
+      .sp-icon-plus-box {
+        width: 104px;
+      }
 
       .sp-icon-plus {
         font-size: 26px;
         margin-bottom: 10px;
-        color: #999;
+        color: $upload-picture__btn-icon-color;
       }
 
-      &.is-plain:hover, &.is-plain:focus {
-        color: inherit;
+      &:hover {
+        background-color: $upload-picture__btn-background-hover;
+        border-color: $color-primary;
+      }
+
+      &.is-disabled {
+        color: $upload-picture__btn--is-disabled-color;
+        background-color: $upload-picture__btn--is-disabled-background;
+        border-color: $upload-picture__btn--is-disabled-border-color;
+        cursor: not-allowed;
+
+        .sp-icon-plus {
+          color: $upload-picture__btn--is-disabled-color;
+        }
       }
     }
   }

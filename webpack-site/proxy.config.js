@@ -19,5 +19,6 @@ const ip = getIP(0) || 'localhost'
 
 module.exports = {
   ip: ip,
-  domain: `http://${ip}`
+  domain: `http://${ip}`,
+  port: '7784'
 }

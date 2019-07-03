@@ -32,6 +32,15 @@ async function serve() {
     {
       clientLogLevel: 'none',
       quiet: true,
+      proxy: {
+        // 凡是 `/api` 开头的 http 请求，都会被代理到 target 上，由 koa 提供 mock 数据。
+        // koa 代码在 ./mock 目录中，启动命令为 npm run mock。
+        '/': {
+          target: `${proxyConfig.domain}:${proxyConfig.port}`, // 如果说联调了，将地址换成后端环境的地址就哦了
+          secure: false,
+          changeOrigin: true
+        }
+      },
       disableHostCheck: true, // 为了手机可以访问
       contentBase: webpackConfigBase.resolve('dev'), // 本地服务器所加载的页面所在的目录
       watchContentBase: true,
@@ -39,18 +48,6 @@ async function serve() {
       hot: true  // 使用热加载插件 HotModuleReplacementPlugin
     }
   )
-  
-  // 关闭监听保证进程关闭
-  ;['SIGINT', 'SIGTERM'].forEach(signal => {
-    process.on(signal, () => {
-      server.close(() => {
-        process.exit(0)
-      })
-    })
-  })
-  process.on('SIGHUP', function () {
-    process.kill(process.pid, 'SIGTERM')
-  })
   
   // 编译完成后提示文案
   compiler.hooks.done.tap('Webpack devServer serve', stats => {
@@ -61,6 +58,7 @@ async function serve() {
     console.log('  App running at:')
     console.log(`  - Local:   ${chalk.cyan('http://localhost' + ':' + port)}`)
     console.log(`  - Network: ${chalk.cyan('http://' + proxyConfig.ip + ':' + port)}`)
+    console.log(`  - Mock:    ${chalk.cyan('http://' + proxyConfig.ip + ':' + proxyConfig.port)}`)
     console.log()
     console.log('  Note that the development build is not optimized.')
     console.log(`  To create a production build, and take a view of files' size, run ${chalk.cyan('npm run analyze')}.`)

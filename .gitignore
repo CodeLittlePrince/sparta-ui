@@ -1,5 +1,6 @@
 node_modules/
 dist/
+server/uploadFiles
 lib/
 test/unit/coverage
 .DS_Store
