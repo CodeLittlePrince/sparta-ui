@@ -83,10 +83,11 @@
       ]"
     >
       <sp-upload
+        :files="validateForm1.picture"
         action="/api/upload"
         type="picture"
-        v-model="validateForm1.picture"
         :processResult="processPictureResult"
+        @change="handlePictureChange"
         :limit="1"
       >
         上传靓照
@@ -101,7 +102,7 @@
         type="primary"
         @click="submitForm('validateForm1')"
       >提交</sp-button>
-      <sp-button @click="resetForm('validateForm1')">重置</sp-button>
+      <sp-button @click="handleReset1">重置</sp-button>
     </sp-form-item>
   </sp-form>
 </template>
@@ -139,6 +140,9 @@
       },
       resetForm(formName) {
         this.$refs[formName].resetFields()
+      },
+      handlePictureChange(list) {
+        this.validateForm1.picture = list
       },
       processPictureResult(item) {
         return item.path
@@ -456,6 +460,10 @@
       },
       processPictureResult(item) {
         return item.path
+      },
+      handleReset1() {
+        this.resetForm('validateForm1')
+        this.validateForm1.picture = []
       }
     }
   }

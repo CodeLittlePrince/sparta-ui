@@ -175,7 +175,7 @@ export default {
   mixins: [Emitter],
 
   props: {
-    value: {
+    files: {
       type: Array,
       default: () => []
     },
@@ -255,7 +255,7 @@ export default {
     return {
       request: {},
       uidIndex: 1,
-      uploadFiles: this.value
+      uploadFiles: this.files
     }
   },
 
@@ -269,7 +269,7 @@ export default {
   },
 
   watch: {
-    value(val) {
+    files(val) {
       this.uploadFiles = val
     }
   },
@@ -309,7 +309,7 @@ export default {
      * 初始化files的状态
      */
     _initUploadFilesData() {
-      this.uploadFiles = this.value.map(item => {
+      this.uploadFiles = this.files.map(item => {
         item.status = 'success'
         item.type = 'image'
         item.percentage = 100
@@ -519,7 +519,6 @@ export default {
 
     _emitChange() {
       const rst = this._getSuccessUploadFiles()
-      this.$emit('input', rst)
       this.$emit('change', rst)
       this.dispatch('SpFormItem', 'sp.form.change', rst)
     },

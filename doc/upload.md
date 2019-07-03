@@ -8,14 +8,14 @@
 ### 文件上传
 经典款式，用户点击按钮弹出文件选择框
 
-:::demo `action`为必填的字段，为上传的地址；<br>由于服务器不一定按照组件预先定义的格式返回数据，所以需要借助`processResult`处理；<br>每次上传成功/删除后，都会触发`change`，可在此事件回调中获取最终的值；<br>组件的值可用`v-model`绑定。
+:::demo `action`为必填的字段，为上传的地址；由于服务器不一定按照组件预先定义的格式返回数据，所以需要借助`processResult`处理；每次上传成功/删除后，都会触发`change`，可在此事件回调中获取最终的值；
 ```vue
 <template>
   <div class="sp-upload-demo">
     <sp-upload
-      v-model="fileList1"
       action="/api/upload"
       :processResult="processResult"
+      @change="handleChange"
     >
       上传文件
       <template slot="tip">
@@ -27,17 +27,10 @@
 
 <script>
 export default{
-  data() {
-    return {
-      files1: [{name: 'food.jpg', url: 'https://cn.vuejs.org/images/logo.png'}]
-    }
-  },
-  watch: {
-    fileList1(val) {
-      console.log(val)
-    }
-  },
   methods: {
+    handleChange(list) {
+      console.log(list)
+    },
     processResult(item) {
       return item.path
     }
@@ -56,6 +49,7 @@ export default{
     <sp-upload
       action="/api/upload"
       :processResult="processResult"
+      :files="[{name: 'food.jpg', url: 'https://cn.vuejs.org/images/logo.png'}]"
       @change="handleChange"
       multiple
     >
@@ -211,7 +205,7 @@ export default{
 ### Attribute
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
-| value | 上传的文件列表, 例如: [{name: 'food.jpg', url: 'https://xxx.cdn.com/xxx.jpg'}] | array | — | [] |
+| files | 上传的文件列表, 例如: [{name: 'food.jpg', url: 'https://xxx.cdn.com/xxx.jpg'}] | array | — | [] |
 | action | 必选参数，上传的地址 | string | — | — |
 | headers | 设置上传的请求头部 | object | — | — |
 | multiple | 是否支持多选文件 | boolean | — | — |
@@ -239,16 +233,10 @@ export default{
 export default{
   data() {
     return {
-      fileList1: [{name: 'food.jpg', url: 'https://cn.vuejs.org/images/logo.png'}],
       data3: {
         name: 'kitty',
         age: 7
       }
-    }
-  },
-  watch: {
-    fileList1(val) {
-      console.log(val)
     }
   },
   methods: {
