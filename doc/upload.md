@@ -102,7 +102,7 @@ export default{
     <sp-upload
       type="picture"
       action="/api/upload"
-      :files="[{name: 'food.jpg', url: '/static/img/avatar.jpg'}]"
+      :files="[{name: 'food.jpg', url: 'https://cn.vuejs.org/images/logo.png'}]"
       :processResult="processResult"
       @change="handleChange"
     >
