@@ -261,10 +261,11 @@ $date-picker-pane__cell-color-hover: $color-primary;
 /* Upload
 -------------------------- */
 
-$upload-option-font-size: 14px;
+$upload__tip-color: #606266;
 $upload-file__item-background-hover: #f5f7fa;
 $upload-file__item-color: $color-text-primary;
 $upload-file__item--is-error-color: $color-danger;
+$upload-picture__item-size: 104px;
 $upload-picture__btn-background: #fafafa;
 $upload-picture__btn-background-hover: #fff;
 $upload-picture__btn-border: 1px dashed #d9d9d9;

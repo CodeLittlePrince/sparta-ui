@@ -34,7 +34,6 @@ export default {
 
   watch: {
     value(value) {
-      console.log('xxx', value)
       this.dispatch('SpFormItem', 'sp.form.change', [value])
     }
   }

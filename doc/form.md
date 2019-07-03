@@ -74,6 +74,27 @@
         >{{city}}</sp-checkbox>
       </sp-checkbox-group>
     </sp-form-item>
+    <!-- 靓照 -->
+    <sp-form-item
+      label="靓照"
+      prop="picture"
+      :rules="[
+        { required: true, message: '靓照不能为空'}
+      ]"
+    >
+      <sp-upload
+        action="/api/upload"
+        type="picture"
+        v-model="validateForm1.picture"
+        :processResult="processPictureResult"
+        :limit="1"
+      >
+        上传靓照
+        <template slot="tip">
+          温馨提示：大文件可能会上传更长时间
+        </template>
+      </sp-upload>
+    </sp-form-item>
     <!-- 按钮 -->
     <sp-form-item>
       <sp-button
@@ -93,7 +114,8 @@
           name: '',
           age: '',
           favorite: '',
-          cities: []
+          cities: [],
+          picture: []
         },
         favouriteList: [
           { label: '唱歌', value: 'sing' },
@@ -117,6 +139,9 @@
       },
       resetForm(formName) {
         this.$refs[formName].resetFields()
+      },
+      processPictureResult(item) {
+        return item.path
       }
     }
   }
@@ -369,7 +394,8 @@
           name: '',
           age: '',
           favorite: '',
-          cities: []
+          cities: [],
+          picture: []
         },
         favouriteList: [
           { label: '唱歌', value: 'sing' },
@@ -424,6 +450,12 @@
       },
       resetForm(formName) {
         this.$refs[formName].resetFields()
+      },
+      handlePictureChange(list) {
+        this.validateForm1.picture = list
+      },
+      processPictureResult(item) {
+        return item.path
       }
     }
   }

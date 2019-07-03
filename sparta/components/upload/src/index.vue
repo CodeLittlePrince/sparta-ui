@@ -22,6 +22,11 @@
         >
           <slot>上传文件</slot>
         </sp-button>
+        <!-- 提示 -->
+        <div class="sp-upload__tip">
+          <slot name="tip"></slot>
+        </div>
+        <!-- 展示 -->
         <ul class="sp-upload-file__show">
           <li
             v-for="(item, index) in uploadFiles"
@@ -137,13 +142,17 @@
             <slot>上传图片</slot>
           </li>
         </ul>
-        
+        <!-- 提示 -->
+        <div class="sp-upload__tip">
+          <slot name="tip"></slot>
+        </div>
       </div>
     </template>
   </div>
 </template>
 
 <script>
+import Emitter from 'sparta/common/js/mixins/emitter'
 import SPProgress from 'sparta/components/progress'
 import httpRequest from './ajax'
 
@@ -154,7 +163,22 @@ export default {
     'sp-progress': SPProgress
   },
 
+  inject: {
+    spForm: {
+      default: ''
+    },
+    spFormItem: {
+      default: ''
+    }
+  },
+
+  mixins: [Emitter],
+
   props: {
+    value: {
+      type: Array,
+      default: () => []
+    },
     disabled: {
       type: Boolean,
       default: false
@@ -162,10 +186,6 @@ export default {
     multiple: {
       type: Boolean,
       default: false
-    },
-    files: {
-      type: Array,
-      default: () => []
     },
     type: {
       type: String,
@@ -235,7 +255,7 @@ export default {
     return {
       request: {},
       uidIndex: 1,
-      uploadFiles: this.files
+      uploadFiles: this.value
     }
   },
 
@@ -249,7 +269,7 @@ export default {
   },
 
   watch: {
-    files(val) {
+    value(val) {
       this.uploadFiles = val
     }
   },
@@ -283,22 +303,22 @@ export default {
       const file = this.uploadFiles.splice(index, 1)
       this._abort(file[0])
       const rst = this._getSuccessUploadFiles()
+      this.$emit('input', rst)
       this.$emit('change', rst)
+      this.dispatch('SpFormItem', 'sp.form.change', rst)
     },
 
     /**
      * 初始化files的状态
      */
     _initUploadFilesData() {
-      setTimeout(() => {
-        this.uploadFiles = this.files.map(item => {
-          item.status = 'success'
-          item.type = 'image'
-          item.percentage = 100
-          item.uid = Date.now() + this.uidIndex++
-          return item
-        })
-      }, 0)
+      this.uploadFiles = this.value.map(item => {
+        item.status = 'success'
+        item.type = 'image'
+        item.percentage = 100
+        item.uid = Date.now() + this.uidIndex++
+        return item
+      })
     },
 
     _uploadFiles(files) {
@@ -348,7 +368,9 @@ export default {
           file.url = res
           file.status = 'success'
           const rst = this._getSuccessUploadFiles()
+          this.$emit('input', rst)
           this.$emit('change', rst)
+          this.dispatch('SpFormItem', 'sp.form.change', rst)
           delete this.request[uid]
         },
         onError: err => {
@@ -424,10 +446,16 @@ export default {
       for (let i = 0, len = copy.length; i < len; i++) {
         const item = copy[i]
         if (item.status === 'success') {
-          rst.push({
+          let data = {
             name: item.name,
-            url: item.url
-          })
+            url: item.url,
+            status: item.status,
+            type: item.type
+          }
+          if (this.type === 'picture' && !this.isIE9) {
+            data.urlBase64 = item.urlBase64
+          }
+          rst.push(data)
         }
       }
       return rst
@@ -486,7 +514,9 @@ export default {
         this.uploadFiles[index].url = this.processResult(JSON.parse(resData))
         this.uploadFiles[index].status = 'success'
         const rst = this._getSuccessUploadFiles()
+        this.$emit('input', rst)
         this.$emit('change', rst)
+        this.dispatch('SpFormItem', 'sp.form.change', rst)
       } catch (e) {
         this.uploadFiles[index].status = 'fail'
       }
@@ -508,9 +538,15 @@ export default {
 @import "sparta/common/scss/mixin";
 
 .sp-upload {
-
   &__input {
     display: none;
+  }
+
+  &__tip {
+    font-size: 12px;
+    color: $upload__tip-color;
+    line-height: 1.2;
+    margin-top: 8px;
   }
 
   &-file {
@@ -581,8 +617,8 @@ export default {
     &__item {
       position: relative;
       float: left;
-      width: 104px;
-      height: 104px;
+      width: $upload-picture__item-size;
+      height: $upload-picture__item-size;
       padding: 8px;
       border: 1px solid #d9d9d9;
       border-radius: 4px;
@@ -674,8 +710,8 @@ export default {
 
     &__btn {
       display: table-cell;
-      width: 104px;
-      height: 104px;
+      width: $upload-picture__item-size;
+      height: $upload-picture__item-size;
       margin-right: 8px;
       margin-bottom: 8px;
       text-align: center;
@@ -689,7 +725,7 @@ export default {
       box-sizing: border-box;
 
       .sp-icon-plus-box {
-        width: 104px;
+        width: $upload-picture__item-size;
       }
 
       .sp-icon-plus {
