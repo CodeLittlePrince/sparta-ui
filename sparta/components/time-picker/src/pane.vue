@@ -93,3 +93,30 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+@import "~sparta/common/scss/variable";
+@import "sparta/common/scss/mixin";
+
+.sp-time-picker-pane {
+  width: $time-picker-pane-width;
+  float: left;
+  max-height: $time-picker-pane-max-height;
+  box-sizing: border-box;
+  border-left: $time-picker-pane-border;
+  overflow-y: hidden;
+  overflow-x: hidden;
+
+  &:first-child {
+    border-left: none;
+  }
+
+  &__list {
+    width: 100%;
+  }
+
+  &:hover {
+    overflow-y: auto;
+  }
+}
+</style>

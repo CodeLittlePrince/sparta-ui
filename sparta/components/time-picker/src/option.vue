@@ -119,3 +119,36 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+@import "~sparta/common/scss/variable";
+@import "sparta/common/scss/mixin";
+
+.sp-time-picker-option {
+  width: 100%;
+  height: $time-picker-option-height;
+  line-height: $time-picker-option-height;
+  text-align: left;
+  padding-left: 10px;
+  user-select: none;
+  transition: $transition-all;
+  color: $time-picker-option-color;
+  box-sizing: border-box;
+  font-size: $time-picker-option-font-size;
+  cursor: pointer;
+
+  &.is-hover {
+    background-color: $select-dropdown-item-background-hover;
+  }
+
+  &.is-selected {
+    color: $time-picker-option-color--is-selected;
+    font-weight: bold;
+  }
+
+  &.is-disabled {
+    color: $time-picker-option-color--is-disabled;
+    cursor: not-allowed;
+  }
+}
+</style>

@@ -70,3 +70,21 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+@import "~sparta/common/scss/variable";
+@import "sparta/common/scss/mixin";
+
+.sp-time-picker__dropdown {
+  border: $time-picker-border;
+  border-radius: $time-picker-border-radius;
+  box-shadow: $flot-box-shadow-box;
+  box-sizing: border-box;
+  background-color: $time-picker-pane-background;
+  margin: 5px 0;
+
+  &__box {
+    @include clearfix();
+  }
+}
+</style>

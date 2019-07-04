@@ -70,3 +70,21 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+@import "~sparta/common/scss/variable";
+@import "sparta/common/scss/mixin";
+
+.sp-date-picker__dropdown {
+  box-sizing: border-box;
+  margin: 5px 0;
+
+  &__box {
+    border: $date-picker-border;
+    border-radius: $date-picker-border-radius;
+    box-shadow: $flot-box-shadow-box;
+    background-color: $date-picker-pane-background;
+    @include clearfix();
+  }
+}
+</style>

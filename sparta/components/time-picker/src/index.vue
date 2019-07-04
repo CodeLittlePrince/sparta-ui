@@ -316,70 +316,8 @@ export default {
 
 <style lang="scss">
 @import "~sparta/common/scss/variable";
-@import "sparta/common/scss/mixin";
 
 .sp-time-picker {
-  &__dropdown {
-    border: $time-picker-border;
-    border-radius: $time-picker-border-radius;
-    box-shadow: $flot-box-shadow-box;
-    box-sizing: border-box;
-    background-color: $time-picker-pane-background;
-    margin: 5px 0;
-
-    &__box {
-      @include clearfix();
-    }
-  }
-
-  &-pane {
-    width: $time-picker-pane-width;
-    float: left;
-    max-height: $time-picker-pane-max-height;
-    box-sizing: border-box;
-    border-left: $time-picker-pane-border;
-    overflow-y: hidden;
-    overflow-x: hidden;
-
-    &:first-child {
-      border-left: none;
-    }
-
-    &__list {
-      width: 100%;
-    }
-
-    &:hover {
-      overflow-y: auto;
-    }
-  }
-
-  &-option {
-    width: 100%;
-    height: $time-picker-option-height;
-    line-height: $time-picker-option-height;
-    text-align: left;
-    padding-left: 10px;
-    user-select: none;
-    transition: $transition-all;
-    color: $time-picker-option-color;
-    box-sizing: border-box;
-    font-size: $time-picker-option-font-size;
-    cursor: pointer;
-
-    &.is-hover {
-      background-color: $select-dropdown-item-background-hover;
-    }
-
-    &.is-selected {
-      color: $time-picker-option-color--is-selected;
-      font-weight: bold;
-    }
-
-    &.is-disabled {
-      color: $time-picker-option-color--is-disabled;
-      cursor: not-allowed;
-    }
-  }
+  color: $time-picker-color;
 }
 </style>
