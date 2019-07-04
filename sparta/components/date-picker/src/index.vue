@@ -86,13 +86,12 @@
       class="sp-date-picker-content sp-date-picker-range"
       :class="{'is-focus': isDateRangeFocus}"
       @click="handleRangeClick"
-      @blur="handleRangeBlur"
     >
       <!-- 开始input -->
       <div class="sp-date-picker-range-start">
         <sp-input
           v-model="modelStart"
-          :disabled="disabledStart"
+          :disabled="disabled"
           :placeholder="placeholderStart"
           @input="handleStartInput"
         />
@@ -103,7 +102,7 @@
       <div class="sp-date-picker-range-end">
         <sp-input
           v-model="modelEnd"
-          :disabled="disabledEnd"
+          :disabled="disabled"
           :placeholder="placeholderEnd"
           @input="handleEndInput"
         />
@@ -126,32 +125,120 @@
         class="sp-date-picker__dropdown"
       >
         <transition name="sp-zoom-in-top">
-          <div
-            class="sp-date-picker__dropdown__box"
-          >
-            <!-- 开始日期模板 -->
-            <div class="sp-date-picker-range__pane">
-              <div v-show="visiblePaneDayStart">
-                <sp-date-picker-pane-day />
+          <div>
+            <div
+              class="sp-date-picker__dropdown__box"
+            >
+              <!-- 开始日期模板 -->
+              <div class="sp-date-picker-range__pane">
+                <div v-show="visiblePaneDayStart">
+                  <sp-date-picker-pane-day
+                    :year="yearStart"
+                    :month="monthStart"
+                    :day="dayStart"
+                    :cal-year="calYearStart"
+                    :cal-month="calMonthStart"
+                    :disable-year="disableYear"
+                    :disable-month="disableMonth"
+                    :disable-day="disableDay"
+                    :today-year="todayYear"
+                    :today-month="todayMonth"
+                    :today-day="todayDay"
+                    :end="end"
+                    @calYearChange="handleCalYearStartChange"
+                    @calMonthChange="handleCalMonthStartChange"
+                    @calDayChange="handleCalDayStartChange"
+                    @yearChange="handleYearStartChange"
+                    @monthChange="handleMonthStartChange"
+                    @dayChange="handleDayStartChange"
+                    @daySelect="handleDayStartSelect"
+                    @switchYear="handleSwitchYearStart"
+                    @switchMonth="handleSwitchMonthStart"
+                    @modelChange="handleModelStartChange"
+                  />
+                </div>
+                <div v-show="visiblePaneMonthStart">
+                  <sp-date-picker-pane-month
+                    :year="yearStart"
+                    :month="monthStart"
+                    :cal-year="calYearStart"
+                    :cal-month="calMonthStart"
+                    :disable-year="disableYear"
+                    :disable-month="disableMonth"
+                    @calYearChange="handleCalYearStartChange"
+                    @calMonthChange="handleCalMonthStartChange"
+                    @monthSelect="handleMonthStartSelect"
+                  />
+                </div>
+                <div v-show="visiblePaneYearStart">
+                  <sp-date-picker-pane-year
+                    :year="yearStart"
+                    :cal-year="calYearStart"
+                    :disable-year="disableYear"
+                    @calYearChange="handleCalYearStartChange"
+                    @yearSelect="handleYearStartSelect"
+                  />
+                </div>
               </div>
-              <div v-show="visiblePaneYearStart">
-                <sp-date-picker-pane-year />
-              </div>
-              <div v-show="visiblePaneMonthStart">
-                <sp-date-picker-pane-month />
+              <!-- 结束日期模板 -->
+              <div class="sp-date-picker-range__pane">
+                <div v-show="visiblePaneDayEnd">
+                  <sp-date-picker-pane-day
+                    :year="yearEnd"
+                    :month="monthEnd"
+                    :day="dayEnd"
+                    :cal-year="calYearEnd"
+                    :cal-month="calMonthEnd"
+                    :disable-year="disableYear"
+                    :disable-month="disableMonth"
+                    :disable-day="disableDay"
+                    :today-year="todayYear"
+                    :today-month="todayMonth"
+                    :today-day="todayDay"
+                    :start="start"
+                    @calYearChange="handleCalYearEndChange"
+                    @calMonthChange="handleCalMonthEndChange"
+                    @calDayChange="handleCalDayEndChange"
+                    @yearChange="handleYearEndChange"
+                    @monthChange="handleMonthEndChange"
+                    @dayChange="handleDayEndChange"
+                    @daySelect="handleDayEndSelect"
+                    @switchYear="handleSwitchYearEnd"
+                    @switchMonth="handleSwitchMonthEnd"
+                    @modelChange="handleModelEndChange"
+                  />
+                </div>
+                <div v-show="visiblePaneMonthEnd">
+                  <sp-date-picker-pane-month
+                    :year="yearEnd"
+                    :month="monthEnd"
+                    :cal-year="calYearEnd"
+                    :cal-month="calMonthEnd"
+                    :disable-year="disableYear"
+                    :disable-month="disableMonth"
+                    @calYearChange="handleCalYearEndChange"
+                    @calMonthChange="handleCalMonthEndChange"
+                    @monthSelect="handleMonthEndSelect"
+                  />
+                </div>
+                <div v-show="visiblePaneYearEnd">
+                  <sp-date-picker-pane-year
+                    :year="yearEnd"
+                    :cal-year="calYearEnd"
+                    :disable-year="disableYear"
+                    @calYearChange="handleCalYearEndChange"
+                    @yearSelect="handleYearEndSelect"
+                  />
+                </div>
               </div>
             </div>
-            <!-- 结束日期模板 -->
-            <div class="sp-date-picker-range__pane">
-              <div v-show="visiblePaneDayEnd">
-                <sp-date-picker-pane-day />
-              </div>
-              <div v-show="visiblePaneYearEnd">
-                <sp-date-picker-pane-year />
-              </div>
-              <div v-show="visiblePaneMonthEnd">
-                <sp-date-picker-pane-month />
-              </div>
+            <!-- 底部 -->
+            <div class="sp-date-picker-range__foot">
+              <sp-button
+                type="primary"
+                size="mini"
+                @click="handleSubmitTime"
+              >确认</sp-button>
             </div>
           </div>
         </transition>
@@ -188,13 +275,12 @@ export default {
 
   props: {
     value: [String, Array],
-    placeholder: {
+    type: {
       type: String,
-      default: '请选择时间'
-    },
-    disabled: {
-      type: Boolean,
-      default: false
+      default: 'date',
+      validator(val) {
+        return ['date', 'daterange'].indexOf(val) > -1
+      }
     },
     disableYear: {
       type: Function,
@@ -208,45 +294,34 @@ export default {
       type: Function,
       default: () => false
     },
-    disabledStart: {
+    disabled: {
       type: Boolean,
       default: false
     },
+    // 普通日期选择框
+    placeholder: {
+      type: String,
+      default: '请选择日期'
+    },
+    // 范围型日期选择框
     placeholderStart: {
-      type: Boolean,
-      default: false
-    },
-    disabledEnd: {
-      type: Boolean,
-      default: false
+      type: String,
+      default: '开始日期'
     },
     placeholderEnd: {
-      type: Boolean,
-      default: false
-    },
-    type: {
       type: String,
-      default: 'date',
-      validator(val) {
-        return ['date', 'daterange'].indexOf(val) > -1
-      }
+      default: '结束日期'
     },
   },
 
   data() {
     return {
-      visible: false,
-      visiblePaneDay: true,
-      visiblePaneYear: false,
-      visiblePaneMonth: false,
-      visibleDateRange: false,
-      visiblePaneDayStart: true,
-      visiblePaneYearStart: false,
-      visiblePaneMonthStart: false,
-      visiblePaneDayEnd: true,
-      visiblePaneYearEnd: false,
-      visiblePaneMonthEnd: false,
-      isDateRangeFocus: false,
+      todayDay: '',
+      todayMonth: '',
+      todayYear: '',
+      start: '',
+      end: '',
+      // 普通日期选择框
       model: this.value,
       day: '',
       month: '',
@@ -254,11 +329,35 @@ export default {
       calDay: '',
       calMonth: '',
       calYear: '',
-      todayDay: '',
-      todayMonth: '',
-      todayYear: '',
+      visible: false,
+      visiblePaneDay: true,
+      visiblePaneYear: false,
+      visiblePaneMonth: false,
+      // 范围型日期选择框
+      visibleDateRange: false,
+      isDateRangeFocus: false,
+      // 范围型日期选择框 - 开始
       modelStart: this.value[0],
-      modelEnd: this.value[1]
+      dayStart: '',
+      monthStart: '',
+      yearStart: '',
+      calDayStart: '',
+      calMonthStart: '',
+      calYearStart: '',
+      visiblePaneDayStart: true,
+      visiblePaneYearStart: false,
+      visiblePaneMonthStart: false,
+      // 范围型日期选择框 - 结束
+      modelEnd: this.value[1],
+      dayEnd: '',
+      monthEnd: '',
+      yearEnd: '',
+      calDayEnd: '',
+      calMonthEnd: '',
+      calYearEnd: '',
+      visiblePaneDayEnd: true,
+      visiblePaneYearEnd: false,
+      visiblePaneMonthEnd: false
     }
   },
 
@@ -281,19 +380,24 @@ export default {
     },
     modelStart(val) {
       this.$emit('input', val)
-      // if (!val) {
-      //   this._resetDate()
-      // } else {
-      //   this._calDate()
-      // }
+      if (!val) {
+        this._resetDateStart()
+      } else {
+        this._calDateStart()
+      }
     },
     modelEnd(val) {
       this.$emit('input', val)
-      // if (!val) {
-      //   this._resetDate()
-      // } else {
-      //   this._calDate()
-      // }
+      if (!val) {
+        this._resetDateEnd()
+      } else {
+        this._calDateEnd()
+      }
+    },
+    isDateRangeFocus(val) {
+      if (!val) {
+        this.handleRangeBlur()
+      }
     }
   },
 
@@ -301,6 +405,7 @@ export default {
     if (this.disabled) {
       return
     }
+    // 设置默认值
     if (this.type === 'daterange') {
       this._setDefaultRange()
     } else {
@@ -317,21 +422,36 @@ export default {
   },
 
   methods: {
-    _setDefaultRange() {
-
-    },
     _setDefault() {
       const now = tool.formatDate(+new Date)
       const pieces = now.split('-')
       this.todayYear = pieces[0]
       this.todayMonth = pieces[1] - 1
       this.todayDay = pieces[2]
-      if (this.model && this._valiate()) {
+      if (this.model && this._valiate(this.model)) {
         this._calDate()
       } else {
         this._resetDate()
       }
     },
+    _setDefaultRange() {
+      const now = tool.formatDate(+new Date)
+      const pieces = now.split('-')
+      this.todayYear = pieces[0]
+      this.todayMonth = pieces[1] - 1
+      this.todayDay = pieces[2]
+      if (this.modelStart && this._valiate(this.modelStart)) {
+        this._calDateStart()
+      } else {
+        this._resetDateStart()
+      }
+      if (this.modelEnd && this._valiate(this.modelEnd)) {
+        this._calDateEnd()
+      } else {
+        this._resetDateEnd()
+      }
+    },
+
     _resetDate() {
       this.day = ''
       this.month = ''
@@ -340,8 +460,25 @@ export default {
       this.calMonth = new Date().getMonth()
       this.calYear = new Date().getFullYear()
     },
+    _resetDateStart() {
+      this.dayStart = ''
+      this.monthStart = ''
+      this.yearStart = ''
+      this.calDayStart = new Date().getDate()
+      this.calMonthStart = new Date().getMonth()
+      this.calYearStart = new Date().getFullYear()
+    },
+    _resetDateEnd() {
+      this.dayEnd = ''
+      this.monthEnd = ''
+      this.yearEnd = ''
+      this.calDayEnd = new Date().getDate()
+      this.calMonthEnd = new Date().getMonth() + 1 // 结束默认比开始多一个月
+      this.calYearEnd = new Date().getFullYear()
+    },
+
     _calDate() {
-      if (this._valiate()) {
+      if (this._valiate(this.model)) {
         const pieces = this.model.split('-')
         this.year = +pieces[0]
         this.month = +pieces[1] - 1
@@ -349,16 +486,48 @@ export default {
         this._setCalValues()
       }
     },
+    _calDateStart() {
+      if (this._valiate(this.modelStart)) {
+        const pieces = this.modelStart.split('-')
+        this.yearStart = +pieces[0]
+        this.monthStart = +pieces[1] - 1
+        this.dayStart = +pieces[2]
+        this._setCalValuesStart()
+      }
+    },
+    _calDateEnd() {
+      if (this._valiate(this.modelEnd)) {
+        const pieces = this.modelEnd.split('-')
+        this.yearEnd = +pieces[0]
+        this.monthEnd = +pieces[1] - 1
+        this.dayEnd = +pieces[2]
+        this._setCalValuesEnd()
+      }
+    },
+
     _setCalValues() {
       this.calYear = this.year
       this.calMonth = this.month
       this.calDay = this.day
     },
+    _setCalValuesStart() {
+      this.calYearStart = this.yearStart
+      this.calMonthStart = this.monthStart
+      this.calDayStart = this.dayStart
+    },
+    _setCalValuesEnd() {
+      this.calYearEnd = this.yearEnd
+      this.calMonthEnd = this.monthEnd
+      this.calDayEnd = this.dayEnd
+    },
     /**
      * 校验时间格式
      */
-    _valiate() {
-      const pieces = this.model.split('-')
+    _valiate(time) {
+      if (!time) {
+        return false
+      }
+      const pieces = time.split('-')
       const len = pieces.length
       if (len === 3) {
         // 防止用户自主输入disabled的条目
@@ -395,6 +564,12 @@ export default {
     handleInput() {
       this.visible = true
     },
+    handleStartInput() {
+      this.visibleDateRange = true
+    },
+    handleEndInput() {
+      this.visibleDateRange = true
+    },
     /**
      * 点击处理
      */
@@ -421,28 +596,73 @@ export default {
       }
     },
     
-    handleRangeBlur() {
 
-    },
-
-    handleStartInput() {
-      this.visibleDateRange = true
-    },
-    handleEndInput() {
-      this.visibleDateRange = true
-    },
-    
     /**
-     * 清除不符合格式的值
+     * 不符合格式的值，如果之前有值则用之前的值，否则清除
      */
     handleInputBlur() {
-      if (!this._valiate() && this.year && this.month && this.day) {
+      if (
+        !this._valiate(this.model) &&
+        this.year && this.month && this.day
+      ) {
         const year = this.year
         const month = tool.formatNumberTo2digits(this.month + 1)
         const day = tool.formatNumberTo2digits(this.day)
         this.model = [year, month, day].join('-')
-      } else if (!this._valiate() && !(this.year && this.month && this.day)) {
+      } else if (
+        !this._valiate(this.model) &&
+        !(this.year && this.month && this.day)
+      ) {
         this.model = ''
+      }
+    },
+
+    handleRangeBlur() {
+      // start
+      // 如果有yearStart，monthStart，dayStart
+      // 且格式验证未通过，则用之前保存的值
+      if (
+        !this._valiate(this.modelStart) &&
+        this.yearStart && this.monthStart && this.dayStart
+      ) {
+        const year = this.yearStart
+        const month = tool.formatNumberTo2digits(this.monthStart + 1)
+        const day = tool.formatNumberTo2digits(this.dayStart)
+        this.modelStart = [year, month, day].join('-')
+      } else if (
+        !this._valiate(this.modelStart) &&
+        !(this.yearStart && this.monthStart && this.dayStart)
+      ) {
+        this.modelStart = ''
+      }
+      // end
+      if (
+        !this._valiate(this.modelEnd) &&
+        this.yearEnd && this.monthEnd && this.dayEnd
+      ) {
+        const year = this.yearEnd
+        const month = tool.formatNumberTo2digits(this.monthEnd + 1)
+        const day = tool.formatNumberTo2digits(this.dayEnd)
+        this.modelEnd = [year, month, day].join('-')
+      } else if (
+        !this._valiate(this.modelEnd) &&
+        !(this.yearEnd && this.monthEnd && this.dayEnd)
+      ) {
+        this.modelEnd = ''
+      }
+      // 如果modelStart有值，但越界则清空
+      if (this.end < this.modelStart) {
+        this.modelStart = ''
+      }
+      // 如果modelEnd有值，但越界则清空
+      if (this.modelEnd < this.start) {
+        this.modelEnd = ''
+      }
+      // 如果modelStart，modelEnd有值，且比 modelEnd大，则交换（以防用户手动输入的情况）
+      if (this.modelStart && this.modelEnd && this.modelStart > this.modelEnd) {
+        const temp = this.modelStart
+        this.modelStart = this.modelEnd
+        this.modelEnd = temp
       }
     },
 
@@ -470,25 +690,110 @@ export default {
     handleDaySelect() {
       this.visible = false
     },
-
     handleMonthSelect() {
       this.visiblePaneDay = true
       this.visiblePaneMonth = false
     },
-
     handleYearSelect() {
       this.visiblePaneDay = true
       this.visiblePaneYear = false
     },
-
     handleSwitchYear() {
       this.visiblePaneDay = false
       this.visiblePaneYear = true
     },
-
     handleSwitchMonth() {
       this.visiblePaneDay = false
       this.visiblePaneMonth = true
+    },
+
+    // start
+    handleCalYearStartChange(val) {
+      this.calYearStart = val
+    },
+    handleCalMonthStartChange(val) {
+      this.calMonthStart = val
+    },
+    handleCalDayStartChange(val) {
+      this.calDayStart = val
+    },
+    handleYearStartChange(val) {
+      this.yearStart = val
+    },
+    handleMonthStartChange(val) {
+      this.monthStart = val
+    },
+    handleDayStartChange(val) {
+      this.dayStart = val
+    },
+    handleModelStartChange(val) {
+      this.modelStart = val
+      this.start = val
+    },
+    handleDayStartSelect() {
+      // this.visible = false
+    },
+    handleMonthStartSelect() {
+      this.visiblePaneDayStart = true
+      this.visiblePaneMonthStart = false
+    },
+    handleYearStartSelect() {
+      this.visiblePaneDayStart = true
+      this.visiblePaneYearStart = false
+    },
+    handleSwitchYearStart() {
+      this.visiblePaneDayStart = false
+      this.visiblePaneYearStart = true
+    },
+    handleSwitchMonthStart() {
+      this.visiblePaneDayStart = false
+      this.visiblePaneMonthStart = true
+    },
+
+    // end
+    handleCalYearEndChange(val) {
+      this.calYearEnd = val
+    },
+    handleCalMonthEndChange(val) {
+      this.calMonthEnd = val
+    },
+    handleCalDayEndChange(val) {
+      this.calDayEnd = val
+    },
+    handleYearEndChange(val) {
+      this.yearEnd = val
+    },
+    handleMonthEndChange(val) {
+      this.monthEnd = val
+    },
+    handleDayEndChange(val) {
+      this.dayEnd = val
+    },
+    handleModelEndChange(val) {
+      this.modelEnd = val
+      this.end = val
+    },
+    handleDayEndSelect() {
+      // this.visible = false
+    },
+    handleMonthEndSelect() {
+      this.visiblePaneDayEnd = true
+      this.visiblePaneMonthEnd = false
+    },
+    handleYearEndSelect() {
+      this.visiblePaneDayEnd = true
+      this.visiblePaneYearEnd = false
+    },
+    handleSwitchYearEnd() {
+      this.visiblePaneDayEnd = false
+      this.visiblePaneYearEnd = true
+    },
+    handleSwitchMonthEnd() {
+      this.visiblePaneDayEnd = false
+      this.visiblePaneMonthEnd = true
+    },
+    handleSubmitTime() {
+      this._resetRangeAllVisible()
     },
     /**
      * 点击其他区域触发事件
@@ -511,15 +816,18 @@ export default {
         !this.$el.contains(e.target) &&
         e.target != document.body
       ){
-        this.isDateRangeFocus = false
-        this.visibleDateRange = false
-        this.visiblePaneDayStart = true
-        this.visiblePaneYearStart = false
-        this.visiblePaneMonthStart = false
-        this.visiblePaneDayEnd = true
-        this.visiblePaneYearEnd = false
-        this.visiblePaneMonthEnd = false
+        this._resetRangeAllVisible()
       }
+    },
+    _resetRangeAllVisible() {
+      this.isDateRangeFocus = false
+      this.visibleDateRange = false
+      this.visiblePaneDayStart = true
+      this.visiblePaneYearStart = false
+      this.visiblePaneMonthStart = false
+      this.visiblePaneDayEnd = true
+      this.visiblePaneYearEnd = false
+      this.visiblePaneMonthEnd = false
     }
   }
 }
@@ -527,6 +835,7 @@ export default {
 
 <style lang="scss">
 @import "~sparta/common/scss/variable";
+@import "~sparta/common/scss/mixin";
 
 .sp-date-picker {
   color: $date-picker-color;
@@ -539,7 +848,7 @@ export default {
   &-range {
     border-width: 1px;
     background-image: none;
-    border: $input-border-color;
+    border: $data-picker-range-border;
     border-radius: $input-border-radus;
     transition: $transition-all;
 
@@ -558,6 +867,7 @@ export default {
 
       .sp-input .sp-input__inner {
         border: none;
+        width: 120px;
 
         &:focus {
           box-shadow: none;
@@ -575,6 +885,29 @@ export default {
 
     &__pane {
       float: left;
+    }
+
+    &__pane:first-child {
+      .sp-date-picker-pane-year,
+      .sp-date-picker-pane-month,
+      .sp-date-picker-pane-day {
+        border-left: none;
+      }
+    }
+
+    &__foot {
+      @include clearfix();
+      background-color: #fff;
+      border: $data-picker-range-border;
+      border-top: 0;
+      border-radius: $date-picker-border-radius;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      padding: 5px 10px;
+
+      .sp-button {
+        float: right;
+      }
     }
   }
 }

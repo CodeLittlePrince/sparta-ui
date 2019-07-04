@@ -135,7 +135,7 @@ $checkbox-checkmark-color-disabled: rgba(0, 0, 0, 0.2);
 $input-color: $color-text-regular;
 $input-background: #fff;
 $input-background-disabled: #f5f7fa;
-$input-border-color: $border-base;
+$input-border: $border-base;
 $input-border-color-hover: #c0c4cc;
 $input-box-shadow-focus: 0 0 0 2px $color-primary-light-8;
 $input-box-shadow-focus-error: 0 0 0 2px $color-danger-light;
@@ -259,6 +259,7 @@ $date-picker-pane__cell--is-ln-month-color: rgba(0, 0, 0, 0.3);
 $date-picker-pane__cell-background-hover: #f5f7fa;
 $date-picker-pane__cell-color-hover: $color-primary;
 $date-picker-range-icon-color: #c0c4cc;
+$data-picker-range-border: $border-base;
 
 /* Upload
 -------------------------- */

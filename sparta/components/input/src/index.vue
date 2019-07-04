@@ -433,7 +433,7 @@ export default {
     background-color: #fff;
     background-image: none;
     border-radius: $input-border-radus;
-    border: $input-border-color;
+    border: $input-border;
     box-sizing: border-box;
     color: $input-color;
     display: inline-block;

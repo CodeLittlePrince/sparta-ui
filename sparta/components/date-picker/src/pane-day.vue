@@ -112,7 +112,7 @@
                   !item.lastMonth &&
                   !item.nextMonth
               }"
-              @click="handleSelectDay(item)"
+              @click="handleSelectDay(item, $event)"
             >
               <div class="sp-date-picker-pane-day__date">{{ item.value }}</div>
             </td>
@@ -161,7 +161,17 @@ export default {
     disableDay: {
       type: Function,
       default: () => false
-    }
+    },
+    // 以start为起始，此前的项全都disable
+    start: {
+      type: String,
+      default: ''
+    },
+    // 以end为结尾，此后的项全都disable
+    end: {
+      type: String,
+      default: ''
+    },
   },
 
   data() {
@@ -197,13 +207,26 @@ export default {
       let dateList = Array.from(
         { length: currentMonthLength },
         (val, index) => {
+          let beforeStart = false
+          let afterEnd = false
+          let formatTime = `${this.calYear}-${tool.formatNumberTo2digits(this.calMonth + 1)}-${tool.formatNumberTo2digits(index + 1)}`
+          if (this.start && formatTime < this.start) {
+            // 在start之前的项目需要disable
+            beforeStart = true
+          }
+          if (this.end && this.end < formatTime) {
+            // 在end后的项目需要disable
+            afterEnd = true
+          }
           return {
             currentMonth: true,
             value: index + 1,
             disabled:
               this.disableYear(this.calYear) ||
               this.disableMonth(this.calMonth + 1) ||
-              this.disableDay(index + 1)
+              this.disableDay(index + 1) ||
+              beforeStart ||
+              afterEnd
           }
         }
       )
@@ -217,6 +240,17 @@ export default {
       ).getDate()
       // 在1号前插入上个月日期
       for (let i = 0, len = startDay; i < len; i++) {
+        let beforeStart = false
+        let afterEnd = false
+        let formatTime = `${this.calYear}-${tool.formatNumberTo2digits(this.calMonth)}-${tool.formatNumberTo2digits(lastMonthLength - i)}`
+        if (this.start && formatTime < this.start) {
+          // 在start之前的项目需要disable
+          beforeStart = true
+        }
+        if (this.end && this.end < formatTime) {
+          // 在end后的项目需要disable
+          afterEnd = true
+        }
         dateList = [
           {
             lastMonth: true,
@@ -224,19 +258,34 @@ export default {
             disabled:
               this.disableYear(this.calYear) ||
               this.disableMonth(this.calMonth) ||
-              this.disableDay(lastMonthLength - i)
+              this.disableDay(lastMonthLength - i) ||
+              beforeStart ||
+              afterEnd
           }
         ].concat(dateList)
       }
       // 补全剩余位置,至少14天，则 i < 15
       for (let i = 1, item = 1; i < 15; i++, item++) {
+        let beforeStart = false
+        let afterEnd = false
+        let formatTime = `${this.calYear}-${tool.formatNumberTo2digits(this.calMonth + 2)}-${tool.formatNumberTo2digits(i)}`
+        if (this.start && formatTime < this.start) {
+          // 在start之前的项目需要disable
+          beforeStart = true
+        }
+        if (this.end && this.end < formatTime) {
+          // 在end后的项目需要disable
+          afterEnd = true
+        }
         dateList[dateList.length] = {
           nextMonth: true,
           value: i,
           disabled:
             this.disableYear(this.calYear) ||
             this.disableMonth(this.calMonth + 2) ||
-            this.disableDay(i)
+            this.disableDay(i) ||
+            beforeStart ||
+            afterEnd
         }
       }
       return dateList
@@ -250,8 +299,8 @@ export default {
   },
 
   methods: {
-    handleSelectDay(item) {
-      if (!item.disabled) {
+    handleSelectDay(item, e) {
+      if (!item.disabled && -1 === e.target.parentNode.className.indexOf('is-checked')) {
         // 赋值 当前 nowValue,用于控制样式突出显示当前月份日期
         this.$emit('calDayChange', item.value)
         // 选择了上个月

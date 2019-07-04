@@ -196,7 +196,7 @@ export default {
     /**
      * 校验时间格式
      */
-    _valiate() {
+    _validate() {
       const pieces = this.model.split(':')
       const len = pieces.length
       for (let i = 0; i < len; i++) {
@@ -227,7 +227,7 @@ export default {
      * 初始化时间
      */
     _calTime() {
-      if (this._valiate()) {
+      if (this._validate()) {
         const pieces = this.model.split(':')
         
         this.hour = pieces[0]
@@ -279,7 +279,7 @@ export default {
      * 清除不符合格式的值
      */
     handleInputBlur() {
-      if ((!this._valiate()) ||
+      if ((!this._validate()) ||
         this.hourIndex === -1 ||
         this.minuteIndex === -1 ||
         this.secondIndex === -1
