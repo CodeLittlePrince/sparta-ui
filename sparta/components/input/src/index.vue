@@ -270,8 +270,7 @@ export default {
     },
 
     handleSpInputClick(e) {
-      e.stopPropagation()
-      this.$emit('click')
+      this.$emit('click', e)
     },
 
     handleFocus(event) {

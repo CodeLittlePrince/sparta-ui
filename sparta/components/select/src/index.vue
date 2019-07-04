@@ -254,6 +254,7 @@ export default {
     }
     document.addEventListener('click', this.handleOtherAreaClick)
   },
+  
   beforeDestroy() {
     if (this.disabled) {
       return
