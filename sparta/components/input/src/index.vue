@@ -12,8 +12,8 @@
         'sp-input--suffix': $slots.suffix || suffixIcon || clearable
       }
     ]"
-    @mouseenter="hovering = true"
-    @mouseleave="hovering = false"
+    @mouseenter="isHover = true"
+    @mouseleave="isHover = false"
     @click="handleSpInputClick"
   >
     <template v-if="type !== 'textarea'">
@@ -175,8 +175,8 @@ export default {
         ? ''
         : this.value,
       textareaCalcStyle: {},
-      hovering: false,
-      focused: false,
+      isHover: false,
+      isFocus: false,
       isOnComposition: false,
       valueBeforeComposition: null
     }
@@ -213,7 +213,7 @@ export default {
         !this.inputDisabled &&
         !this.readonly &&
         this.currentValue !== '' &&
-        (this.focused || this.hovering)
+        (this.isFocus || this.isHover)
     }
   },
 
@@ -244,7 +244,7 @@ export default {
       (this.$refs.input || this.$refs.textarea).blur()
     },
     handleBlur(event) {
-      this.focused = false
+      this.isFocus = false
       this.$emit('blur', event)
       if (this.validateEvent) {
         this.dispatch('SpFormItem', 'sp.form.blur', [this.currentValue])
@@ -274,7 +274,7 @@ export default {
     },
 
     handleFocus(event) {
-      this.focused = true
+      this.isFocus = true
       this.$emit('focus', event)
     },
 
@@ -376,9 +376,8 @@ export default {
     font-size: inherit;
     color: $input-color;
     background-color: $input-background;
-    border-width: 1px;
     background-image: none;
-    border-color: #d9d9d9;
+    border: $border-base;
     border-radius: $input-border-radus;
     transition: $transition-all;
 
@@ -392,7 +391,8 @@ export default {
 
     &:focus {
       outline: none;
-      border-color: $input-box-shadow-focus;
+      border-color: $color-primary;
+      box-shadow: $input-box-shadow-focus;
     }
   }
 

@@ -9,7 +9,7 @@
       ></a>
 
       <span class="sp-date-picker-pane-month__header">
-        {{ SpDatePicker.calYear }}
+        {{ calYear }}
       </span>
 
       <a
@@ -37,16 +37,16 @@
               class="sp-date-picker-pane-month__cell"
               :class="{
                 'is-currentMonth':
-                  SpDatePicker.calYear == currentYear &&
+                  calYear == currentYear &&
                   item.value == currentMonth,
                 'is-disabled': item.disabled,
                 'is-checked':
-                  SpDatePicker.calYear == SpDatePicker.year &&
-                  item.value == SpDatePicker.month &&
+                  calYear == year &&
+                  item.value == month &&
                   !item.lastYearEndMonth &&
                   !item.nextYearStartMonth
               }"
-              @click="handleSelectDate(item)"
+              @click="handleMonthSelect(item)"
             >
               <div class="sp-date-picker-pane-month__date">{{ item.name }}</div>
             </td>
@@ -62,12 +62,6 @@ import Emitter from 'sparta/common/js/mixins/emitter'
 
 export default {
   name: 'SpDatePickerPaneMonth',
-  
-  inject: {
-    SpDatePicker: {
-      default: ''
-    }
-  },
 
   mixins: [Emitter],
   
@@ -76,6 +70,18 @@ export default {
     visible: {
       type: Boolean,
       default: true
+    },
+    calYear: [Number, String],
+    calMonth: [Number, String],
+    year: [Number, String],
+    month: [Number, String],
+    disableYear: {
+      type: Function,
+      default: () => false
+    },
+    disableMonth: {
+      type: Function,
+      default: () => false
     }
   },
 
@@ -112,8 +118,8 @@ export default {
         rst.forEach((item, index) => {
           item.value = index
           item.disabled =
-            this.SpDatePicker.disableYear(this.SpDatePicker.calYear) ||
-            this.SpDatePicker.disableMonth(index + 1)
+            this.disableYear(this.calYear) ||
+            this.disableMonth(index + 1)
         })
       }
       return rst
@@ -121,22 +127,21 @@ export default {
   },
 
   created() {
-    this.calMonthValue = this.SpDatePicker.calMonth
+    this.calMonthValue = this.calMonth
   },
 
   methods: {
-    handleSelectDate(item) {
+    handleMonthSelect(item) {
       if (!item.disabled) {
-        this.SpDatePicker.calMonth = item.value
-        this.SpDatePicker.visiblePaneDate = true
-        this.SpDatePicker.visiblePaneMonth = false
+        this.$emit('calMonthChange', item.value)
+        this.$emit('monthSelect')
       }
     },
     handleSwitchLastDecade() {
-      this.SpDatePicker.calYear--
+      this.$emit('calYearChange', this.calYear - 1)
     },
     handleSwitchNextDecade() {
-      this.SpDatePicker.calYear++
+      this.$emit('calYearChange', this.calYear + 1)
     }
   },
 }

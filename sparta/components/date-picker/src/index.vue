@@ -3,40 +3,160 @@
     ref="spDatePicker"
     class="sp-date-picker"
   >
-    <sp-input
-      ref="spInput"
-      v-model="model"
-      clearable
-      :disabled="disabled"
-      :placeholder="placeholder"
-      suffix-icon="sp-icon-time"
-      @click="handleInputClick"
-      @blur="handleInputBlur"
-      @input="handleInput"
-    />
-    <!-- 下拉 -->
-    <sp-date-picker-dropdown
-      ref="sp-date-picker__dropdown"
-      v-model="visible"
-      class="sp-date-picker__dropdown"
+    <!-- 非范围型date-picker -->
+    <div
+      v-if="type !== 'daterange'"
+      class="sp-date-picker-content"
     >
-      <transition name="sp-zoom-in-top">
-        <div
-          v-show="visible"
-          class="sp-date-picker__dropdown__box"
-        >
-          <div v-show="visiblePaneDate">
-            <sp-date-picker-pane />
+      <sp-input
+        v-model="model"
+        clearable
+        :disabled="disabled"
+        :placeholder="placeholder"
+        suffix-icon="sp-icon-date"
+        @click="handleInputClick"
+        @blur="handleInputBlur"
+        @input="handleInput"
+      />
+      <!-- 下拉 -->
+      <sp-date-picker-dropdown
+        ref="sp-date-picker__dropdown"
+        v-model="visible"
+        class="sp-date-picker__dropdown"
+      >
+        <transition name="sp-zoom-in-top">
+          <div
+            v-show="visible"
+            class="sp-date-picker__dropdown__box"
+          >
+            <div v-show="visiblePaneDay">
+              <sp-date-picker-pane-day
+                :year="year"
+                :month="month"
+                :day="day"
+                :cal-year="calYear"
+                :cal-month="calMonth"
+                :disable-year="disableYear"
+                :disable-month="disableMonth"
+                :disable-day="disableDay"
+                :today-year="todayYear"
+                :today-month="todayMonth"
+                :today-day="todayDay"
+                @calYearChange="handleCalYearChange"
+                @calMonthChange="handleCalMonthChange"
+                @calDayChange="handleCalDayChange"
+                @yearChange="handleYearChange"
+                @monthChange="handleMonthChange"
+                @dayChange="handleDayChange"
+                @daySelect="handleDaySelect"
+                @switchYear="handleSwitchYear"
+                @switchMonth="handleSwitchMonth"
+                @modelChange="handleModelChange"
+              />
+            </div>
+            <div v-show="visiblePaneMonth">
+              <sp-date-picker-pane-month
+                :year="year"
+                :month="month"
+                :cal-year="calYear"
+                :cal-month="calMonth"
+                :disable-year="disableYear"
+                :disable-month="disableMonth"
+                @calYearChange="handleCalYearChange"
+                @calMonthChange="handleCalMonthChange"
+                @monthSelect="handleMonthSelect"
+              />
+            </div>
+            <div v-show="visiblePaneYear">
+              <sp-date-picker-pane-year
+                :year="year"
+                :cal-year="calYear"
+                :disable-year="disableYear"
+                @calYearChange="handleCalYearChange"
+                @yearSelect="handleYearSelect"
+              />
+            </div>
           </div>
-          <div v-show="visiblePaneYear">
-            <sp-date-picker-pane-year />
+        </transition>
+      </sp-date-picker-dropdown>
+    </div>
+    <!-- 范围型date-picker -->
+    <div
+      v-if="type === 'daterange'"
+      class="sp-date-picker-content sp-date-picker-range"
+      :class="{'is-focus': isDateRangeFocus}"
+      @click="handleRangeClick"
+      @blur="handleRangeBlur"
+    >
+      <!-- 开始input -->
+      <div class="sp-date-picker-range-start">
+        <sp-input
+          v-model="modelStart"
+          :disabled="disabledStart"
+          :placeholder="placeholderStart"
+          @input="handleStartInput"
+        />
+        
+      </div>
+      <span>~</span>
+      <!-- 结束input -->
+      <div class="sp-date-picker-range-end">
+        <sp-input
+          v-model="modelEnd"
+          :disabled="disabledEnd"
+          :placeholder="placeholderEnd"
+          @input="handleEndInput"
+        />
+      </div>
+      <!-- 后缀icon -->
+      <div class="sp-date-picker-range-suffix">
+        <i
+          v-show="showClear"
+          class="sp-icon-close"
+        />
+        <i
+          v-show="!showClear"
+          class="sp-icon-date"
+        />
+      </div>
+      <!-- 下拉 -->
+      <sp-date-picker-dropdown
+        ref="sp-date-picker__dropdown"
+        v-model="visibleDateRange"
+        class="sp-date-picker__dropdown"
+      >
+        <transition name="sp-zoom-in-top">
+          <div
+            class="sp-date-picker__dropdown__box"
+          >
+            <!-- 开始日期模板 -->
+            <div class="sp-date-picker-range__pane">
+              <div v-show="visiblePaneDayStart">
+                <sp-date-picker-pane-day />
+              </div>
+              <div v-show="visiblePaneYearStart">
+                <sp-date-picker-pane-year />
+              </div>
+              <div v-show="visiblePaneMonthStart">
+                <sp-date-picker-pane-month />
+              </div>
+            </div>
+            <!-- 结束日期模板 -->
+            <div class="sp-date-picker-range__pane">
+              <div v-show="visiblePaneDayEnd">
+                <sp-date-picker-pane-day />
+              </div>
+              <div v-show="visiblePaneYearEnd">
+                <sp-date-picker-pane-year />
+              </div>
+              <div v-show="visiblePaneMonthEnd">
+                <sp-date-picker-pane-month />
+              </div>
+            </div>
           </div>
-          <div v-show="visiblePaneMonth">
-            <sp-date-picker-pane-month />
-          </div>
-        </div>
-      </transition>
-    </sp-date-picker-dropdown>
+        </transition>
+      </sp-date-picker-dropdown>
+    </div>
   </div>
 </template>
 
@@ -44,7 +164,7 @@
 import tool from '../tool'
 import Emitter from 'sparta/common/js/mixins/emitter'
 import SpDatePickerDropdown from './dropdown'
-import SpDatePickerPane from './pane'
+import SpDatePickerPaneDay from './pane-day'
 import SpDatePickerPaneYear from './pane-year'
 import SpDatePickerPaneMonth from './pane-month'
 
@@ -53,7 +173,7 @@ export default {
 
   components: {
     'sp-date-picker-dropdown': SpDatePickerDropdown,
-    'sp-date-picker-pane': SpDatePickerPane,
+    'sp-date-picker-pane-day': SpDatePickerPaneDay,
     'sp-date-picker-pane-year': SpDatePickerPaneYear,
     'sp-date-picker-pane-month': SpDatePickerPaneMonth
   },
@@ -67,7 +187,7 @@ export default {
   mixins: [Emitter],
 
   props: {
-    value: String,
+    value: [String, Array],
     placeholder: {
       type: String,
       default: '请选择时间'
@@ -87,15 +207,46 @@ export default {
     disableDay: {
       type: Function,
       default: () => false
-    }
+    },
+    disabledStart: {
+      type: Boolean,
+      default: false
+    },
+    placeholderStart: {
+      type: Boolean,
+      default: false
+    },
+    disabledEnd: {
+      type: Boolean,
+      default: false
+    },
+    placeholderEnd: {
+      type: Boolean,
+      default: false
+    },
+    type: {
+      type: String,
+      default: 'date',
+      validator(val) {
+        return ['date', 'daterange'].indexOf(val) > -1
+      }
+    },
   },
 
   data() {
     return {
       visible: false,
-      visiblePaneDate: true,
+      visiblePaneDay: true,
       visiblePaneYear: false,
       visiblePaneMonth: false,
+      visibleDateRange: false,
+      visiblePaneDayStart: true,
+      visiblePaneYearStart: false,
+      visiblePaneMonthStart: false,
+      visiblePaneDayEnd: true,
+      visiblePaneYearEnd: false,
+      visiblePaneMonthEnd: false,
+      isDateRangeFocus: false,
       model: this.value,
       day: '',
       month: '',
@@ -105,7 +256,17 @@ export default {
       calYear: '',
       todayDay: '',
       todayMonth: '',
-      todayYear: ''
+      todayYear: '',
+      modelStart: this.value[0],
+      modelEnd: this.value[1]
+    }
+  },
+
+  computed: {
+    showClear() {
+      return !this.disabled &&
+        (this.modelStart !== '' || this.modelStart !== '') &&
+        this.isHover
     }
   },
 
@@ -117,6 +278,22 @@ export default {
       } else {
         this._calDate()
       }
+    },
+    modelStart(val) {
+      this.$emit('input', val)
+      // if (!val) {
+      //   this._resetDate()
+      // } else {
+      //   this._calDate()
+      // }
+    },
+    modelEnd(val) {
+      this.$emit('input', val)
+      // if (!val) {
+      //   this._resetDate()
+      // } else {
+      //   this._calDate()
+      // }
     }
   },
 
@@ -124,7 +301,11 @@ export default {
     if (this.disabled) {
       return
     }
-    this._setDefault()
+    if (this.type === 'daterange') {
+      this._setDefaultRange()
+    } else {
+      this._setDefault()
+    }
     document.addEventListener('click', this.handleOtherAreaClick)
   },
 
@@ -136,6 +317,9 @@ export default {
   },
 
   methods: {
+    _setDefaultRange() {
+
+    },
     _setDefault() {
       const now = tool.formatDate(+new Date)
       const pieces = now.split('-')
@@ -159,9 +343,9 @@ export default {
     _calDate() {
       if (this._valiate()) {
         const pieces = this.model.split('-')
-        this.year = pieces[0]
-        this.month = pieces[1] - 1
-        this.day = pieces[2]
+        this.year = +pieces[0]
+        this.month = +pieces[1] - 1
+        this.day = +pieces[2]
         this._setCalValues()
       }
     },
@@ -224,6 +408,29 @@ export default {
         this.broadcast('SpDatePickerDropdown', 'updatePopper')
       }
     },
+
+    handleRangeClick() {
+      if (!this.disabled) {
+        this.isDateRangeFocus = true
+        this.visibleDateRange = true
+        if (this.currentValue !== undefined) {
+          this.$nextTick(() => this.scrollToView())
+        }
+        // 为了每次弹出dropdown，都会根据处的环境做适应
+        this.broadcast('SpDatePickerDropdown', 'updatePopper')
+      }
+    },
+    
+    handleRangeBlur() {
+
+    },
+
+    handleStartInput() {
+      this.visibleDateRange = true
+    },
+    handleEndInput() {
+      this.visibleDateRange = true
+    },
     
     /**
      * 清除不符合格式的值
@@ -239,19 +446,82 @@ export default {
       }
     },
 
+    handleCalYearChange(val) {
+      this.calYear = val
+    },
+    handleCalMonthChange(val) {
+      this.calMonth = val
+    },
+    handleCalDayChange(val) {
+      this.calDay = val
+    },
+    handleYearChange(val) {
+      this.year = val
+    },
+    handleMonthChange(val) {
+      this.month = val
+    },
+    handleDayChange(val) {
+      this.day = val
+    },
+    handleModelChange(val) {
+      this.model = val
+    },
+    handleDaySelect() {
+      this.visible = false
+    },
+
+    handleMonthSelect() {
+      this.visiblePaneDay = true
+      this.visiblePaneMonth = false
+    },
+
+    handleYearSelect() {
+      this.visiblePaneDay = true
+      this.visiblePaneYear = false
+    },
+
+    handleSwitchYear() {
+      this.visiblePaneDay = false
+      this.visiblePaneYear = true
+    },
+
+    handleSwitchMonth() {
+      this.visiblePaneDay = false
+      this.visiblePaneMonth = true
+    },
     /**
      * 点击其他区域触发事件
      */
     handleOtherAreaClick(e) {
-      if (!this.$el.contains(e.target) && e.target != document.body){
+      if (
+        this.type !== 'daterange' &&
+        !this.$el.contains(e.target) &&
+        e.target != document.body
+      ){
         this.isFocus = false
         this.visible = false
-        this.visiblePaneDate = true
+        this.visiblePaneDay = true
         this.visiblePaneYear = false
         this.visiblePaneMonth = false
       }
-    },
-  },
+      // daterange 类型
+      if (
+        this.type === 'daterange' &&
+        !this.$el.contains(e.target) &&
+        e.target != document.body
+      ){
+        this.isDateRangeFocus = false
+        this.visibleDateRange = false
+        this.visiblePaneDayStart = true
+        this.visiblePaneYearStart = false
+        this.visiblePaneMonthStart = false
+        this.visiblePaneDayEnd = true
+        this.visiblePaneYearEnd = false
+        this.visiblePaneMonthEnd = false
+      }
+    }
+  }
 }
 </script>
 
@@ -260,5 +530,52 @@ export default {
 
 .sp-date-picker {
   color: $date-picker-color;
+  display: inline-block;
+
+  &-content {
+    display: inline-block;
+  }
+
+  &-range {
+    border-width: 1px;
+    background-image: none;
+    border: $input-border-color;
+    border-radius: $input-border-radus;
+    transition: $transition-all;
+
+    &:hover {
+      border-color: $color-primary-light-2;
+    }
+
+    &.is-focus {
+      outline: none;
+      border-color: $color-primary;
+      box-shadow: $input-box-shadow-focus;
+    }
+
+    &-start, &-end {
+      display: inline-block;
+
+      .sp-input .sp-input__inner {
+        border: none;
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+    }
+
+    &-suffix {
+      display: inline-block;
+      margin-right: 10px;
+      i {
+        color: $date-picker-range-icon-color;
+      }
+    }
+
+    &__pane {
+      float: left;
+    }
+  }
 }
 </style>

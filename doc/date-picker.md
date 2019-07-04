@@ -86,6 +86,32 @@ export default{
 ```
 :::
 
+### 范围
+:::demo 通过`disabled`控制
+```vue
+<template>
+  <div class="">
+    <sp-date-picker
+      v-model="time4"
+      type="daterange"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期"
+    />
+  </div>
+</template>
+
+<script>
+export default{
+  data() {
+    return {
+      time3: '2019-07-07'
+    }
+  }
+}
+</script>
+```
+:::
+
 ### Attributes
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
@@ -101,7 +127,8 @@ export default{
     return {
       time1: '2019-02-11',
       time2: '',
-      time3: '2019-07-07'
+      time3: '2019-07-07',
+      time4: []
     }
   },
   watch: {

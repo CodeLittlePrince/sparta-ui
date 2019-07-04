@@ -43,7 +43,7 @@
                 'is-currentYear': item.value == currentYear,
                 'is-disabled': item.disabled,
                 'is-checked':
-                  item.value == SpDatePicker.year &&
+                  item.value == year &&
                   !item.lastDecadeEndYear &&
                   !item.nextDecadeStartYear
               }"
@@ -63,12 +63,6 @@ import Emitter from 'sparta/common/js/mixins/emitter'
 
 export default {
   name: 'SpDatePickerPaneYear',
-  
-  inject: {
-    SpDatePicker: {
-      default: ''
-    }
-  },
 
   mixins: [Emitter],
   
@@ -77,6 +71,12 @@ export default {
     visible: {
       type: Boolean,
       default: true
+    },
+    year: [Number, String],
+    calYear: [Number, String],
+    disableYear: {
+      type: Function,
+      default: () => false
     }
   },
 
@@ -97,7 +97,7 @@ export default {
       if (this.calYearValue) {
         for (let i = 0; i <= this.nextDecadeStartYear - this.lastDecadeEndYear; i++) {
           rst.push({
-            disabled: this.SpDatePicker.disableYear(this.lastDecadeEndYear + i),
+            disabled: this.disableYear(this.lastDecadeEndYear + i),
             lastDecadeEndYear: i === 0,
             nextDecadeStartYear: i === this.nextDecadeStartYear - this.lastDecadeEndYear,
             value: this.lastDecadeEndYear + i
@@ -117,15 +117,14 @@ export default {
   },
 
   created() {
-    this.calYearValue = this.SpDatePicker.calYear
+    this.calYearValue = this.calYear
   },
 
   methods: {
     handleSelectDate(item) {
       if (!item.disabled) {
-        this.SpDatePicker.calYear = item.value
-        this.SpDatePicker.visiblePaneDate = true
-        this.SpDatePicker.visiblePaneYear = false
+        this.$emit('calYearChange', item.value)
+        this.$emit('yearSelect')
       }
     },
     handleSwitchLastDecade() {

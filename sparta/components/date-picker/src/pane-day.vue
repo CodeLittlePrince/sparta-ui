@@ -1,7 +1,7 @@
 <template>
-  <div class="sp-date-picker-pane">
+  <div class="sp-date-picker-pane-day">
     <!-- 头部 -->
-    <div class="sp-date-picker-pane__header">
+    <div class="sp-date-picker-pane-day__header">
       <a
         class="sp-icon-d-arrow-left"
         title="上一年"
@@ -12,17 +12,17 @@
         title="上个月"
         @click="handleLastMonth"
       ></a>
-      <span class="sp-date-picker-pane__header-ym-select">
+      <span class="sp-date-picker-pane-day__header-ym-select">
         <a
-          class="sp-date-picker-pane__header-year-select"
+          class="sp-date-picker-pane-day__header-year-select"
           title="选择年份"
           @click="handleSwitchYear"
-        >{{ SpDatePicker.calYear }}年</a>
+        >{{ calYear }}年</a>
         <a
-          class="sp-date-picker-pane__header-month-select"
+          class="sp-date-picker-pane-day__header-month-select"
           title="选择月份"
           @click="handleSwitchMonth"
-        >{{ SpDatePicker.calMonth + 1 }}月</a>
+        >{{ calMonth + 1 }}月</a>
       </span>
       <a
         class="sp-icon-arrow-right"
@@ -36,9 +36,9 @@
       ></a>
     </div>
     <!-- 内容 -->
-    <div class="sp-date-picker-pane__body">
+    <div class="sp-date-picker-pane-day__body">
       <table
-        class="sp-date-picker-pane__table"
+        class="sp-date-picker-pane-day__table"
         cellspacing="0"
         role="grid"
       >
@@ -46,82 +46,82 @@
           <tr>
             <th
               title="周一"
-              class="sp-date-picker-pane__column-header"
+              class="sp-date-picker-pane-day__column-header"
             >
-              <span class="sp-date-picker-pane__column-header-inner">一</span>
+              <span class="sp-date-picker-pane-day__column-header-inner">一</span>
             </th>
             <th
               title="周二"
-              class="sp-date-picker-pane__column-header"
+              class="sp-date-picker-pane-day__column-header"
             >
-              <span class="sp-date-picker-pane__column-header-inner">二</span>
+              <span class="sp-date-picker-pane-day__column-header-inner">二</span>
             </th>
             <th
               title="周三"
-              class="sp-date-picker-pane__column-header"
+              class="sp-date-picker-pane-day__column-header"
             >
-              <span class="sp-date-picker-pane__column-header-inner">三</span>
+              <span class="sp-date-picker-pane-day__column-header-inner">三</span>
             </th>
             <th
               title="周四"
-              class="sp-date-picker-pane__column-header"
+              class="sp-date-picker-pane-day__column-header"
             >
-              <span class="sp-date-picker-pane__column-header-inner">四</span>
+              <span class="sp-date-picker-pane-day__column-header-inner">四</span>
             </th>
             <th
               title="周五"
-              class="sp-date-picker-pane__column-header"
+              class="sp-date-picker-pane-day__column-header"
             >
-              <span class="sp-date-picker-pane__column-header-inner">五</span>
+              <span class="sp-date-picker-pane-day__column-header-inner">五</span>
             </th>
             <th
               title="周六"
-              class="sp-date-picker-pane__column-header"
+              class="sp-date-picker-pane-day__column-header"
             >
-              <span class="sp-date-picker-pane__column-header-inner">六</span>
+              <span class="sp-date-picker-pane-day__column-header-inner">六</span>
             </th>
             <th
               title="周日"
-              class="sp-date-picker-pane__column-header"
+              class="sp-date-picker-pane-day__column-header"
             >
-              <span class="sp-date-picker-pane__column-header-inner">日</span>
+              <span class="sp-date-picker-pane-day__column-header-inner">日</span>
             </th>
           </tr>
         </thead>
-        <tbody class="sp-date-picker-pane__tbody">
+        <tbody class="sp-date-picker-pane-day__tbody">
           <tr
             v-for="(line, lineIndex) in 7"
             :key="line"
-            class="sp-date-picker-pane__week"
+            class="sp-date-picker-pane-day__week"
           >
             <td
               v-for="(item, index) in dateList.slice((lineIndex - 1) * 7, lineIndex * 7)"
               :key="index"
-              class="sp-date-picker-pane__cell"
+              class="sp-date-picker-pane-day__cell"
               :class="{
                 'is-last-month-cell': item.lastMonth,
                 'is-next-month-cell': item.nextMonth,
-                'is-today': `${SpDatePicker.calYear}-${SpDatePicker.calMonth}-${item.value}` ===
-                  `${SpDatePicker.todayYear}-${+SpDatePicker.todayMonth}-${+SpDatePicker.todayDay}` &&
+                'is-today': `${calYear}-${calMonth}-${item.value}` ===
+                  `${todayYear}-${+todayMonth}-${+todayDay}` &&
                   !item.lastMonth &&
                   !item.nextMonth,
                 'is-disabled': item.disabled,
                 'is-checked':
-                  `${SpDatePicker.calYear}-${SpDatePicker.calMonth}-${item.value}` ===
-                  `${SpDatePicker.year}-${+SpDatePicker.month}-${+SpDatePicker.day}` &&
+                  `${calYear}-${calMonth}-${item.value}` ===
+                  `${year}-${+month}-${+day}` &&
                   !item.lastMonth &&
                   !item.nextMonth
               }"
-              @click="handleSelectDate(item)"
+              @click="handleSelectDay(item)"
             >
-              <div class="sp-date-picker-pane__date">{{ item.value }}</div>
+              <div class="sp-date-picker-pane-day__date">{{ item.value }}</div>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
     <!-- 底部 -->
-    <div class="sp-date-picker-pane__footer">
+    <div class="sp-date-picker-pane-day__footer">
       
     </div>
   </div>
@@ -132,13 +132,7 @@ import tool from '../tool'
 import Emitter from 'sparta/common/js/mixins/emitter'
 
 export default {
-  name: 'SpDatePickerPane',
-
-  inject: {
-    SpDatePicker: {
-      default: ''
-    }
-  },
+  name: 'SpDatePickerPaneDay',
 
   mixins: [Emitter],
   
@@ -147,6 +141,26 @@ export default {
     visible: {
       type: Boolean,
       default: true
+    },
+    calYear: [Number, String],
+    calMonth: [Number, String],
+    todayYear: [Number, String],
+    todayMonth: [Number, String],
+    todayDay: [Number, String],
+    year: [Number, String],
+    month: [Number, String],
+    day: [Number, String],
+    disableYear: {
+      type: Function,
+      default: () => false
+    },
+    disableMonth: {
+      type: Function,
+      default: () => false
+    },
+    disableDay: {
+      type: Function,
+      default: () => false
     }
   },
 
@@ -175,8 +189,8 @@ export default {
      */
     dateList() {
       let currentMonthLength = new Date(
-        this.SpDatePicker.calYear,
-        this.SpDatePicker.calMonth + 1,
+        this.calYear,
+        this.calMonth + 1,
         0
       ).getDate()
       //先将当月的日期塞入dateList
@@ -187,18 +201,18 @@ export default {
             currentMonth: true,
             value: index + 1,
             disabled:
-              this.SpDatePicker.disableYear(this.SpDatePicker.calYear) ||
-              this.SpDatePicker.disableMonth(this.SpDatePicker.calMonth + 1) ||
-              this.SpDatePicker.disableDay(index + 1)
+              this.disableYear(this.calYear) ||
+              this.disableMonth(this.calMonth + 1) ||
+              this.disableDay(index + 1)
           }
         }
       )
       // 获取当月1号的星期是为了确定在1号前需要插多少天
-      let startDay = new Date(this.SpDatePicker.calYear, this.SpDatePicker.calMonth, 1).getDay()
+      let startDay = new Date(this.calYear, this.calMonth, 1).getDay()
       // 确认上个月一共多少天
       let lastMonthLength = new Date(
-        this.SpDatePicker.calYear,
-        this.SpDatePicker.calMonth,
+        this.calYear,
+        this.calMonth,
         0
       ).getDate()
       // 在1号前插入上个月日期
@@ -208,9 +222,9 @@ export default {
             lastMonth: true,
             value: lastMonthLength - i,
             disabled:
-              this.SpDatePicker.disableYear(this.SpDatePicker.calYear) ||
-              this.SpDatePicker.disableMonth(this.SpDatePicker.calMonth) ||
-              this.SpDatePicker.disableDay(lastMonthLength - i)
+              this.disableYear(this.calYear) ||
+              this.disableMonth(this.calMonth) ||
+              this.disableDay(lastMonthLength - i)
           }
         ].concat(dateList)
       }
@@ -220,9 +234,9 @@ export default {
           nextMonth: true,
           value: i,
           disabled:
-              this.SpDatePicker.disableYear(this.SpDatePicker.calYear) ||
-              this.SpDatePicker.disableMonth(this.SpDatePicker.calMonth + 2) ||
-              this.SpDatePicker.disableDay(i)
+            this.disableYear(this.calYear) ||
+            this.disableMonth(this.calMonth + 2) ||
+            this.disableDay(i)
         }
       }
       return dateList
@@ -236,75 +250,86 @@ export default {
   },
 
   methods: {
-    handleSelectDate(item) {
+    handleSelectDay(item) {
       if (!item.disabled) {
         // 赋值 当前 nowValue,用于控制样式突出显示当前月份日期
-        this.SpDatePicker.calDay = item.value
+        this.$emit('calDayChange', item.value)
         // 选择了上个月
-        if (item.lastMonth) this.SpDatePicker.calMonth--
+        let month = this.calMonth
+        if (item.lastMonth) month--
         // 选择了下个月
-        if (item.nextMonth) this.SpDatePicker.calMonth++
+        if (item.nextMonth) month++
+        this.$emit('calMonthChange', month)
         // 获取选中日期的 date
-        let selectDay = new Date(this.SpDatePicker.calYear, this.SpDatePicker.calMonth, this.SpDatePicker.calDay)
+        let selectDay = new Date(this.calYear, month, item.value)
         // 赋值
         this.dateValue = tool.formatDate(selectDay.getTime())
         const pieces = this.dateValue.split('-')
-        this.SpDatePicker.year = pieces[0]
-        this.SpDatePicker.month = pieces[1]
-        this.SpDatePicker.day = pieces[2]
-        this.SpDatePicker.model = this.dateValue
-        this.SpDatePicker.visible = false
-        this.SpDatePicker.$refs.spInput.focus()
+        this.$emit('yearChange', +pieces[0])
+        this.$emit('monthChange', +pieces[1])
+        this.$emit('dayChange', +pieces[2])
+        this.$emit('modelChange', this.dateValue)
+        this.$emit('daySelect')
       }
     },
 
     // 确认是否为当前月份
     validateDate(item) {
-      if (this.nowValue === item.value && item.currentMonth) return true
+      if (this.nowValue === item.value && item.currentMonth) {
+        return true
+      }
     },
 
     handleLastMonth() {
-      if (this.panelType === 'year') this.SpDatePicker.calYear--
-      else {
-        if (this.SpDatePicker.calMonth === 0) {
-          this.SpDatePicker.calMonth = 11
-          this.SpDatePicker.calYear--
+      if (this.panelType === 'year') {
+        this.$emit('calYearChange', this.calYear - 1)
+      } else {
+        if (this.calMonth === 0) {
+          this.$emit('calMonthChange', 11)
+          this.$emit('calYearChange', this.calYear - 1)
         } else {
-          this.SpDatePicker.calMonth--
+          this.$emit('calMonthChange', this.calMonth - 1)
         }
       }
     },
 
     handleLastYear() {
-      if (this.panelType === 'year') this.SpDatePicker.calYear -= 12
-      else this.SpDatePicker.calYear--
+      if (this.panelType === 'year') {
+        this.$emit('calYearChange', this.calYear - 12)
+      } else {
+        this.$emit('calYearChange', this.calYear - 1)
+      }
     },
     
     handleNextMonth() {
-      if (this.panelType === 'year') this.SpDatePicker.calYear++
-      else {
-        if (this.SpDatePicker.calMonth === 11) {
-          this.SpDatePicker.calYear++
-          this.SpDatePicker.calMonth = 0
-        } else this.SpDatePicker.calMonth++
+      if (this.panelType === 'year') {
+        this.$emit('calYearChange', this.calYear + 1)
+      } else {
+        if (this.calMonth === 11) {
+          this.$emit('calMonthChange', 0)
+          this.$emit('calYearChange', this.calYear + 1)
+        } else {
+          this.$emit('calMonthChange', this.calMonth + 1)
+        }
       }
     },
     
     handleNextYear() {
-      if (this.panelType === 'year') this.SpDatePicker.calYear += 12
-      else this.SpDatePicker.calYear++
+      if (this.panelType === 'year') {
+        this.$emit('calYearChange', this.calYear + 12)
+      } else {
+        this.$emit('calYearChange', this.calYear + 1)
+      }
     },
 
     handleSwitchYear() {
-      this.SpDatePicker.visiblePaneDate = false
-      this.SpDatePicker.visiblePaneYear = true
+      this.$emit('switchYear')
     },
 
     handleSwitchMonth() {
-      this.SpDatePicker.visiblePaneDate = false
-      this.SpDatePicker.visiblePaneMonth = true
+      this.$emit('switchMonth')
     }
-  },
+  }
 }
 </script>
 
@@ -312,7 +337,7 @@ export default {
 @import "~sparta/common/scss/variable";
 @import "sparta/common/scss/mixin";
 
-.sp-date-picker-pane {
+.sp-date-picker-pane-day {
   width: $date-picker-pane-width;
   float: left;
   box-sizing: border-box;

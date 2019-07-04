@@ -16,7 +16,7 @@ export default {
       type: String,
       default: 'left',
       validator(val) {
-        return [ 'left', 'right'].indexOf(val) > -1
+        return ['left', 'right'].indexOf(val) > -1
       }
     },
     width: {
