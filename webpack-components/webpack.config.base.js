@@ -17,47 +17,21 @@ const config = {
     extensions: ['.js', '.vue', '.scss', '.css'],
     // 取路径别名，方便在业务代码中import
     alias: {
-      sparta: resolve('/'),
-      common: resolve('common'),
-      scss: resolve('common/scss'),
-      directives: resolve('directives'),
-      filters: resolve('filters'),
-      mixins: resolve('mixins'),
-      plugins: resolve('plugins')
+      site: resolve('/'),
+      sparta: resolve('../sparta/'),
+      doc: resolve('../doc/'),
+      common: resolve('/common/'),
+      ajax: resolve('/common/js/ajax/'),
+      utils: resolve('/common/js/utils/'),
+      views: resolve('/views/'),
+      components: resolve('/components/'),
+      directives: resolve('/directives/'),
+      filters: resolve('/filters/'),
+      mixins: resolve('/mixins/'),
+      plugins: resolve('/plugins/')
     }
   },
-  // loaders处理
-  module: {
-    noParse: /^vue$/,
-    rules: [
-      {
-        test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
-        loader: 'file-loader',
-        options: {
-          name: 'img/[name].[ext]'
-        }
-      },
-      {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i,
-        loader: 'file-loader',
-        options: {
-          name: 'font/[name].[ext]'
-        }
-      },
-      {
-        test: /\.js$/,
-        loader: [
-          'babel-loader',
-          'eslint-loader'
-        ]
-      },
-      {
-        test: /\.vue$/,
-        exclude: /node_modules/,
-        loader: 'vue-loader'
-      }
-    ]
-  }
+  
 }
 
 module.exports = {

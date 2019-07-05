@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const webpackConfigBase = require('./webpack.config.base.js')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -45,8 +46,55 @@ const config = Object.assign(webpackConfigBase.config, {
       amd: 'vue'
     }
   },
+  // loaders处理
+  module: {
+    noParse: /^vue$/,
+    rules: [
+      {
+        test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
+        loader: 'file-loader',
+        options: {
+          name: 'img/[name].[ext]'
+        }
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i,
+        loader: 'file-loader',
+        options: {
+          name: 'font/[name].[ext]'
+        }
+      },
+      {
+        test: /\.(css|scss)$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'sass-loader'
+        ]
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: [
+          'babel-loader',
+          'eslint-loader'
+        ]
+      },
+      {
+        test: /\.vue$/,
+        exclude: /node_modules/,
+        loader: 'vue-loader'
+      }
+    ]
+  },
   optimization: {
+    // 压缩js
     minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true
+      }),
       new OptimizeCSSAssetsPlugin()
     ]
   },
@@ -63,16 +111,6 @@ const config = Object.assign(webpackConfigBase.config, {
         NODE_ENV: '"production"'
       }
     })
-  ]
-})
-// 抽离css
-config.module.rules.push({
-  test: /\.(css|scss)$/,
-  use: [
-    MiniCssExtractPlugin.loader,
-    'css-loader',
-    'postcss-loader',
-    'sass-loader'
   ]
 })
 

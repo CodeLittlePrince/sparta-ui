@@ -1,4 +1,4 @@
-import './common/scss'
+import Style from './components/style'
 import Row from './components/row'
 import Col from './components/col'
 import Layout from './components/layout'
@@ -90,6 +90,7 @@ Sparta.install = Vue => {
 export default Sparta
 // 按需引入支持
 export {
+  Style,
   Row,
   Col,
   Layout,

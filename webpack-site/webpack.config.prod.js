@@ -77,7 +77,7 @@ const config = Object.assign(webpackConfigBase.config, {
     new CleanWebpackPlugin(
       'dist',
       {
-        root: webpackConfigBase.resolve('')
+        root: webpackConfigBase.resolve('../')
       }
     ),
     // 抽离出css

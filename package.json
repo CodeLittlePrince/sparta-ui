@@ -1,10 +1,10 @@
 {
   "name": "njr-sparta",
   "version": "1.0.0",
-  "description": "网易金融PC组件库",
-  "main": "index.js",
+  "description": "网易支付PC组件库",
+  "main": "lib/index.js",
   "scripts": {
-    "mock": "nodemon --inspect -q ./server/index.js --kill-others",
+    "mock": "nodemon -q ./server/index.js --kill-others",
     "watch": "nodemon -q --watch webpack-site/dev.js webpack-site/dev.js",
     "dev": "concurrently \"npm run mock\" \"npm run watch\" --kill-others",
     "test:unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js",

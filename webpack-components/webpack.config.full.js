@@ -43,6 +43,48 @@ const config = Object.assign(webpackConfigBase.config, {
       new OptimizeCSSAssetsPlugin()
     ]
   },
+  // loaders处理
+  module: {
+    noParse: /^vue$/,
+    rules: [
+      {
+        test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
+        loader: 'file-loader',
+        options: {
+          name: 'img/[name].[ext]'
+        }
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i,
+        loader: 'file-loader',
+        options: {
+          name: 'font/[name].[ext]'
+        }
+      },
+      {
+        test: /\.(css|scss)$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'sass-loader'
+        ]
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: [
+          'babel-loader',
+          'eslint-loader'
+        ]
+      },
+      {
+        test: /\.vue$/,
+        exclude: /node_modules/,
+        loader: 'vue-loader'
+      }
+    ]
+  },
   plugins: [
     // make sure to include the plugin for the magic
     webpackConfigBase.VueLoaderPluginInstance,
@@ -63,17 +105,6 @@ const config = Object.assign(webpackConfigBase.config, {
         NODE_ENV: '"production"'
       }
     })
-  ]
-})
-
-// 抽离css
-config.module.rules.push({
-  test: /\.(css|scss)$/,
-  use: [
-    MiniCssExtractPlugin.loader,
-    'css-loader',
-    'postcss-loader',
-    'sass-loader'
   ]
 })
 
