@@ -134,6 +134,9 @@ export default{
   watch: {
     time1(val) {
       console.log(val)
+    },
+    time4(val) {
+      console.log(val)
     }
   },
   methods: {

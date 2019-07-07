@@ -370,8 +370,38 @@ export default {
   },
 
   watch: {
+    value(val) {
+      // 范围类型
+      if (
+        this.type === 'daterange' &&
+        val &&
+        val instanceof Array &&
+        this._valiate(val[0]) &&
+        this._valiate(val[1])
+      ) {
+        this.modelStart = val[0]
+        this.modelEnd = val[1]
+        return
+      }
+      // 普通类型
+      if (
+        this.type !== 'daterange' &&
+        val &&
+        typeof val === 'string' &&
+        this._valiate(val)
+      ) {
+        this.model = val
+        return
+      }
+      // 其它
+      if (this.type === 'datarange') {
+        this.modelStart = val[0]
+        this.modelEnd = val[1]
+      } else {
+        this.model = val
+      }
+    },
     model(val) {
-      this.$emit('input', val)
       if (!val) {
         this._resetDate()
       } else {
@@ -379,7 +409,6 @@ export default {
       }
     },
     modelStart(val) {
-      this.$emit('input', val)
       if (!val) {
         this._resetDateStart()
       } else {
@@ -387,7 +416,6 @@ export default {
       }
     },
     modelEnd(val) {
-      this.$emit('input', val)
       if (!val) {
         this._resetDateEnd()
       } else {
@@ -664,6 +692,13 @@ export default {
         this.modelStart = this.modelEnd
         this.modelEnd = temp
       }
+      // 如果modelStart或modelEnd有一个为空，则清除两者
+      if (!this.modelStart || !this.modelEnd) {
+        this.modelStart = ''
+        this.modelEnd = ''
+      }
+      this.$emit('input', [this.modelStart, this.modelEnd])
+      this.dispatch('SpFormItem', 'sp.form.change', [this.modelStart, this.modelEnd])
     },
 
     handleCalYearChange(val) {
@@ -686,6 +721,8 @@ export default {
     },
     handleModelChange(val) {
       this.model = val
+      this.$emit('input', val)
+      this.dispatch('SpFormItem', 'sp.form.change', val)
     },
     handleDaySelect() {
       this.visible = false

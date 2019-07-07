@@ -39,6 +39,16 @@
         autocomplete="off"
       />
     </sp-form-item>
+    <!-- 出生日期 -->
+    <sp-form-item
+      label="出生日期"
+      prop="birth"
+      :rules="[
+        { required: true, message: '出生日期不能为空'}
+      ]"
+    >
+      <sp-date-picker v-model="validateForm1.birth" />
+    </sp-form-item>
     <!-- 爱好 -->
     <sp-form-item
       label="爱好"
@@ -114,6 +124,7 @@
         validateForm1: {
           name: '',
           age: '',
+          birth: '',
           favorite: '',
           cities: [],
           picture: []
@@ -397,6 +408,7 @@
         validateForm1: {
           name: '',
           age: '',
+          birth: '',
           favorite: '',
           cities: [],
           picture: []
