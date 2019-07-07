@@ -1,6 +1,6 @@
 {
   "name": "sparta-ui",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "网易支付PC组件库",
   "main": "lib/index.js",
   "scripts": {
