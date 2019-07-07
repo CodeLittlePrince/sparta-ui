@@ -1,5 +1,5 @@
 {
-  "name": "njr-sparta",
+  "name": "sparta-ui",
   "version": "1.0.0",
   "description": "网易支付PC组件库",
   "main": "lib/index.js",
