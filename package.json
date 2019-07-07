@@ -70,9 +70,7 @@
     "sinon-chai": "^3.2.0",
     "vue-style-loader": "^4.1.2",
     "webpack-bundle-analyzer": "^3.3.2",
-    "webpack-dev-server": "^3.1.14"
-  },
-  "dependencies": {
+    "webpack-dev-server": "^3.1.14",
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.2.3",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
