@@ -104,7 +104,7 @@ export default{
 export default{
   data() {
     return {
-      time3: '2019-07-07'
+      time4: []
     }
   }
 }

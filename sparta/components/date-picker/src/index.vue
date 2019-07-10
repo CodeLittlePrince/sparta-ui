@@ -17,6 +17,7 @@
         @click="handleInputClick"
         @blur="handleInputBlur"
         @input="handleInput"
+        @clear="handleClear"
       />
       <!-- 下拉 -->
       <sp-date-picker-dropdown
@@ -86,6 +87,8 @@
       class="sp-date-picker-content sp-date-picker-range"
       :class="{'is-focus': isDateRangeFocus}"
       @click="handleRangeClick"
+      @mouseover="isHover = true"
+      @mouseout="isHover = false"
     >
       <!-- 开始input -->
       <div class="sp-date-picker-range-start">
@@ -95,7 +98,6 @@
           :placeholder="placeholderStart"
           @input="handleStartInput"
         />
-        
       </div>
       <span>~</span>
       <!-- 结束input -->
@@ -111,7 +113,8 @@
       <div class="sp-date-picker-range-suffix">
         <i
           v-show="showClear"
-          class="sp-icon-close"
+          class="sp-icon-circle-close"
+          @click="handleRangeClear"
         />
         <i
           v-show="!showClear"
@@ -357,14 +360,15 @@ export default {
       calYearEnd: '',
       visiblePaneDayEnd: true,
       visiblePaneYearEnd: false,
-      visiblePaneMonthEnd: false
+      visiblePaneMonthEnd: false,
+      isHover: false
     }
   },
 
   computed: {
     showClear() {
-      return !this.disabled &&
-        (this.modelStart !== '' || this.modelStart !== '') &&
+      return (!this.disabled) &&
+        (this.modelStart !== '' || this.modelEnd !== '') &&
         this.isHover
     }
   },
@@ -398,7 +402,8 @@ export default {
         this.modelStart = val[0]
         this.modelEnd = val[1]
       } else {
-        this.model = val
+        this.modelStart = ''
+        this.modelEnd = ''
       }
     },
     model(val) {
@@ -645,6 +650,11 @@ export default {
       }
     },
 
+    handleClear() {
+      this.$emit('input', '')
+      this.dispatch('SpFormItem', 'sp.form.change', '')
+    },
+
     handleRangeBlur() {
       // start
       // 如果有yearStart，monthStart，dayStart
@@ -697,8 +707,14 @@ export default {
         this.modelStart = ''
         this.modelEnd = ''
       }
-      this.$emit('input', [this.modelStart, this.modelEnd])
-      this.dispatch('SpFormItem', 'sp.form.change', [this.modelStart, this.modelEnd])
+      let rst = []
+      if (this.modelStart && this.modelEnd) {
+        rst = [this.modelStart, this.modelEnd]
+      } else {
+        rst = []
+      }
+      this.$emit('input', rst)
+      this.dispatch('SpFormItem', 'sp.form.change', rst)
     },
 
     handleCalYearChange(val) {
@@ -833,6 +849,15 @@ export default {
       this._resetRangeAllVisible()
     },
     /**
+     * 范围型清除日期
+     */
+    handleRangeClear() {
+      this.modelStart = ''
+      this.modelEnd = ''
+      this.$emit('input', [])
+      this.dispatch('SpFormItem', 'sp.form.change', [])
+    },
+    /**
      * 点击其他区域触发事件
      */
     handleOtherAreaClick(e) {
@@ -917,6 +942,7 @@ export default {
       margin-right: 10px;
       i {
         color: $date-picker-range-icon-color;
+        cursor: pointer;
       }
     }
 
