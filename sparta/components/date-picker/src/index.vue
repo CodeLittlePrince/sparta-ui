@@ -251,7 +251,7 @@
 </template>
 
 <script>
-import tool from '../tool'
+import format from 'sparta/common/js/utils/format'
 import Emitter from 'sparta/common/js/mixins/emitter'
 import SpDatePickerDropdown from './dropdown'
 import SpDatePickerPaneDay from './pane-day'
@@ -285,6 +285,10 @@ export default {
         return ['date', 'daterange'].indexOf(val) > -1
       }
     },
+    showTime: {
+      type: Boolean,
+      default: true
+    },
     disableYear: {
       type: Function,
       default: () => false
@@ -314,7 +318,7 @@ export default {
     placeholderEnd: {
       type: String,
       default: '结束日期'
-    },
+    }
   },
 
   data() {
@@ -456,7 +460,7 @@ export default {
 
   methods: {
     _setDefault() {
-      const now = tool.formatDate(+new Date)
+      const now = format.formatDate(+new Date)
       const pieces = now.split('-')
       this.todayYear = pieces[0]
       this.todayMonth = pieces[1] - 1
@@ -468,7 +472,7 @@ export default {
       }
     },
     _setDefaultRange() {
-      const now = tool.formatDate(+new Date)
+      const now = format.formatDate(+new Date)
       const pieces = now.split('-')
       this.todayYear = pieces[0]
       this.todayMonth = pieces[1] - 1
@@ -639,8 +643,8 @@ export default {
         this.year && this.month && this.day
       ) {
         const year = this.year
-        const month = tool.formatNumberTo2digits(this.month + 1)
-        const day = tool.formatNumberTo2digits(this.day)
+        const month = format.formatNumberTo2digits(this.month + 1)
+        const day = format.formatNumberTo2digits(this.day)
         this.model = [year, month, day].join('-')
       } else if (
         !this._valiate(this.model) &&
@@ -664,8 +668,8 @@ export default {
         this.yearStart && this.monthStart && this.dayStart
       ) {
         const year = this.yearStart
-        const month = tool.formatNumberTo2digits(this.monthStart + 1)
-        const day = tool.formatNumberTo2digits(this.dayStart)
+        const month = format.formatNumberTo2digits(this.monthStart + 1)
+        const day = format.formatNumberTo2digits(this.dayStart)
         this.modelStart = [year, month, day].join('-')
       } else if (
         !this._valiate(this.modelStart) &&
@@ -679,8 +683,8 @@ export default {
         this.yearEnd && this.monthEnd && this.dayEnd
       ) {
         const year = this.yearEnd
-        const month = tool.formatNumberTo2digits(this.monthEnd + 1)
-        const day = tool.formatNumberTo2digits(this.dayEnd)
+        const month = format.formatNumberTo2digits(this.monthEnd + 1)
+        const day = format.formatNumberTo2digits(this.dayEnd)
         this.modelEnd = [year, month, day].join('-')
       } else if (
         !this._valiate(this.modelEnd) &&

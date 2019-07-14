@@ -104,7 +104,7 @@ export default{
 export default{
   data() {
     return {
-      time4: []
+      time3: '2019-07-07'
     }
   }
 }
@@ -133,9 +133,6 @@ export default{
   },
   watch: {
     time1(val) {
-      console.log(val)
-    },
-    time4(val) {
       console.log(val)
     }
   },

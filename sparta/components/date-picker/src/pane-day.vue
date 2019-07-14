@@ -128,7 +128,7 @@
 </template>
 
 <script>
-import tool from '../tool'
+import format from 'sparta/common/js/utils/format'
 import Emitter from 'sparta/common/js/mixins/emitter'
 
 export default {
@@ -209,7 +209,7 @@ export default {
         (val, index) => {
           let beforeStart = false
           let afterEnd = false
-          let formatTime = `${this.calYear}-${tool.formatNumberTo2digits(this.calMonth + 1)}-${tool.formatNumberTo2digits(index + 1)}`
+          let formatTime = `${this.calYear}-${format.formatNumberTo2digits(this.calMonth + 1)}-${format.formatNumberTo2digits(index + 1)}`
           if (this.start && formatTime < this.start) {
             // 在start之前的项目需要disable
             beforeStart = true
@@ -242,7 +242,7 @@ export default {
       for (let i = 0, len = startDay; i < len; i++) {
         let beforeStart = false
         let afterEnd = false
-        let formatTime = `${this.calYear}-${tool.formatNumberTo2digits(this.calMonth)}-${tool.formatNumberTo2digits(lastMonthLength - i)}`
+        let formatTime = `${this.calYear}-${format.formatNumberTo2digits(this.calMonth)}-${format.formatNumberTo2digits(lastMonthLength - i)}`
         if (this.start && formatTime < this.start) {
           // 在start之前的项目需要disable
           beforeStart = true
@@ -268,7 +268,7 @@ export default {
       for (let i = 1, item = 1; i < 15; i++, item++) {
         let beforeStart = false
         let afterEnd = false
-        let formatTime = `${this.calYear}-${tool.formatNumberTo2digits(this.calMonth + 2)}-${tool.formatNumberTo2digits(i)}`
+        let formatTime = `${this.calYear}-${format.formatNumberTo2digits(this.calMonth + 2)}-${format.formatNumberTo2digits(i)}`
         if (this.start && formatTime < this.start) {
           // 在start之前的项目需要disable
           beforeStart = true
@@ -312,7 +312,7 @@ export default {
         // 获取选中日期的 date
         let selectDay = new Date(this.calYear, month, item.value)
         // 赋值
-        this.dateValue = tool.formatDate(selectDay.getTime())
+        this.dateValue = format.formatDate(selectDay.getTime())
         const pieces = this.dateValue.split('-')
         this.$emit('yearChange', +pieces[0])
         this.$emit('monthChange', +pieces[1])

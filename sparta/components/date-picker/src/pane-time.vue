@@ -12,74 +12,63 @@
       @focus="handleInputFocus"
       @blur="handleInputBlur"
     />
-    <!-- 下拉 -->
-    <sp-time-picker-dropdown
-      ref="sp-time-picker__dropdown"
-      v-model="visible"
-      class="sp-time-picker__dropdown"
+    <div
+      v-show="visible"
+      class="sp-time-picker__dropdown__box"
     >
-      <transition name="sp-zoom-in-top">
-        <div
-          v-show="visible"
-          class="sp-time-picker__dropdown__box"
-        >
-          <!-- 时 -->
-          <sp-time-picker-pane :index="hourIndex">
-            <sp-time-picker-option
-              v-for="(item, index) in hourList"
-              :key="item"
-              :disabled="disableHour(item)"
-              type="hour"
-              :text="item"
-              :index="index"
-              @click="handleHourClick(item)"
-            />
-          </sp-time-picker-pane>
-          <!-- 分 -->
-          <sp-time-picker-pane :index="minuteIndex">
-            <sp-time-picker-option
-              v-for="(item, index) in minuteList"
-              :key="item"
-              :disabled="disableMinute(item)"
-              type="minute"
-              :text="item"
-              :index="index"
-              @click="handleMinuteClick(item)"
-            />
-          </sp-time-picker-pane>
-          <!-- 秒 -->
-          <sp-time-picker-pane
-            v-if="needSecond"
-            :index="secondIndex"
-          >
-            <sp-time-picker-option
-              v-for="(item, index) in secondList"
-              :key="item"
-              :disabled="disableSecond(item)"
-              type="second"
-              :text="item"
-              :index="index"
-              @click="handleSecondClick(item)"
-            />
-          </sp-time-picker-pane>
-        </div>
-      </transition>
-    </sp-time-picker-dropdown>
+      <!-- 时 -->
+      <sp-time-picker-pane :index="hourIndex">
+        <sp-time-picker-option
+          v-for="(item, index) in hourList"
+          :key="item"
+          :disabled="disableHour(item)"
+          type="hour"
+          :text="item"
+          :index="index"
+          @click="handleHourClick(item)"
+        />
+      </sp-time-picker-pane>
+      <!-- 分 -->
+      <sp-time-picker-pane :index="minuteIndex">
+        <sp-time-picker-option
+          v-for="(item, index) in minuteList"
+          :key="item"
+          :disabled="disableMinute(item)"
+          type="minute"
+          :text="item"
+          :index="index"
+          @click="handleMinuteClick(item)"
+        />
+      </sp-time-picker-pane>
+      <!-- 秒 -->
+      <sp-time-picker-pane
+        v-if="needSecond"
+        :index="secondIndex"
+      >
+        <sp-time-picker-option
+          v-for="(item, index) in secondList"
+          :key="item"
+          :disabled="disableSecond(item)"
+          type="second"
+          :text="item"
+          :index="index"
+          @click="handleSecondClick(item)"
+        />
+      </sp-time-picker-pane>
+    </div>
   </div>
 </template>
 
 <script>
 import format from 'sparta/common/js/utils/format'
 import Emitter from 'sparta/common/js/mixins/emitter'
-import SpTimePickerDropdown from './dropdown'
-import SpTimePickerPane from './pane'
-import SpTimePickerOption from './option'
+import SpTimePickerPane from 'sparta/components/time-picker/pane'
+import SpTimePickerOption from 'sparta/components/time-picker/option'
 
 export default {
-  name: 'SpTimePicker',
+  name: 'SpDatePickerPaneTime',
 
   components: {
-    'sp-time-picker-dropdown': SpTimePickerDropdown,
     'sp-time-picker-pane': SpTimePickerPane,
     'sp-time-picker-option': SpTimePickerOption
   },
