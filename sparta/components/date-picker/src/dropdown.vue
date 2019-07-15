@@ -85,6 +85,20 @@ export default {
     box-shadow: $flot-box-shadow-box;
     background-color: $date-picker-pane-background;
     @include clearfix();
+
+    > div {
+      @include clearfix();
+    }
+
+    .sp-time-picker {
+      width: 280px;
+      height: 275px;
+
+      &-pane {
+        width: 33.3%;
+        max-height: 275px;
+      }
+    }
   }
 }
 </style>

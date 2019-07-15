@@ -45,6 +45,7 @@
               :text="item"
               :index="index"
               @click="handleMinuteClick(item)"
+              @indexChange="handleIndexChange"
             />
           </sp-time-picker-pane>
           <!-- 秒 -->
@@ -82,12 +83,6 @@ export default {
     'sp-time-picker-dropdown': SpTimePickerDropdown,
     'sp-time-picker-pane': SpTimePickerPane,
     'sp-time-picker-option': SpTimePickerOption
-  },
-
-  provide() {
-    return {
-      'SpTimePicker': this
-    }
   },
 
   mixins: [Emitter],
@@ -268,9 +263,6 @@ export default {
      */
     handleInputFocus() {
       this.visible = true
-      if (this.currentValue !== undefined) {
-        this.$nextTick(() => this.scrollToView())
-      }
       // 为了每次弹出dropdown，都会根据处的环境做适应
       this.broadcast('SpTimePickerDropdown', 'updatePopper')
     },
@@ -301,14 +293,29 @@ export default {
 
     handleHourClick(hour) {
       this.hour = hour
+      this._setTime()
     },
 
     handleMinuteClick(minute) {
       this.minute = minute
+      this._setTime()
     },
 
     handleSecondClick(second) {
       this.second = second
+      this._setTime()
+    },
+
+    handleIndexChange(type) {
+      if (type === 'hour' ) {
+        this.hourIndex = -1
+      }
+      if (type === 'minute') {
+        this.minuteIndex = -1
+      }
+      if (type === 'second') {
+        this.secondIndex = -1
+      }
     }
   }
 }

@@ -243,7 +243,7 @@ $date-picker-border: $border-base;
 $date-picker-border-radius: 4px;
 $date-picker-pane-border: $border-base;
 $date-picker-pane-background: #fff;
-$date-picker-pane-width: 280px; 
+$date-picker-pane-width: 280px;
 $date-picker-pane__header-height: 40px;
 $date-picker-pane__header-icon-color: rgba(0, 0, 0, 0.3);
 $date-picker-pane__header-color: $color-text-primary;
@@ -260,6 +260,8 @@ $date-picker-pane__cell-background-hover: #f5f7fa;
 $date-picker-pane__cell-color-hover: $color-primary;
 $date-picker-range-icon-color: #c0c4cc;
 $data-picker-range-border: $border-base;
+$date-picker__footer-a: $color-primary; 
+$date-picker__footer-a-hover: $color-primary-light-3;
 
 /* Upload
 -------------------------- */

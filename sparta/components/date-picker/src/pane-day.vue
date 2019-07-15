@@ -102,7 +102,7 @@
                 'is-last-month-cell': item.lastMonth,
                 'is-next-month-cell': item.nextMonth,
                 'is-today': `${calYear}-${calMonth}-${item.value}` ===
-                  `${todayYear}-${+todayMonth}-${+todayDay}` &&
+                  `${nowYear}-${+nowMonth}-${+nowDay}` &&
                   !item.lastMonth &&
                   !item.nextMonth,
                 'is-disabled': item.disabled,
@@ -119,10 +119,6 @@
           </tr>
         </tbody>
       </table>
-    </div>
-    <!-- 底部 -->
-    <div class="sp-date-picker-pane-day__footer">
-      
     </div>
   </div>
 </template>
@@ -144,9 +140,9 @@ export default {
     },
     calYear: [Number, String],
     calMonth: [Number, String],
-    todayYear: [Number, String],
-    todayMonth: [Number, String],
-    todayDay: [Number, String],
+    nowYear: [Number, String],
+    nowMonth: [Number, String],
+    nowDay: [Number, String],
     year: [Number, String],
     month: [Number, String],
     day: [Number, String],

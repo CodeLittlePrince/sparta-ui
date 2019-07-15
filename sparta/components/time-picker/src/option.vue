@@ -21,9 +21,6 @@ export default {
   name: 'SpTimePickerOption',
 
   inject: {
-    'SpTimePicker': {
-      default: ''
-    },
     'SpTimePickerPane': {
       default: ''
     }
@@ -78,15 +75,7 @@ export default {
         if (!this.disabled) {
           this.isSelect = this.SpTimePickerPane.activeIndex == this.index
         } else if (this.SpTimePickerPane.activeIndex == this.index) {
-          if (this.type === 'hour' ) {
-            this.SpTimePicker.hourIndex = -1
-          }
-          if (this.type === 'minute') {
-            this.SpTimePicker.minuteIndex = -1
-          }
-          if (this.type === 'second') {
-            this.SpTimePicker.secondIndex = -1
-          }
+          this.$emit('indexChange', this.type)
         }
       })
     },
@@ -111,7 +100,6 @@ export default {
     handleClick() {
       if (!this.disabled) {
         this.$emit('click')
-        this.SpTimePicker._setTime()
         // 点亮条目
         this.SpTimePickerPane.activeIndex = this.index
       }

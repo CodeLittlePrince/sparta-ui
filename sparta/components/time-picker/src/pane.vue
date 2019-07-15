@@ -15,12 +15,6 @@ import Emitter from 'sparta/common/js/mixins/emitter'
 export default {
   name: 'SpTimePickerPane',
 
-  inject: {
-    'SpTimePickerDropdown': {
-      default: ''
-    }
-  },
-
   provide() {
     return {
       'SpTimePickerPane': this

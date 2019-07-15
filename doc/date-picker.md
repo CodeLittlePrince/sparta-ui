@@ -86,13 +86,38 @@ export default{
 ```
 :::
 
+### 显示时分秒
+
+:::demo 通过`v-model`绑定时间数据
+```vue
+<template>
+  <div class="sp-date-pikcer-demo">
+    <sp-date-picker
+      v-model="time4"
+      showTime
+    />
+  </div>
+</template>
+
+<script>
+export default{
+  data() {
+    return {
+      time4: ''
+    }
+  }
+}
+</script>
+```
+:::
+
 ### 范围
 :::demo 通过`disabled`控制
 ```vue
 <template>
   <div class="">
     <sp-date-picker
-      v-model="time4"
+      v-model="time5"
       type="daterange"
       start-placeholder="开始日期"
       end-placeholder="结束日期"
@@ -104,7 +129,7 @@ export default{
 export default{
   data() {
     return {
-      time3: '2019-07-07'
+      time5: []
     }
   }
 }
@@ -128,11 +153,18 @@ export default{
       time1: '2019-02-11',
       time2: '',
       time3: '2019-07-07',
-      time4: []
+      time4: '',
+      time5: []
     }
   },
   watch: {
     time1(val) {
+      console.log(val)
+    },
+    time4(val) {
+      console.log(val)
+    },
+    time5(val) {
       console.log(val)
     }
   },
