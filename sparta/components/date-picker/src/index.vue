@@ -462,11 +462,10 @@ export default {
       }
       // 其它
       if (this.type === 'datarange') {
-        this.modelStart = val[0]
-        this.modelEnd = val[1]
-      } else {
         this.modelStart = ''
         this.modelEnd = ''
+      } else {
+        this.model = ''
       }
     },
     model(val) {
