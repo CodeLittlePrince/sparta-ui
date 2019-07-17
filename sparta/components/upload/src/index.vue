@@ -617,7 +617,7 @@ export default {
       width: $upload-picture__item-size;
       height: $upload-picture__item-size;
       padding: 8px;
-      border: 1px solid #d9d9d9;
+      border: $upload-picture__item-border;
       border-radius: 4px;
       box-sizing: border-box;
       margin-right: 8px;

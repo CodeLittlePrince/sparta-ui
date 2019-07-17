@@ -12,7 +12,6 @@
     "analyze": "cross-env NODE_ENV=production ANALYZE=active webpack -p --progress --colors --config webpack-site/webpack.config.prod.js",
     "dist": "cross-env NODE_ENV=production webpack -p --progress --colors --config webpack-site/webpack.config.prod.js",
     "lib": "node webpack-components/build.js",
-    "online": "cross-env NODE_ENV=production ONLINE=active webpack -p --progress --colors --config webpack-site/webpack.config.prod.js",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "eslint ./site/ ./sparta/ --ext .vue,.js",
     "lint:css": "stylelint \"./site/**/*.(vue|scss)\" --syntax scss",

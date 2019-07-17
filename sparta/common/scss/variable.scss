@@ -270,6 +270,7 @@ $upload-file__item-background-hover: #f5f7fa;
 $upload-file__item-color: $color-text-primary;
 $upload-file__item--is-error-color: $color-danger;
 $upload-picture__item-size: 104px;
+$upload-picture__item-border: 1px solid #d9d9d9;
 $upload-picture__btn-background: #fafafa;
 $upload-picture__btn-background-hover: #fff;
 $upload-picture__btn-border: 1px dashed #d9d9d9;
@@ -277,7 +278,7 @@ $upload-picture__btn-border-radius: 4px;
 $upload-picture__btn-font-size: 14px;
 $upload-picture__btn-icon-color: #999;
 $upload-picture__btn--is-disabled-background: #fff;
-$upload-picture__btn--is-disabled-border-color: #ebeef5;
+$upload-picture__btn--is-disabled-border-color: #d9d9d9;
 $upload-picture__btn--is-disabled-color: #c0c4cc;
 
 /* Tabs
