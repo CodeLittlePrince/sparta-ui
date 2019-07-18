@@ -1,7 +1,7 @@
-node_modules/
-dist/
+node_modules
+dist
 server/uploadFiles
-lib/
+lib
 test/unit/coverage
 .DS_Store
 .idea
