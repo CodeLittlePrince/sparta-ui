@@ -6,7 +6,8 @@ body, html {
   -webkit-font-smoothing: antialiased;
 }
 
-*::-ms-clear {
+*::-ms-clear,
+*::-ms-reveal {
   display: none;
 }
 

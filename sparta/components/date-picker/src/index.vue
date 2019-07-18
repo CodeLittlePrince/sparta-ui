@@ -316,12 +316,6 @@ export default {
     'sp-date-picker-pane-time': SpDatePickerPaneTime
   },
 
-  provide() {
-    return {
-      'SpDatePicker': this
-    }
-  },
-
   mixins: [Emitter],
 
   props: {
@@ -802,17 +796,17 @@ export default {
       return true
     },
     handleInput() {
-      this.visible = true
+      // this.visible = true
       if (this._valiate(this.model)) {
         this.$emit('input', this.model)
         this.dispatch('SpFormItem', 'sp.form.change', this.model)
       }
     },
     handleStartInput() {
-      this.visibleDateRange = true
+      // this.visibleDateRange = true
     },
     handleEndInput() {
-      this.visibleDateRange = true
+      // this.visibleDateRange = true
     },
     /**
      * 点击处理

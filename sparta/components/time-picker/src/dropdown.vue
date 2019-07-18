@@ -76,6 +76,7 @@ export default {
 @import "sparta/common/scss/mixin";
 
 .sp-time-picker__dropdown {
+  margin: 5px 0;
 
   &__box {
     @include clearfix();
@@ -84,7 +85,6 @@ export default {
     box-shadow: $flot-box-shadow-box;
     box-sizing: border-box;
     background-color: $time-picker-pane-background;
-    margin: 5px 0;
   }
 }
 </style>
