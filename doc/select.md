@@ -310,9 +310,10 @@ export default{
   data(){
     return {
       list7: [
-        { label: '音乐', value: 'music' },
-        { label: '电影', value: 'movie' },
-        { label: '绘画', value: 'drawing' }
+        { label: '听音乐', value: 'music' },
+        { label: '看电影', value: 'movie' },
+        { label: '绘画', value: 'drawing' },
+        { label: '跑步', value: 'running' }
       ],
       value7: []
     }
@@ -423,9 +424,10 @@ export default{
       }],
       value6: '',
       list7: [
-        { label: '音乐', value: 'music' },
-        { label: '电影', value: 'movie' },
-        { label: '绘画', value: 'drawing' }
+        { label: '听音乐', value: 'music' },
+        { label: '看电影', value: 'movie' },
+        { label: '绘画', value: 'drawing' },
+        { label: '跑步', value: 'running' }
       ],
       value7: []
     }
