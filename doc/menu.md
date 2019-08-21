@@ -381,9 +381,9 @@ export default {
 ### Events
 | 事件名称      | 说明    | 回调参数      |
 |---------- |-------- |---------- |
-| select  | 条目 选择的回调 | — |
-| open  | 条目 展开的回调 | — |
-| close  | 条目 折叠的回调 | — |
+| select  | 条目 选择的回调 | (index, itemData) index为操作的条目的索引值；itemData为操作元素对应的数据 |
+| open  | 条目 展开的回调 | (index, itemData) index为操作的条目的索引值；itemData为操作元素对应的数据 |
+| close  | 条目 折叠的回调 | (index, itemData) index为操作的条目的索引值；itemData为操作元素对应的数据 |
 
 <script>
 export default {
