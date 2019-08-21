@@ -216,6 +216,15 @@
         validateForm2: {
           favorite: '',
           cities: []
+        },
+        rules2: {
+          name: [
+            { required: true, message: '姓名不能为空'},
+            { max: 5, message: '长度最长5个字符'}
+          ],
+          age: [
+            { required: true, message: '年龄不能为空'}
+          ],
         }
       }
     }
@@ -305,7 +314,12 @@
     class="sp-form-demo"
   >
     <!-- 姓名 -->
-    <sp-form-item two-line>
+    <sp-form-item
+      two-line
+      :rules="[
+        { required: true, message: '银行所在地'}
+      ]"
+    >
       <template slot="label">
         <div require>银行所在地</div>
         <div>Bank Location</div>
@@ -377,6 +391,7 @@
 |---------- |-------------- | --------------
 | validate | 对整个表单进行校验的方法，参数为一个回调函数。该回调函数会在校验结束后被调用，并传入两个参数：是否校验成功和未通过校验的字段。若不传入回调函数，则会返回一个 promise | Function(callback: Function(boolean, object))
 | resetFields | 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果 | —
+| clearValidate | 移除表单项的校验结果。传入待移除的表单项的 prop 属性或者 prop 组成的数组，如不传则移除整个表单的校验结果果 | Function(props: array | string)
 
 ### Form Events
 | 事件名称 | 说明    | 回调参数  |

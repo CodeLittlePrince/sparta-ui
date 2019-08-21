@@ -369,12 +369,12 @@ export default {
 
     .sp-select {
       &-input-box {
-        border-color: $select-input-border-color-focus-error;
+        border-color: $color-danger;
       }
 
       &.isFocus .sp-select-input-box {
-        border-color: $select-input-border-color-focus-error;
-        box-shadow: $select-input-box-shadow-focus-error;
+        border-color: $color-danger;
+        box-shadow: $input-box-shadow-focus-error;
       }
     }
   }
@@ -395,6 +395,17 @@ export default {
     .sp-input__validateIcon {
       color: $color-success;
     }
+
+    .sp-select {
+      &-input-box {
+        border-color: $color-success;
+      }
+
+      &.isFocus .sp-select-input-box {
+        border-color: $color-success;
+        box-shadow: $color-success;
+      }
+    }
   }
 
   &.is-required &__label::before {
@@ -407,7 +418,7 @@ export default {
     display: none;
   }
 
-  &__label.is-two-line div[require]::before {
+  &.is-required &__label.is-two-line div[require]::before {
     content: '*';
     color: $color-danger;
     margin-right: 4px;
