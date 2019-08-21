@@ -1,3 +1,15 @@
+sparta-ui
+---
+[![NPM version](https://img.shields.io/npm/v/sparta-ui.svg)](https://npmjs.org/package/sparta-ui)
+
 介绍
 ---
-`sparta-ui`是一款Vue组件库，为了兼容IE9而创建。
+
+### 命名由来
+此组件库叫Sparta名字的由来，是因为一部名为《斯巴达300勇士》。
+因为目前市面上，针对IE9的完全兼容的组件库几乎是没有了。而对于网易支付来说，IE9的用户占比还是不少，为了更好地服务用户，Sparta从此而生。
+
+### 特性
+- 开箱即用的高质量 Vue 组件。
+- 全链路开发和设计工具体系。
+- 为数不多的支持IE9的组件库。
