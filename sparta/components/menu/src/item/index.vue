@@ -233,7 +233,7 @@ export default {
   &__text {
     @include ellipsis();
     position: relative;
-    padding: 16px 20px;
+    padding: 12px 20px;
     transition: all 0.2s;
     &:hover {
       color: #409eff;
@@ -257,7 +257,7 @@ export default {
       }
     }
     .sp-icon-document, .sp-icon-message {
-      font-size: 20px;
+      font-size: 18px;
       vertical-align: text-top;
     }
     .sp-icon-arrow-down {
