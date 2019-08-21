@@ -171,9 +171,14 @@ export default {
               index: '5-1-2'
             },
             {
+              title: 'Confirm 全局确认',
+              link: '/confirm',
+              index: '5-1-3'
+            },
+            {
               title: 'Progress 进度条',
               link: '/progress',
-              index: '5-1-3'
+              index: '5-1-4'
             }
           ]
         }

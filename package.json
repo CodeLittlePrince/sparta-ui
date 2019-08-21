@@ -86,7 +86,7 @@
     "koa2-cors": "^2.0.6",
     "markdown-it": "^8.4.2",
     "markdown-it-container": "^2.0.0",
-    "marked": "^0.6.2",
+    "marked": "^0.7.0",
     "mini-css-extract-plugin": "^0.4.4",
     "mocha": "^5.2.0",
     "mockjs": "^1.0.1-beta3",

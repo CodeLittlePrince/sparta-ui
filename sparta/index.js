@@ -35,6 +35,7 @@ import TabPane from './components/tab-pane'
 import Pagination from './components/pagination'
 import Modal from './components/modal'
 import Toast from './components/toast'
+import confrim from './components/confirm'
 
 const components = [
   Row,
@@ -85,6 +86,7 @@ Sparta.install = Vue => {
   Vue.prototype.$success = Toast('success')
   Vue.prototype.$warning = Toast('warning')
   Vue.prototype.$info = Toast('info')
+  Vue.prototype.$confirm = confrim
 }
 
 

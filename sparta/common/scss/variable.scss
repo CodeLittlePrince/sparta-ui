@@ -216,10 +216,13 @@ $tag-border-color--danger: $color-danger;
 
 /* Table
 -------------------------- */
+$table-font-size: 14px;
 $table-background: #fafafa;
 $table-border: $border-base;
 $table-thead-color: $color-text-primary;
 $table-tbody-color: $color-text-regular;
+$table-min-height: 60px;
+$table-loading-background: rgba(255, 255, 255, 0.5);
 
 /* TimePicker
 -------------------------- */
@@ -327,6 +330,11 @@ $toast-background-success: #eeffef;
 $toast-background-error: #ffefef;
 $toast-background-warning: #fff6eb;
 $toast-border-raduis: $border-radius-base;
+
+/* Confirm
+-------------------------- */
+$confirm-font-size: 16px;
+$confirm-body-color: $color-text-primary;
 
 /* Break-point
 -------------------------- */
