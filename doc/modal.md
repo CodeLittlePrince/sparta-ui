@@ -7,18 +7,18 @@ Modal 模态弹窗
 :::demo 通过`v-model`控制modal的是否可见
 ```vue
 <template>
-  <sp-button type="primary" @click="visiable1 = true">show</sp-button>
+  <sp-button type="primary" @click="visible1 = true">show</sp-button>
   <sp-modal
     class="components--main__sp-modal"
-    v-model="visiable1"
+    v-model="visible1"
     @show="showHandle"
     @close="closeHandle">
     <div class="content">
       我是modal的内容
     </div>
     <div slot="foot">
-      <sp-button type="default" @click="visiable1 = false">取消</sp-button>
-      <sp-button type="primary" @click="visiable1 = false">确定</sp-button>
+      <sp-button type="default" @click="visible1 = false">取消</sp-button>
+      <sp-button type="primary" @click="visible1 = false">确定</sp-button>
     </div>
   </sp-modal>
 </template>
@@ -27,7 +27,7 @@ Modal 模态弹窗
 export default{
   data() {
     return {
-      visiable1: false
+      visible1: false
     }
   },
   methods: {
@@ -63,13 +63,14 @@ export default{
 |---------- |-------- |---------- |
 | close  | modal 关闭的回调 | — |
 | show  | modal 打开的回调 | — |
+| after-leave  | modal 消失动画结束的回调 | — |
 
 
 <script>
 export default{
   data() {
     return {
-      visiable1: false
+      visible1: false
     }
   },
   methods: {

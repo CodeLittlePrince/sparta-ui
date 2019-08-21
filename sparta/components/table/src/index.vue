@@ -1,12 +1,16 @@
 <template>
   <div class="sp-table">
     <!-- 表格头部 -->
-    <div class="sp-table__head">
-      <table>
+    <div
+      class="sp-table__head"
+      :class="{ borderBox: !showVScroll }"
+      :style="`width: ${tableWidth}`"
+    >
+      <table :style="`width: ${tableWidth}`">
         <colgroup>
           <col
             v-if="selection"
-            width="60px"
+            :width="selectionWidth"
           >
           <col
             v-for="(item, index) in children"
@@ -33,13 +37,19 @@
       </table>
     </div>
     <!-- 表格主体 -->
-    <div class="sp-table__body">
+    <div
+      class="sp-table__body"
+      :style="`width: ${tableWidth}`"
+    >
       <!-- 有数据情况 -->
-      <table v-if="list && list.length && !loading">
+      <table
+        v-show="list && list.length"
+        :style="`width: ${tableWidth}`"
+      >
         <colgroup>
           <col
             v-if="selection"
-            width="60px"
+            :width="selectionWidth"
           >
           <col
             v-for="(item, index) in children"
@@ -76,7 +86,7 @@
       </table>
       <!-- 没有数据情况 -->
       <div
-        v-else-if="!loading"
+        v-show="(!list || !list.length) && !loading"
         class="sp-table__empty"
       >
         <span>
@@ -85,14 +95,16 @@
       </div>
       <!-- loading情况 -->
       <div
-        v-else
-        class="sp-table__loading"
+        v-show="loading"
+        class="sp-table__loading-wrap"
       >
-        <i
-          v-if="!isIE9"
-          class="sp-icon-loading"
-        ></i>
-        加载中...
+        <div class="sp-table__loading">
+          <i
+            v-if="!isIE9"
+            class="sp-icon-loading"
+          ></i>
+          加载中...
+        </div>
       </div>
     </div>
   </div>
@@ -128,6 +140,10 @@ export default {
     selection: {
       type: Boolean,
       default: false
+    },
+    selectionWidth: {
+      type: String,
+      default: '60'
     }
   },
 
@@ -136,7 +152,9 @@ export default {
       checkAll: false,
       isIndeterminate: false,
       checkedIndexs: [],
-      checkedList: []
+      checkedList: [],
+      tableWidth: '100%',
+      showVScroll: false
     }
   },
 
@@ -151,21 +169,58 @@ export default {
     }
   },
 
+  watch: {
+    list()  {
+      // 数据变化后清除所有点亮状态
+      this.checkAll = false
+      this.isIndeterminate = false
+      this.checkedIndexs = []
+      this.checkedList = []
+      this._initCheckedList()
+      this._emitChange()
+    }
+  },
+
   mounted() {
     if (this.selection) {
-      this.initCheckedList()
+      this._initCheckedList()
     }
+    this._initTableWidth()
   },
   
   methods: {
-    initCheckedList() {
+    _initTableWidth() {
+      let width = 0
+      for (let i = 0, len = this.children.length; i < len; i++) {
+        const w = this.children[i].componentOptions.propsData.width
+        if (w) {
+          width += +w
+        }
+      }
+      // 如果width大于容器宽度，则使用累加的w来处理table;
+      // 否则table 100%
+      const parentW = parseInt(window.getComputedStyle(this.$el).width)
+      if (this.selection) {
+        width += +this.selectionWidth
+      }
+      if (width <= parentW) {
+        width = '100%'
+        this.showVScroll = false
+      } else {
+        this.showVScroll = true
+      }
+      this.tableWidth = width + 'px'
+    },
+
+    _initCheckedList() {
       let len = this.list.length
       while(len) {
         len--
         this.checkedList[len] = false
       }
     },
-    emitChange() {
+
+    _emitChange() {
       // 过滤出打勾了的值给上层
       const result = []
       this.checkedList.forEach((isChecked, index) => {
@@ -175,25 +230,11 @@ export default {
       })
       this.$emit('selection-change', result)
     },
+
     /**
-     * 全选单选框点击
+     * 处理checkbox的关联
      */
-    handleCheckAllChange(isChecked) {
-      let len = this.list.length
-      while(len) {
-        len--
-        this.checkedList[len] = isChecked
-      }
-      this.isIndeterminate = false
-      this.emitChange()
-    },
-    /**
-     * 单选框单独点击
-     */
-    handleCheck(index, isChecked) {
-      // 更新checkedList
-      this.checkedList[index] = isChecked
-      // 处理checkbox的关联
+    _processCheckBoxRelation() {
       const checkedAccount = this.checkedList.filter(item => {
         return item
       }).length
@@ -207,7 +248,27 @@ export default {
         this.isIndeterminate = false
         this.checkAll = false
       }
-      this.emitChange()
+    },
+    /**
+     * 全选单选框点击
+     */
+    handleCheckAllChange(isChecked) {
+      let len = this.list.length
+      while(len) {
+        len--
+        this.checkedList[len] = isChecked
+      }
+      this.isIndeterminate = false
+      this._emitChange()
+    },
+    /**
+     * 单选框单独点击
+     */
+    handleCheck(index, isChecked) {
+      // 更新checkedList
+      this.checkedList[index] = isChecked
+      this._processCheckBoxRelation()
+      this._emitChange()
     }
   },
 }
@@ -217,15 +278,21 @@ export default {
 @import "~sparta/common/scss/variable";
 
 .sp-table {
-  table {
-    width: 100%;
-  }
+  width: 100%;
+  overflow-x: auto;
+  font-size: $table-font-size;
+
   &__head {
     padding: 15px 24px;
     text-align: left;
     color: $table-thead-color;
     border-bottom: $table-border;
     background-color: $table-background;
+
+    &.borderBox {
+      box-sizing: border-box;
+    }
+
     th {
       text-align: left; /* 为了IE */
       &:first-child {
@@ -234,18 +301,25 @@ export default {
     }
   }
   &__body {
+    position: relative;
     padding: 0 24px;
     text-align: left;
     color: $table-tbody-color;
+    min-height: $table-min-height;
+    box-sizing: border-box;
+
     tr {
       border-bottom: $table-border;
+
       &:last-child {
         border-bottom: none;
       }
+
       td {
         vertical-align: middle;
         line-height: 1.2;
-        padding: 15px 0;
+        padding: 10px 0;
+
         &:first-child {
           .sp-table-cell {
             padding-left: 16px;
@@ -260,16 +334,30 @@ export default {
     }
   }
   &__empty {
-    padding: 30px 0;
+    height: $table-min-height;
+    line-height: $table-min-height;
     text-align: center;
   }
   &__loading {
-    padding: 30px 0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
     color: $color-text-secondary;
+
     .sp-icon-loading {
       font-size: 30px;
       vertical-align: sub;
+    }
+
+    &-wrap {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: rgba(255, 255, 255, 0.5);
     }
   }
 
@@ -282,4 +370,3 @@ export default {
   }
 }
 </style>
-

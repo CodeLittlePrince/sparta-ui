@@ -26,7 +26,7 @@ export default {
 
   data() {
     return {
-      visiable: false,
+      visible: false,
       toastAnimateClass: 'toastFadeInDown animated',
       duration: 3000,
       message: '',
@@ -56,7 +56,7 @@ export default {
           this.toastAnimateClass = 'toastFadeOutUp animated'
           // 为了动画更自然，加个延时
           setTimeout(() => {
-            this.visiable = false
+            this.visible = false
             this.destroyElement()
           }, 200)
         }, this.duration)

@@ -15,7 +15,6 @@
       <template v-if="multiple">
         <div
           ref="sp-tag-box"
-          :style="`width: ${tagBoxWidth}`"
           class="sp-tag-box"
           @click="focusSelectInput"
         >
@@ -25,7 +24,7 @@
           >
             <sp-tag
               v-for="tag in selected"
-              :key="tag.label"
+              :key="tag.value"
               closable
               @close="handleTagClose(tag, $event)"
             >{{ tag.label }}</sp-tag>
@@ -89,7 +88,7 @@
           <slot></slot>
           <!-- 无数据情况 -->
           <li
-            v-show="!hasSpOptions || (hasSpOptions && spOptionsAllInVisiable)"
+            v-show="!hasSpOptions || (hasSpOptions && spOptionsAllInVisible)"
             class="sp-option is-disabled sp-select-list-emptyText"
             @click.stop
           >{{ emptyText }}</li>
@@ -123,9 +122,13 @@ export default {
       type: [String, Number],
       default: 240
     },
+    height: {
+      type: [String, Number],
+      default: 40
+    },
     value: {
       type: [Array, Number, String, Boolean, Object],
-      default: undefined
+      default: ''
     },
     placeholder: {
       type: String,
@@ -172,8 +175,7 @@ export default {
       spOptions: [],
       evOptionHoverIndex: -1,
       selected: [],
-      tagBoxWidth: 'auto',
-      selectInputBoxHeight: '38px',
+      selectInputBoxHeight: this.height - 2 + 'px',
       currentValue: this.value
     }
   },
@@ -185,11 +187,11 @@ export default {
     spOptionsAllDisabled() {
       return this.spOptions.every(option => option.disabled)
     },
-    spOptionsAllInVisiable() {
+    spOptionsAllInVisible() {
       return this.spOptions.every(option => !option.visible)
     },
     showClearIcon() {
-      return this.clearable && this.inputText !== '' && this.isHover
+      return this.clearable && this.inputText !== '' && this.isHover && !this.multiple
     },
     hasSpOptions() {
       return this.spOptions && this.spOptions.length
@@ -208,7 +210,7 @@ export default {
     // 监控下拉是否显示
     visible(val) {
       if (val) {
-        if (this.currentValue !== undefined) {
+        if (this.currentValue !== '') {
           this.$nextTick(() => this.scrollToView())
         }
         // 为了每次弹出dropdown，都会根据处的环境做适应
@@ -248,10 +250,7 @@ export default {
     if (this.disabled) {
       return
     }
-    this.setDefault()
-    if (this.multiple) {
-      this.setTagboxWidth()
-    }
+    this.setCurrentValue(this.value)
     document.addEventListener('click', this.handleOtherAreaClick)
   },
   
@@ -263,40 +262,24 @@ export default {
   },
 
   methods: {
-    /**
-     * 设置默认label和evOptionHoverIndex
-     */
-    setDefault() {
-      const defaultSlot = this.$slots.default
-      if (defaultSlot && this.value) {
-        for (let i = 0, len = defaultSlot.length; i < len; i++) {
-          if (defaultSlot[i].componentInstance.value === this.value) {
-            this.evOptionHoverIndex = i
-            this.inputText = defaultSlot[i].componentInstance.label
-            break
-          }
-        }
-      }
-    },
-
-    setTagboxWidth() {
-      this.tagBoxWidth = `${parseFloat(window.getComputedStyle(this.$refs['sp-tag-box'].parentNode).width) - 38}px`
-    },
-    
     updateTagboxHeight() {
-      if (this.selected.length) {
+      this.$nextTick(() => {
+        // 更新容器的高度
+        const style = window.getComputedStyle(this.$refs['sp-tag-box'])
+        let height = parseFloat(style.height) + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom)
+        if (height.toString() === 'NaN') { // 防止弹窗情况，父级消失导致拿不到高度
+          height = 0
+        }
+        if (height < this.height - 2) {
+          height = this.height - 2
+        }
+        this.selectInputBoxHeight = `${height}px`
+        this.$refs['sp-select-suffix'].style.height = height + 'px'
+        this.$refs['sp-select-suffix'].style.lineHeight = height + 'px'
         this.$nextTick(() => {
-          // 更新容器的高度
-          const style = window.getComputedStyle(this.$refs['sp-tag-box'])
-          const height = parseFloat(style.height) + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom)
-          this.selectInputBoxHeight = `${height}px`
-          this.$refs['sp-select-suffix'].style.height = height + 'px'
-          this.$refs['sp-select-suffix'].style.lineHeight = height + 'px'
-          this.$nextTick(() => {
-            this.broadcast('SpSelectDropdown', 'updatePopper')
-          })
+          this.broadcast('SpSelectDropdown', 'updatePopper')
         })
-      }
+      })
     },
     
     setCurrentValue(val) {
@@ -304,9 +287,38 @@ export default {
       if (this.validateEvent) {
         this.dispatch('SpFormItem', 'sp.form.change', [val])
       }
-      // 恢复文案
-      if (!val) {
+      // 设置输入框显示文案
+      if ((!val) || (this.multiple && val && val.length === 0)) {
+        // 没有值则置空
         this.inputText = ''
+        if (this.multiple) {
+          this.selected = []
+          this.spOptions.map(item => {
+            return item.selected = false
+          })
+          this.updateTagboxHeight()
+        }
+      } else if (this.multiple) {
+        this.selected = []
+        // 多选情况
+        for (let i = 0, len = this.spOptions.length; i < len; i++) {
+          for (let j = 0, len = val.length; j < len; j++) {
+            if (this.spOptions[i].value === val[j]) {
+              this.selected.push({ label: this.spOptions[i].label, value: this.spOptions[i].value })
+              this.spOptions[i].selected = true
+              this.updateTagboxHeight()
+            }
+          }
+        }
+      } else {
+        // 单选情况
+        for (let i = 0, len = this.spOptions.length; i < len; i++) {
+          if (this.spOptions[i].value === val) {
+            this.inputText = this.spOptions[i].label
+            this.evOptionHoverIndex = i
+            break
+          }
+        }
       }
     },
     /**
@@ -334,7 +346,7 @@ export default {
      * 通过键盘的Enter键选定条目
      */
     handleInputEnter() {
-      if (this.filterable && this.spOptionsAllInVisiable) {
+      if (this.filterable && this.spOptionsAllInVisible) {
         return
       }
       const hoverItem = this.spOptions[this.evOptionHoverIndex]
@@ -350,7 +362,6 @@ export default {
           this.currentValue.push(hoverItem.value)
           this.spOptions[this.evOptionHoverIndex].selected = true
         }
-        this.updateTagboxHeight()
       } else if (hoverItem) {
         this.$emit('input', hoverItem.value)
         this.inputText = hoverItem.label
@@ -394,7 +405,7 @@ export default {
           this.$emit('input', matchedItem.value)
         } else {
           this.inputText = ''
-          this.$emit('input', undefined)
+          this.$emit('input', '')
         }
       }
       // 触发form的校验
@@ -405,7 +416,7 @@ export default {
 
     handleSuffixClick(e) {
       if (this.showClearIcon) {
-        this.$emit('input', undefined)
+        this.$emit('input', '')
         this.inputText = ''
         this.$refs.selectInput.blur()
         this.visible = false
@@ -445,7 +456,7 @@ export default {
         return
       }
       if (this.spOptions.length === 0) return
-      if (!this.spOptionsAllDisabled && !this.spOptionsAllInVisiable) {
+      if (!this.spOptionsAllDisabled && !this.spOptionsAllInVisible) {
         // 上下切换
         if (direction === 'next') {
           this.evOptionHoverIndex++
@@ -565,6 +576,8 @@ export default {
     .sp-tag-box {
       position: absolute;
       padding-bottom: 3px;
+      left: 0;
+      right: 28px;
     }
 
     .sp-tag {

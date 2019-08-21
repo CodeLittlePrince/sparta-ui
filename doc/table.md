@@ -24,7 +24,10 @@
       prop="tag"
       label="操作">
       <template slot-scope="scope">
-        <sp-button type="primary">
+        <sp-button
+          type="primary"
+          size="small"
+        >
           {{ scope.cell }}
           {{ scope.row.tag }}
         </sp-button>
@@ -87,7 +90,10 @@ export default{
       prop="tag"
       label="操作">
       <template slot-scope="scope">
-        <sp-button type="primary">
+        <sp-button
+          type="primary"
+          size="small"
+        >
           click
         </sp-button>
       </template>
@@ -119,6 +125,95 @@ export default{
     },
     handleSelectionChange(data) {
       console.log(data)
+    }
+  }
+}
+</script>
+```
+:::
+
+### 横向滚动的表格
+
+:::demo 需要把所有的column设置width。
+```vue
+<template>
+  <sp-table
+    :list="tableList1"
+    @selection-change="handleSelectionChange"
+  >
+    <sp-table-column
+      :ellipsis="true"
+      prop="name"
+      label="店铺名称"
+      width="200">
+    </sp-table-column>
+    <sp-table-column
+      prop="withdrawing"
+      label="提现中的金额"
+      :formatter="formatter"
+      width="200">
+    </sp-table-column>
+    <sp-table-column
+      prop="withdrawing"
+      label="提现中的金额"
+      :formatter="formatter"
+      width="200">
+    </sp-table-column>
+    <sp-table-column
+      prop="withdrawing"
+      label="提现中的金额"
+      :formatter="formatter"
+      width="200">
+    </sp-table-column>
+    <sp-table-column
+      prop="withdrawing"
+      label="提现中的金额"
+      :formatter="formatter"
+      width="200">
+    </sp-table-column>
+    <sp-table-column
+      prop="withdrawing"
+      label="提现中的金额"
+      :formatter="formatter"
+      width="200">
+    </sp-table-column>
+    <sp-table-column
+      prop="tag"
+      label="操作"
+      width="150">
+      <template slot-scope="scope">
+        <sp-button
+          type="primary"
+          size="small"
+        >
+          click
+        </sp-button>
+      </template>
+    </sp-table-column>
+  </sp-table>
+</template>
+
+<script>
+export default{
+  data() {
+    return {
+      tableList1: [
+        {
+          name: '番茄炒西红柿',
+          withdrawing: '20.00',
+          tag: 'yo'
+        },
+        {
+          name: '土豆炖马铃薯',
+          withdrawing: '30.00',
+          tag: 'yo'
+        }
+      ]
+    }
+  },
+  methods: {
+    formatter(cell) {
+      return cell + '元'
     }
   }
 }

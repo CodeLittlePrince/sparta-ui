@@ -15,7 +15,7 @@ const Toast = type => {
     })
     instance.vm = instance.$mount()
     document.body.appendChild(instance.vm.$el)
-    instance.vm.visiable = true
+    instance.vm.visible = true
   }
 }
 

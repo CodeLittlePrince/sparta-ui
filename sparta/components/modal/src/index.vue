@@ -1,6 +1,9 @@
 <template>
   <div class="sp-modal">
-    <transition name="sp-modal-fade">
+    <transition
+      name="sp-modal-fade"
+      @after-leave="handleAfterLeave"
+    >
       <div
         v-show="visible"
         class="sp-modal-wrap"
@@ -98,9 +101,9 @@ export default {
   },
   mounted() {
     const popManage = new PopManage()
-    this.modalMaskZIndex = popManage.getZIndex()
+    this.modalMaskZIndex = PopManage.zIndex
     popManage.zIndexIncrease()
-    this.modalWrapperZIndex = popManage.getZIndex()
+    this.modalWrapperZIndex = PopManage.zIndex
     document.body.appendChild(this.$el)
   },
   beforeDestroy() {
@@ -108,6 +111,20 @@ export default {
   },
   methods: {
     closeHandle() {
+      // 是否所有的modal都已经为不可见了
+      const modals = Array.from(document.getElementsByClassName('sp-modal-wrap'))
+      let modalCount = modals.length
+      Array.from(document.getElementsByClassName('sp-modal-wrap')).forEach(item => {
+        if (item.style.display) {
+          modalCount --
+        }
+      })
+      // 因为是这时还没完全关闭当前弹窗
+      // 所以其实当modalCount为1的时候说明所有modal都要消失了
+      const isAllModalHide = modalCount === 1
+      if (isAllModalHide) {
+        document.body.style.overflow = 'inherit'
+      }
       // 传出close事件
       this.$emit('close')
       this.visible = false
@@ -120,6 +137,10 @@ export default {
       this.$emit('show')
       // 配合v-model
       this.$emit('input', this.visible)
+      document.body.style.overflow = 'hidden'
+    },
+    handleAfterLeave() {
+      this.$emit('after-leave')
     }
   }
 }
@@ -181,4 +202,3 @@ export default {
   background: $modal-mask-background;
 }
 </style>
-
