@@ -2,16 +2,11 @@
 class PopManage {
   static id = 0
   static popInstances = {}
-  constructor(zIndex) {
+  static zIndex = 2000
+  constructor() {
     PopManage.id ++
     this.id = PopManage.id
-    this.zIndex = zIndex || 2000 + this.id
-  }
-  getId() {
-    return this.id
-  }
-  getZIndex() {
-    return this.zIndex
+    PopManage.zIndex += this.id
   }
   getInstances() {
     return PopManage.popInstances
@@ -25,10 +20,10 @@ class PopManage {
   }
   zIndexIncrease() {
     PopManage.id ++
-    this.zIndex ++
+    PopManage.zIndex ++
   }
   nextZIndex() {
-    return this.zIndex + 1
+    return PopManage.zIndex + 1
   }
 }
 

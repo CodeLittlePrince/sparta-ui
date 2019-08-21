@@ -19,8 +19,6 @@
 <script>
 import PopManage from 'sparta/model/PopManage'
 
-const popManage = new PopManage()
-
 export default {
   name: 'SpToast',
 
@@ -37,7 +35,7 @@ export default {
   },
 
   mounted() {
-    this.zIndex = popManage.getZIndex()
+    this.zIndex = PopManage.zIndex
     this.startTimer()
   },
 
