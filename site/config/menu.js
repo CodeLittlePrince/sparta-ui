@@ -73,14 +73,19 @@ export default {
               index: '4-3-1'
             },
             {
+              title: 'Window 窗口',
+              link: '/window',
+              index: '4-3-2'
+            },
+            {
               title: 'Dropdown 下拉菜单',
               link: '/dropdown',
-              index: '4-3-2'
+              index: '4-3-3'
             },
             {
               title: 'Pagination 分页',
               link: '/pagination',
-              index: '4-3-3'
+              index: '4-3-4'
             }
           ]
         },

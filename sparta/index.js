@@ -7,6 +7,7 @@ import Footer from './components/footer'
 import Aside from './components/aside'
 import Main from './components/main'
 import Menu from './components/menu'
+import Window from './components/window'
 import Dropdown from './components/dropdown'
 import DropdownItem from './components/dropdown-item'
 import Button from './components/button'
@@ -44,6 +45,7 @@ const components = [
   Aside,
   Main,
   Menu,
+  Window,
   Dropdown,
   DropdownItem,
   Button,
@@ -99,6 +101,7 @@ export {
   Aside,
   Main,
   Menu,
+  Window,
   Dropdown,
   DropdownItem,
   Button,
