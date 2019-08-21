@@ -36,6 +36,11 @@
         :autocomplete="autocomplete"
         :value="currentValue"
         :aria-label="label"
+        :maxlength="maxlength"
+        :minlength="minlength"
+        :max="max"
+        :min="min"
+        :step="step"
         @compositionstart="handleComposition"
         @compositionupdate="handleComposition"
         @compositionend="handleComposition"
@@ -105,6 +110,11 @@
       :autocomplete="autocomplete"
       :style="textareaStyle"
       :aria-label="label"
+      :maxlength="maxlength"
+      :minlength="minlength"
+      :max="max"
+      :min="min"
+      :step="step"
       @compositionstart="handleComposition"
       @compositionupdate="handleComposition"
       @compositionend="handleComposition"
@@ -143,6 +153,11 @@ export default {
     form: String,
     disabled: Boolean,
     readonly: Boolean,
+    maxlength: [String, Number],
+    minlength: [String, Number],
+    max: [String, Number],
+    min: [String, Number],
+    step: [String, Number],
     type: {
       type: String,
       default: 'text'
