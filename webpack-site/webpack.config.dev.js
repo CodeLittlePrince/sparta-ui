@@ -29,13 +29,15 @@ const config = Object.assign(webpackConfigBase.config, {
       template: webpackConfigBase.resolve('index.html')
     }),
     // 复制文件
-    new CopyWebpackPlugin([
+    new CopyWebpackPlugin({
+      patterns: [
       // 复制favicon到dist
-      {
-        from: webpackConfigBase.favicon,
-        to: webpackConfigBase.resolve('dev')
-      }
-    ]),
+        {
+          from: webpackConfigBase.favicon,
+          to: webpackConfigBase.resolve('dev')
+        }
+      ]
+    }),
     // 热替换插件
     new webpack.HotModuleReplacementPlugin(),
     // 更友好地输出错误信息

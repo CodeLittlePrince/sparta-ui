@@ -1,7 +1,7 @@
 const webpack = require('webpack')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const webpackConfigBase = require('./webpack.config.base.js')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const extractCSS =
@@ -36,7 +36,7 @@ const config = Object.assign(webpackConfigBase.config, {
   optimization: {
     // 压缩js
     minimizer: [
-      new UglifyJsPlugin({
+      new TerserPlugin({
         cache: true,
         parallel: true
       }),
@@ -73,9 +73,13 @@ const config = Object.assign(webpackConfigBase.config, {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: [
-          'babel-loader',
-          'eslint-loader'
+        use: [
+          {
+            loader: 'babel-loader',
+            // Use cache carefully 😤It will cache although you have changed .browserslistrc sometimes.
+            options: { cacheDirectory: true }
+          },
+          { loader: 'eslint-loader', options: { cache: true } }
         ]
       },
       {

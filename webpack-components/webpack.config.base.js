@@ -30,11 +30,7 @@ const config = {
       mixins: resolve('/mixins/'),
       plugins: resolve('/plugins/')
     },
-    externals: {
-      vue: 'vue'
-    }
   },
-  
 }
 
 module.exports = {
