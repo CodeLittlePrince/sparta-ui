@@ -170,7 +170,7 @@ export default {
   },
 
   watch: {
-    list()  {
+    list() {
       // 数据变化后清除所有点亮状态
       this.checkAll = false
       this.isIndeterminate = false

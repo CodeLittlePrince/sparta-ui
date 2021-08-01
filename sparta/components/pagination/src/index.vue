@@ -95,7 +95,7 @@ export default {
   data() {
     return {
       index: +this.pageIndex, //当前页码
-      limit: +this.pageSize,  //每页显示条数
+      limit: +this.pageSize, //每页显示条数
       size: +this.total || 1, //总记录数
       showPrevMore: false,
       showNextMore: false,
@@ -176,13 +176,13 @@ export default {
       }
     },
 
-    first(){
+    first() {
       if (this.index !== 1) {
         this.go(1)
       }
     },
 
-    last(){
+    last() {
       if (this.index != this.pages) {
         this.go(this.pages)
       }

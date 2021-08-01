@@ -14,14 +14,14 @@ import Emitter from 'sparta/common/js/mixins/emitter'
 
 export default {
   name: 'SpDatePickerDropdown',
+
+  mixins: [Popper, Emitter],
   
   provide() {
     return {
       'SpDatePickerDropdown': this
     }
   },
-
-  mixins: [Popper, Emitter],
 
   props: {
     placement: {

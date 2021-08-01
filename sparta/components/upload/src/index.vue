@@ -163,6 +163,8 @@ export default {
     'sp-progress': SPProgress
   },
 
+  mixins: [Emitter],
+
   inject: {
     spForm: {
       default: ''
@@ -171,8 +173,6 @@ export default {
       default: ''
     }
   },
-
-  mixins: [Emitter],
 
   props: {
     files: {
@@ -512,7 +512,7 @@ export default {
         this.uploadFiles[index].status = 'fail'
       }
       //删除form
-      setTimeout(function(){
+      setTimeout(function() {
         document.body.removeChild(form)
       }, 0)
     },

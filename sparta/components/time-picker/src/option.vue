@@ -20,13 +20,13 @@ import Emitter from 'sparta/common/js/mixins/emitter'
 export default {
   name: 'SpTimePickerOption',
 
+  mixins: [Emitter],
+
   inject: {
     'SpTimePickerPane': {
       default: ''
     }
   },
-
-  mixins: [Emitter],
 
   props: {
     disabled: {

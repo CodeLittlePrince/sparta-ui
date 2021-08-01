@@ -35,13 +35,13 @@ export default {
     'sp-dropdown-item-wrap': SpDropdownItemWrap
   },
 
+  mixins: [Emitter],
+
   provide() {
     return {
       'SpDropdown': this
     }
   },
-
-  mixins: [Emitter],
 
   props: {
     trigger: {
@@ -113,7 +113,7 @@ export default {
      * 点击其他区域触发事件
      */
     handleOtherAreaClick(e) {
-      if (!this.$el.contains(e.target)){
+      if (!this.$el.contains(e.target)) {
         this.isFocus = false
         this.visible = false
       }

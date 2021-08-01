@@ -109,13 +109,13 @@ export default {
     'sp-select-dropdown': SpSelectDropdown
   },
 
+  mixins: [Emitter],
+
   provide() {
     return {
       'spSelect': this
     }
   },
-
-  mixins: [Emitter],
 
   props: {
     width:  {
@@ -337,7 +337,7 @@ export default {
      * 点击其他区域触发事件
      */
     handleOtherAreaClick(e) {
-      if (!this.$el.contains(e.target)){
+      if (!this.$el.contains(e.target)) {
         this.isFocus = false
         this.visible = false
       }
@@ -498,7 +498,7 @@ export default {
         // 3 index在视窗之中 dropdownTop
         if (indexOptionTop - dropdownHeight - dropdownTop > 0) {
           offset = indexOptionTop - dropdownHeight + parseInt(dropdownStyle.paddingTop)
-        } else if (dropdownTop - indexOptionTop  + stepDistance >= 0) {
+        } else if (dropdownTop - indexOptionTop + stepDistance >= 0) {
           offset = indexOptionTop - stepDistance + parseInt(dropdownStyle.paddingBottom)
         } else {
           offset = dropdownTop

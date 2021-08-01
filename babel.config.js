@@ -3,16 +3,9 @@ module.exports = {
     [
       '@babel/env',
       {
-        'targets': {
-          'browsers': [
-            '> 1%',
-            'last 2 versions',
-            'ie >= 9'
-          ]
-        },
         'modules': false,
         'useBuiltIns': 'usage',
-        'corejs': '2'
+        'corejs': '3'
       }
     ]
   ],
@@ -22,9 +15,13 @@ module.exports = {
     ['@babel/plugin-proposal-object-rest-spread', { 'loose': true, 'useBuiltIns': true }], // babel-preset-env已依赖安装
     ['@babel/plugin-proposal-class-properties', { 'loose': true }]
   ],
-  'env': {
+  'env': process.env.BABEL_ENV === 'test' ? {
     'test': {
-      'plugins': [ 'istanbul' ]
+      'plugins': [
+        ['babel-plugin-istanbul', {
+          'extension': ['.js', '.vue']
+        }]
+      ]
     }
-  }
+  } : {}
 }

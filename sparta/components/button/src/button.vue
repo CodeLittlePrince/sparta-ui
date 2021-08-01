@@ -49,7 +49,10 @@ export default {
         return ['default', 'primary', 'success', 'warning', 'danger', 'info', 'text'].indexOf(val) > -1
       }
     },
-    size: String,
+    size: {
+      type: String,
+      default: ''
+    },
     icon: {
       type: String,
       default: ''

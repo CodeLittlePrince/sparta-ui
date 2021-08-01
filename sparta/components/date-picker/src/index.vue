@@ -1179,7 +1179,7 @@ export default {
         this.type !== 'daterange' &&
         !this.$el.contains(e.target) &&
         e.target != document.body
-      ){
+      ) {
         this._resetAllVisible()
       }
       // daterange 类型
@@ -1187,7 +1187,7 @@ export default {
         this.type === 'daterange' &&
         !this.$el.contains(e.target) &&
         e.target != document.body
-      ){
+      ) {
         this._resetRangeAllVisible()
       }
     },

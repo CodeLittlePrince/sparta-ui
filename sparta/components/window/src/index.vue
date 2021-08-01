@@ -146,6 +146,7 @@ export default {
      */
     _handleClose(index, e) {
       e.stopPropagation()
+      // eslint-disable-next-line vue/no-mutating-props
       this.tabs.splice(index, 1)
       const currentItem = this.$refs.item[index]
       const isActive = dom.hasClass(currentItem, 'active')
@@ -192,7 +193,7 @@ export default {
      * 设置list的宽度
      */
     _setListWidth() {
-      const items =  Array.from(this.$refs.list.children)
+      const items = Array.from(this.$refs.list.children)
       let w = 0
       items.forEach(item => {
         const itemStyle = window.getComputedStyle(item)

@@ -10,13 +10,13 @@ import Emitter from 'sparta/common/js/mixins/emitter'
 export default {
   name: 'SpRadioGroup',
 
+  mixins: [Emitter],
+
   inject: {
     spFormItem: {
       default: ''
     }
   },
-
-  mixins: [Emitter],
 
   props: {
     value: {},

@@ -15,13 +15,13 @@ import Emitter from 'sparta/common/js/mixins/emitter'
 export default {
   name: 'SpTimePickerPane',
 
+  mixins: [Emitter],
+
   provide() {
     return {
       'SpTimePickerPane': this
     }
   },
-
-  mixins: [Emitter],
 
   props: {
     index: {

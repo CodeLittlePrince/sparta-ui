@@ -135,8 +135,6 @@ export default {
 
   mixins: [Emitter],
 
-  inheritAttrs: false,
-
   inject: {
     spForm: {
       default: ''
@@ -145,6 +143,8 @@ export default {
       default: ''
     }
   },
+
+  inheritAttrs: false,
 
   props: {
     value: [String, Number],

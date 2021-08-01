@@ -285,7 +285,7 @@ export default {
      * 点击其他区域触发事件
      */
     handleOtherAreaClick(e) {
-      if (!this.$el.contains(e.target) && e.target != document.body){
+      if (!this.$el.contains(e.target) && e.target != document.body) {
         this.isFocus = false
         this.visible = false
       }
