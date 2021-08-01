@@ -29,6 +29,9 @@ const config = {
       filters: resolve('/filters/'),
       mixins: resolve('/mixins/'),
       plugins: resolve('/plugins/')
+    },
+    externals: {
+      vue: 'vue'
     }
   },
   

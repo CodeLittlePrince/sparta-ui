@@ -35,7 +35,7 @@ function traverseMenu(config) {
     if (item.link) {
       routes[1].children.push({
         path: `${item.link.slice(1)}`,
-        component: () => import(`../../doc${item.link}`)
+        component: () => import('../../doc' + item.link)
       })
     }
     if (item.child) {

@@ -112,9 +112,13 @@ const config = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: [
-          'babel-loader',
-          'eslint-loader'
+        use: [
+          {
+            loader: 'babel-loader',
+            // Use cache carefully 😤It will cache although you have changed .browserslistrc sometimes.
+            options: { cacheDirectory: true }
+          },
+          { loader: 'eslint-loader', options: { cache: true } }
         ]
       },
       {

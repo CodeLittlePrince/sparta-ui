@@ -53,6 +53,9 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     'no-console': 0,
     // vue rules
+    'vue/component-definition-name-casing': 0,
+    'vue/require-prop-types': 0,
+    'vue/require-default-prop': 0,
     'vue/html-self-closing': 0,
     'vue/no-v-html': 0,
     'vue/component-name-in-template-casing': 0,
@@ -63,9 +66,6 @@ module.exports = {
       'multiline': {
         'max': 3,
       }
-    }],
-    'vue/component-definition-name-casing': 0,
-    'vue/require-prop-types': 0,
-    'vue/require-default-prop': 0
+    }]
   }
 }
