@@ -9,7 +9,7 @@
   <sp-form
     :model="validateForm1"
     ref="validateForm1"
-    label-width="100px"
+    label-width="130px"
     class="sp-form-demo"
   >
     <!-- 姓名 -->
@@ -22,8 +22,10 @@
     >
       <sp-input
         v-model="validateForm1.name"
+        placeholder="请输入"
         autocomplete="off"
-      />
+      ></sp-input>
+      <div slot="append">输入你的名字吧，靓仔!</div>
     </sp-form-item>
     <!-- 年龄 -->
     <sp-form-item
@@ -36,6 +38,7 @@
     >
       <sp-input
         v-model.number="validateForm1.age"
+        placeholder="请输入"
         autocomplete="off"
       />
     </sp-form-item>
@@ -92,6 +95,7 @@
         { required: true, message: '靓照不能为空'}
       ]"
     >
+      <div slot="prepend">上传文件说明，可多行</div>
       <sp-upload
         :files="validateForm1.picture"
         action="/api/upload"
@@ -99,12 +103,7 @@
         :processResult="processPictureResult"
         @change="handlePictureChange"
         :limit="1"
-      >
-        上传靓照
-        <template slot="tip">
-          温馨提示：大文件可能会上传更长时间
-        </template>
-      </sp-upload>
+      ></sp-upload>
     </sp-form-item>
     <!-- 按钮 -->
     <sp-form-item>

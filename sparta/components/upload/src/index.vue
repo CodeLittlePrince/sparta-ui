@@ -20,12 +20,8 @@
           :disabled="disabled"
           @click="handleSelect"
         >
-          <slot>上传文件</slot>
+          <slot>点击上传</slot>
         </sp-button>
-        <!-- 提示 -->
-        <div class="sp-upload__tip">
-          <slot name="tip"></slot>
-        </div>
         <!-- 展示 -->
         <ul class="sp-upload-file__show">
           <li
@@ -138,14 +134,14 @@
             :disabled="disabled"
             @click="handleSelect"
           >
-            <div class="sp-icon-plus-box"><i class="sp-icon-plus"></i></div>
-            <slot>上传图片</slot>
+            <div class="sp-upload-picture__btn__box">
+              <div class="sp-icon-plus-box"><i class="sp-icon-plus"></i></div>
+              <div class="sp-upload-picture__btn__text">
+                <slot>点击上传</slot>
+              </div>
+            </div>
           </li>
         </ul>
-        <!-- 提示 -->
-        <div class="sp-upload__tip">
-          <slot name="tip"></slot>
-        </div>
       </div>
     </template>
   </div>
@@ -535,15 +531,11 @@ export default {
 @import "sparta/common/scss/mixin";
 
 .sp-upload {
+  @include clearfix();
+  color: $color-text-tip;
+
   &__input {
     display: none;
-  }
-
-  &__tip {
-    font-size: 12px;
-    color: $upload__tip-color;
-    line-height: 1.2;
-    margin-top: 8px;
   }
 
   &-file {
@@ -614,14 +606,13 @@ export default {
     &__item {
       position: relative;
       float: left;
-      width: $upload-picture__item-size;
-      height: $upload-picture__item-size;
+      width: 174px;
+      height: 110px;
       padding: 8px;
       border: $upload-picture__item-border;
       border-radius: 4px;
       box-sizing: border-box;
-      margin-right: 8px;
-      margin-bottom: 8px;
+      margin-right: 10px;
 
       .sp-progress {
         position: absolute;
@@ -706,29 +697,33 @@ export default {
     }
 
     &__btn {
-      display: table-cell;
-      width: $upload-picture__item-size;
-      height: $upload-picture__item-size;
-      margin-right: 8px;
-      margin-bottom: 8px;
+      float: left;
+      width: 174px;
+      height: 110px;
       text-align: center;
-      vertical-align: middle;
-      background-color: $upload-picture__btn-background;
-      border: $upload-picture__btn-border;
-      border-radius: $upload-picture__btn-border-radius;
+      background-color: #f0f3f7;
+      border-radius: 4px;
       transition: $transition-all;
-      font-size: $upload-picture__btn-font-size;
       cursor: pointer;
       box-sizing: border-box;
+      font-size: 0;
+      padding: 4px;
+      line-height: 1;
 
-      .sp-icon-plus-box {
-        width: $upload-picture__item-size;
+      &__box {
+        border: 1px dashed #d9d9d9;
+        height: calc(100% - 2px);
       }
 
       .sp-icon-plus {
-        font-size: 26px;
-        margin-bottom: 10px;
-        color: $upload-picture__btn-icon-color;
+        font-size: 24px;
+        margin-bottom: 11px;
+        margin-top: 29px;
+      }
+
+      &__text {
+        font-size: 12px;
+        line-height: 18px;
       }
 
       &:hover {

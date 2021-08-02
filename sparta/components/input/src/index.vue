@@ -4,7 +4,7 @@
       type === 'textarea' ? 'sp-textarea' : 'sp-input',
       inputSize ? 'sp-input--' + inputSize : '',
       {
-        'is-disabled': inputDisabled,
+        'is--disabled': inputDisabled,
         'sp-input-group': $slots.prepend || $slots.append,
         'sp-input-group--append': $slots.append,
         'sp-input-group--prepend': $slots.prepend,
@@ -411,7 +411,7 @@ export default {
     }
   }
 
-  .sp-textarea.is-disabled {
+  .sp-textarea.is--disabled {
     .sp-textarea__inner {
       background-color: $input-background-disabled;
       border-color: #e4e7ed;
@@ -453,10 +453,10 @@ export default {
     color: $input-color;
     display: inline-block;
     font-size: inherit;
-    height: 40px;
-    line-height: 40px;
+    height: 36px;
+    line-height: 36px;
     outline: none;
-    padding: 0 15px;
+    padding: 0 10px;
     transition: $transition-all;
     width: 100%;
 
@@ -505,7 +505,7 @@ export default {
     width: 25px;
     text-align: center;
     transition: all 0.3s;
-    line-height: 40px;
+    line-height: 36px;
 
     &::after {
       content: '';
@@ -520,7 +520,7 @@ export default {
     pointer-events: none;
   }
 
-  &.is-active {
+  &.is--active {
     .sp-input__inner {
       outline: none;
       border-color: $color-primary;
@@ -528,7 +528,7 @@ export default {
     }
   }
 
-  &.is-disabled {
+  &.is--disabled {
     .sp-input__inner {
       background-color: $input-background-disabled;
       border-color: #e4e7ed;
@@ -667,7 +667,7 @@ export default {
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
     }
-    .sp-select .sp-input.is-focus .sp-input__inner {
+    .sp-select .sp-input.is--focus .sp-input__inner {
       border-color: transparent;
     }
   }
@@ -677,7 +677,7 @@ export default {
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
     }
-    .sp-select .sp-input.is-focus .sp-input__inner {
+    .sp-select .sp-input.is--focus .sp-input__inner {
       border-color: transparent;
     }
   }
