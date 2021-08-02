@@ -124,7 +124,7 @@ export default {
     },
     height: {
       type: [String, Number],
-      default: 40
+      default: 36
     },
     value: {
       type: [Array, Number, String, Boolean, Object],

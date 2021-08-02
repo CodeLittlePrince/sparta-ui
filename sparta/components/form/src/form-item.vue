@@ -4,10 +4,10 @@
     :class="[
       {
         'sp-form-item--feedback': spForm && spForm.statusIcon,
-        'is-error': validateState === 'error',
-        'is-validating': validateState === 'validating',
-        'is-success': validateState === 'success',
-        'is-required': isRequired || required
+        'is--error': validateState === 'error',
+        'is--validating': validateState === 'validating',
+        'is--success': validateState === 'success',
+        'is--required': isRequired || required
       }
     ]"
   >
@@ -15,7 +15,7 @@
       v-if="label || $slots.label"
       :for="labelFor"
       class="sp-form-item__label"
-      :class="{ 'is-two-line': twoLine }"
+      :class="{ 'is--two-line': twoLine }"
       :style="labelStyle"
     >
       <slot name="label">{{ label }}</slot>
@@ -24,7 +24,13 @@
       class="sp-form-item__content"
       :style="contentStyle"
     >
+      <div v-if="$slots.prepend" class="sp-form-item__content__prepend">
+        <slot name="prepend"></slot>
+      </div>
       <slot></slot>
+      <div v-if="$slots.append" class="sp-form-item__content__append">
+        <slot name="append"></slot>
+      </div>
       <div class="sp-form-item__error">
         <transition name="sp-zoom-in-top">
           <div v-if="validateState === 'error' && showMessage && form.showMessage">
@@ -314,19 +320,19 @@ export default {
     vertical-align: middle;
     float: left;
     font-size: 14px;
-    color: $color-text-regular;
-    line-height: 40px;
-    padding-right: 12px;
+    color: $color-text-secondary;
+    line-height: 36px;
+    padding-right: 56px;
     box-sizing: border-box;
 
-    &.is-two-line {
+    &.is--two-line {
       line-height: 1.2;
       padding-top: 4px;
     }
   }
 
   &__content {
-    line-height: 40px;
+    line-height: 36px;
     position: relative;
     font-size: 14px;
     @include clearfix();
@@ -334,18 +340,36 @@ export default {
     .sp-input-group {
       vertical-align: middle;
     }
+
+    &__prepend {
+      font-size: 14px;
+      line-height: 20px;
+      color: $color-text-secondary;
+      padding-top: 8px;
+    }
+
+    &__append {
+      font-size: 12px;
+      line-height: 18px;
+      color: $color-text-tip;
+      padding-top: 3px;
+    }
+
+    .sp-upload {
+      padding-top: 8px;
+    }
   }
 
   &__error {
     color: $form-item-error-color;
     font-size: $form-item-error-font-size;
-    line-height: 1.5;
-    padding: 5px 0;
-    min-height: 30px;
+    line-height: 18px;
+    padding: 3px 0 6px;
+    min-height: 26px;
     box-sizing: border-box;
   }
 
-  &.is-error {
+  &.is--error {
     & .sp-input__inner,
     & .sp-textarea__inner {
       &, &:focus {
@@ -379,49 +403,8 @@ export default {
     }
   }
 
-  &.is-success {
-    & .sp-input__inner,
-    & .sp-textarea__inner {
-      &, &:focus {
-        border-color: $color-success;
-      }
-    }
-    & .sp-input-group__append,
-    & .sp-input-group__prepend {
-      & .sp-input__inner {
-        border-color: transparent;
-      }
-    }
-    .sp-input__validateIcon {
-      color: $color-success;
-    }
-
-    .sp-select {
-      &-input-box {
-        border-color: $color-success;
-      }
-
-      &.isFocus .sp-select-input-box {
-        border-color: $color-success;
-        box-shadow: $color-success;
-      }
-    }
-  }
-
-  &.is-required &__label::before {
-    content: '*';
-    color: $color-danger;
-    margin-right: 4px;
-  }
-
-  &.is-required &__label.is-two-line::before {
+  &.is--required &__label.is--two-line::before {
     display: none;
-  }
-
-  &.is-required &__label.is-two-line div[require]::before {
-    content: '*';
-    color: $color-danger;
-    margin-right: 4px;
   }
 
   &--feedback {

@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "mock": "nodemon -q ./server/index.js --kill-others",
-    "watch": "nodemon -q --watch webpack-site/dev.js webpack-site/dev.js",
+    "watch": "node webpack-site/dev.js",
     "dev": "concurrently \"npm run mock\" \"npm run watch\" --kill-others",
     "test:unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js",
     "test:e2e": "mocha ./test/e2e/index.js",

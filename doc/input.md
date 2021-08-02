@@ -119,6 +119,46 @@ export default {
 ```
 :::
 
+### 格式化提示
+:::demo 使用`tipFormat`属性即可得到一个有格式化提示的输入框
+```vue
+<template>
+  <div class="sp-input-demo" style="padding-top: 30px">
+    <sp-input
+      v-model="value13"
+      :tip-format="tipFormat"
+      placeholder="格式化提示"
+    />
+  </div>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        value13: ''
+      }
+    },
+    methods: {
+      tipFormat(val) {
+        let result = '';
+        if (val) {
+          for (let i = 1; i <= val.length; i++) {
+            if (i % 4 === 0) {
+              result += ' '
+            } else {
+              result += val[i]
+            }
+          }
+        }
+        return result
+      }
+    }
+  }
+</script>
+```
+:::
+
 ### 带 icon 的输入框
 :::demo 可以通过 prefix-icon 和 suffix-icon 属性在 input 组件首部和尾部增加显示图标，也可以通过 slot 来放置图标。
 ```vue
@@ -228,11 +268,23 @@ export default {
       </sp-input>
     </div>
     <div style="margin-top: 15px;">
+      <sp-input placeholder="请输入内容" v-model="input11">
+        <template slot="appendSubmit">
+          <sp-button type="primary">搜索</sp-button>
+        </template>
+      </sp-input>
+    </div>
+    <div style="margin-top: 15px;">
+      <sp-input placeholder="请输入内容" v-model="input12" prependType="white">
+        <template slot="prepend">Mex$</template>
+      </sp-input>
+    </div>
+    <div style="margin-top: 15px;">
       <sp-input
         placeholder="请输入内容"
-        v-model="input11"
+        v-model="input12"
         class="input-with-select"
-        style="width: 600px;">
+        style="width: 400px;">
         <sp-select
           v-model="select"
           width="100"
@@ -257,6 +309,7 @@ export default {
         input9: '',
         input10: '',
         input11: '',
+        input12: '',
         select: ''
       }
     }
@@ -301,6 +354,7 @@ export default {
 | suffix | 输入框尾部内容，只对 `type="text"` 有效 |
 | prepend | 输入框前置内容，只对 `type="text"` 有效 |
 | append | 输入框后置内容，只对 `type="text"` 有效 |
+| appendSubmit | 输入框后置提交按钮，只对 `type="text"` 有效 |
 
 ### Input Events
 | 事件名称 | 说明 | 回调参数 |
@@ -337,12 +391,29 @@ export default {
         input9: '',
         input10: '',
         input11: '',
+        input12: '',
+        value13: '',
         select: ''
       }
     },
     watch: {
       value1(val) {
         console.log(val)
+      }
+    },
+    methods: {
+      tipFormat(val) {
+        let result = ''
+        if (val) {
+          for (let i = 0; i < val.length; i++) {
+            if (i % 4 === 0) {
+              result += ' ' + val[i]
+            } else {
+              result += val[i]
+            }
+          }
+        }
+        return result
       }
     }
   }
@@ -352,7 +423,7 @@ export default {
 .sp-input-demo {
   .sp-input {
     margin-right: 15px;
-    width: 200px;
+    width: 300px;
     &:last-child {
       margin-bottom: 0;
     }

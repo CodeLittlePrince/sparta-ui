@@ -4,13 +4,15 @@
       type === 'textarea' ? 'sp-textarea' : 'sp-input',
       inputSize ? 'sp-input--' + inputSize : '',
       {
-        'is-disabled': inputDisabled,
+        'is--disabled': inputDisabled,
         'sp-input-group': $slots.prepend || $slots.append,
         'sp-input-group--append': $slots.append,
         'sp-input-group--prepend': $slots.prepend,
+        'sp-input-group--append-submit': $slots.appendSubmit,
         'sp-input--prefix': $slots.prefix || prefixIcon,
         'sp-input--suffix': $slots.suffix || suffixIcon || clearable
-      }
+      },
+      `sp-input-group--prepend--${prependType}`
     ]"
     @mouseenter="isHover = true"
     @mouseleave="isHover = false"
@@ -24,6 +26,11 @@
       >
         <slot name="prepend"></slot>
       </div>
+      <template v-if="tipFormat && tipFormat(value)">
+        <transition name="sp-fade">
+          <div v-show="isFocus" class="sp-input-group__format-tip">{{ tipFormat(value) }}</div>
+        </transition>
+      </template>
       <input
         v-if="type !== 'textarea'"
         ref="input"
@@ -97,6 +104,12 @@
       >
         <slot name="append"></slot>
       </div>
+      <div
+        v-if="$slots.appendSubmit"
+        class="sp-input-group__append-submit"
+      >
+        <slot name="appendSubmit"></slot>
+      </div>
     </template>
     <textarea
       v-else
@@ -162,6 +175,13 @@ export default {
       type: String,
       default: 'text'
     },
+    prependType: {
+      type: String,
+      default: '',
+      validator(val) {
+        return ['', 'white'].indexOf(val) > -1
+      }
+    },
     autosize: {
       type: [Boolean, Object],
       default: false
@@ -181,7 +201,11 @@ export default {
       type: Boolean,
       default: false
     },
-    tabindex: String
+    tabindex: String,
+    tipFormat: {
+      type: Function,
+      default: null
+    }
   },
 
   data() {
@@ -411,7 +435,7 @@ export default {
     }
   }
 
-  .sp-textarea.is-disabled {
+  .sp-textarea.is--disabled {
     .sp-textarea__inner {
       background-color: $input-background-disabled;
       border-color: #e4e7ed;
@@ -453,10 +477,10 @@ export default {
     color: $input-color;
     display: inline-block;
     font-size: inherit;
-    height: 40px;
-    line-height: 40px;
+    height: $input-height;
+    line-height: $input-height;
     outline: none;
-    padding: 0 15px;
+    padding: 0 10px;
     transition: $transition-all;
     width: 100%;
 
@@ -505,7 +529,7 @@ export default {
     width: 25px;
     text-align: center;
     transition: all 0.3s;
-    line-height: 40px;
+    line-height: $input-height;
 
     &::after {
       content: '';
@@ -520,7 +544,7 @@ export default {
     pointer-events: none;
   }
 
-  &.is-active {
+  &.is--active {
     .sp-input__inner {
       outline: none;
       border-color: $color-primary;
@@ -528,7 +552,7 @@ export default {
     }
   }
 
-  &.is-disabled {
+  &.is--disabled {
     .sp-input__inner {
       background-color: $input-background-disabled;
       border-color: #e4e7ed;
@@ -609,15 +633,16 @@ export default {
 
   &__append, &__prepend {
     background-color: $input-background-disabled;
-    color: $color-info;
+    color: $color-text-regular;
     vertical-align: middle;
     display: table-cell;
     position: relative;
     border: $border-base;
     border-radius: $input-border-radus;
-    padding: 0 20px;
+    padding: 0 10px;
     width: 1px;
     white-space: nowrap;
+    overflow: hidden;
 
     &:focus {
       outline: none;
@@ -630,8 +655,13 @@ export default {
 
     .sp-select {
       display: inline-block;
-      margin: -5px -20px;
+      margin: -6px -12px;
       top: 5px;
+
+      .sp-select-input {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
     }
 
     button.sp-button,
@@ -662,12 +692,23 @@ export default {
     border-bottom-left-radius: 0;
   }
 
+  &--prepend--white &__prepend {
+    background-color: #fff;
+    padding-right: 0;
+  }
+
+  &--prepend--white {
+    .sp-input__inner {
+      border-left: none;
+    }
+  }
+
   &--prepend {
     .sp-input__inner {
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
     }
-    .sp-select .sp-input.is-focus .sp-input__inner {
+    .sp-select .sp-input.is--focus .sp-input__inner {
       border-color: transparent;
     }
   }
@@ -677,9 +718,44 @@ export default {
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
     }
-    .sp-select .sp-input.is-focus .sp-input__inner {
+    .sp-select .sp-input.is--focus .sp-input__inner {
       border-color: transparent;
     }
+  }
+
+  &--append-submit {
+
+    .sp-input__inner {
+      padding-right: 75px;
+    }
+  }
+
+  &__append-submit {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+
+    .sp-button {
+      width: 60px;
+      height: 26px;
+      padding: 4px 0;
+    }
+  }
+
+  &__format-tip {
+    position: absolute;
+    bottom: $input-height - 6px;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    background-color: #e6f1ff;
+    border-radius: $input-border-radus;
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 600;
+    color: $color-text-regular;
+    box-sizing: border-box;
+    padding: 7px 10px 13px;
   }
 }
 </style>
