@@ -25,7 +25,7 @@
         placeholder="请输入"
         autocomplete="off"
       ></sp-input>
-      <div slot="append">输入你的名字吧，靓仔!</div>
+      <div slot="tip">输入你的名字吧，靓仔!</div>
     </sp-form-item>
     <!-- 年龄 -->
     <sp-form-item
@@ -95,7 +95,6 @@
         { required: true, message: '靓照不能为空'}
       ]"
     >
-      <div slot="prepend">上传文件说明，可多行</div>
       <sp-upload
         :files="validateForm1.picture"
         action="/api/upload"
@@ -103,7 +102,7 @@
         :processResult="processPictureResult"
         @change="handlePictureChange"
         :limit="1"
-      ></sp-upload>
+      ><div slot="desc">上传文件说明，可多行</div></sp-upload>
     </sp-form-item>
     <!-- 按钮 -->
     <sp-form-item>
@@ -414,6 +413,7 @@
 |------|--------|
 | — | Form Item 的内容 |
 | label | 标签文本的内容 |
+| tip | 提示文本的内容 |
 
 <script>
   export default {

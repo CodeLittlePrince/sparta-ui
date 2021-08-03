@@ -228,6 +228,7 @@ export default{
 |------|--------|
 | default | 文件选择框的内容 |
 | tip | 提示说明文字 |
+| desc | 顶部描述说明文字 |
 
 <script>
 export default{

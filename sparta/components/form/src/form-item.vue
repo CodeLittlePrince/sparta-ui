@@ -24,12 +24,9 @@
       class="sp-form-item__content"
       :style="contentStyle"
     >
-      <div v-if="$slots.prepend" class="sp-form-item__content__prepend">
-        <slot name="prepend"></slot>
-      </div>
       <slot></slot>
-      <div v-if="$slots.append" class="sp-form-item__content__append">
-        <slot name="append"></slot>
+      <div v-if="$slots.tip" class="sp-form-item__content__tip">
+        <slot name="tip"></slot>
       </div>
       <div class="sp-form-item__error">
         <transition name="sp-zoom-in-top">
@@ -341,14 +338,7 @@ export default {
       vertical-align: middle;
     }
 
-    &__prepend {
-      font-size: 14px;
-      line-height: 20px;
-      color: $color-text-secondary;
-      padding-top: 8px;
-    }
-
-    &__append {
+    &__tip {
       font-size: 12px;
       line-height: 18px;
       color: $color-text-tip;
@@ -380,7 +370,7 @@ export default {
       }
     }
 
-    & .sp-input-group__append,
+    & .sp-input-group__tip,
     & .sp-input-group__prepend {
       & .sp-input__inner {
         border-color: transparent;

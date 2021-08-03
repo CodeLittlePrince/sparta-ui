@@ -9,6 +9,9 @@
       :accept="accept"
       @change="handleChange"
     >
+    <div v-if="$slots.desc" class="sp-upload__desc">
+      <slot name="desc"></slot>
+    </div>
     <!-- 上传文件 -->
     <template v-if="type === 'text'">
       <div class="sp-upload-file">
@@ -533,6 +536,13 @@ export default {
 .sp-upload {
   @include clearfix();
   color: $color-text-tip;
+
+  &__desc {
+    font-size: 14px;
+    line-height: 20px;
+    color: $color-text-secondary;
+    padding-bottom: 8px;
+  }
 
   &__input {
     display: none;
