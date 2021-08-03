@@ -1235,7 +1235,7 @@ export default {
     border-width: 1px;
     background-image: none;
     border: $data-picker-range-border;
-    border-radius: $input-border-radus;
+    border-radius: $input-border-radius;
     transition: $transition-all;
 
     &:hover {

@@ -417,7 +417,7 @@ export default {
     background-color: $input-background;
     background-image: none;
     border: $border-base;
-    border-radius: $input-border-radus;
+    border-radius: $input-border-radius;
     transition: $transition-all;
 
     &::placeholder {
@@ -471,7 +471,7 @@ export default {
     -webkit-appearance: none;
     background-color: #fff;
     background-image: none;
-    border-radius: $input-border-radus;
+    border-radius: $input-border-radius;
     border: $input-border;
     box-sizing: border-box;
     color: $input-color;
@@ -638,7 +638,7 @@ export default {
     display: table-cell;
     position: relative;
     border: $border-base;
-    border-radius: $input-border-radus;
+    border-radius: $input-border-radius;
     padding: 0 10px;
     width: 1px;
     white-space: nowrap;
@@ -749,7 +749,7 @@ export default {
     right: 0;
     z-index: -1;
     background-color: #e6f1ff;
-    border-radius: $input-border-radus;
+    border-radius: $input-border-radius;
     font-size: 16px;
     line-height: 22px;
     font-weight: 600;
