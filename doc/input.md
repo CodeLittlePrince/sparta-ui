@@ -346,6 +346,7 @@ export default {
 | form | 原生属性 | string | — | — |
 | label | 输入框关联的label文字 | string | — | — |
 | tabindex | 输入框的tabindex | string | - | - |
+| tipFormat | 格式化提示的格式定义 | Function | - | val => val
 
 ### Input Slots
 | name | 说明 |
