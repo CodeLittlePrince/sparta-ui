@@ -6,7 +6,7 @@
 ```vue
 <template>
   <sp-row>
-    <sp-button type="primary" @click="handleClick">文字按钮</sp-button>
+    <sp-button type="primary" @click="handleClick">点击查看图片</sp-button>
   </sp-row>
 </template>
 
