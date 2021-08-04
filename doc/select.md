@@ -66,7 +66,14 @@ export default{
 :::demo 为`sp-select`设置`readonly`属性，则整个选择器不可用
 ```vue
 <template>
-  <sp-select readonly>
+  <sp-select v-model="value2" readonly>
+    <sp-option
+      v-for="item in list2"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value"
+      :disabled="item.value === 2"
+    ></sp-option>
   </sp-select>
 </template>
 ```

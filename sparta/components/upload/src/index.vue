@@ -638,7 +638,6 @@ export default {
       float: left;
       width: 174px;
       height: 110px;
-      padding: 8px;
       border: $upload-picture__item-border;
       border-radius: 4px;
       box-sizing: border-box;

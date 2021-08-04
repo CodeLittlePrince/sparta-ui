@@ -99,7 +99,7 @@ $option-height: 34px;
 .sp-option {
   position: relative;
   font-size: 14px;
-  padding: 0 20px;
+  padding: 0 10px;
   margin: 0;
   white-space: nowrap;
   overflow: hidden;

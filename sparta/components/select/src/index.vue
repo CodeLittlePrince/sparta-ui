@@ -65,11 +65,11 @@
       >
         <i
           v-show="showClearIcon && !multiple"
-          class="sp-icon-close"
+          class="sp-icon-close-bold"
         />
         <i
           v-show="!showClearIcon"
-          class="sp-icon-arrow-down"
+          class="sp-icon-arrow-down-bold"
           :class="{'rotate': visible}"
         />
       </div>
@@ -566,7 +566,7 @@ export default {
       border: none;
       height: $select-height - 2;
       line-height: $select-height - 2;
-      padding: 0 30px 0 15px;
+      padding: 0 30px 0 10px;
       box-sizing: border-box;
       border-radius: 4px;
       color: inherit;
@@ -578,7 +578,7 @@ export default {
         top: 0;
         right: 0;
         bottom: 0;
-        padding: 0 30px 0 15px;
+        padding: 0 30px 0 10px;
         margin: 0;
         line-height: $select-height - 2;
         color: $color-text-placeholder;
@@ -597,13 +597,13 @@ export default {
     }
 
     .sp-tag {
-      height: 32px;
-      line-height: 32px;
+      height: 28px;
+      line-height: 28px;
       margin-left: 3px;
       margin-top: 3px;
     }
 
-    .sp-icon-arrow-down.rotate {
+    .sp-icon-arrow-down-bold .rotate {
       transition: $transition-all;
       transform: rotate(180deg);
     }
@@ -631,11 +631,18 @@ export default {
     text-align: center;
     user-select: none;
     background-color: $select-suffix-background-color;
+
+    i {
+      font-size: 12px;
+    }
   }
 
   &.isFocus &-suffix {
-    color: white;
     background-color: $select-suffix-background-color-focus;
+
+    i {
+      color: #fff;
+    }
   }
 
   .is--disabled &-suffix {

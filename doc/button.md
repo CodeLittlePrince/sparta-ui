@@ -32,10 +32,10 @@
     </sp-row>
     <sp-row>
       <sp-button icon="sp-icon-search" circle></sp-button>
-      <sp-button type="primary" icon="sp-icon-edit" circle></sp-button>
+      <sp-button type="primary" icon="sp-icon-add" circle></sp-button>
       <sp-button type="success" icon="sp-icon-check" circle></sp-button>
-      <sp-button type="info" icon="sp-icon-message" circle></sp-button>
-      <sp-button type="warning" icon="sp-icon-star-off" circle></sp-button>
+      <sp-button type="info" icon="sp-icon-view" circle></sp-button>
+      <sp-button type="warning" icon="sp-icon-file" circle></sp-button>
       <sp-button type="danger" icon="sp-icon-delete" circle></sp-button>
     </sp-row>
   </div>

@@ -167,7 +167,7 @@ export default {
     属性方式：
     <sp-input
       placeholder="请选择日期"
-      suffix-icon="sp-icon-date"
+      suffix-icon="sp-icon-calendar"
       v-model="input1">
     </sp-input>
     <sp-input
@@ -182,7 +182,7 @@ export default {
     <sp-input
       placeholder="请选择日期"
       v-model="input3">
-      <i slot="suffix" class="sp-input__icon sp-icon-date"></i>
+      <i slot="suffix" class="sp-input__icon sp-icon-calendar"></i>
     </sp-input>
     <sp-input
       placeholder="请输入内容"

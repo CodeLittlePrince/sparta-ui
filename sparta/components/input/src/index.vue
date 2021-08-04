@@ -502,8 +502,9 @@ export default {
   &__suffix {
     position: absolute;
     height: 100%;
-    right: 5px;
+    right: 0;
     top: 0;
+    width: 36px;
     text-align: center;
     color: $color-text-placeholder;
     transition: all 0.3s;
@@ -517,8 +518,9 @@ export default {
   &__prefix {
     position: absolute;
     height: 100%;
-    left: 5px;
+    left: 0;
     top: 0;
+    width: 36px;
     text-align: center;
     color: $color-text-placeholder;
     transition: all 0.3s;
@@ -694,13 +696,6 @@ export default {
 
   &--prepend--white &__prepend {
     background-color: #fff;
-    padding-right: 0;
-  }
-
-  &--prepend--white {
-    .sp-input__inner {
-      border-left: none;
-    }
   }
 
   &--prepend {

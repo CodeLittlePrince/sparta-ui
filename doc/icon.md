@@ -21,9 +21,9 @@
 ```vue
 <template>
   <div class="demo-icon">
-    <i class="sp-icon-picture-outline"></i>
-    <i class="sp-icon-goods"></i>
-    <i class="sp-icon-date"></i>
+    <i class="sp-icon-view"></i>
+    <i class="sp-icon-warning-circle"></i>
+    <i class="sp-icon-file"></i>
     <sp-button type="primary" icon="sp-icon-search">搜索</sp-button>
   </div>
 </template>

@@ -8,11 +8,11 @@
       type ? 'sp-button--' + type : '',
       buttonSize ? 'sp-button--' + buttonSize : '',
       {
-        'is-disabled': buttonDisabled,
-        'is-loading': loading,
-        'is-plain': plain,
-        'is-round': round,
-        'is-circle': circle
+        'is--disabled': buttonDisabled,
+        'is--loading': loading,
+        'is--plain': plain,
+        'is--round': round,
+        'is--circle': circle
       }
     ]"
     @click="handleClick"
@@ -137,13 +137,11 @@ export default {
   }
 
   & [class*="sp-icon-"] {
-    font-weight: bold;
-    & + span {
-      margin-left: 5px;
-    }
+    color: inherit;
+    font-size: 14px;
   }
 
-  &.is-plain {
+  &.is--plain {
     &:hover,
     &:focus {
       background: $color-white;
@@ -159,12 +157,12 @@ export default {
     }
   }
 
-  &.is-active {
+  &.is--active {
     color: mix($color-black, $color-primary, $button-active-shade-percent);
     border-color: mix($color-black, $color-primary, $button-active-shade-percent);
   }
 
-  &.is-disabled {
+  &.is--disabled {
     &,
     &:hover,
     &:focus {
@@ -179,7 +177,7 @@ export default {
       background-color: transparent;
     }
 
-    &.is-plain {
+    &.is--plain {
       &,
       &:hover,
       &:focus {
@@ -190,7 +188,7 @@ export default {
     }
   }
 
-  &.is-loading {
+  &.is--loading {
     position: relative;
     pointer-events: none;
 
@@ -206,11 +204,11 @@ export default {
       background-color: rgba(255,255,255,.35);
     }
   }
-  &.is-round {
+  &.is--round {
     border-radius: 20px;
     padding: 12px 23px;
   }
-  &.is-circle {
+  &.is--circle {
     border-radius: 50%;
     padding: $button-padding-vertical;
   }
@@ -231,19 +229,19 @@ export default {
   }
   &--medium {
     @include button-size($button-medium-padding-vertical, $button-medium-padding-horizontal, $button-medium-font-size, $button-medium-border-radius);
-    @at-root &.is-circle {
+    @at-root &.is--circle {
       padding: $button-medium-padding-vertical;
     }
   }
   &--small {
     @include button-size($button-small-padding-vertical, $button-small-padding-horizontal, $button-small-font-size, $button-small-border-radius);
-    @at-root &.is-circle {
+    @at-root &.is--circle {
       padding: $button-small-padding-vertical;
     }
   }
   &--mini {
     @include button-size($button-mini-padding-vertical, $button-mini-padding-horizontal, $button-mini-font-size, $button-mini-border-radius);
-    @at-root &.is-circle {
+    @at-root &.is--circle {
       padding: $button-mini-padding-vertical;
     }
   }
@@ -266,9 +264,9 @@ export default {
       background-color: transparent;
     }
 
-    &.is-disabled,
-    &.is-disabled:hover,
-    &.is-disabled:focus {
+    &.is--disabled,
+    &.is--disabled:hover,
+    &.is--disabled:focus {
       border-color: transparent;
     }
   }
@@ -285,7 +283,7 @@ export default {
     & + .sp-button {
       margin-left: 0;
     }
-    &.is-disabled {
+    &.is--disabled {
       z-index: 1;
     }
     &:first-child {
@@ -302,11 +300,11 @@ export default {
       border-top-left-radius: $button-border-radius;
       border-bottom-left-radius: $button-border-radius;
 
-      &.is-round {
+      &.is--round {
         border-radius: 20px;
       }
 
-      &.is-circle {
+      &.is--circle {
         border-radius: 50%;
       }
     }
@@ -323,7 +321,7 @@ export default {
       z-index: 1;
     }
 
-    @at-root &.is-active {
+    @at-root &.is--active {
       z-index: 1;
     }
   }

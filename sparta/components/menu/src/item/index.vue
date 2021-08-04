@@ -41,7 +41,7 @@
       <!-- 上下箭头 -->
       <i
         v-if="hasChild && !data[groupKey]"
-        class="sp-icon-arrow-down"
+        class="sp-icon-arrow-down-bold"
         :class="{ active: isOpen }"
       ></i>
     </div>
@@ -260,7 +260,7 @@ export default {
       font-size: 18px;
       vertical-align: text-top;
     }
-    .sp-icon-arrow-down {
+    .sp-icon-arrow-down-bold {
       position: absolute;
       right: 10px;
       top: 50%;

@@ -1,170 +1,104 @@
 @font-face {
-  font-family: 'sparta-icons';
-  src: url('~sparta/common/font/sparta-icons.woff') format('woff'), /* chrome, firefox */
-       url('~sparta/common/font/sparta-icons.ttf') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  font-weight: normal;
-  font-style: normal;
+  font-family: "sparta-icons"; /* Project id 2706544 */
+  src: url('~sparta/common/font/iconfont.woff2?t=1628055677570') format('woff2'),
+       url('~sparta/common/font/iconfont.woff?t=1628055677570') format('woff'),
+       url('~sparta/common/font/iconfont.ttf?t=1628055677570') format('truetype');
 }
 
 [class^="sp-icon-"], [class*=" sp-icon-"] {
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'sparta-icons' !important;
-  speak: none;
+  font-family: "sparta-icons" !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  font-style: normal;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
-  line-height: 1;
+  color: #97a2b5;
   vertical-align: baseline;
   display: inline-block;
+  line-height: 1;
 
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  &::before {
+    display: inline-block; /* 解决伪元素在字号为12px的时候，高度会是13的问题 */
+  }
 }
 
-.sp-icon-info:before { content: "\e61a"; }
-
-.sp-icon-error:before { content: "\e62c"; }
-
-.sp-icon-success:before { content: "\e62d"; }
-
-.sp-icon-warning:before { content: "\e62e"; }
-
-.sp-icon-question:before { content: "\e634"; }
-
-.sp-icon-back:before { content: "\e606"; }
-
-.sp-icon-arrow-left:before { content: "\e600"; }
-
-.sp-icon-arrow-down:before { content: "\e603"; }
-
-.sp-icon-arrow-right:before { content: "\e604"; }
-
-.sp-icon-arrow-up:before { content: "\e605"; }
-
-.sp-icon-caret-left:before { content: "\e60a"; }
-
-.sp-icon-caret-bottom:before { content: "\e60b"; }
-
-.sp-icon-caret-top:before { content: "\e60c"; }
-
-.sp-icon-caret-right:before { content: "\e60e"; }
-
-.sp-icon-d-arrow-left:before { content: "\e610"; }
-
-.sp-icon-d-arrow-right:before { content: "\e613"; }
-
-.sp-icon-minus:before { content: "\e621"; }
-
-.sp-icon-plus:before { content: "\e62b"; }
-
-.sp-icon-remove:before { content: "\e635"; }
-
-.sp-icon-circle-plus:before { content: "\e601"; }
-
-.sp-icon-remove-outline:before { content: "\e63c"; }
-
-.sp-icon-circle-plus-outline:before { content: "\e602"; }
-
-.sp-icon-close:before { content: "\e60f"; }
-
-.sp-icon-check:before { content: "\e611"; }
-
-.sp-icon-circle-close:before { content: "\e607"; }
-
-.sp-icon-circle-check:before { content: "\e639"; }
-
-.sp-icon-circle-close-outline:before { content: "\e609"; }
-
-.sp-icon-circle-check-outline:before { content: "\e63e"; }
-
-.sp-icon-zoom-out:before { content: "\e645"; }
-
-.sp-icon-zoom-in:before { content: "\e641"; }
-
-.sp-icon-d-caret:before { content: "\e615"; }
-
-.sp-icon-sort:before { content: "\e640"; }
-
-.sp-icon-sort-down:before { content: "\e630"; }
-
-.sp-icon-sort-up:before { content: "\e631"; }
-
-.sp-icon-tickets:before { content: "\e63f"; }
-
-.sp-icon-document:before { content: "\e614"; }
-
-.sp-icon-goods:before { content: "\e618"; }
-
-.sp-icon-sold-out:before { content: "\e63b"; }
-
-.sp-icon-news:before { content: "\e625"; }
-
-.sp-icon-message:before { content: "\e61b"; }
-
-.sp-icon-date:before { content: "\e608"; }
-
-.sp-icon-printer:before { content: "\e62f"; }
-
-.sp-icon-time:before { content: "\e642"; }
-
-.sp-icon-bell:before { content: "\e622"; }
-
-.sp-icon-mobile-phone:before { content: "\e624"; }
-
-.sp-icon-service:before { content: "\e63a"; }
-
-.sp-icon-view:before { content: "\e643"; }
-
-.sp-icon-menu:before { content: "\e620"; }
-
-.sp-icon-more:before { content: "\e646"; }
-
-.sp-icon-more-outline:before { content: "\e626"; }
-
-.sp-icon-star-on:before { content: "\e637"; }
-
-.sp-icon-star-off:before { content: "\e63d"; }
-
-.sp-icon-location:before { content: "\e61d"; }
-
-.sp-icon-location-outline:before { content: "\e61f"; }
-
-.sp-icon-phone:before { content: "\e627"; }
-
-.sp-icon-phone-outline:before { content: "\e628"; }
-
-.sp-icon-picture:before { content: "\e629"; }
-
-.sp-icon-picture-outline:before { content: "\e62a"; }
-
-.sp-icon-delete:before { content: "\e612"; }
-
-.sp-icon-search:before { content: "\e619"; }
-
-.sp-icon-edit:before { content: "\e61c"; }
-
-.sp-icon-edit-outline:before { content: "\e616"; }
-
-.sp-icon-rank:before { content: "\e632"; }
-
-.sp-icon-refresh:before { content: "\e633"; }
-
-.sp-icon-share:before { content: "\e636"; }
-
-.sp-icon-setting:before { content: "\e638"; }
-
-.sp-icon-upload:before { content: "\e60d"; }
-
-.sp-icon-upload2:before { content: "\e644"; }
-
-.sp-icon-download:before { content: "\e617"; }
-
-.sp-icon-loading:before { content: "\e61e"; }
+.sp-icon-close:before {
+  content: "\e6b0";
+}
+
+.sp-icon-close-bold:before {
+  content: "\e6af";
+}
+
+.sp-icon-delete:before {
+  content: "\e6ae";
+}
+
+.sp-icon-view:before {
+  content: "\e6ac";
+}
+
+.sp-icon-add:before {
+  content: "\e6ab";
+}
+
+.sp-icon-warning-circle:before {
+  content: "\e6aa";
+}
+
+.sp-icon-loading-bold:before {
+  content: "\e6a9";
+}
+
+.sp-icon-file:before {
+  content: "\e6a8";
+}
+
+.sp-icon-check:before {
+  content: "\e6a7";
+}
+
+.sp-icon-arrow-down-bold:before {
+  content: "\e6a6";
+}
+
+.sp-icon-arrow-right:before {
+  content: "\e6a4";
+}
+
+.sp-icon-arrow-double-right:before {
+  content: "\e6a3";
+}
+
+.sp-icon-arrow-left:before {
+  content: "\e6a2";
+}
+
+.sp-icon-arrow-double-left:before {
+  content: "\e6a1";
+}
+
+.sp-icon-calendar:before {
+  content: "\e6a0";
+}
+
+.sp-icon-search:before {
+  content: "\e69f";
+}
+
+.sp-icon-add-bold:before {
+  content: "\e69e";
+}
+
+.sp-icon-loading:before {
+  content: "\e697";
+}
 
 .sp-icon-loading {
-  animation: rotating 2s linear infinite;
+  animation: rotating 0.7s linear infinite;
 }
 
 @keyframes rotating {
