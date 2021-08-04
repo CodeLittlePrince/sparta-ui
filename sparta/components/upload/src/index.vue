@@ -293,6 +293,9 @@ export default {
      * 选取文件以后操作
      */
     handleChange(e) {
+      if (!this.$refs.reference || !this.$refs.reference.value) {
+        return
+      }
       if (this.isIE9) {
         this._uploadByIframe()
       } else {
@@ -384,12 +387,14 @@ export default {
           file.status = 'success'
           this._emitChange()
           delete this.request[uid]
+          this.$refs.reference.value = null
         },
         onError: err => {
           const file = this._getFile(rawFile)
           this.onError(err, file, rawFile)
           file.status = 'fail'
           delete this.request[uid]
+          this.$refs.reference.value = null
         }
       }
       const req = httpRequest(options)
@@ -507,10 +512,12 @@ export default {
       document.body.appendChild(hiddenform)
       hiddenform.appendChild(input)
       hiddenform.appendChild(hiddenframe)
+      this.hiddenform = hiddenform
 
       hiddenframe.addEventListener('load', () => {
         this._iframeUpload(hiddenform, hiddenframe, file)
       })
+
 
       hiddenform.submit()
     },
@@ -530,7 +537,9 @@ export default {
         this.uploadFiles[index].status = 'fail'
       }
       //删除form
-      setTimeout(function() {
+      setTimeout(() => {
+        this.$refs.reference.value = null
+        this.hiddenform.reset() // 解决IE9上传同一张图片无法触发change
         document.body.removeChild(form)
       }, 0)
     },
