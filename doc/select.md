@@ -59,6 +59,19 @@ export default{
 ```
 :::
 
+
+### 只读状态
+选择器只读状态
+
+:::demo 为`sp-select`设置`readonly`属性，则整个选择器不可用
+```vue
+<template>
+  <sp-select readonly>
+  </sp-select>
+</template>
+```
+:::
+
 ### 有禁用选项
 禁止下拉中的选项
 

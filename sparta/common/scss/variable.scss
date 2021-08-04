@@ -184,22 +184,24 @@ $radio-background-color-disabled: #f5f5f5;
 $select-height: 36px;
 $select-background: #fff;
 $select-background-disabled: #f5f7fa;
-$select-input-border-color: #dcdfe6;
+$select-suffix-background-color: #f0f3f7; 
+$select-suffix-background-color-focus: $color-primary; 
+$select-input-border-color: $border-color-base;
 $select-input-border-color-disabled: #c0c4cc;
-$select-input-border-color-hover: #c0c4cc;
+$select-input-border-color-hover: $color-primary;
 $select-input-box-shadow-focus: 0 0 0 2px $color-primary-light-8;
 $select-input-border-color-focus: $color-primary;
 $select-input-box-shadow-focus-error: 0 0 0 2px $color-danger-light;
 $select-input-border-color-focus-error: $color-danger;
 $select-input-font-color: $color-text-regular;
 $select-dropdown-item-background: #fff;
-$select-dropdown-item-background-hover: #f5f7fa;
-$select-dropdown-border-color: #e4e7ed;
+$select-dropdown-item-background-hover: #e6f1ff;
+$select-dropdown-border-color: $border-color-base;
 
 /* Form
 -------------------------- */
-$form-item-require-star: #f5222d;
-$form-item-error-color: #f5222d;
+$form-item-require-star: $color-danger;
+$form-item-error-color: $color-danger;
 $form-item-error-font-size: 12px;
 
 /* Dropdown

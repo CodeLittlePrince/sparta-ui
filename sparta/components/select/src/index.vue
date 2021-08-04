@@ -1,7 +1,7 @@
 <template>
   <div
     class="sp-select"
-    :class="{ isFocus, cursorPoiner, 'is-disabled': disabled }"
+    :class="{ isFocus, cursorPoiner, 'is--disabled': disabled, 'is--readonly': readonly }"
     :style="`width: ${width}px;`"
     @click="handleSelfClick"
   >
@@ -45,7 +45,7 @@
         class="sp-select-input"
         :style="{ height: selectInputBoxHeight }"
         type="text"
-        :readonly="readonly"
+        :readonly="_readonly"
         :disabled="disabled"
         autocomplete="off"
         @input="handleInputSelectInput"
@@ -89,7 +89,7 @@
           <!-- 无数据情况 -->
           <li
             v-show="!hasSpOptions || (hasSpOptions && spOptionsAllInVisible)"
-            class="sp-option is-disabled sp-select-list-emptyText"
+            class="sp-option is--disabled sp-select-list-emptyText"
             @click.stop
           >{{ emptyText }}</li>
         </ul>
@@ -118,6 +118,10 @@ export default {
   },
 
   props: {
+    readonly: {
+      type: Boolean,
+      default: false
+    },
     width:  {
       type: [String, Number],
       default: 240
@@ -170,7 +174,7 @@ export default {
       isFocus: false,
       isHover: false,
       canNotFocus: true,
-      cursorPoiner: !this.disabled,
+      cursorPoiner: !this.disabled && !this.readonly,
       inputText: this.value && this.value.length ? ' ' : '',
       spOptions: [],
       evOptionHoverIndex: -1,
@@ -181,8 +185,8 @@ export default {
   },
 
   computed: {
-    readonly() {
-      return (!this.isFocus || this.canNotFocus) && !this.filterable
+    _readonly() {
+      return ((!this.isFocus || this.canNotFocus) && !this.filterable) || this.readonly
     },
     spOptionsAllDisabled() {
       return this.spOptions.every(option => option.disabled)
@@ -195,6 +199,9 @@ export default {
     },
     hasSpOptions() {
       return this.spOptions && this.spOptions.length
+    },
+    disableOperation() {
+      return this.disabled || this.readonly
     }
   },
 
@@ -247,7 +254,7 @@ export default {
   },
   
   mounted() {
-    if (this.disabled) {
+    if (this.disableOperation) {
       return
     }
     this.setCurrentValue(this.value)
@@ -255,7 +262,7 @@ export default {
   },
   
   beforeDestroy() {
-    if (this.disabled) {
+    if (this.disableOperation) {
       return
     }
     document.removeEventListener('click', this.handleOtherAreaClick)
@@ -325,7 +332,7 @@ export default {
      * 点击自身处理
      */
     handleSelfClick() {
-      if (!this.disabled) {
+      if (!this.disableOperation) {
         // 原本可以在点击自身的时候切换下拉显示隐藏状态
         // 但是IE9上聚焦就会触发input事件
         // input又会影响下拉显示状态，input事件又在click前触发
@@ -380,7 +387,7 @@ export default {
     },
 
     handleFocusSelectInput() {
-      if (!this.disabled) {
+      if (!this.disableOperation) {
         this.isFocus = true
         // 如果filterable开启，并且用户输入为空，则展示所有条目
         if (this.filterable && this.inputText.length === 0) {
@@ -522,10 +529,19 @@ export default {
   padding: 0;
   box-sizing: border-box;
 
-  &.is-disabled, &.is-disabled &-input-box input {
+  &.is--disabled, &.is--disabled &-input-box input {
     background-color: $select-background-disabled;
     color: $select-input-border-color-disabled;
     cursor: not-allowed;
+  }
+  &.is--readonly, &.is--readonly &-input-box input {
+    background-color: $select-background-disabled;
+    color: $color-text-regular;
+  }
+  &.is--disabled &-input-box, &.is--readonly &-input-box {
+    &:hover {
+      border-color: $select-input-border-color;
+    }
   }
 
   &-input-box {
@@ -609,11 +625,21 @@ export default {
     position: absolute;
     top: 0;
     right: 0;
-    width: 30px;
+    width: 34px;
     height: $select-height - 2px;
     line-height: $select-height - 2px;
     text-align: center;
     user-select: none;
+    background-color: $select-suffix-background-color;
+  }
+
+  &.isFocus &-suffix {
+    color: white;
+    background-color: $select-suffix-background-color-focus;
+  }
+
+  .is--disabled &-suffix {
+    color: #c7cbd1;
   }
 
   &-list {
