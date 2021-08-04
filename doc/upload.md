@@ -142,6 +142,7 @@ export default{
       :processResult="processResult"
       :limit="3"
       example-image="https://i.epay.126.net/a/ge/static/img/ex_supplier.5f209565.png"
+      example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
       :onExceed="onExceed"
       @change="handleChange"
     >
@@ -206,6 +207,8 @@ export default{
 ### Attribute
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
+| example-image | 示例图 | string | — | — |
+| example-big-image | 示例图点击后放大的大图 | string | — | — |
 | files | 上传的文件列表, 例如: [{name: 'food.jpg', url: 'https://xxx.cdn.com/xxx.jpg'}] | array | — | [] |
 | action | 必选参数，上传的地址 | string | — | — |
 | headers | 设置上传的请求头部 | object | — | — |
@@ -260,7 +263,7 @@ export default{
 
 <style>
 .sp-upload-demo {
-  width: 400px;
+  width: 700px;
   &.is-disabled .sp-upload {
     margin-bottom: 10px;
   }

@@ -119,14 +119,8 @@
             </div>
             <!-- 查看和删除按钮 -->
             <span class="sp-upload-picture__item-actions">
-              <a
-                :href="item.url"
-                target="_blank"
-              ><i class="sp-icon-view"></i></a>
-              <i
-                class="sp-icon-delete"
-                @click="handleRemoveItem(index)"
-              ></i>
+              <i class="sp-icon-view" @click="handleFilePreview(item)" />
+              <i class="sp-icon-delete" @click="handleRemoveItem(index)" />
             </span>
           </li>
           <!-- 上传图片按钮 -->
@@ -145,8 +139,8 @@
             </div>
           </li>
         </ul>
-        <div v-if="exampleImage" class="sp-upload__example-image">
-          <img :src="exampleImage" alt="">
+        <div v-if="exampleImage" class="sp-upload__example-image" :class="{ 'has--big-img': exampleBigImage }">
+          <img :src="exampleImage" alt="" @click="handleExampleImagePreview">
         </div>
       </div>
     </template>
@@ -309,10 +303,24 @@ export default {
       }
     },
 
+    handleFilePreview(item) {
+      if (item.type === 'image') {
+        this.$sparta.imgPreview(item.url)
+      } else {
+        window.open(item.url)
+      }
+    },
+
     handleRemoveItem(index) {
       const file = this.uploadFiles.splice(index, 1)
       this._abort(file[0])
       this._emitChange()
+    },
+
+    handleExampleImagePreview() {
+      if (this.exampleBigImage) {
+        this.$sparta.imgPreview(this.exampleBigImage)
+      }
     },
 
     /**
@@ -786,6 +794,10 @@ export default {
       line-height: 20px;
       text-align: center;
       background-color: rgba(1, 34, 87, 0.4);
+    }
+
+    &.has--big-img {
+      cursor: pointer;
     }
 
     img {
