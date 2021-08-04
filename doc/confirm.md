@@ -17,7 +17,7 @@
 export default{
   methods: {
     show1() {
-      this.$confirm({
+      this.$sparta.confirm({
         title: '我是一个大标题',
         message: '我是主体文案',
         cancelText: '算了',
@@ -51,7 +51,7 @@ export default{
 export default{
   methods: {
     show2() {
-      this.$confirm('确定要删除吗？')
+      this.$sparta.confirm('确定要删除吗？')
     }
   }
 }
@@ -74,7 +74,7 @@ export default{
 export default{
   methods: {
     show3() {
-      this.$confirm({
+      this.$sparta.confirm({
         message: '我在中间',
         align: 'center'
       })
@@ -100,7 +100,7 @@ export default{
 export default{
   methods: {
     show4() {
-      this.$confirm({
+      this.$sparta.confirm({
         message: '确定要删除吗？',
         hideAfterConfirm: false,
         confirmFunc: vm => {
@@ -132,7 +132,7 @@ export default{
 export default{
   methods: {
     show1() {
-      this.$confirm({
+      this.$sparta.confirm({
         title: '我是一个大标题',
         message: '我是主体文案',
         cancelText: '算了',
@@ -146,16 +146,16 @@ export default{
       })
     },
     show2() {
-      this.$confirm('确定要删除吗？')
+      this.$sparta.confirm('确定要删除吗？')
     },
     show3() {
-      this.$confirm({
+      this.$sparta.confirm({
         message: '我在中间',
         align: 'center'
       })
     },
     show4() {
-      this.$confirm({
+      this.$sparta.confirm({
         message: '确定要删除吗？',
         hideAfterConfirm: false,
         confirmFunc: vm => {

@@ -24,6 +24,7 @@ import TimePicker from './components/time-picker'
 import DatePicker from './components/date-picker'
 import Progress from './components/progress'
 import Upload from './components/upload'
+import ImgPreview from './components/img-preview'
 import Form from './components/form'
 import FormItem from './components/form-item'
 import Tag from './components/tag'
@@ -82,11 +83,13 @@ Sparta.install = Vue => {
     Sparta[component.name] = component.name
   })
 
-  Vue.prototype.$error = Toast('error')
-  Vue.prototype.$success = Toast('success')
-  Vue.prototype.$warning = Toast('warning')
-  Vue.prototype.$info = Toast('info')
-  Vue.prototype.$confirm = confrim
+  Vue.prototype.$sparta = {}
+  Vue.prototype.$sparta.imgPreview = ImgPreview()
+  Vue.prototype.$sparta.error = Toast('error')
+  Vue.prototype.$sparta.success = Toast('success')
+  Vue.prototype.$sparta.warning = Toast('warning')
+  Vue.prototype.$sparta.info = Toast('info')
+  Vue.prototype.$sparta.confirm = confrim
 }
 
 

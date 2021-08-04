@@ -141,6 +141,7 @@ export default{
       multiple
       :processResult="processResult"
       :limit="3"
+      example-image="https://i.epay.126.net/a/ge/static/img/ex_supplier.5f209565.png"
       :onExceed="onExceed"
       @change="handleChange"
     >
@@ -251,7 +252,7 @@ export default{
       return url + '?w=200'
     },
     onExceed() {
-      this.$error('最多上传3张图片')
+      this.$sparta.error('最多上传3张图片')
     }
   }
 }

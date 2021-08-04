@@ -145,6 +145,9 @@
             </div>
           </li>
         </ul>
+        <div v-if="exampleImage" class="sp-upload__example-image">
+          <img :src="exampleImage" alt="">
+        </div>
       </div>
     </template>
   </div>
@@ -212,6 +215,14 @@ export default {
       default: ''
     },
     limit: [Number, String],
+    exampleImage: {
+      type: String,
+      default: ''
+    },
+    exampleBigImage: {
+      type: String,
+      default: ''
+    },
     headers: {
       type: Object,
       default: () => {}
@@ -611,6 +622,7 @@ export default {
 
     &__show {
       @include clearfix();
+      float: left;
     }
 
     &__item {
@@ -751,6 +763,33 @@ export default {
           color: $upload-picture__btn--is-disabled-color;
         }
       }
+    }
+  }
+
+  &__example-image {
+    position: relative;
+    width: 120px;
+    height: 76px;
+    margin-left: 10px;
+    float: left;
+    background-color: $upload-picture__btn-background;
+    overflow: hidden;
+
+    &::before {
+      content: "示例图";
+      position: absolute;
+      display: inline-block;
+      width: 46px;
+      height: 20px;
+      font-size: 12px;
+      color: #fff;
+      line-height: 20px;
+      text-align: center;
+      background-color: rgba(1, 34, 87, 0.4);
+    }
+
+    img {
+      width: 100%;
     }
   }
 }

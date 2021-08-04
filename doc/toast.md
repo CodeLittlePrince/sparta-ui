@@ -52,16 +52,16 @@ export default{
 export default{
   methods: {
     showSuccess() {
-      this.$success('一个消息')
+      this.$sparta.success('一个消息')
     },
     showWarning() {
-      this.$warning('一个消息')
+      this.$sparta.warning('一个消息')
     },
     showInfo() {
-      this.$info('一个消息')
+      this.$sparta.info('一个消息')
     },
     showError() {
-      this.$error('一个消息')
+      this.$sparta.error('一个消息')
     }
   }
 }
@@ -73,16 +73,16 @@ export default{
 export default{
   methods: {
     showSuccess() {
-      this.$success('一个消息')
+      this.$sparta.success('一个消息')
     },
     showWarning() {
-      this.$warning('一个消息')
+      this.$sparta.warning('一个消息')
     },
     showInfo() {
-      this.$info('一个消息')
+      this.$sparta.info('一个消息')
     },
     showError() {
-      this.$error('一个消息')
+      this.$sparta.error('一个消息')
     },
     show() {
       this.$info({

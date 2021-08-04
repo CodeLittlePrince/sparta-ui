@@ -153,7 +153,12 @@ export default {
               title: 'Tabs 标签页',
               link: '/tabs',
               index: '4-5-3'
-            }
+            },
+            {
+              title: 'ImgPreview 图片查看器',
+              link: '/img-preview',
+              index: '4-5-4'
+            },
           ]
         },
         {
