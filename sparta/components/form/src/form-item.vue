@@ -370,6 +370,13 @@ export default {
       }
     }
 
+    & .sp-password-input__item {
+      border-color: $color-danger;
+      &.is__focus {
+        box-shadow: $input-box-shadow-focus-error;
+      }
+    }
+
     & .sp-input-group__tip,
     & .sp-input-group__prepend {
       & .sp-input__inner {
