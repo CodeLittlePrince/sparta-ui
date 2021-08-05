@@ -138,7 +138,7 @@ export default {
       padding: 5px 0;
       border: 1px solid $dropdown-border-color;
       border-radius: $dropdown-border-radius;
-      box-shadow: $flot-box-shadow-box;
+      box-shadow: $float-box-shadow-box;
       box-sizing: border-box;
       background-color: $dropdown-background;
       cursor: pointer;
