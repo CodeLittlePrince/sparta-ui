@@ -27,9 +27,6 @@ export default {
     disabled: Boolean,
     min: Number,
     max: Number,
-    size: String,
-    fill: String,
-    textColor: String
   },
 
   watch: {
