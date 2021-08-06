@@ -16,12 +16,7 @@
       action="/api/upload"
       :processResult="processResult"
       @change="handleChange"
-    >
-      上传文件
-      <template slot="tip">
-        温馨提示：大文件可能会上传更长时间
-      </template>
-    </sp-upload>
+    ></sp-upload>
   </div>
 </template>
 
@@ -48,6 +43,8 @@ export default{
   <div class="sp-upload-demo">
     <sp-upload
       action="/api/upload"
+      example-image="https://i.epay.126.net/a/ge/static/img/ex_supplier.5f209565.png"
+      example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
       :processResult="processResult"
       :files="[{name: 'food.jpg', url: 'https://cn.vuejs.org/images/logo.png'}]"
       @change="handleChange"
@@ -156,6 +153,32 @@ export default{
 ```
 :::
 
+### 文件数量限制，限制数量只有1的特殊场景
+
+:::demo 使用`limit`控制，`onExceed`为超过限制的回调。
+```vue
+<template>
+  <div class="sp-upload-demo">
+    <sp-upload
+      type="picture"
+      action="/api/upload"
+      :processResult="processResult"
+      :limit="1"
+      example-image="https://i.epay.126.net/a/ge/static/img/ex_supplier.5f209565.png"
+      example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
+      :onExceed="onExceed1"
+      @change="handleChange"
+    >
+      添加图片
+      <template slot="tip">
+        温馨提示：图片最多上传1张
+      </template>
+    </sp-upload>
+  </div>
+</template>
+```
+:::
+
 ### 文件类型限制
 
 :::demo 使用`accept`控制。
@@ -231,7 +254,6 @@ export default{
 | name | 说明 |
 |------|--------|
 | default | 文件选择框的内容 |
-| tip | 提示说明文字 |
 | desc | 顶部描述说明文字 |
 
 <script>
@@ -256,6 +278,9 @@ export default{
     },
     onExceed() {
       this.$sparta.error('最多上传3张图片')
+    },
+    onExceed1() {
+      this.$sparta.error('最多上传1张图片')
     }
   }
 }

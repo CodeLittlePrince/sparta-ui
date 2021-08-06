@@ -70,10 +70,14 @@ export default {
     border-radius: 50%;
     background: #4e4e52;
     color: #fff;
-    font-size: 24px;
     text-align: center;
     line-height: 37px;
     cursor: pointer;
+    font-size: 0;
+
+    i {
+      font-size: 16px;
+    }
   }
 }
 </style>

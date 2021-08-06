@@ -353,7 +353,7 @@ export default {
   &__error {
     color: $form-item-error-color;
     font-size: $form-item-error-font-size;
-    line-height: 18px;
+    line-height: 17px;
     padding: 3px 0 6px;
     min-height: 26px;
     box-sizing: border-box;

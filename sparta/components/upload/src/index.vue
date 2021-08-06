@@ -15,53 +15,75 @@
     <!-- 上传文件 -->
     <template v-if="type === 'text'">
       <div class="sp-upload-file">
-        <!-- 上传文件按钮 -->
-        <sp-button
-          plain
-          class="sp-upload-file__btn"
-          icon="sp-icon-upload"
-          :disabled="disabled"
-          @click="handleSelect"
-        >
-          <slot>点击上传</slot>
-        </sp-button>
+        <!-- 上传文件按钮区域 -->
+        <div class="sp-upload-file__upload-area">
+          <div
+            class="sp-upload-file__btn"
+            :class="{'is--disabled': disabled}"
+            :disabled="disabled"
+            @click="handleSelect"
+          >
+            <div class="sp-upload-file__btn__box">
+              <div class="sp-icon-add-box"><i class="sp-icon-add-bold"></i></div>
+              <span class="sp-upload-file__btn__text">
+                <slot>点击批量上传</slot>
+              </span>
+            </div>
+          </div>
+          <div class="sp-upload__right-content">
+            <div
+              v-if="exampleImage"
+              class="sp-upload__example-image"
+              :class="{ 'has--big-img': exampleBigImage }"
+            >
+              <img :src="exampleImage" alt="" @click="handleExampleImagePreview">
+            </div>
+          </div>
+        </div>
         <!-- 展示 -->
         <ul class="sp-upload-file__show">
           <li
             v-for="(item, index) in uploadFiles"
             :key="item.uid"
             class="sp-upload-file__item"
-            :class="{'is-error': item.status === 'fail'}"
+            :class="{'is--error': item.status === 'fail'}"
           >
-            <i class="sp-icon-document"></i>
+            <template v-if="item.status === 'uploading'">
+              <!-- IE9情况显示 -->
+              <img
+                v-if="isIE9"
+                class="sp-upload-file__item__ie9-loading"
+                src="./img/loading-small.gif"
+                alt=""
+              />
+              <!-- 非IE9 -->
+              <i v-else class="sp-icon-loading"></i>
+            </template>
+            <i v-else-if="item.status === 'fail'" class="sp-icon-warning-circle" />
+            <i v-else class="sp-icon-file" />
             <a
               v-if="item.url"
               class="sp-upload-file__item-name"
               :href="item.url"
+              :title="item.name"
               target="_blank"
             >{{ item.name }}</a>
             <!-- 文件名 -->
             <span
               v-else
+              :title="item.name"
               class="sp-upload-file__item-name"
-            >
-              {{ item.name }}
-            </span>
+            >{{ item.name }}</span>
+            <!-- 错误提示 -->
+            <span
+              v-if="item.status === 'fail'"
+              class="sp-upload-file__item__error-tip"
+            >上传失败</span>
             <!-- 删除按钮 -->
             <i
               class="sp-icon-close"
               @click="handleRemoveItem(index)"
             ></i>
-            <!-- IE9情况显示 -->
-            <span
-              v-if="item.status !== 'success' && item.status !== 'fail' && isIE9"
-            >上传中...</span>
-            <!-- IE10+显示进度条 -->
-            <sp-progress
-              v-if="item.percentage && item.status !== 'success' && item.status !== 'fail' && !isIE9"
-              type="line"
-              :percentage="_parsePercentage(item.percentage)"
-            />
           </li>
         </ul>
       </div>
@@ -69,13 +91,17 @@
 
     <!-- 上传图片 -->
     <template v-else>
-      <div class="sp-upload-picture">
+      <div class="sp-upload-picture" :class="{ 'is--show-upload-btn': showUploadBtn }">
         <ul class="sp-upload-picture__show">
           <li
             v-for="(item, index) in uploadFiles"
             :key="item.uid"
             class="sp-upload-picture__item"
-            :class="{'is-error': item.status === 'fail'}"
+            :class="{
+              'is--error': item.status === 'fail',
+              'is--uploading': item.status === 'uploading',
+              'is--ready': item.status === 'ready'
+            }"
           >
             <div class="sp-upload-picture__item-info">
               <img
@@ -88,37 +114,35 @@
                 v-if="item.status === 'success' && item.type !== 'image' && !isIE9"
                 class="sp-upload-picture__item-info-file"
               >
-                <i class="sp-icon-picture-outline"></i>
+                <i class="sp-icon-file"></i>
                 <div class="sp-upload-picture__item-info-name">
                   {{ item.name }}
                 </div>
               </div>
               <!-- 上传中 -->
-              <div
-                v-if="item.status !== 'success' && item.status !== 'fail' && isIE9"
-                class="sp-upload-picture__item-info-ie9"
-              >上传中...</div>
-              <sp-progress
-                v-if="item.percentage && item.status !== 'success' && item.status !== 'fail' && !isIE9"
-                type="circle"
-                :width="86"
-                :percentage="_parsePercentage(item.percentage)"
-              />
+              <div v-if="item.status === 'uploading'" class="sp-upload-picture__item__box">
+                <!-- IE9情况显示 -->
+                <img
+                  v-if="isIE9"
+                  class="sp-upload-picture__item__ie9-loading"
+                  src="./img/loading.gif"
+                  alt=""
+                />
+                <!-- 非IE9 -->
+                <i v-else class="sp-icon-loading-bold" />
+                <p class="sp-upload-picture__item__text">上传中...</p>
+              </div>
               <!-- 上传错误 -->
               <div
-                v-if="item.status === 'fail' && isIE9"
-                class="sp-upload-picture__item-info-ie9 is-error"
-              >上传失败</div>
-              <sp-progress
-                v-if="item.percentage && item.status === 'fail' && !isIE9"
-                type="circle"
-                :percentage="100"
-                :width="86"
-                status="exception"
-              >上传失败</sp-progress>
+                v-if="item.status === 'fail'"
+                class="sp-upload-picture__item__error"
+              >
+                <i class="sp-icon-warning-circle"></i>
+                <p>上传失败</p>
+              </div>
             </div>
             <!-- 查看和删除按钮 -->
-            <span class="sp-upload-picture__item-actions">
+            <span v-show="item.status !== 'uploading'" class="sp-upload-picture__item-actions">
               <i class="sp-icon-view" @click="handleFilePreview(item)" />
               <i class="sp-icon-delete" @click="handleRemoveItem(index)" />
             </span>
@@ -127,20 +151,32 @@
           <li
             v-show="showUploadBtn"
             class="sp-upload-picture__btn"
-            :class="{'is-disabled': disabled}"
+            :class="{'is--disabled': disabled}"
             :disabled="disabled"
             @click="handleSelect"
           >
             <div class="sp-upload-picture__btn__box">
-              <div class="sp-icon-plus-box"><i class="sp-icon-plus"></i></div>
+              <div class="sp-icon-add-box"><i class="sp-icon-add"></i></div>
               <div class="sp-upload-picture__btn__text">
                 <slot>点击上传</slot>
               </div>
             </div>
           </li>
         </ul>
-        <div v-if="exampleImage" class="sp-upload__example-image" :class="{ 'has--big-img': exampleBigImage }">
-          <img :src="exampleImage" alt="" @click="handleExampleImagePreview">
+        <div class="sp-upload__right-content">
+          <div
+            v-if="exampleImage"
+            class="sp-upload__example-image"
+            :class="{ 'has--big-img': exampleBigImage }"
+          >
+            <img :src="exampleImage" alt="" @click="handleExampleImagePreview">
+          </div>
+          <sp-button
+            v-if="limit == 1 && uploadFiles.length === 1"
+            type="text"
+            class="sp-upload__reupload-text"
+            @click="handleSelect"
+          >重新上传</sp-button>
         </div>
       </div>
     </template>
@@ -149,15 +185,10 @@
 
 <script>
 import Emitter from 'sparta/common/js/mixins/emitter'
-import SPProgress from 'sparta/components/progress'
 import httpRequest from './ajax'
 
 export default {
   name: 'SpUpload',
-
-  components: {
-    'sp-progress': SPProgress
-  },
 
   mixins: [Emitter],
 
@@ -340,12 +371,17 @@ export default {
     },
 
     _uploadFiles(files) {
+      // 当limit为1，并且不允许批量上传，并且已经有1个文件上传过了
+      // 那说明，这个upload肯定是用户点击了“重新上传”按钮触发的
+      const isReUploading = this.limit == 1 && !this.multiple && this.uploadFiles.length === 1
+      if (isReUploading) {
+        this.uploadFiles.pop()
+      }
       // 超过文件数量限制处理
       if (this.limit && this.uploadFiles.length + files.length > this.limit) {
         this.onExceed(files, this.uploadFiles)
         return
       }
-
       // 文件遍历上传
       let postFiles = Array.prototype.slice.call(files)
       if (!this.multiple) { postFiles = postFiles.slice(0, 1) }
@@ -513,6 +549,8 @@ export default {
       hiddenform.appendChild(input)
       hiddenform.appendChild(hiddenframe)
       this.hiddenform = hiddenform
+      const index = this.uploadFiles.indexOf(file)
+      this.uploadFiles[index].status = 'uploading'
 
       hiddenframe.addEventListener('load', () => {
         this._iframeUpload(hiddenform, hiddenframe, file)
@@ -577,58 +615,141 @@ export default {
   }
 
   &-file {
+
+    &__upload-area {
+      @include clearfix();
+    }
+
+    &__btn {
+      float: left;
+      width: $upload-picture__item-width;
+      height: 76px;
+      text-align: center;
+      background-color: $upload-bg-grey;
+      border-radius: 4px;
+      cursor: pointer;
+      box-sizing: border-box;
+      font-size: 0;
+      padding: 4px;
+      line-height: 1;
+      margin-right: 10px;
+
+      &__box {
+        border: 1px dashed #d9d9d9;
+        height: 100%;
+        padding-top: 25px;
+        box-sizing: border-box;
+      }
+
+      .sp-icon-add-bold {
+        font-size: 14px;
+        vertical-align: middle;
+        margin-right: 8px;
+      }
+
+      &__text {
+        font-size: 12px;
+        line-height: 18px;
+      }
+
+      &:hover {
+        transition: $transition-all;
+        background-color: $upload-picture__btn-background-hover;
+        border-color: $color-primary;
+      }
+
+      &.is--disabled {
+        color: $upload-picture__btn--is--disabled-color;
+        background-color: $upload-picture__btn--is--disabled-background;
+        border-color: $upload-picture__btn--is--disabled-border-color;
+        cursor: not-allowed;
+
+        .sp-icon-add {
+          color: $upload-picture__btn--is--disabled-color;
+        }
+      }
+    }
+
+    .sp-upload__right-content {
+      height: 76px;
+    }
+
     &__item {
       position: relative;
-      margin-top: 8px;
-      font-size: 14px;
+      margin-top: 3px;
+      font-size: 0;
       transition: $transition-all;
       color: $upload-file__item-color;
 
+      &:first-child {
+        margin-top: 10px;
+      }
+
       a {
-        color: $color-primary;
+        color: $color-text-regular;
       }
 
       &-name {
         display: inline-block;
         width: 100%;
-        padding-left: 22px;
-        line-height: 22px;
+        padding-left: 18px;
+        padding-right: 78px;
+        font-size: 12px;
+        line-height: 18px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         box-sizing: border-box;
       }
 
-      .sp-icon-document {
+      &__ie9-loading {
+        width: 12px;
+        height: 12px;
+      }
+
+      .sp-icon-file,
+      .sp-icon-warning-circle,
+      .sp-icon-loading,
+      .sp-upload-file__item__ie9-loading {
         position: absolute;
         top: 0;
-        font-size: 14px;
-        line-height: 22px;
+        font-size: 12px;
+        line-height: 18px;
+        color: $color-text-tip;
+      }
+
+      .sp-upload-file__item__ie9-loading {
+        top: 50%;
+        transform: translateY(-50%);
       }
 
       .sp-icon-close {
-        opacity: 0;
         position: absolute;
-        top: 1px;
-        right: 4px;
+        top: 0;
+        right: 0;
         cursor: pointer;
-        font-size: 14px;
-        line-height: 22px;
+        font-size: 12px;
+        line-height: 18px;
+        color: $color-text-tip;
+      }
+
+      &__error-tip {
+        position: absolute;
+        top: 0;
+        right: 18px;
+        font-size: 12px;
+        line-height: 18px;
       }
 
       &:hover {
         background-color: $upload-file__item-background-hover;
-        .sp-icon-close {
-          opacity: 1;
-        }
       }
 
-      &.is-error {
-        color: $upload-file__item--is-error-color;
+      &.is--error {
+        color: $upload-file__item--is--error-color;
 
-        .sp-icon-close, .sp-icon-document {
-          opacity: 1;
-          color: $upload-file__item--is-error-color;
+        .sp-icon-warning-circle {
+          color: $upload-file__item--is--error-color;
         }
       }
     }
@@ -645,26 +766,20 @@ export default {
     &__item {
       position: relative;
       float: left;
-      width: 174px;
-      height: 110px;
+      width: $upload-picture__item-width;
+      height: $upload-picture__item-height;
       border: $upload-picture__item-border;
       border-radius: 4px;
       box-sizing: border-box;
       margin-right: 10px;
-
-      .sp-progress {
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
+      overflow: hidden;
 
       &-info {
         position: relative;
         height: 100%;
         overflow: hidden;
-        transition: $transition-all;
 
-        img {
+        > img {
           width: 100%;
         }
 
@@ -675,21 +790,16 @@ export default {
           z-index: 10;
           content: '';
           display: inline-block;
-          transition: $transition-all;
-        }
-
-        &-ie9 {
-          font-size: 14px;
-          color: $upload-file__item-color;
-          text-align: center;
-          line-height: 84px;
-          &.is-error {
-            color: $color-danger;
-          }
         }
 
         &-file {
           text-align: center;
+          color: $color-text-tip;
+
+          .sp-icon-file {
+            margin-top: 32px;
+            font-size: 24px;
+          }
         }
 
         .sp-icon-picture-outline {
@@ -699,11 +809,11 @@ export default {
         }
 
         &-name {
-          margin-top: 10px;
-          width: 100%;
           @include ellipsis();
-          font-size: 14px;
-          text-align: center;
+          font-size: 12px;
+          line-height: 18px;
+          margin-top: 10px;
+          padding: 0 5px;
         }
       }
 
@@ -717,12 +827,40 @@ export default {
         opacity: 0;
         transition: $transition-all;
         color: #fff;
-        font-size: 16px;
+        font-size: 0;
 
         i {
           cursor: pointer;
           color: #fff;
+          font-size: 22px;
+
+          &:first-child {
+            margin-right: 20px;
+          }
         }
+      }
+
+      &__error {
+        text-align: center;
+        color: $color-danger;
+
+        .sp-icon-warning-circle {
+          font-size: 24px;
+          margin-top: 32px;
+          margin-bottom: 10px;
+        }
+
+        p {
+          font-size: 12px;
+          line-height: 18px;
+        }
+      }
+
+      &__ie9-loading {
+        width: 24px;
+        height: 24px;
+        margin-bottom: 11px;
+        margin-top: 29px;
       }
 
       &:hover &-actions {
@@ -732,62 +870,102 @@ export default {
       &:hover &-info::before {
         background: rgba(0, 0, 0, 0.5);
       }
+
+      &.is--uploading:hover &-info::before {
+        background: transparent;
+      }
+
+      &.is--uploading,
+      &.is--ready {
+        border: none;
+      }
+
+      &.is--error {
+        border-color: $color-danger;
+
+        .sp-icon-view {
+          display: none;
+        }
+      }
     }
 
+    &__item.is--uploading,
+    &__item.is--ready,
     &__btn {
       float: left;
-      width: 174px;
-      height: 110px;
+      width: $upload-picture__item-width;
+      height: $upload-picture__item-height;
       text-align: center;
-      background-color: #f0f3f7;
+      background-color: $upload-bg-grey;
       border-radius: 4px;
-      transition: $transition-all;
       cursor: pointer;
       box-sizing: border-box;
       font-size: 0;
       padding: 4px;
       line-height: 1;
 
-      &__box {
+      .sp-upload-picture__item__box,
+      .sp-upload-picture__btn__box {
         border: 1px dashed #d9d9d9;
-        height: calc(100% - 2px);
+        height: 100%;
+        box-sizing: border-box;
       }
 
-      .sp-icon-plus {
+      .sp-icon-add,
+      .sp-icon-loading-bold {
         font-size: 24px;
         margin-bottom: 11px;
         margin-top: 29px;
       }
 
-      &__text {
+      .sp-upload-picture__item__text,
+      .sp-upload-picture__btn__text {
         font-size: 12px;
         line-height: 18px;
       }
 
       &:hover {
+        transition: $transition-all;
         background-color: $upload-picture__btn-background-hover;
         border-color: $color-primary;
       }
 
-      &.is-disabled {
-        color: $upload-picture__btn--is-disabled-color;
-        background-color: $upload-picture__btn--is-disabled-background;
-        border-color: $upload-picture__btn--is-disabled-border-color;
+      &.is--disabled {
+        color: $upload-picture__btn--is--disabled-color;
+        background-color: $upload-picture__btn--is--disabled-background;
+        border-color: $upload-picture__btn--is--disabled-border-color;
         cursor: not-allowed;
 
-        .sp-icon-plus {
-          color: $upload-picture__btn--is-disabled-color;
+        .sp-icon-add {
+          color: $upload-picture__btn--is--disabled-color;
         }
       }
     }
+
+    &.is--show-upload-btn .sp-upload__right-content {
+      margin-left: 10px;
+    }
+  }
+
+  &__right-content {
+    position: relative;
+    float: left;
+    height: $upload-picture__item-height;
+  }
+
+  &__reupload-text {
+    position: absolute;
+    bottom: 0;
+    font-size: 12px;
+    line-height: 18px;
+    padding: 0;
+    border: none;
   }
 
   &__example-image {
     position: relative;
     width: 120px;
     height: 76px;
-    margin-left: 10px;
-    float: left;
     background-color: $upload-picture__btn-background;
     overflow: hidden;
 

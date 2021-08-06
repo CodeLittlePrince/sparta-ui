@@ -29,7 +29,7 @@
       <template v-if="theme === 'file'">
         <i
           v-if="!hasChild"
-          class="sp-icon-document"
+          class="sp-icon-file"
         />
         <i
           v-else
@@ -256,7 +256,7 @@ export default {
         cursor: pointer;
       }
     }
-    .sp-icon-document, .sp-icon-message {
+    .sp-icon-file, .sp-icon-message {
       font-size: 18px;
       vertical-align: text-top;
     }

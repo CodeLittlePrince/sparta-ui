@@ -384,7 +384,7 @@ export default{
   data(){
     return {
       list1: [
-        { label: 'Tom', value: 1 },
+        { label: 'TomTomTomTomTomTomTomTomTom', value: 1 },
         { label: 'Jerry', value: 2 },
         { label: 'Kitty', value: 3 },
         { label: 'Adam', value: 4 },

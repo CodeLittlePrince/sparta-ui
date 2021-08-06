@@ -81,14 +81,13 @@
               v-if="suffixIcon"
               class="sp-input__icon"
               :class="suffixIcon"
-            >
-            </i>
+            />
           </template>
           <i
             v-else
-            class="sp-input__icon sp-icon-circle-close sp-input__clear"
+            class="sp-input__icon sp-icon-close-bold sp-input__clear"
             @click.stop="handleClear"
-          ></i>
+          />
         </span>
         <i
           v-if="validateState"
@@ -234,8 +233,8 @@ export default {
     validateIcon() {
       return {
         validating: 'sp-icon-loading',
-        success: 'sp-icon-circle-check',
-        error: 'sp-icon-circle-close'
+        success: 'sp-icon-check',
+        error: 'sp-icon-close-bold'
       }[this.validateState]
     },
     textareaStyle() {
@@ -408,7 +407,7 @@ export default {
   .sp-textarea__inner {
     display: block;
     resize: vertical;
-    padding: 5px 15px;
+    padding: 5px 10px;
     line-height: 1.5;
     box-sizing: border-box;
     width: 100%;
@@ -456,15 +455,18 @@ export default {
   width: 100%;
 
   & .sp-input__clear {
-    color: $color-text-placeholder;
-    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    color: #fff;
+    background-color: $color-text-tip;
+    font-size: 12px;
     line-height: 16px;
-    transition: $transition-all;
     cursor: pointer;
-
-    &:hover {
-      color: $color-text-secondary;
-    }
   }
 
   &__inner {
@@ -489,7 +491,7 @@ export default {
     }
 
     &:hover {
-      border-color: $input-border-color-hover;
+      border-color: $color-primary;
     }
 
     &:focus {

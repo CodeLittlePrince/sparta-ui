@@ -15,10 +15,8 @@
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
-  color: #97a2b5;
   vertical-align: baseline;
   display: inline-block;
-  line-height: 1;
 
   &::before {
     display: inline-block; /* 解决伪元素在字号为12px的时候，高度会是13的问题 */
@@ -97,7 +95,8 @@
   content: "\e697";
 }
 
-.sp-icon-loading {
+.sp-icon-loading,
+.sp-icon-loading-bold {
   animation: rotating 0.7s linear infinite;
 }
 
