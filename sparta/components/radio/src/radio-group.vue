@@ -1,5 +1,5 @@
 <template>
-  <div class="sp-radio-group">
+  <div class="sp-radio__group">
     <slot></slot>
   </div>
 </template>

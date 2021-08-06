@@ -181,9 +181,12 @@ $radio-color-active: $color-primary;
 $radio-font-size: 14px;
 $radio-border-color: $border-color-base;
 $radio-background-color: #fff;
-$radio-color-disabled: $color-text-secondary;
+$radio-color-disabled: #c7cbd1;
 $radio-border-color-disabled: $border-color-base;
-$radio-background-color-disabled: #f5f5f5;
+$radio-background-color-disabled: #f0f3f7;
+$radio-button-background-color-active: #e6f1ff;
+$radio-button-border-color-disabled: #e4e8ef;
+$radio-button-text-hover: #97a2b5;
 
 /* Select
 -------------------------- */
