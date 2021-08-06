@@ -82,7 +82,7 @@ export default {
   &__box {
     border: $date-picker-border;
     border-radius: $date-picker-border-radius;
-    box-shadow: $flot-box-shadow-box;
+    box-shadow: $float-box-shadow-box;
     background-color: $date-picker-pane-background;
     @include clearfix();
 

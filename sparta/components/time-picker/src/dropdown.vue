@@ -82,7 +82,7 @@ export default {
     @include clearfix();
     border: $time-picker-border;
     border-radius: $time-picker-border-radius;
-    box-shadow: $flot-box-shadow-box;
+    box-shadow: $float-box-shadow-box;
     box-sizing: border-box;
     background-color: $time-picker-pane-background;
   }
