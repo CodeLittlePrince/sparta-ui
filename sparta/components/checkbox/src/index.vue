@@ -263,6 +263,10 @@ export default {
     border-color: $color-primary;
   }
 
+  .sp-icon-check {
+    line-height: 1;
+  }
+
   &.is--checked {
     .sp-checkbox__icon {
       color: $checkbox-checkmark-color;

@@ -114,9 +114,12 @@ export default {
     white-space: nowrap;
     text-align: center;
     font-size: 0;
+    transition: $transition-all;
+
     &:last-child {
       margin-right: 0;
     }
+
     &:hover {
       border-color: $color-primary;
     }
