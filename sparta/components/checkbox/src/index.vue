@@ -1,26 +1,39 @@
 <template>
-  <label class="sp-checkbox-wrap">
+  <label class="sp-checkbox__wrap">
     <span
-      class="sp-checkbox" :class="[
-        { 'is-disabled': isDisabled },
-        { 'is-checked': isChecked }
+      class="sp-checkbox"
+      :class="[
+        { 'is--disabled': isDisabled },
+        { 'is--checked': isChecked }
       ]"
     >
       <input
-        v-if="trueLabel || falseLabel" v-model="model" type="checkbox"
-        class="sp-checkbox-input" :true-value="trueLabel" :false-value="falseLabel"
-        :disabled="isDisabled" :value="label" @change="handleChange"
-      />
-      <input
-        v-else v-model="model" type="checkbox"
-        class="sp-checkbox-input" :disabled="isDisabled" :value="label"
+        v-if="trueLabel || falseLabel"
+        v-model="model"
+        type="checkbox"
+        class="sp-checkbox__input"
+        :true-value="trueLabel"
+        :false-value="falseLabel"
+        :disabled="isDisabled"
+        :value="label"
         @change="handleChange"
       />
-      <span class="sp-checkbox-inner iconfont" :class="{'sp-icon-check': isChecked, 'is-indeterminate': indeterminate}"></span>
+      <input
+        v-else
+        v-model="model"
+        type="checkbox"
+        class="sp-checkbox__input"
+        :disabled="isDisabled"
+        :value="label"
+        @change="handleChange"
+      />
+      <span
+        class="sp-checkbox__icon iconfont"
+        :class="{'sp-icon-check': isChecked, 'is--indeterminate': indeterminate}"
+      ></span>
     </span><!--
- --><span v-if="$slots.default || label">
-      <!--
-    --><template v-if="!$slots.default">{{ label }}</template>
+ --><span v-if="$slots.default || label"><!--
+  --><template v-if="!$slots.default">{{ label }}</template>
       <slot></slot>
     </span>
   </label>
@@ -187,7 +200,7 @@ export default {
   outline: none;
   cursor: pointer;
 
-  &-wrap {
+  &__wrap {
     font-size: 14px;
     height: 20px;
     line-height: 20px;
@@ -206,13 +219,13 @@ export default {
     display: inline-block;
   }
 
-  &-input {
+  &__input {
     opacity: 0;
     width: 14px;
     height: 14px;
   }
 
-  &-inner {
+  &__icon {
     position: absolute;
     top: 0;
     left: 0;
@@ -224,7 +237,7 @@ export default {
     border-radius: 2px;
     transition: all 0.3s;
 
-    &.is-indeterminate::after {
+    &.is--indeterminate::after {
       content: "";
       width: 6px;
       height: 6px;
@@ -242,12 +255,12 @@ export default {
     }
   }
 
-  &-input:focus + span {
+  &__input:focus + span {
     border-color: $color-primary;
   }
 
-  &.is-checked {
-    .sp-checkbox-inner {
+  &.is--checked {
+    .sp-checkbox__icon {
       color: $checkbox-checkmark-color;
       font-size: 12px;
       background-color: $color-primary;
@@ -255,14 +268,14 @@ export default {
     }
   }
 
-  &.is-disabled {
+  &.is--disabled {
     cursor: not-allowed;
-    .sp-checkbox-inner {
+    .sp-checkbox__icon {
       background-color: $checkbox-background-disabled;
       border-color: $checkbox-border-color;
     }
-    &.is-checked {
-      .sp-checkbox-inner {
+    &.is--checked {
+      .sp-checkbox__icon {
         color: $checkbox-checkmark-color-disabled;
         border-color: $checkbox-background-disabled;
       }
