@@ -527,7 +527,6 @@ export default {
   display: block;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 
   &.is--disabled, &.is--disabled &-input-box input {
     background-color: $select-background-disabled;
@@ -618,7 +617,6 @@ export default {
 
   &.isFocus &-input-box {
     border-color: $select-input-border-color-focus;
-    box-shadow: $select-input-box-shadow-focus;
   }
 
   &-suffix {
@@ -630,6 +628,7 @@ export default {
     line-height: $select-height - 2px;
     text-align: center;
     user-select: none;
+    border-left: 1px solid $border-color-base;
     background-color: $select-suffix-background-color;
 
     i {
@@ -653,11 +652,11 @@ export default {
     max-height: 274px;
     height: 100%;
     overflow: auto;
-    margin: 5px 0;
+    margin: 4px 0;
     padding: 5px 0;
     border: 1px solid $select-dropdown-border-color;
     border-radius: 4px;
-    box-shadow: $flot-box-shadow-box;
+    box-shadow: $float-box-shadow-box;
     box-sizing: border-box;
     background-color: $select-dropdown-item-background;
 
