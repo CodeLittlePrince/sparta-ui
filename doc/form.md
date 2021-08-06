@@ -27,6 +27,19 @@
       ></sp-input>
       <div slot="tip">输入你的名字吧，靓仔!</div>
     </sp-form-item>
+     <!-- 姓名 -->
+    <sp-form-item
+      prop="password"
+      label="支付密码"
+      :rules="[
+        { required: true, message: '支付密码不能为空'}
+      ]"
+    >
+      <sp-password-input
+        v-model="validateForm1.password"
+      ></sp-password-input>
+      <div slot="tip">输入你的支付密码!</div>
+    </sp-form-item>
     <!-- 年龄 -->
     <sp-form-item
       label="年龄"
@@ -121,6 +134,7 @@
       return {
         validateForm1: {
           name: '',
+          password: '',
           age: '',
           birth: '',
           favorite: '',
@@ -421,6 +435,7 @@
       return {
         validateForm1: {
           name: '',
+          password: '',
           age: '',
           birth: '',
           favorite: '',
