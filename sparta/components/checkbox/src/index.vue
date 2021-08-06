@@ -31,9 +31,9 @@
         class="sp-checkbox__icon iconfont"
         :class="{'sp-icon-check': isChecked, 'is--indeterminate': indeterminate}"
       ></span>
-    </span><!--
- --><span v-if="$slots.default || label"><!--
-  --><template v-if="!$slots.default">{{ label }}</template>
+    </span>
+    <span v-if="$slots.default || label" class="sp-checkbox__text">
+      <template v-if="!$slots.default">{{ label }}</template>
       <slot></slot>
     </span>
   </label>
@@ -201,7 +201,7 @@ export default {
   cursor: pointer;
 
   &__wrap {
-    font-size: 14px;
+    font-size: 0;
     height: 20px;
     line-height: 20px;
     margin-right: 40px;
@@ -232,6 +232,7 @@ export default {
     display: block;
     width: 12px;
     height: 12px;
+    font-size: 14px;
     background-color: $checkbox-background;
     border: 1px solid $checkbox-border-color;
     border-radius: 2px;
@@ -253,6 +254,9 @@ export default {
     &:hover {
       border-color: $color-primary;
     }
+  }
+  &__text {
+    font-size: 14px;
   }
 
   &__input:focus + span {
