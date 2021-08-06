@@ -132,6 +132,11 @@ export default {
               title: 'Form 表单',
               link: '/form',
               index: '4-4-8'
+            },
+            {
+              title: 'PasswordInput 密码输入',
+              link: '/password-input',
+              index: '4-4-9'
             }
           ]
         },
