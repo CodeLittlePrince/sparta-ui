@@ -225,6 +225,9 @@ checkbox 不可用。
     watch: {
       checked1(val) {
         console.log('watch checked1: ', val)
+      },
+      checkedCities2(val){
+        console.log('可选项目数量的限制', val)
       }
     },
     methods: {
@@ -238,10 +241,12 @@ checkbox 不可用。
         console.log('checkList2: ', vals)
       },
       handleCheckAllChange(val) {
+        console.log('checkAll', val)
         this.checkedCities = val ? ['上海', '北京', '广州', '深圳'] : []
         this.isIndeterminate = false
       },
       handleCheckedCitiesChange(value) {
+        console.log('选择城市', value)
         let checkedCount = value.length;
         this.checkAll = checkedCount === this.cities.length
         this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;

@@ -1,17 +1,17 @@
 <template>
-  <label class="sp-checkbox-wrap">
+  <label class="sp-checkbox__wrap">
     <span
       class="sp-checkbox"
       :class="[
-        { 'is-disabled': isDisabled },
-        { 'is-checked': isChecked }
+        { 'is--disabled': isDisabled },
+        { 'is--checked': isChecked }
       ]"
     >
       <input
         v-if="trueLabel || falseLabel"
         v-model="model"
         type="checkbox"
-        class="sp-checkbox-input"
+        class="sp-checkbox__input"
         :true-value="trueLabel"
         :false-value="falseLabel"
         :disabled="isDisabled"
@@ -19,25 +19,22 @@
         @change="handleChange"
       />
       <input
+        v-else
         v-model="model"
         type="checkbox"
-        class="sp-checkbox-input"
+        class="sp-checkbox__input"
         :disabled="isDisabled"
         :value="label"
         @change="handleChange"
       />
       <span
-        class="sp-checkbox-inner"
-        :class="{
-          'is-disabled': isDisabled,
-          'is-checked': isChecked,
-          'is-indeterminate': indeterminate,
-        }"
-      />
+        class="sp-checkbox__icon iconfont"
+        :class="{'sp-icon-check': isChecked, 'is--indeterminate': indeterminate}"
+      ></span>
     </span>
-    <span v-if="$slots.default || label">
-      <slot></slot>
+    <span v-if="$slots.default || label" class="sp-checkbox__text">
       <template v-if="!$slots.default">{{ label }}</template>
+      <slot></slot>
     </span>
   </label>
 </template>
@@ -58,7 +55,7 @@ export default {
       default: ''
     }
   },
-  
+
   props: {
     value: {},
     label: {},
@@ -89,14 +86,14 @@ export default {
           this.isLimitExceeded = false;
           (
             this._checkboxGroup.min !== undefined &&
-              val.length < this._checkboxGroup.min &&
-              (this.isLimitExceeded = true)
+            val.length < this._checkboxGroup.min &&
+            (this.isLimitExceeded = true)
           );
 
           (
             this._checkboxGroup.max !== undefined &&
-              val.length > this._checkboxGroup.max &&
-              (this.isLimitExceeded = true)
+            val.length > this._checkboxGroup.max &&
+            (this.isLimitExceeded = true)
           )
 
           this.isLimitExceeded === false &&
@@ -153,12 +150,12 @@ export default {
   mounted() {
     this.checked && this.addToStore()
   },
-  
+
   methods: {
     addToStore() {
       if (
         Array.isArray(this.model) &&
-          this.model.indexOf(this.label) === -1
+        this.model.indexOf(this.label) === -1
       ) {
         this.model.push(this.label)
       } else {
@@ -191,63 +188,61 @@ export default {
 .sp-checkbox {
   position: relative;
   box-sizing: border-box;
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   margin: 0;
   padding: 0;
   list-style: none;
-  top: -0.09em;
   display: inline-block;
-  line-height: 1;
+  vertical-align: middle;
+  line-height: 20px;
   white-space: nowrap;
   outline: none;
   cursor: pointer;
 
-  &-wrap {
-    font-size: 14px;
+  &__wrap {
+    font-size: 0;
+    height: 20px;
+    line-height: 20px;
+    margin-right: 40px;
+    display: inline-block;
+    &:last-child {
+      margin-right: 0;
+    }
   }
 
   & + span {
-    padding-right: 8px;
-    padding-left: 8px;
+    font-size: 14px;
+    padding-left: 6px;
     cursor: pointer;
+    vertical-align: middle;
+    display: inline-block;
   }
 
-  &-input {
+  &__input {
     opacity: 0;
+    width: 14px;
+    height: 14px;
   }
 
-  &-inner {
+  &__icon {
     position: absolute;
     top: 0;
     left: 0;
     display: block;
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
+    font-size: 14px;
     background-color: $checkbox-background;
     border: 1px solid $checkbox-border-color;
     border-radius: 2px;
     transition: all 0.3s;
 
-    &::after {
+    &.is--indeterminate::after {
       content: "";
-      position: absolute;
-      top: 18%;
-      left: 54%;
-      display: inline-block;
+      width: 6px;
       height: 6px;
-      width: 9px;
-      border-left: 2px solid $checkbox-checkmark-color;
-      border-bottom: 2px solid $checkbox-checkmark-color;
-      box-sizing: border-box;
-      transform: rotate(-45deg) scale(1) translate(-50%, -50%);
-      transition: $transition-all;
-      opacity: 0;
-    }
-
-    &.is-indeterminate::after {
-      width: 8px;
-      height: 8px;
+      position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -260,31 +255,37 @@ export default {
       border-color: $color-primary;
     }
   }
+  &__text {
+    font-size: 14px;
+  }
 
-  &-input:focus + span {
+  &__input:focus + span {
     border-color: $color-primary;
   }
 
-  &.is-checked {
-    .sp-checkbox-inner {
+  &.is--checked {
+    .sp-checkbox__icon {
+      color: $checkbox-checkmark-color;
+      font-size: 12px;
       background-color: $color-primary;
       border-color: $color-primary;
-      &::after {
-        opacity: 1;
-      }
     }
   }
 
-  &.is-disabled {
+  &.is--disabled {
     cursor: not-allowed;
-    .sp-checkbox-inner {
+    .sp-checkbox__icon {
       background-color: $checkbox-background-disabled;
       border-color: $checkbox-border-color;
-      &::after {
-        border-color: $checkbox-checkmark-color-disabled;
+    }
+    &.is--checked {
+      .sp-checkbox__icon {
+        color: $checkbox-checkmark-color-disabled;
+        border-color: $checkbox-background-disabled;
       }
     }
     & + span {
+      color: $checkbox-font-color-disabled;
       cursor: not-allowed;
     }
   }
