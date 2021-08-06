@@ -5,6 +5,7 @@
       inputSize ? 'sp-input--' + inputSize : '',
       {
         'is--disabled': inputDisabled,
+        'is--readonly': readonly,
         'sp-input-group': $slots.prepend || $slots.append,
         'sp-input-group--append': $slots.append,
         'sp-input-group--prepend': $slots.prepend,
@@ -434,15 +435,30 @@ export default {
     }
   }
 
-  .sp-textarea.is--disabled {
-    .sp-textarea__inner {
-      background-color: $input-background-disabled;
-      border-color: #e4e7ed;
-      color: $color-text-placeholder;
-      cursor: not-allowed;
-
-      &::placeholder {
+  .sp-textarea {
+    &.is--disabled {
+      .sp-textarea__inner {
+        background-color: $input-background-disabled;
+        border-color: $border-color-base;
         color: $color-text-placeholder;
+        cursor: not-allowed;
+
+        &::placeholder {
+          color: $color-text-placeholder;
+        }
+      }
+    }
+
+    &.is--readonly {
+      .sp-textarea__inner {
+        background-color: $input-background-readonly;
+        color: $color-text-regular;
+
+        &:hover,
+        &:focus {
+          border: 1px solid $border-color-base;
+          box-shadow: none;
+        }
       }
     }
   }
@@ -559,7 +575,7 @@ export default {
   &.is--disabled {
     .sp-input__inner {
       background-color: $input-background-disabled;
-      border-color: #e4e7ed;
+      border-color: $border-color-base;
       color: $color-text-placeholder;
       cursor: not-allowed;
 
@@ -570,6 +586,19 @@ export default {
 
     .sp-input__icon {
       cursor: not-allowed;
+    }
+  }
+
+  &.is--readonly {
+    .sp-input__inner {
+      background-color: $input-background-readonly;
+      color: $color-text-regular;
+
+      &:hover,
+      &:focus {
+        border: 1px solid $border-color-base;
+        box-shadow: none;
+      }
     }
   }
 
