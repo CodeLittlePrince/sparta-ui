@@ -1,7 +1,7 @@
 <template>
   <div
     class="sp-select"
-    :class="{ isFocus, cursorPoiner, 'is--disabled': disabled, 'is--readonly': readonly }"
+    :class="{ 'isFocus' : isFocus && !restClass, 'cursorPoiner' : cursorPoiner && !restClass, 'is--disabled': disabled, 'is--readonly': readonly }"
     :style="`width: ${width}px;`"
     @click="handleSelfClick"
   >
@@ -32,6 +32,13 @@
         </div>
       </template>
       <!-- 非多选情况-->
+      <!-- 前置元素 -->
+      <div
+        v-if="$slots.prefix"
+        class="sp-select-prefix"
+      >
+        <slot name="prefix"></slot>
+      </div>
       <p
         v-show="inputText === ''"
         class="sp-select-input-placeholder"
@@ -39,11 +46,14 @@
       >
         {{ placeholder }}
       </p>
+      <div v-if="$slots.center" class="sp-select-center">
+        <slot name="center"></slot>
+      </div>
       <input
         ref="selectInput"
         v-model="inputText"
         class="sp-select-input"
-        :style="{ height: selectInputBoxHeight }"
+        :style="{ height: !$slots.center ? selectInputBoxHeight : 0}"
         type="text"
         :readonly="_readonly"
         :disabled="disabled"
@@ -165,6 +175,10 @@ export default {
     validateEvent: {
       type: Boolean,
       default: true
+    },
+    restClass: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -534,12 +548,26 @@ export default {
     cursor: not-allowed;
   }
   &.is--readonly, &.is--readonly &-input-box input {
-    background-color: $select-background-disabled;
+    background-color: $select-background-readonly;
     color: $color-text-regular;
   }
   &.is--disabled &-input-box, &.is--readonly &-input-box {
     &:hover {
       border-color: $select-input-border-color;
+    }
+  }
+
+  &-prefix {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 41px;
+    height: $select-height - 2px;
+    line-height: $select-height - 2px;
+    text-align: center;
+    user-select: none;
+    i {
+      font-size: 12px;
     }
   }
 
@@ -559,18 +587,9 @@ export default {
     overflow: hidden;
 
     .sp-select-input {
-      width: 100%;
-      -webkit-appearance: none;
-      outline: none;
-      border: none;
-      height: $select-height - 2;
-      line-height: $select-height - 2;
-      padding: 0 30px 0 10px;
-      box-sizing: border-box;
-      border-radius: 4px;
-      color: inherit;
-      font-size: inherit;
-
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
       &-placeholder {
         position: absolute;
         left: 0;
@@ -582,6 +601,20 @@ export default {
         line-height: $select-height - 2;
         color: $color-text-placeholder;
       }
+    }
+
+    .sp-select-input, .sp-select-center {
+      width: 100%;
+      -webkit-appearance: none;
+      outline: none;
+      border: none;
+      height: $select-height - 2;
+      line-height: $select-height - 2;
+      padding: 0 30px 0 10px;
+      box-sizing: border-box;
+      border-radius: 4px;
+      color: inherit;
+      font-size: inherit;
     }
 
     &:hover {
@@ -617,6 +650,10 @@ export default {
 
   &.isFocus &-input-box {
     border-color: $select-input-border-color-focus;
+  }
+
+  &-prefix ~ &-input, &-prefix ~ &-center {
+    padding: 0 30px 0 41px;
   }
 
   &-suffix {
