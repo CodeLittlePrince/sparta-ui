@@ -389,11 +389,11 @@ export default {
     }
 
     .sp-select {
-      &-input-box {
+      &__input-box {
         border-color: $color-danger;
       }
 
-      &.isFocus .sp-select-input-box {
+      &.isFocus .sp-select__input-box {
         border-color: $color-danger;
         box-shadow: $input-box-shadow-focus-error;
       }

@@ -44,7 +44,7 @@ export default {
   },
 
   mounted() {
-    this.referenceElm = this.$parent.$refs.selectInput
+    this.referenceElm = this.$parent.$refs['sp-select-input-box']
     this.popperElm = this.$el
     // 根据父元素设置宽度
     // 监听select的事件（那边会广播下发）
