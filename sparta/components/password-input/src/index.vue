@@ -19,9 +19,9 @@
       ref="input"
       v-model="code"
       type="text"
-      maxlength="6"
+      :maxlength="codeLength"
       class="sp-password-input__input"
-      autocomplete="off"
+      autocomplete="new-password"
       @focus="handleFocus"
       @blur="handleBlur"
     >
@@ -101,7 +101,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~sparta/common/scss/variable";
+@import "sparta/common/scss/variable";
+@import "sparta/common/scss/mixin";
 .sp-password-input {
   position: relative;
   user-select: none;
@@ -109,10 +110,9 @@ export default {
   height: $item-height;
 
   &__security {
-    display: flex;
+    @include clearfix();
     width: 100%;
     cursor: pointer;
-    justify-content: space-between;
   }
 
   &__item {
@@ -125,22 +125,33 @@ export default {
     font-size: 18px;
     text-align: center;
     border-radius: $border-radius-base;
+    float: left;
+    margin-right: 4px;
+    transition: $transition-all;
+  }
+
+  &__item:last-child {
+    margin-right: 0;
   }
 
   &__item.is__focus {
     border-color: $color-primary;
-    transition-delay: 0.3ms;
     box-shadow: 0 0 0 1px rgba(25, 119, 234, 0.2);
   }
 
   &__input {
     opacity: 0;
+    font-size: 1;
+    text-indent: -9999px;
+    background: white;
     position: absolute;
-    display: inline-block;
+    border: none;
+    outline: none;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+    height: $item-height;
     width: $password-input-width;
   }
 
