@@ -19,6 +19,17 @@
       :style="labelStyle"
     >
       <slot name="label">{{ label }}</slot>
+      <sp-popup-tip
+        v-if="$slots.labelTip"
+        class="sp-form-item__label__tip"
+        :width="labelTipWidth" color="#747d8c"
+        has-border
+      >
+        <i class="sp-icon-ques" />
+        <template slot="popup">
+          <slot name="labelTip"></slot>
+        </template>
+      </sp-popup-tip>
     </label>
     <div
       class="sp-form-item__content"
@@ -80,6 +91,10 @@ export default {
     showMessage: {
       type: Boolean,
       default: true
+    },
+    labelTipWidth: {
+      type: [String, Number],
+      default: '230'
     }
   },
   data() {
@@ -313,6 +328,7 @@ export default {
   }
 
   &__label {
+    position: relative;
     text-align: right;
     vertical-align: middle;
     float: left;
@@ -325,6 +341,20 @@ export default {
     &.is--two-line {
       line-height: 1.2;
       padding-top: 4px;
+    }
+
+    &__tip {
+      position: absolute;
+
+      .sp-icon-ques {
+        margin-left: 2px;
+        color: $color-text-tip;
+        font-size: 13px;
+      }
+
+      .sp-popup-tip__modal {
+        top: 32px;
+      }
     }
   }
 

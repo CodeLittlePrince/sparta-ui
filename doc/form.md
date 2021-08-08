@@ -16,6 +16,7 @@
     <sp-form-item
       prop="name"
       label="姓名"
+      labelTipWidth="150px"
       :rules="[
         { required: true, message: '姓名不能为空'}
       ]"
@@ -25,6 +26,7 @@
         placeholder="请输入"
         autocomplete="off"
       ></sp-input>
+      <div slot="labelTip">靓仔，有什么疑问吗？</div>
       <div slot="tip">输入你的名字吧，靓仔!</div>
     </sp-form-item>
      <!-- 姓名 -->
@@ -417,6 +419,7 @@
 | prop    | 表单域 model 字段，在使用 validate、resetFields 方法的情况下，该属性是必填的 | string    | 传入 Form 组件的 `model` 中的字段 | — |
 | label | 标签文本 | string | — | — |
 | label-width | 表单域标签的的宽度，例如 '50px' | string |       —       | — |
+| label-tip-width | 标签文本悬浮提示的宽度 | string/number | — | 230 |
 | required | 是否必填，如不设置，则会根据校验规则自动生成 | boolean | — | false |
 | rules    | 表单验证规则 | object | — | — |
 | error    | 表单域验证错误信息, 设置该值会使表单验证状态变为`error`，并显示该错误信息 | string | — | — |
@@ -427,6 +430,7 @@
 |------|--------|
 | — | Form Item 的内容 |
 | label | 标签文本的内容 |
+| labelTip | 标签文本后的悬浮提示内容 |
 | tip | 提示文本的内容 |
 
 <script>

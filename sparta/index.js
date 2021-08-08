@@ -39,6 +39,7 @@ import Modal from './components/modal'
 import Toast from './components/toast'
 import confrim from './components/confirm'
 import PasswordInput from './components/password-input'
+import PopupTip from './components/popup-tip'
 
 const components = [
   Row,
@@ -77,7 +78,8 @@ const components = [
   TabPane,
   Pagination,
   Modal,
-  PasswordInput
+  PasswordInput,
+  PopupTip,
 ]
 
 let Sparta = {}
@@ -138,5 +140,6 @@ export {
   TabPane,
   Pagination,
   Modal,
-  PasswordInput
+  PasswordInput,
+  PopupTip,
 }
