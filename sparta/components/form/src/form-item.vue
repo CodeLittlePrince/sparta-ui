@@ -372,9 +372,9 @@ export default {
 
     & .sp-password-input__item {
       border-color: $color-danger;
-      &.is__focus {
-        box-shadow: $input-box-shadow-focus-error;
-      }
+    }
+    & .sp-password-input__item.is--focus {
+      box-shadow: $input-box-shadow-focus-error;
     }
 
     & .sp-input-group__tip,
