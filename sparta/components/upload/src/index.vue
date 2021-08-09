@@ -615,6 +615,7 @@ export default {
   }
 
   &-file {
+    line-height: 1;
 
     &__upload-area {
       @include clearfix();
@@ -778,9 +779,11 @@ export default {
         position: relative;
         height: 100%;
         overflow: hidden;
+        line-height: 1;
 
         > img {
           width: 100%;
+          height: 100%;
         }
 
         &::before {

@@ -36,3 +36,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.sp-checkbox__group {
+  font-size: 0;
+}
+</style>

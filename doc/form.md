@@ -9,7 +9,7 @@
   <sp-form
     :model="validateForm1"
     ref="validateForm1"
-    label-width="130px"
+    label-width="150px"
     class="sp-form-demo"
   >
     <!-- 姓名 -->
@@ -102,6 +102,20 @@
         >{{city}}</sp-checkbox>
       </sp-checkbox-group>
     </sp-form-item>
+    <!-- 性别 -->
+    <sp-form-item
+      label="最喜欢的水果"
+      prop="favoriteFruit"
+      :rules="[
+        { required: true, message: '性别不能为空'}
+      ]"
+    >
+      <sp-radio-group v-model="validateForm1.favoriteFruit">
+        <sp-radio label="apple">苹果</sp-radio>
+        <sp-radio label="banana">香蕉</sp-radio>
+        <sp-radio label="pear">梨</sp-radio>
+      </sp-radio-group>
+    </sp-form-item>
     <!-- 靓照 -->
     <sp-form-item
       label="靓照"
@@ -114,10 +128,31 @@
         :files="validateForm1.picture"
         action="/api/upload"
         type="picture"
+        example-image="https://i.epay.126.net/a/ge/static/img/ex_supplier.5f209565.png"
+        example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
         :processResult="processPictureResult"
         @change="handlePictureChange"
         :limit="1"
-      ><div slot="desc">上传文件说明，可多行</div></sp-upload>
+      ></sp-upload>
+    </sp-form-item>
+    <!-- 多文件上传 -->
+    <sp-form-item
+      label="认证文件"
+      prop="files"
+      :rules="[
+        { required: true, message: '认证文件不能为空'}
+      ]"
+    >
+      <sp-upload
+        action="/api/upload"
+        example-image="https://i.epay.126.net/a/ge/static/img/ex_supplier.5f209565.png"
+        example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
+        :processResult="processFilesResult"
+        @change="handleFilesChange"
+        multiple
+      >
+        多文件上传<div slot="desc">上传文件说明，可多行</div>
+      </sp-upload>
     </sp-form-item>
     <!-- 按钮 -->
     <sp-form-item>
@@ -434,7 +469,9 @@
           birth: '',
           favorite: '',
           cities: [],
-          picture: []
+          favoriteFruit: '',
+          picture: [],
+          files: []
         },
         favouriteList: [
           { label: '唱歌', value: 'sing' },
@@ -499,7 +536,16 @@
       handleReset1() {
         this.resetForm('validateForm1')
         this.validateForm1.picture = []
-      }
+      },
+      handleFilesChange(list) {
+        this.validateForm1.files = list
+      },
+      processFilesResult(item) {
+        return item.path
+      },
+      onExceed() {
+        this.$sparta.error('最多上传3张图片')
+      },
     }
   }
 </script>
