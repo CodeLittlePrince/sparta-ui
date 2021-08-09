@@ -258,6 +258,7 @@ export default {
   }
   &__text {
     font-size: 14px;
+    color: $color-text-regular;
   }
 
   &__input:focus + span {

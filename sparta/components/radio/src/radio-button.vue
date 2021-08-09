@@ -95,6 +95,7 @@ export default {
     display: inline-block;
     vertical-align: middle;
     font-size: $radio-font-size;
+    color: $color-text-regular;
   }
 
   &__wrap {
@@ -130,10 +131,10 @@ export default {
   }
 
   &__wrap.is--checked {
-    color: $color-primary;
     border-color: $color-primary;
     background-color: $radio-button-background-color-active;
     .sp-radio-button__text {
+      color: $color-primary;
       font-weight: 600;
     }
   }
@@ -142,7 +143,9 @@ export default {
     border-color: $radio-button-border-color-disabled;
     background-color: #fff;
     cursor: not-allowed;
-    color: $radio-color-disabled;
+    .sp-radio-button__text {
+      color: $radio-color-disabled;
+    }
   }
 
   &__wrap.is--text {
@@ -154,18 +157,18 @@ export default {
       background-color: $radio-button-background-color-active;
     }
     &.is--checked, &.is--checked:hover {
-      color: $color-primary;
       border-color: $radio-button-background-color-active;
       background-color: $radio-button-background-color-active;
       .sp-radio-button__text {
+        color: $color-primary;
         font-weight: 600;
       }
     }
     &.is--disabled:hover {
       border-color: transparent;
       background-color: #fff;
-      color: $radio-color-disabled;
       .sp-radio-button__text {
+        color: $radio-color-disabled;
         font-weight: normal;
       }
     }

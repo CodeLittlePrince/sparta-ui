@@ -99,6 +99,7 @@ export default {
     line-height: 20px;
     font-size: $radio-font-size;
     margin-left: 6px;
+    color: $color-text-regular;
   }
 
   &__wrap {
