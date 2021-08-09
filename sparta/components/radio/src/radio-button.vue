@@ -102,7 +102,7 @@ export default {
     cursor: pointer;
     color: $radio-color;
     margin-right: 10px;
-    line-height: 36px;
+    line-height: 34px;
     height: 36px;
     min-width: 78px;
     padding: 0 10px;
