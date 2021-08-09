@@ -101,6 +101,7 @@
           :key="city"
         >{{city}}</sp-checkbox>
       </sp-checkbox-group>
+      <div slot="tip">最多选两个</div>
     </sp-form-item>
     <!-- 性别 -->
     <sp-form-item
