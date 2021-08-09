@@ -762,7 +762,6 @@ export default {
     .sp-select {
       display: inline-block;
       margin: -6px -12px;
-      top: 5px;
 
       .sp-select-input {
         border-top-right-radius: 0;
@@ -776,8 +775,6 @@ export default {
       border-color: transparent;
       background-color: transparent;
       color: inherit;
-      border-top: 0;
-      border-bottom: 0;
     }
 
     .sp-button,

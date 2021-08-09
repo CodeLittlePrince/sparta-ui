@@ -7,7 +7,7 @@
   >
     <div
       ref="sp-select-input-box"
-      class="sp-select-input-box"
+      class="sp-select__input-box"
       @mouseover="isHover = true"
       @mouseout="isHover = false"
     >
@@ -32,17 +32,27 @@
         </div>
       </template>
       <!-- 非多选情况-->
+      <!-- 前置元素 -->
+      <div
+        v-if="$slots.prepend"
+        class="sp-select__prepend"
+      >
+        <slot name="prepend"></slot>
+      </div>
       <p
         v-show="inputText === ''"
-        class="sp-select-input-placeholder"
+        class="sp-select__input-placeholder"
         @click="focusSelectInput"
       >
         {{ placeholder }}
       </p>
+      <div v-if="$slots.center" class="sp-select__center" @click="handleFocusSelectInput">
+        <slot name="center"></slot>
+      </div>
       <input
         ref="selectInput"
         v-model="inputText"
-        class="sp-select-input"
+        class="sp-select__input"
         :style="{ height: selectInputBoxHeight }"
         type="text"
         :readonly="_readonly"
@@ -60,7 +70,7 @@
       <!-- 后缀icon -->
       <div
         ref="sp-select-suffix"
-        class="sp-select-suffix"
+        class="sp-select__suffix"
         @click="handleSuffixClick($event)"
       >
         <i
@@ -452,7 +462,11 @@ export default {
      * 聚焦到输入框
      */
     focusSelectInput() {
-      this.$refs.selectInput.focus()
+      if(this.$slots.center) {
+        this.handleFocusSelectInput()
+      } else {
+        this.$refs.selectInput.focus()
+      }
     },
     /**
      * 通过键盘的上下键(up/down)控制hover的位置
@@ -521,29 +535,47 @@ export default {
 @import "~sparta/common/scss/variable";
 
 .sp-select {
-  font-size: 14px;
-  line-height: 0;
+  font-size: 0;
   position: relative;
   display: block;
   margin: 0;
   padding: 0;
 
-  &.is--disabled, &.is--disabled &-input-box input {
-    background-color: $select-background-disabled;
-    color: $select-input-border-color-disabled;
+  &.is--disabled, &.is--disabled &__input-box {
     cursor: not-allowed;
+    .sp-select__prepend, input, .sp-select__center {
+      background-color: $select-background-disabled;
+      color: $select-input-border-color-disabled;
+    }
   }
-  &.is--readonly, &.is--readonly &-input-box input {
-    background-color: $select-background-disabled;
-    color: $color-text-regular;
+  &.is--readonly, &.is--readonly &__input-box {
+    .sp-select__prepend, input, .sp-select__center {
+      background-color: $select-background-readonly;
+      color: $color-text-regular;
+    }
   }
-  &.is--disabled &-input-box, &.is--readonly &-input-box {
+  &.is--disabled &__input-box, &.is--readonly &__input-box {
     &:hover {
       border-color: $select-input-border-color;
     }
   }
 
-  &-input-box {
+  &__prepend {
+    height: $select-height - 2px;
+    line-height: $select-height - 2px;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    padding-left: 10px;
+    i {
+      font-size: 14px;
+      display: inline-block;
+    }
+  }
+
+  &__input-box {
+    font-size: 14px;
     position: relative;
     width: 100%;
     min-height: $select-height;
@@ -552,36 +584,42 @@ export default {
     border-radius: 4px;
     border: 1px solid $select-input-border-color;
     box-sizing: border-box;
-    display: inline-block;
+    display: inline-table;
     color: $select-input-font-color;
-    font-size: inherit;
     transition: $transition-border-base;
     overflow: hidden;
 
-    .sp-select-input {
-      width: 100%;
-      -webkit-appearance: none;
-      outline: none;
-      border: none;
-      height: $select-height - 2;
-      line-height: $select-height - 2;
-      padding: 0 30px 0 10px;
-      box-sizing: border-box;
-      border-radius: 4px;
-      color: inherit;
-      font-size: inherit;
-
+    .sp-select__input {
       &-placeholder {
         position: absolute;
         left: 0;
         top: 0;
         right: 0;
         bottom: 0;
-        padding: 0 30px 0 10px;
+        padding: 0 45px 0 10px;
         margin: 0;
         line-height: $select-height - 2;
         color: $color-text-placeholder;
       }
+    }
+
+    .sp-select__input, .sp-select__center {
+      width: 100%;
+      vertical-align: middle;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      display: table-cell;
+      -webkit-appearance: none;
+      outline: none;
+      border: none;
+      height: $select-height - 2;
+      line-height: $select-height - 2;
+      padding: 0 45px 0 10px;
+      box-sizing: border-box;
+      border-radius: 4px;
+      color: inherit;
+      font-size: inherit;
     }
 
     &:hover {
@@ -615,11 +653,15 @@ export default {
     }
   }
 
-  &.isFocus &-input-box {
+  &__center ~ &__input {
+    display: none;
+  }
+
+  &.isFocus &__input-box {
     border-color: $select-input-border-color-focus;
   }
 
-  &-suffix {
+  &__suffix {
     position: absolute;
     top: 0;
     right: 0;
@@ -630,21 +672,19 @@ export default {
     user-select: none;
     border-left: 1px solid $border-color-base;
     background-color: $select-suffix-background-color;
+    color: $color-text-tip;
 
     i {
       font-size: 12px;
     }
   }
 
-  &.isFocus &-suffix {
+  &.isFocus &__suffix {
     background-color: $select-suffix-background-color-focus;
-
-    i {
-      color: #fff;
-    }
+    color: #fff;
   }
 
-  .is--disabled &-suffix {
+  .is--disabled &__suffix {
     color: #c7cbd1;
   }
 

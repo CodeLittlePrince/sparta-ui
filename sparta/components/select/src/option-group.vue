@@ -27,7 +27,7 @@ export default {
   padding: 0;
   margin: 0;
   &-title {
-    padding-left: 20px;
+    padding-left: 10px;
     font-size: 12px;
     color: #909399;
     line-height: 30px;
