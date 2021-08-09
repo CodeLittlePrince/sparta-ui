@@ -28,7 +28,7 @@
         @change="handleChange"
       />
       <span
-        class="sp-checkbox__icon iconfont"
+        class="sp-checkbox__icon"
         :class="{'sp-icon-check': isChecked, 'is--indeterminate': indeterminate}"
       ></span>
     </span>
@@ -236,6 +236,7 @@ export default {
     background-color: $checkbox-background;
     border: 1px solid $checkbox-border-color;
     border-radius: 2px;
+    color: $color-primary;
     transition: all 0.3s;
 
     &.is--indeterminate::after {
