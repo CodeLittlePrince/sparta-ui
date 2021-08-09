@@ -1,13 +1,13 @@
 <template>
   <label
-    class="sp-radio__wrap"
+    class="sp-radio-button__wrap"
     :class="[
       { 'is--disabled': disabled },
       { 'is--checked': checked },
+      { 'is--text': text },
     ]"
   >
-    <!-- 小圆圈 -->
-    <span class="sp-radio">
+    <span class="sp-radio-button">
       <input
         v-model="model"
         type="radio"
@@ -15,9 +15,8 @@
         :value="label"
         @change="handleChange"
       >
-      <span class="sp-radio__inner" />
     </span>
-    <span class="sp-radio__text"><slot></slot></span>
+    <span class="sp-radio-button__text"><slot></slot></span>
   </label>
 </template>
 
@@ -25,7 +24,7 @@
 import Emitter from 'sparta/common/js/mixins/emitter'
 
 export default {
-  name: 'SpRadio',
+  name: 'SpRadioButton',
   mixins: [Emitter],
   props: {
     value: {},
@@ -34,6 +33,10 @@ export default {
       deafaul: ''
     },
     disabled: {
+      type: Boolean,
+      default: false
+    },
+    text: {
       type: Boolean,
       default: false
     }
@@ -82,38 +85,44 @@ export default {
 <style lang="scss">
 @import "~sparta/common/scss/variable";
 
-.sp-radio {
-  position: relative;
-  display: inline-block;
-  vertical-align: middle;
-  width: 16px;
-  height: 16px;
-  line-height: 20px;
-  white-space: nowrap;
+.sp-radio-button {
+  position: absolute;
+  z-index: -1;
   outline: none;
-  font-size: $radio-font-size;
+  line-height: 1;
 
   &__text {
     display: inline-block;
     vertical-align: middle;
-    line-height: 20px;
     font-size: $radio-font-size;
-    margin-left: 6px;
     color: $color-text-regular;
   }
 
   &__wrap {
     position: relative;
     cursor: pointer;
-    font-size: 0;
     color: $radio-color;
-    margin-right: 20px;
-    line-height: 20px;
-    height: 20px;
+    margin-right: 10px;
+    line-height: 34px;
+    height: 36px;
+    min-width: 78px;
+    padding: 0 10px;
+    border-radius: 18px;
     display: inline-block;
     vertical-align: middle;
+    box-sizing: border-box;
+    border: solid 1px $radio-border-color;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 0;
+    transition: $transition-all;
+
     &:last-child {
       margin-right: 0;
+    }
+
+    &:hover {
+      border-color: $color-primary;
     }
   }
 
@@ -121,61 +130,47 @@ export default {
     opacity: 0;
   }
 
-  &__inner {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: inline-block;
-    width: 100%;
-    height: 100%;
-    background-color: $radio-background-color;
-    border: 1px solid $radio-border-color;
-    border-radius: 50%;
-    vertical-align: middle;
-    transition: $transition-all;
-    box-sizing: border-box;
-    font-size: $radio-font-size;
-
-    &::after {
-      content: '';
-      position: absolute;
-      top: 4px;
-      left: 4px;
-      width: 6px;
-      height: 6px;
-      background-color: #fff;
-      border-top: 0;
-      border-left: 0;
-      border-radius: 50%;
-      transform: scale(0);
-      opacity: 0;
-      transition: $transition-all;
-    }
-  }
-
-  &__wrap.is--checked &__inner {
+  &__wrap.is--checked {
     border-color: $color-primary;
-    background-color: $color-primary;
-
-    &::after {
-      transform: scale(1);
-      opacity: 1;
+    background-color: $radio-button-background-color-active;
+    .sp-radio-button__text {
+      color: $color-primary;
+      font-weight: 600;
     }
-  }
-
-  &__wrap.is--disabled &__inner {
-    border-color: $radio-border-color-disabled;
-    background-color: $radio-background-color-disabled;
   }
 
   &__wrap.is--disabled {
+    border-color: $radio-button-border-color-disabled;
+    background-color: #fff;
     cursor: not-allowed;
-    color: $radio-color-disabled;
+    .sp-radio-button__text {
+      color: $radio-color-disabled;
+    }
   }
 
-  &__wrap.is--disabled.is--checked &__inner {
-    &::after {
-      background: $radio-border-color-disabled;
+  &__wrap.is--text {
+    border-color: transparent;
+    background-color: transparent;
+    &:hover {
+      color: $radio-button-text-hover;
+      border-color: $radio-button-background-color-active;
+      background-color: $radio-button-background-color-active;
+    }
+    &.is--checked, &.is--checked:hover {
+      border-color: $radio-button-background-color-active;
+      background-color: $radio-button-background-color-active;
+      .sp-radio-button__text {
+        color: $color-primary;
+        font-weight: 600;
+      }
+    }
+    &.is--disabled:hover {
+      border-color: transparent;
+      background-color: #fff;
+      .sp-radio-button__text {
+        color: $radio-color-disabled;
+        font-weight: normal;
+      }
     }
   }
 }

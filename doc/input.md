@@ -86,8 +86,25 @@ export default {
 <template>
   <div class="sp-input-demo">
     <sp-input
+      v-model="value2"
       placeholder="请输入内容"
       disabled>
+    </sp-input>
+  </div>
+</template>
+```
+:::
+
+### 只读状态
+
+:::demo 通过 `readonly` 属性设置禁用
+```vue
+<template>
+  <div class="sp-input-demo">
+    <sp-input
+      v-model="value2"
+      placeholder="请输入内容"
+      readonly>
     </sp-input>
   </div>
 </template>

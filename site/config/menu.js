@@ -164,6 +164,11 @@ export default {
               link: '/img-preview',
               index: '4-5-4'
             },
+            {
+              title: 'PopupTip 浮层提示',
+              link: '/popup-tip',
+              index: '4-5-5'
+            },
           ]
         },
         {

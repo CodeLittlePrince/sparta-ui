@@ -15,10 +15,24 @@
       v-if="label || $slots.label"
       :for="labelFor"
       class="sp-form-item__label"
-      :class="{ 'is--two-line': twoLine }"
+      :class="{ 'is--two-line': $slots.labelSecondLine }"
       :style="labelStyle"
     >
       <slot name="label">{{ label }}</slot>
+      <p v-if="$slots.labelSecondLine" class="sp-form-item__label__second-line">
+        <slot name="labelSecondLine"></slot>
+      </p>
+      <sp-popup-tip
+        v-if="$slots.labelTip"
+        class="sp-form-item__label__tip"
+        :width="labelTipWidth" color="#747d8c"
+        has-border
+      >
+        <i class="sp-icon-ques" />
+        <template slot="popup">
+          <slot name="labelTip"></slot>
+        </template>
+      </sp-popup-tip>
     </label>
     <div
       class="sp-form-item__content"
@@ -64,10 +78,6 @@ export default {
   props: {
     label: String,
     labelWidth: String,
-    twoLine: {
-      type: Boolean,
-      dafault: false
-    },
     prop: String,
     required: {
       type: Boolean,
@@ -80,6 +90,10 @@ export default {
     showMessage: {
       type: Boolean,
       default: true
+    },
+    labelTipWidth: {
+      type: [String, Number],
+      default: '230'
     }
   },
   data() {
@@ -313,6 +327,7 @@ export default {
   }
 
   &__label {
+    position: relative;
     text-align: right;
     vertical-align: middle;
     float: left;
@@ -323,8 +338,26 @@ export default {
     box-sizing: border-box;
 
     &.is--two-line {
-      line-height: 1.2;
-      padding-top: 4px;
+      line-height: 20px;
+    }
+
+    &__second-line {
+      font-size: 12px;
+      line-height: 17px;
+    }
+
+    &__tip {
+      position: absolute;
+
+      .sp-icon-ques {
+        margin-left: 2px;
+        color: $color-text-tip;
+        font-size: 13px;
+      }
+
+      .sp-popup-tip__modal {
+        top: 32px;
+      }
     }
   }
 
@@ -398,10 +431,6 @@ export default {
         box-shadow: $input-box-shadow-focus-error;
       }
     }
-  }
-
-  &.is--required &__label.is--two-line::before {
-    display: none;
   }
 
   &--feedback {

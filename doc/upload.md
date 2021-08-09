@@ -142,12 +142,7 @@ export default{
       example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
       :onExceed="onExceed"
       @change="handleChange"
-    >
-      添加图片
-      <template slot="tip">
-        温馨提示：图片最多上传3张
-      </template>
-    </sp-upload>
+    >添加图片</sp-upload>
   </div>
 </template>
 ```
@@ -168,12 +163,7 @@ export default{
       example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
       :onExceed="onExceed1"
       @change="handleChange"
-    >
-      添加图片
-      <template slot="tip">
-        温馨提示：图片最多上传1张
-      </template>
-    </sp-upload>
+    >添加图片</sp-upload>
   </div>
 </template>
 ```

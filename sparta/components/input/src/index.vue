@@ -5,6 +5,7 @@
       inputSize ? 'sp-input--' + inputSize : '',
       {
         'is--disabled': inputDisabled,
+        'is--readonly': readonly,
         'sp-input-group': $slots.prepend || $slots.append,
         'sp-input-group--append': $slots.append,
         'sp-input-group--prepend': $slots.prepend,
@@ -37,6 +38,7 @@
         :tabindex="tabindex"
         class="sp-input__inner"
         v-bind="$attrs"
+        :placeholder="placeholderText"
         :type="type"
         :disabled="inputDisabled"
         :readonly="readonly"
@@ -56,6 +58,14 @@
         @blur="handleBlur"
         @change="handleChange"
       >
+      <!-- 为了万恶的IE -->
+      <p
+        v-show="isIE && currentValue === ''"
+        class="sp-input__placeholder"
+        @click="handleFocusInput"
+      >
+        {{ placeholder }}
+      </p>
       <!-- 前置内容 -->
       <span
         v-if="$slots.prefix || prefixIcon"
@@ -110,32 +120,42 @@
         <slot name="appendSubmit"></slot>
       </div>
     </template>
-    <textarea
-      v-else
-      ref="textarea"
-      :tabindex="tabindex"
-      class="sp-textarea__inner"
-      :value="currentValue"
-      v-bind="$attrs"
-      :disabled="inputDisabled"
-      :readonly="readonly"
-      :autocomplete="autocomplete"
-      :style="textareaStyle"
-      :aria-label="label"
-      :maxlength="maxlength"
-      :minlength="minlength"
-      :max="max"
-      :min="min"
-      :step="step"
-      @compositionstart="handleComposition"
-      @compositionupdate="handleComposition"
-      @compositionend="handleComposition"
-      @input="handleInput"
-      @focus="handleFocus"
-      @blur="handleBlur"
-      @change="handleChange"
-    >
-    </textarea>
+    <template v-else>
+      <textarea
+        ref="textarea"
+        :tabindex="tabindex"
+        class="sp-textarea__inner"
+        :value="currentValue"
+        v-bind="$attrs"
+        :placeholder="placeholderText"
+        :disabled="inputDisabled"
+        :readonly="readonly"
+        :autocomplete="autocomplete"
+        :style="textareaStyle"
+        :aria-label="label"
+        :maxlength="maxlength"
+        :minlength="minlength"
+        :max="max"
+        :min="min"
+        :step="step"
+        @compositionstart="handleComposition"
+        @compositionupdate="handleComposition"
+        @compositionend="handleComposition"
+        @input="handleInput"
+        @focus="handleFocus"
+        @blur="handleBlur"
+        @change="handleChange"
+      >
+      </textarea>
+      <!-- 为了万恶的IE -->
+      <p
+        v-show="isIE && currentValue === ''"
+        class="sp-textarea__placeholder"
+        @click="handleFocusInput"
+      >
+        {{ placeholder }}
+      </p>
+    </template>
   </div>
 </template>
 <script>
@@ -173,6 +193,10 @@ export default {
     type: {
       type: String,
       default: 'text'
+    },
+    placeholder: {
+      type: String,
+      default: ''
     },
     prependType: {
       type: String,
@@ -252,6 +276,13 @@ export default {
         !this.readonly &&
         this.currentValue !== '' &&
         (this.isFocus || this.isHover)
+    },
+    isIE() {
+      return window.ActiveXObject || 'ActiveXObject' in window
+    },
+    placeholderText() {
+      // IE10和IE11上，如果有placeholder，input显示以后IE辣鸡浏览器会自动触发input事件
+      return this.isIE ? '' : this.placeholder
     }
   },
 
@@ -314,6 +345,14 @@ export default {
     handleFocus(event) {
       this.isFocus = true
       this.$emit('focus', event)
+    },
+
+    handleFocusInput() {
+      if (this.type === 'textarea') {
+        this.$refs.textarea.focus()
+      } else {
+        this.$refs.input.focus()
+      }
     },
 
     handleComposition(event) {
@@ -399,6 +438,7 @@ export default {
 @import "~sparta/common/scss/variable";
 
 .sp-textarea {
+  position: relative;
   display: inline-block;
   width: 100%;
   vertical-align: bottom;
@@ -407,8 +447,8 @@ export default {
   .sp-textarea__inner {
     display: block;
     resize: vertical;
-    padding: 5px 10px;
-    line-height: 1.5;
+    padding: 7px 10px;
+    line-height: 20px;
     box-sizing: border-box;
     width: 100%;
     font-size: inherit;
@@ -434,17 +474,46 @@ export default {
     }
   }
 
-  .sp-textarea.is--disabled {
-    .sp-textarea__inner {
-      background-color: $input-background-disabled;
-      border-color: #e4e7ed;
-      color: $color-text-placeholder;
-      cursor: not-allowed;
-
-      &::placeholder {
+  .sp-textarea {
+    &.is--disabled {
+      .sp-textarea__inner {
+        background-color: $input-background-disabled;
+        border-color: $border-color-base;
         color: $color-text-placeholder;
+        cursor: not-allowed;
+
+        &::placeholder {
+          color: $color-text-placeholder;
+        }
       }
     }
+
+    &.is--readonly {
+      .sp-textarea__inner {
+        background-color: $input-background-readonly;
+        color: $color-text-regular;
+
+        &:hover,
+        &:focus {
+          border: 1px solid $border-color-base;
+          box-shadow: none;
+        }
+      }
+    }
+  }
+
+  &__placeholder {
+    position: absolute;
+    top: 7px;
+    bottom: 7px;
+    right: 10px;
+    font-size: inherit;
+    color: $color-text-placeholder;
+    line-height: 1.5;
+    outline: none;
+    padding: 0 10px;
+    user-select: none;
+    overflow: hidden;
   }
 }
 
@@ -559,7 +628,7 @@ export default {
   &.is--disabled {
     .sp-input__inner {
       background-color: $input-background-disabled;
-      border-color: #e4e7ed;
+      border-color: $border-color-base;
       color: $color-text-placeholder;
       cursor: not-allowed;
 
@@ -570,6 +639,19 @@ export default {
 
     .sp-input__icon {
       cursor: not-allowed;
+    }
+  }
+
+  &.is--readonly {
+    .sp-input__inner {
+      background-color: $input-background-readonly;
+      color: $color-text-regular;
+
+      &:hover,
+      &:focus {
+        border: 1px solid $border-color-base;
+        box-shadow: none;
+      }
     }
   }
 
@@ -620,6 +702,26 @@ export default {
     .sp-input__icon {
       line-height: $input-mini-height;
     }
+  }
+
+  &__placeholder {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    font-size: inherit;
+    color: $color-text-placeholder;
+    line-height: $input-height;
+    outline: none;
+    padding: 0 10px;
+    user-select: none;
+  }
+
+  &--prefix &__placeholder {
+    padding-left: 30px;
+  }
+
+  &--suffix &__placeholder {
+    padding-right: 30px;
   }
 }
 

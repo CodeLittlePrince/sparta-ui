@@ -1,6 +1,6 @@
 <template>
   <div
-    class="sp-checkbox-group"
+    class="sp-checkbox__group"
     role="group"
     aria-label="checkbox-group"
   >
@@ -27,9 +27,6 @@ export default {
     disabled: Boolean,
     min: Number,
     max: Number,
-    size: String,
-    fill: String,
-    textColor: String
   },
 
   watch: {
@@ -39,3 +36,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.sp-checkbox__group {
+  font-size: 0;
+}
+</style>
