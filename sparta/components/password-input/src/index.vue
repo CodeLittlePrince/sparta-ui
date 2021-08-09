@@ -1,12 +1,12 @@
 <template>
   <div class="sp-password-input">
-    <ul class="sp-password-input__security">
+    <ul class="sp-password-input__security" @click="handleClick">
       <li
         v-for="(item, index) in codeLength"
         :key="index"
         class="sp-password-input__item"
         :index="index"
-        :class="{ 'is__focus': (isFocus && cursorIndex === index) || codeList[index] }"
+        :class="{ 'is--focus': isFocus && (cursorIndex === index || codeList[index]) }"
       >
         <i :class="{ 'is__animated': isFocus && cursorIndex === index }"></i>
         <i v-if="codeList[index] && type ==='password'" class="sp-password-input__dot"></i>
@@ -73,6 +73,9 @@ export default {
       }
       this.$emit('input', newVal)
       this.dispatch('SpFormItem', 'sp.form.change', [newVal])
+    },
+    value(newVal) {
+      this.setCurrentValue(newVal)
     }
   },
   mounted() {
@@ -82,8 +85,18 @@ export default {
     document.removeEventListener('click', this.handleOtherAreaClick)
   },
   methods: {
+    setCurrentValue(value) {
+      this.code = value
+    },
     handleFocus() {
       this.isFocus = true
+      if(this.isIE9()) {
+        const cursorPos = this.code.length
+        this.$refs.input && ( this.$refs.input.selectionStart = cursorPos )
+      }
+    },
+    isIE9() {
+      return navigator.appVersion.indexOf('MSIE 9.0') > -1
     },
     handleOtherAreaClick(e) {
       if (!this.$el.contains(e.target)) {
@@ -95,6 +108,9 @@ export default {
       if (this.validateEvent) {
         this.dispatch('SpFormItem', 'sp.form.blur', [this.code])
       }
+    },
+    handleClick() {
+      this.$refs.input && this.$refs.input.focus()
     }
   }
 }
@@ -134,13 +150,14 @@ export default {
     margin-right: 0;
   }
 
-  &__item.is__focus {
+  &__item.is--focus {
     border-color: $color-primary;
     box-shadow: 0 0 0 1px rgba(25, 119, 234, 0.2);
   }
 
   &__input {
     opacity: 0;
+    z-index: -1;
     font-size: 1;
     text-indent: -9999px;
     background: white;
@@ -151,8 +168,6 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
-    height: $item-height;
-    width: $password-input-width;
   }
 
   &__dot {
