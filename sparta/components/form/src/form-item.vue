@@ -15,10 +15,13 @@
       v-if="label || $slots.label"
       :for="labelFor"
       class="sp-form-item__label"
-      :class="{ 'is--two-line': twoLine }"
+      :class="{ 'is--two-line': $slots.labelSecondLine }"
       :style="labelStyle"
     >
       <slot name="label">{{ label }}</slot>
+      <p v-if="$slots.labelSecondLine" class="sp-form-item__label__second-line">
+        <slot name="labelSecondLine"></slot>
+      </p>
       <sp-popup-tip
         v-if="$slots.labelTip"
         class="sp-form-item__label__tip"
@@ -75,10 +78,6 @@ export default {
   props: {
     label: String,
     labelWidth: String,
-    twoLine: {
-      type: Boolean,
-      dafault: false
-    },
     prop: String,
     required: {
       type: Boolean,
@@ -339,8 +338,12 @@ export default {
     box-sizing: border-box;
 
     &.is--two-line {
-      line-height: 1.2;
-      padding-top: 4px;
+      line-height: 20px;
+    }
+
+    &__second-line {
+      font-size: 12px;
+      line-height: 17px;
     }
 
     &__tip {
@@ -428,10 +431,6 @@ export default {
         box-shadow: $input-box-shadow-focus-error;
       }
     }
-  }
-
-  &.is--required &__label.is--two-line::before {
-    display: none;
   }
 
   &--feedback {

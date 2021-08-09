@@ -316,44 +316,7 @@
 ```
 :::
 
-### label两行样式
-在`form-item`中指定`two-line`为`true`，然后再`slot`为`label`的template中自定义两行的内容。
-另外，因为自定义元素的特殊性，两行样式时候，仅仅在`rules`指定`require`想显示`*`号是不够的，需要在你自己想要显示`*`的元素加`require`属性。
-
-:::demo 通过`two-line`的添加
-```vue
-<template>
-  <sp-form
-    label-width="150px"
-    class="sp-form-demo"
-  >
-    <!-- 姓名 -->
-    <sp-form-item
-      two-line
-      :rules="[
-        { required: true, message: '银行所在地'}
-      ]"
-    >
-      <template slot="label">
-        <div require>银行所在地</div>
-        <div>Bank Location</div>
-      </template>
-      <sp-input />
-    </sp-form-item>
-    <!-- 年龄 -->
-    <sp-form-item two-line>
-      <template slot="label">
-        <div require>账户类型</div>
-        <div>Account Type</div>
-      </template>
-      <sp-input />
-    </sp-form-item>
-  </sp-form>
-</template>
-```
-:::
-
-### label自定义内容
+### label单行自定义样式
 在上面的 **label两行样式** 中，其实已经可以看到，通过`slot`可以自定义label的内容。
 
 :::demo `slot`为`label`的template中自定义的内容
@@ -366,22 +329,48 @@
     <!-- 姓名 -->
     <sp-form-item>
       <template slot="label">
-        <div>
-          雷火
-          <i class="sp-icon-question"></i>
-        </div>
+        雷火<a href="">牛啊</a>
       </template>
       <sp-input />
     </sp-form-item>
     <!-- 年龄 -->
     <sp-form-item>
       <template slot="label">
-        <div>
-          伏羲
-          <i class="sp-icon-info"></i>
-        </div>
+        伏羲<a href="">牛啊</a>
       </template>
       <sp-input />
+    </sp-form-item>
+  </sp-form>
+</template>
+```
+:::
+
+### label两行自定义样式
+在`slot`为`labelSecondLine`的template中自定义第两行的内容。
+
+:::demo 通过`two-line`的添加
+```vue
+<template>
+  <sp-form
+    label-width="150px"
+    class="sp-form-demo"
+  >
+    <sp-form-item
+      two-line
+      :rules="[
+        { required: true, message: '银行所在地'}
+      ]"
+    >
+      <template slot="label">银行所在地</template>
+      <template slot="labelSecondLine">Bank Location</template>
+      <sp-input placeholder="银行所在地" />
+    </sp-form-item>
+    <sp-form-item two-line>
+      <template slot="label">账户类型</template>
+      <template slot="labelSecondLine">
+        <a href="">Account Type</a>
+      </template>
+      <sp-input placeholder="账户类型" />
     </sp-form-item>
   </sp-form>
 </template>
@@ -420,7 +409,7 @@
 | label | 标签文本 | string | — | — |
 | label-width | 表单域标签的的宽度，例如 '50px' | string |       —       | — |
 | label-tip-width | 标签文本悬浮提示的宽度 | string/number | — | 230 |
-| required | 是否必填，如不设置，则会根据校验规则自动生成 | boolean | — | false |
+| required | 是否必填，如不设置，则会根据校验规则自动生成（暂时，需要特别样式，所以可忽略） | boolean | — | false |
 | rules    | 表单验证规则 | object | — | — |
 | error    | 表单域验证错误信息, 设置该值会使表单验证状态变为`error`，并显示该错误信息 | string | — | — |
 | show-message  | 是否显示校验错误信息 | boolean | — | true |
@@ -430,6 +419,7 @@
 |------|--------|
 | — | Form Item 的内容 |
 | label | 标签文本的内容 |
+| labelSecondLine | 第两行标签文本的内容 |
 | labelTip | 标签文本后的悬浮提示内容 |
 | tip | 提示文本的内容 |
 
@@ -517,7 +507,10 @@
 <style>
 .components--main {
   .sp-form-demo {
-    width: 500px
+    width: 500px;
+    a {
+      color: #1977ea;
+    }
   }
 }
 </style>
