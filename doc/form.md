@@ -406,6 +406,7 @@
       <template slot="labelSecondLine">
         <a href="">Account Type</a>
       </template>
+      <div slot="labelTip">靓仔，有什么疑问吗？</div>
       <sp-input placeholder="账户类型" />
     </sp-form-item>
   </sp-form>

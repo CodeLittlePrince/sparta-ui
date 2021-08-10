@@ -341,6 +341,10 @@ export default {
       line-height: 20px;
     }
 
+    &.is--two-line .sp-popup-tip__modal {
+      top: 24px;
+    }
+
     &__second-line {
       font-size: 12px;
       line-height: 17px;
@@ -348,6 +352,8 @@ export default {
 
     &__tip {
       position: absolute;
+      top: 0;
+      line-height: inherit;
 
       .sp-icon-ques {
         margin-left: 2px;
