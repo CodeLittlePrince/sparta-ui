@@ -367,14 +367,14 @@
     <!-- 姓名 -->
     <sp-form-item>
       <template slot="label">
-        雷火<a href="">牛啊</a>
+        雷火<a style="color: #1977ea" href="">牛啊</a>
       </template>
       <sp-input />
     </sp-form-item>
     <!-- 年龄 -->
     <sp-form-item>
       <template slot="label">
-        伏羲<a href="">牛啊</a>
+        伏羲<a style="color: #1977ea" href="">牛啊</a>
       </template>
       <sp-input />
     </sp-form-item>
@@ -406,7 +406,7 @@
     <sp-form-item two-line>
       <template slot="label">账户类型</template>
       <template slot="labelSecondLine">
-        <a href="">Account Type</a>
+        <a style="color: #1977ea" href="">Account Type</a>
       </template>
       <div slot="labelTip">靓仔，有什么疑问吗？</div>
       <sp-input placeholder="账户类型" />
@@ -558,9 +558,6 @@
 .components--main {
   .sp-form-demo {
     width: 500px;
-    a {
-      color: #1977ea;
-    }
   }
 }
 </style>

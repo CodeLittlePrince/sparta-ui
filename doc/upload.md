@@ -222,7 +222,7 @@ export default{
 |---------- |-------------- |---------- |--------------------------------  |-------- |
 | example-image | 示例图 | string | — | — |
 | example-big-image | 示例图点击后放大的大图 | string | — | — |
-| files | 上传的文件列表, 例如: [{name: 'food.jpg', url: 'https://xxx.cdn.com/xxx.jpg'}] | array | — | [] |
+| files | 上传的文件列表, 例如: [{name: 'food.jpg', url: 'https://xxx.cdn.com/xxx.jpg'}]，注意：files的变量不要用事件change出来的值，因为格式不一样 | array | — | [] |
 | action | 必选参数，上传的地址 | string | — | — |
 | headers | 设置上传的请求头部 | object | — | — |
 | multiple | 是否支持多选文件 | boolean | — | — |
