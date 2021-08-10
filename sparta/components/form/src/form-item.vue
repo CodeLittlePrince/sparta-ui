@@ -25,7 +25,9 @@
       <sp-popup-tip
         v-if="$slots.labelTip"
         class="sp-form-item__label__tip"
-        :width="labelTipWidth" color="#747d8c"
+        :width="labelTipWidth"
+        color="#747d8c"
+        theme="blue"
         has-border
       >
         <i class="sp-icon-ques" />

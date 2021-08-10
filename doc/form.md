@@ -152,7 +152,9 @@
         @change="handleFilesChange"
         multiple
       >
-        多文件上传<div slot="desc">上传文件说明，可多行</div>
+        多文件上传
+        <div slot="desc">上传文件说明，可多行</div>
+        <div slot="tip">其他说明，可能很多字很多字很多字</div>
       </sp-upload>
     </sp-form-item>
     <!-- 按钮 -->
@@ -161,7 +163,7 @@
         type="primary"
         @click="submitForm('validateForm1')"
       >提交</sp-button>
-      <sp-button @click="handleReset1">重置</sp-button>
+      <sp-button @click="handleResetForm1">重置</sp-button>
     </sp-form-item>
   </sp-form>
 </template>
@@ -535,9 +537,9 @@
       processPictureResult(item) {
         return item.path
       },
-      handleReset1() {
+      handleResetForm1() {
         this.resetForm('validateForm1')
-        this.validateForm1.picture = []
+        console.log(this.validateForm1)
       },
       handleFilesChange(list) {
         this.validateForm1.files = list

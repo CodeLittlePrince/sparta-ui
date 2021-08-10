@@ -11,6 +11,10 @@
     >
     <div v-if="$slots.desc" class="sp-upload__desc">
       <slot name="desc"></slot>
+      <!-- tip永远是配合desc使用的 -->
+      <div v-if="$slots.tip" class="sp-upload__tip">
+        <slot name="tip"></slot>
+      </div>
     </div>
     <!-- 上传文件 -->
     <template v-if="type === 'text'">
@@ -462,6 +466,7 @@ export default {
     _getFile(rawFile) {
       let fileList = this.uploadFiles
       let target
+
       fileList.every(item => {
         target = rawFile.uid === item.uid ? item : null
         return !target
@@ -608,6 +613,13 @@ export default {
     line-height: 20px;
     color: $color-text-secondary;
     padding-bottom: 8px;
+  }
+
+  &__tip {
+    font-size: 12px;
+    line-height: 17px;
+    color: $color-text-tip;
+    margin-top: 3px;
   }
 
   &__input {
