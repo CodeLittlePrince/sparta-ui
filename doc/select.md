@@ -81,6 +81,36 @@ export default{
   }
 }
 </script>
+<style>
+  .customer-select {
+    .sp-select__input-box {
+      border: 1px dashed #ee4c4c;
+      background: rgba(238, 76, 76, 0.1);
+      color: #ee4c4c;
+      .sp-select__input-placeholder,.sp-select__input {
+        color: #ee4c4c;
+        background: rgba(238, 76, 76, 0.1);
+      }
+      .sp-select__suffix {
+        background: rgba(238, 76, 76, 0.1);
+        border: 0;
+        color: #ee4c4c;
+      }
+      .isFocus.sp-select__suffix i {
+        color: #ee4c4c;
+      }
+    }
+    .sp-select.isFocus .sp-select__input-box {
+      border-color: #ee4c4c;
+    }
+    .sp-select.isFocus .sp-select__suffix {
+      background: rgba(238, 76, 76, 0.1);
+      i {
+        color: #ee4c4c;
+      }
+    }
+  }
+</style>
 ```
 :::
 
@@ -648,7 +678,7 @@ export default{
         background: rgba(238, 76, 76, 0.1);
       }
       .sp-select__suffix {
-        background: transparent;
+        background: rgba(238, 76, 76, 0.1);
         border: 0;
         color: #ee4c4c;
       }
@@ -660,11 +690,10 @@ export default{
       border-color: #ee4c4c;
     }
     .sp-select.isFocus .sp-select__suffix {
-      background: transparent;
+      background: rgba(238, 76, 76, 0.1);
       i {
         color: #ee4c4c;
       }
     }
   }
- 
 </style>
