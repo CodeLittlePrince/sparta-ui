@@ -561,10 +561,9 @@ export default {
   }
 
   &__prepend {
-    height: $select-height - 2px;
-    line-height: $select-height - 2px;
     display: table-cell;
     text-align: center;
+    width: 1px;
     vertical-align: middle;
     user-select: none;
     padding-left: 10px;
@@ -577,6 +576,10 @@ export default {
   &__input-box {
     font-size: 14px;
     position: relative;
+    border-collapse: separate;
+    vertical-align: baseline;
+    line-height: normal;
+    border-spacing: 0;
     width: 100%;
     min-height: $select-height;
     background-color: $select-background;
@@ -597,6 +600,7 @@ export default {
         right: 0;
         bottom: 0;
         padding: 0 45px 0 10px;
+        z-index: 10;
         margin: 0;
         line-height: $select-height - 2;
         color: $color-text-placeholder;
@@ -615,7 +619,7 @@ export default {
       border: none;
       height: $select-height - 2;
       line-height: $select-height - 2;
-      padding: 0 45px 0 10px;
+      padding: 0 10px 0 10px;
       box-sizing: border-box;
       border-radius: 4px;
       color: inherit;
@@ -662,17 +666,18 @@ export default {
   }
 
   &__suffix {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 34px;
-    height: $select-height - 2px;
-    line-height: $select-height - 2px;
     text-align: center;
     user-select: none;
+    display: table-cell;
+    width: 1px;
     border-left: 1px solid $border-color-base;
     background-color: $select-suffix-background-color;
     color: $color-text-tip;
+    vertical-align: middle;
+    padding: 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 0;
 
     i {
       font-size: 12px;
