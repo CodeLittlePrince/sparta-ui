@@ -588,6 +588,13 @@ export default {
     },
 
     _emitChange() {
+      // 如果上传队列uploadFiles中还有status为ready或uploading的文件，则暂不emit
+      const uploadNotFinish = this.uploadFiles.some(item => {
+        return item.status === 'ready' || item.status === 'uploading'
+      })
+      if (uploadNotFinish) return
+
+      // 都上传结束后emit事件
       const rst = this._getSuccessUploadFiles()
       this.$emit('change', rst)
       this.dispatch('SpFormItem', 'sp.form.change', rst)

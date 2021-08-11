@@ -14,7 +14,7 @@
   <div class="sp-upload-demo">
     <sp-upload
       action="/api/upload"
-      :processResult="processResult"
+      :process-result="processResult"
       @change="handleChange"
     ></sp-upload>
   </div>
@@ -45,7 +45,7 @@ export default{
       action="/api/upload"
       example-image="https://i.epay.126.net/a/ge/static/img/ex_supplier.5f209565.png"
       example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
-      :processResult="processResult"
+      :process-result="processResult"
       :files="[{name: 'food.jpg', url: 'https://cn.vuejs.org/images/logo.png'}]"
       @change="handleChange"
       multiple
@@ -81,7 +81,7 @@ export default{
   <div class="sp-upload-demo">
     <sp-upload
       action="/api/upload"
-      :processResult="processResult"
+      :process-result="processResult"
       :data="data3"
       name="file"
       withCredentials
@@ -103,7 +103,7 @@ export default{
     <sp-upload
       type="picture"
       action="/api/upload"
-      :processResult="processResult"
+      :process-result="processResult"
       @change="handleChange"
     >
       添加图片
@@ -136,7 +136,7 @@ export default{
       type="picture"
       action="/api/upload"
       multiple
-      :processResult="processResult"
+      :process-result="processResult"
       :limit="3"
       example-image="https://i.epay.126.net/a/ge/static/img/ex_supplier.5f209565.png"
       example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
@@ -157,7 +157,7 @@ export default{
     <sp-upload
       type="picture"
       action="/api/upload"
-      :processResult="processResult"
+      :process-result="processResult"
       :limit="1"
       example-image="https://i.epay.126.net/a/ge/static/img/ex_supplier.5f209565.png"
       example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
@@ -179,7 +179,7 @@ export default{
       type="picture"
       action="/api/upload"
       multiple
-      :processResult="processResult"
+      :process-result="processResult"
       :limit="3"
       :onExceed="onExceed"
       @change="handleChange"
@@ -231,6 +231,7 @@ export default{
 | name | 上传的文件字段名 | string | — | file |
 | with-credentials | 支持发送 cookie 凭证信息 | boolean | — | false |
 | accept | 接受上传的[文件类型](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept)（thumbnail-mode 模式下此参数无效）| string | — | — |
+| process-result | 处理上传接口的返回结果 | function(response) | — | item => item |
 | on-error | 文件上传失败时的钩子 | function(err, file, fileList) | — | — |
 | on-progress | 文件上传时的钩子 | function(event, file, fileList) | — | — |
 | on-change | 文件状态改变时的钩子，上传成功和删除文件时都会被调用 | function(file, fileList) | — | — |

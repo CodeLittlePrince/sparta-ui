@@ -145,10 +145,11 @@
       ]"
     >
       <sp-upload
+        :files="validateForm1.files"
         action="/api/upload"
         example-image="https://i.epay.126.net/a/ge/static/img/ex_supplier.5f209565.png"
         example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
-        :processResult="processFilesResult"
+        :process-result="processFilesResult"
         @change="handleFilesChange"
         multiple
       >
@@ -179,7 +180,9 @@
           birth: '',
           favorite: '',
           cities: [],
-          picture: []
+          favoriteFruit: '',
+          picture: [],
+          files: []
         },
         favouriteList: [
           { label: '唱歌', value: 'sing' },
@@ -195,6 +198,7 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             alert('submit!')
+            console.log(this.validateForm1)
           } else {
             console.log('error submit')
             return false
@@ -209,7 +213,20 @@
       },
       processPictureResult(item) {
         return item.path
-      }
+      },
+      handleResetForm1() {
+        this.resetForm('validateForm1')
+        console.log(this.validateForm1)
+      },
+      handleFilesChange(list) {
+        this.validateForm1.files = list
+      },
+      processFilesResult(item) {
+        return item.path
+      },
+      onExceed() {
+        this.$sparta.error('最多上传3张图片')
+      },
     }
   }
 </script>
@@ -522,6 +539,7 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             alert('submit!')
+            console.log(this.validateForm1)
           } else {
             console.log('error submit')
             return false

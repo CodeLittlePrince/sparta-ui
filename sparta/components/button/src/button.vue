@@ -224,6 +224,8 @@ export default {
     background: transparent;
     padding-left: 0;
     padding-right: 0;
+    min-width: auto;
+    height: auto;
 
     &:hover,
     &:focus {
