@@ -5,8 +5,8 @@
       @click="handleClose"
     >
       <div class="sp-img-preview__close"><i class="sp-icon-close"></i></div>
-      <div class="sp-img-preview__img-box" @click.stop>
-        <img :src="imgUrl" alt="">
+      <div class="sp-img-preview__img-box">
+        <img :src="imgUrl" alt="" @click.stop>
       </div>
     </div>
   </transition>
@@ -49,12 +49,19 @@ export default {
   left: 0;
   background-color: rgba(41, 46, 51, 0.6);
 
+  img {
+    /* 因为坑爹的IE */
+    width: auto;
+    height: auto;
+  }
+
   &__img-box {
     position: absolute;
     top: 5%;
     bottom: 5%;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 75px;
+    right: 75px;
+    text-align: center;
 
     img {
       height: 100%;
