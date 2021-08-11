@@ -760,18 +760,18 @@ export default {
     }
 
     .sp-select {
-      display: inline-block;
-      margin: -6px -12px;
+      margin: -1px -11px;
+      float: left;
 
-      .sp-select-input {
+      .sp-select__input {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
       }
     }
 
     button.sp-button,
-    div.sp-select .sp-select-input-box,
-    div.sp-select:hover .sp-select-input-box {
+    div.sp-select .sp-select__input-box,
+    div.sp-select:hover .sp-select__input-box {
       border-color: transparent;
       background-color: transparent;
       color: inherit;
