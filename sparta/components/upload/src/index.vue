@@ -44,6 +44,7 @@
             </div>
           </div>
         </div>
+        <p v-show="uploadFiles.length" class="sp-upload-file__text">以下为已上传文件：</p>
         <!-- 展示 -->
         <ul class="sp-upload-file__show">
           <li
@@ -694,6 +695,13 @@ export default {
       height: 76px;
     }
 
+    &__text {
+      font-size: 12px;
+      line-height: 17px;
+      color: $color-text-regular;
+      margin-top: 8px;
+    }
+
     &__item {
       position: relative;
       margin-top: 3px;
@@ -702,7 +710,7 @@ export default {
       color: $upload-file__item-color;
 
       &:first-child {
-        margin-top: 10px;
+        margin-top: 6px;
       }
 
       a {
