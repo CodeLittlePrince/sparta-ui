@@ -11,7 +11,6 @@ import Window from './components/window'
 import Dropdown from './components/dropdown'
 import DropdownItem from './components/dropdown-item'
 import Button from './components/button'
-import ButtonGroup from './components/button-group'
 import Checkbox from './components/checkbox'
 import CheckboxGroup from './components/checkbox-group'
 import Input from './components/input'
@@ -54,7 +53,6 @@ const components = [
   Dropdown,
   DropdownItem,
   Button,
-  ButtonGroup,
   Checkbox,
   CheckboxGroup,
   Input,
@@ -116,7 +114,6 @@ export {
   Dropdown,
   DropdownItem,
   Button,
-  ButtonGroup,
   Checkbox,
   CheckboxGroup,
   Input,
@@ -142,4 +139,6 @@ export {
   Modal,
   PasswordInput,
   PopupTip,
+  ImgPreview,
+  Toast,
 }

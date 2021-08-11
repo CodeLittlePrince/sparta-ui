@@ -1,6 +1,7 @@
 /* Transition
 -------------------------- */
 $transition-all: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+$transition-all-quick: all 0.1 cubic-bezier(0.645, 0.045, 0.355, 1);
 $transition-fade: opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1);
 $transition-fade-linear: opacity 0.2s linear;
 $transition-md-fade: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1);
@@ -82,55 +83,46 @@ $border-radius-circle: 100%;
 -------------------------- */
 $button-font-size: 14px;
 $button-font-weight: 500;
+$button-min-width: 120px;
+$button-height: 40px;
 $button-border-radius: 4px;
-$button-padding-vertical: 12px;
-$button-padding-horizontal: 20px;
 
 $button-medium-font-size: 14px;
-$button-medium-border-radius: 4px;
-$button-medium-padding-vertical: 10px;
-$button-medium-padding-horizontal: 20px;
+$button-medium-min-width: 108px;
+$button-medium-height: 36px;
 
 $button-small-font-size: 12px;
-$button-small-border-radius: 3px;
-$button-small-padding-vertical: 9px;
-$button-small-padding-horizontal: 15px;
+$button-small-min-width: 96px;
+$button-small-height: 32px;
 
-$button-mini-font-size: 12px;
-$button-mini-border-radius: 3px;
-$button-mini-padding-vertical: 7px;
-$button-mini-padding-horizontal: 15px;
+$button-mini-font-size: 13px;
+$button-mini-min-width: 84px;
+$button-mini-height: 28px;
 
-$button-default-color: $color-text-regular;
-$button-default-fill: $color-white;
-$button-default-border: $border-color-base;
+$button-default-color: $color-primary;
+$button-default-fill: #e6f1ff;
+$button-default-border: #e6f1ff;
+$button-default-fill--hover: #d8e8fe;
+$button-default-fill--focus: #cde0fa;
 
-$button-disabled-color: $color-text-placeholder;
-$button-disabled-fill: $color-white;
-$button-disabled-border: $border-color-lighter;
+$button-color--disabled: #c7cbd1;
+$button-fill--disabled: #f0f3f7;
+$button-border--disabled: $border-color-lighter;
+
+$button-plain-fill: #fff;
+$button-plain-fill--hover: #e6f1ff;
+$button-plain-fill--focus: #d8e8fe;
+
+$button-plain-border--disabled: #e4e8ef;
+$button-plain-color--disabled: #c7cbd1;
 
 $button-primary-border: $color-primary;
-$button-primary-color: $color-white;
+$button-primary-color: #fff;
 $button-primary-fill: $color-primary;
-
-$button-success-border: $color-success;
-$button-success-color: $color-white;
-$button-success-fill: $color-success;
-
-$button-warning-border: $color-warning;
-$button-warning-color: $color-white;
-$button-warning-fill: $color-warning;
-
-$button-danger-border: $color-danger;
-$button-danger-color: $color-white;
-$button-danger-fill: $color-danger;
-
-$button-info-border: $color-info;
-$button-info-color: $color-white;
-$button-info-fill: $color-info;
-
-$button-hover-tint-percent: 20%;
-$button-active-shade-percent: 10%;
+$button-primary-fill--hover: #0c6bdf;
+$button-primary-border--hover: #0c6bdf;
+$button-primary-fill--focus: #215cbd;
+$button-primary-border--focus: #215cbd;
 
 /* Checkbox
 -------------------------- */

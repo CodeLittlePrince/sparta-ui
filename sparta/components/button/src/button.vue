@@ -11,8 +11,6 @@
         'is--disabled': buttonDisabled,
         'is--loading': loading,
         'is--plain': plain,
-        'is--round': round,
-        'is--circle': circle
       }
     ]"
     @click="handleClick"
@@ -46,7 +44,7 @@ export default {
       type: String,
       default: 'default',
       validator(val) {
-        return ['default', 'primary', 'success', 'warning', 'danger', 'info', 'text'].indexOf(val) > -1
+        return ['default', 'primary', 'danger', 'text'].indexOf(val) > -1
       }
     },
     size: {
@@ -65,8 +63,6 @@ export default {
     disabled: Boolean,
     plain: Boolean,
     autofocus: Boolean,
-    round: Boolean,
-    circle: Boolean
   },
 
   computed: {
@@ -110,26 +106,25 @@ export default {
   box-sizing: border-box;
   outline: none;
   margin: 0;
-  transition: .1s;
+  transition: $transition-all-quick;
   font-weight: $button-font-weight;
   user-select: none;
+  padding: 0 10px;
+  border-radius: 4px;
+
   & + & {
     margin-left: 10px;
   }
 
-  @include button-size($button-padding-vertical, $button-padding-horizontal, $button-font-size, $button-border-radius);
+  @include button-size(font-size, $button-min-width, $button-height);
 
-  &:hover,
-  &:focus {
-    color: $color-primary;
-    border-color: $color-primary-light-7;
-    background-color: $color-primary-light-9;
+  &:hover {
+    background-color: $button-default-fill--hover;
   }
 
+  &:focus,
   &:active {
-    color: mix($color-black, $color-primary, $button-active-shade-percent);
-    border-color: mix($color-black, $color-primary, $button-active-shade-percent);
-    outline: none;
+    background-color: $button-default-fill--focus;
   }
 
   &::-moz-focus-inner {
@@ -142,35 +137,29 @@ export default {
   }
 
   &.is--plain {
-    &:hover,
-    &:focus {
-      background: $color-white;
-      border-color: $color-primary;
+    border-color: $color-primary;
+    background-color: $button-plain-fill;
+
+    &:hover {
+      background: $button-default-fill--hover;
       color: $color-primary;
     }
 
+    &:focus,
     &:active {
-      background: $color-white;
-      border-color: mix($color-black, $color-primary, $button-active-shade-percent);
-      color: mix($color-black, $color-primary, $button-active-shade-percent);
-      outline: none;
+      background: $button-default-fill--focus;
     }
-  }
-
-  &.is--active {
-    color: mix($color-black, $color-primary, $button-active-shade-percent);
-    border-color: mix($color-black, $color-primary, $button-active-shade-percent);
   }
 
   &.is--disabled {
     &,
     &:hover,
     &:focus {
-      color: $button-disabled-color;
+      color: $button-color--disabled;
       cursor: not-allowed;
       background-image: none;
-      background-color: $button-disabled-fill;
-      border-color: $button-disabled-border;
+      background-color: $button-fill--disabled;
+      border-color: $button-fill--disabled;
     }
 
     &.sp-button--text {
@@ -181,9 +170,9 @@ export default {
       &,
       &:hover,
       &:focus {
-        background-color: $color-white;
-        border-color: $button-disabled-border;
-        color: $button-disabled-color;
+        background-color: #fff;
+        border-color: $button-plain-border--disabled;
+        color: $button-plain-color--disabled;
       }
     }
   }
@@ -191,8 +180,9 @@ export default {
   &.is--loading {
     position: relative;
     pointer-events: none;
+    color: rgba(#fff, 0.5);
 
-    &:before {
+    &::before {
       pointer-events: none;
       content: '';
       position: absolute;
@@ -201,49 +191,32 @@ export default {
       right: -1px;
       bottom: -1px;
       border-radius: inherit;
-      background-color: rgba(255,255,255,.35);
     }
-  }
-  &.is--round {
-    border-radius: 20px;
-    padding: 12px 23px;
-  }
-  &.is--circle {
-    border-radius: 50%;
-    padding: $button-padding-vertical;
   }
   &--primary {
-    @include button-variant($button-primary-color, $button-primary-fill, $button-primary-border);
-  }
-  &--success {
-    @include button-variant($button-success-color, $button-success-fill, $button-success-border);
-  }
-  &--warning {
-    @include button-variant($button-warning-color, $button-warning-fill, $button-warning-border);
-  }
-  &--danger {
-    @include button-variant($button-danger-color, $button-danger-fill, $button-danger-border);
-  }
-  &--info {
-    @include button-variant($button-info-color, $button-info-fill, $button-info-border);
+    background-color: $button-primary-fill;
+    border-color: $button-primary-border;
+    color: $button-primary-color;
+
+    &:hover {
+      background-color: $button-primary-fill--hover;
+      border-color: $button-primary-border--hover;
+    }
+
+    &:focus,
+    &:active {
+      background-color: $button-primary-fill--focus;
+      border-color: $button-primary-border--focus;
+    }
   }
   &--medium {
-    @include button-size($button-medium-padding-vertical, $button-medium-padding-horizontal, $button-medium-font-size, $button-medium-border-radius);
-    @at-root &.is--circle {
-      padding: $button-medium-padding-vertical;
-    }
+    @include button-size($button-medium-font-size, $button-medium-min-width, $button-medium-height);
   }
   &--small {
-    @include button-size($button-small-padding-vertical, $button-small-padding-horizontal, $button-small-font-size, $button-small-border-radius);
-    @at-root &.is--circle {
-      padding: $button-small-padding-vertical;
-    }
+    @include button-size($button-small-font-size, $button-small-min-width, $button-small-height);
   }
   &--mini {
-    @include button-size($button-mini-padding-vertical, $button-mini-padding-horizontal, $button-mini-font-size, $button-mini-border-radius);
-    @at-root &.is--circle {
-      padding: $button-mini-padding-vertical;
-    }
+    @include button-size($button-mini-font-size, $button-mini-min-width, $button-mini-height);
   }
   &--text {
     border-color: transparent;
@@ -254,12 +227,10 @@ export default {
 
     &:hover,
     &:focus {
-      color: mix($color-white, $color-primary, $button-hover-tint-percent);
       border-color: transparent;
       background-color: transparent;
     }
     &:active {
-      color: mix($color-black, $color-primary, $button-active-shade-percent);
       border-color: transparent;
       background-color: transparent;
     }
@@ -268,84 +239,6 @@ export default {
     &.is--disabled:hover,
     &.is--disabled:focus {
       border-color: transparent;
-    }
-  }
-}
-
-.sp-button-group {
-  @include clearfix();
-  display: inline-block;
-  vertical-align: middle;
-
-  & > .sp-button {
-    float: left;
-    position: relative;
-    & + .sp-button {
-      margin-left: 0;
-    }
-    &.is--disabled {
-      z-index: 1;
-    }
-    &:first-child {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-    &:last-child {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-    &:first-child:last-child {
-      border-top-right-radius: $button-border-radius;
-      border-bottom-right-radius: $button-border-radius;
-      border-top-left-radius: $button-border-radius;
-      border-bottom-left-radius: $button-border-radius;
-
-      &.is--round {
-        border-radius: 20px;
-      }
-
-      &.is--circle {
-        border-radius: 50%;
-      }
-    }
-    &:not(:first-child):not(:last-child) {
-      border-radius: 0;
-    }
-    &:not(:last-child) {
-      margin-right: -1px;
-    }
-
-    &:hover,
-    &:focus,
-    &:active {
-      z-index: 1;
-    }
-
-    @at-root &.is--active {
-      z-index: 1;
-    }
-  }
-  
-  & > .sp-dropdown {
-    & > .sp-button {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-      border-left-color: rgba($color-white, 0.5);
-    }
-  }
-
-  @each $type in (primary, success, warning, danger, info) {
-    .sp-button--#{$type} {
-      &:first-child {
-        border-right-color: rgba($color-white, 0.5);
-      }
-      &:last-child {
-        border-left-color: rgba($color-white, 0.5);
-      }
-      &:not(:first-child):not(:last-child) {
-        border-left-color: rgba($color-white, 0.5);
-        border-right-color: rgba($color-white, 0.5);
-      }
     }
   }
 }
