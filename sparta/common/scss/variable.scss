@@ -124,6 +124,10 @@ $button-primary-border--hover: #0c6bdf;
 $button-primary-fill--focus: #215cbd;
 $button-primary-border--focus: #215cbd;
 
+$button-text-color: $color-primary;
+$button-text-color--hover: #0c6bdf;
+$button-text-color--focus: #215cbd;
+$button-text-color--disabled: #c7cbd1;
 /* Checkbox
 -------------------------- */
 $checkbox-background: #fff;

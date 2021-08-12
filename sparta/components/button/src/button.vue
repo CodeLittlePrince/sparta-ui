@@ -162,10 +162,6 @@ export default {
       border-color: $button-fill--disabled;
     }
 
-    &.sp-button--text {
-      background-color: transparent;
-    }
-
     &.is--plain {
       &,
       &:hover,
@@ -220,27 +216,31 @@ export default {
   }
   &--text {
     border-color: transparent;
-    color: $color-primary;
+    color: $button-text-color;
     background: transparent;
-    padding-left: 0;
-    padding-right: 0;
+    padding: 0;
     min-width: auto;
     height: auto;
 
-    &:hover,
-    &:focus {
+    &:hover {
       border-color: transparent;
       background-color: transparent;
+      color: $button-text-color--hover;
     }
+
+    &:focus,
     &:active {
       border-color: transparent;
       background-color: transparent;
+      color: $button-text-color--focus;
     }
 
     &.is--disabled,
     &.is--disabled:hover,
     &.is--disabled:focus {
       border-color: transparent;
+      background-color: transparent;
+      color: $button-text-color--disabled;
     }
   }
 }
