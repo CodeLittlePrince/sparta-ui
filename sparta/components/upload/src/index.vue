@@ -111,7 +111,7 @@
             <div class="sp-upload-picture__item-info">
               <img
                 v-if="item.status === 'success' && (item.type === 'image' || isIE9)"
-                :src="(isIE9 || !item.urlBase64) ? item.url : item.urlBase64"
+                :src="_getImgUrl(item)"
                 alt=""
               >
               <!-- 不是图片的文件兼容 -->
@@ -344,7 +344,7 @@ export default {
 
     handleFilePreview(item) {
       if (item.type === 'image') {
-        this.$sparta.imgPreview(item.url)
+        this.$sparta.imgPreview(this._getImgUrl(item))
       } else {
         window.open(item.url)
       }
@@ -502,6 +502,7 @@ export default {
     _getSuccessUploadFiles() {
       let copy = JSON.parse(JSON.stringify(this.uploadFiles))
       const rst = []
+
       for (let i = 0, len = copy.length; i < len; i++) {
         const item = copy[i]
         if (item.status === 'success') {
@@ -562,7 +563,6 @@ export default {
         this._iframeUpload(hiddenform, hiddenframe, file)
       })
 
-
       hiddenform.submit()
     },
 
@@ -580,7 +580,7 @@ export default {
       } catch (e) {
         this.uploadFiles[index].status = 'fail'
       }
-      //删除form
+      // 删除form
       setTimeout(() => {
         this.$refs.reference.value = null
         this.hiddenform.reset() // 解决IE9上传同一张图片无法触发change
@@ -599,6 +599,10 @@ export default {
       const rst = this._getSuccessUploadFiles()
       this.$emit('change', rst)
       this.dispatch('SpFormItem', 'sp.form.change', rst)
+    },
+
+    _getImgUrl(item) {
+      return (this.isIE9 || !item.urlBase64) ? item.url : item.urlBase64
     },
 
     _parsePercentage(val) {
