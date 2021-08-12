@@ -169,6 +169,12 @@ export default {
               link: '/popup-tip',
               index: '4-5-5'
             },
+            {
+              title: 'Step 步骤条',
+              link: '/step',
+              index: '4-5-6'
+            },
+            
           ]
         },
         {
