@@ -36,12 +36,12 @@ export default {
               index: '4-1-1'
             },
             {
-              title: 'Icon 图标',
+              title: 'Icon 图标（新）',
               link: '/icon',
               index: '4-1-2'
             },
             {
-              title: 'Button 按钮',
+              title: 'Button 按钮（新）',
               link: '/button',
               index: '4-1-4'
             }
@@ -94,22 +94,22 @@ export default {
           index: '4-4',
           child: [
             {
-              title: 'Checkbox 多选框',
+              title: 'Checkbox 多选框（新）',
               link: '/checkbox',
               index: '4-4-1'
             },
             {
-              title: 'Select 选择器',
+              title: 'Select 选择器（新）',
               link: '/select',
               index: '4-4-2'
             },
             {
-              title: 'Input 输入框',
+              title: 'Input 输入框（新）',
               link: '/input',
               index: '4-4-3'
             },
             {
-              title: 'Radio 单选框',
+              title: 'Radio 单选框（新）',
               link: '/radio',
               index: '4-4-4'
             },
@@ -124,17 +124,17 @@ export default {
               index: '4-4-6'
             },
             {
-              title: 'Upload 上传',
+              title: 'Upload 上传（新）',
               link: '/upload',
               index: '4-4-7'
             },
             {
-              title: 'Form 表单',
+              title: 'Form 表单（新）',
               link: '/form',
               index: '4-4-8'
             },
             {
-              title: 'PasswordInput 密码输入',
+              title: 'PasswordInput 密码输入（新）',
               link: '/password-input',
               index: '4-4-9'
             }
@@ -160,17 +160,17 @@ export default {
               index: '4-5-3'
             },
             {
-              title: 'ImgPreview 图片查看器',
+              title: 'ImgPreview 图片查看器（新）',
               link: '/img-preview',
               index: '4-5-4'
             },
             {
-              title: 'PopupTip 浮层提示',
+              title: 'PopupTip 浮层提示（新）',
               link: '/popup-tip',
               index: '4-5-5'
             },
             {
-              title: 'Step 步骤条',
+              title: 'Step 步骤条（新）',
               link: '/step',
               index: '4-5-6'
             },
