@@ -222,7 +222,7 @@
         this.validateForm1.picture = list
       },
       processPictureResult(item) {
-        return item.path
+        return item.fileUrl
       },
       handleResetForm1() {
         this.resetForm('validateForm1')
@@ -232,7 +232,7 @@
         this.validateForm1.files = allFiles
       },
       processFilesResult(item) {
-        return item.path
+        return item.fileUrl
       },
       onExceed() {
         this.$sparta.error('最多上传3张图片')
@@ -560,7 +560,7 @@
         this.validateForm1.picture = list
       },
       processPictureResult(item) {
-        return item.path
+        return item.fileUrl
       },
       handleResetForm1() {
         this.resetForm('validateForm1')
@@ -570,7 +570,7 @@
         this.validateForm1.files = allFiles
       },
       processFilesResult(item) {
-        return item.path
+        return item.fileUrl
       },
       onExceed() {
         this.$sparta.error('最多上传3张图片')

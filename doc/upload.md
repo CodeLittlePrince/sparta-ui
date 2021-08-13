@@ -27,7 +27,7 @@ export default{
       console.log(list)
     },
     processResult(item) {
-      return item.path
+      return item.fileUrl
     }
   }
 }
@@ -45,7 +45,6 @@ export default{
       action="/api/upload"
       example-image="https://i.epay.126.net/a/ge/static/img/ex_supplier.5f209565.png"
       example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
-      :process-result="processResult"
       :files="[{name: 'food.jpg', url: 'https://cn.vuejs.org/images/logo.png'}]"
       @change="handleChange"
       multiple
@@ -61,9 +60,6 @@ export default{
     handleChange(list) {
       console.log(list)
     },
-    processResult(item) {
-      return item.path
-    }
   }
 }
 </script>
@@ -81,7 +77,6 @@ export default{
   <div class="sp-upload-demo">
     <sp-upload
       action="/api/upload"
-      :process-result="processResult"
       :data="data3"
       name="file"
       withCredentials
@@ -118,7 +113,7 @@ export default{
       console.log(list)
     },
     processResult(item) {
-      return item.path
+      return item.fileUrl
     }
   }
 }
@@ -231,7 +226,7 @@ export default{
 | name | 上传的文件字段名 | string | — | file |
 | with-credentials | 支持发送 cookie 凭证信息 | boolean | — | false |
 | accept | 接受上传的[文件类型](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept)（thumbnail-mode 模式下此参数无效）| string | — | — |
-| process-result | 处理上传接口的返回结果 | function(response) | — | item => item |
+| process-result | 处理上传接口的返回结果 | function(response) | — | item => item.fileUrl |
 | on-error | 文件上传失败时的钩子 | function(err, file, fileList) | — | — |
 | on-progress | 文件上传时的钩子 | function(event, file, fileList) | — | — |
 | on-change | 文件状态改变时的钩子，上传成功和删除文件时都会被调用 | function(file, fileList) | — | — |
@@ -262,7 +257,7 @@ export default{
       console.log(list)
     },
     processResult(item) {
-      return item.path
+      return item.fileUrl
     },
     thumbProcess(url) {
       return url + '?w=200'

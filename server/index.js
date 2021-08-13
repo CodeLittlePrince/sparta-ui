@@ -69,7 +69,7 @@ app.use(async (ctx, next) => {
       const upStream = fs.createWriteStream(`${uploadDir}/${Math.random().toString()}.${ext}`)		// 创建可写流
       reader.pipe(upStream)	// 可读流通过管道写入可写流
       ctx.body = {
-        path: `${upStream.path.replace(uploadDir, '/uploadFiles')}`
+        fileUrl: `${upStream.path.replace(uploadDir, '/uploadFiles')}`
       }
       ctx.set('Content-Type', 'text/plain; charset=utf-8')
     // 返回文件
