@@ -3,6 +3,9 @@
   "version": "0.0.9",
   "description": "网易支付PC组件库",
   "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "mock": "nodemon -q ./server/index.js --kill-others",
     "watch": "node webpack-site/dev.js",
