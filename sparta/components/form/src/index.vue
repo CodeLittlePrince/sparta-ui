@@ -49,7 +49,6 @@ export default {
         this.fields.push(field)
       }
     })
-    /* istanbul ignore next */
     this.$on('sp.form.removeField', (field) => {
       if (field.prop) {
         this.fields.splice(this.fields.indexOf(field), 1)

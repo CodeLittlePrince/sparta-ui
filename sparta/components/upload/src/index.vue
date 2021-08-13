@@ -499,7 +499,7 @@ export default {
       this.uploadFiles.push(file)
     },
 
-    _getSuccessUploadFiles() {
+    getSuccessUploadFiles() {
       let copy = JSON.parse(JSON.stringify(this.uploadFiles))
       const rst = []
 
@@ -509,14 +509,30 @@ export default {
           let data = {
             name: item.name,
             url: item.url,
-            status: item.status,
             type: item.type
-          }
-          if (this.type === 'picture' && !this.isIE9) {
-            data.urlBase64 = item.urlBase64
           }
           rst.push(data)
         }
+      }
+      return rst
+    },
+
+    _getAllUploadFiles() {
+      let copy = JSON.parse(JSON.stringify(this.uploadFiles))
+      const rst = []
+
+      for (let i = 0, len = copy.length; i < len; i++) {
+        const item = copy[i]
+        let data = {
+          name: item.name,
+          url: item.url,
+          status: item.status,
+          type: item.type
+        }
+        if (this.type === 'picture' && !this.isIE9) {
+          data.urlBase64 = item.urlBase64
+        }
+        rst.push(data)
       }
       return rst
     },
@@ -589,16 +605,10 @@ export default {
     },
 
     _emitChange() {
-      // 如果上传队列uploadFiles中还有status为ready或uploading的文件，则暂不emit
-      const uploadNotFinish = this.uploadFiles.some(item => {
-        return item.status === 'ready' || item.status === 'uploading'
-      })
-      if (uploadNotFinish) return
-
       // 都上传结束后emit事件
-      const rst = this._getSuccessUploadFiles()
-      this.$emit('change', rst)
-      this.dispatch('SpFormItem', 'sp.form.change', rst)
+      const allFiles = this._getAllUploadFiles()
+      this.$emit('change', allFiles)
+      this.dispatch('SpFormItem', 'sp.form.change', allFiles)
     },
 
     _getImgUrl(item) {

@@ -7,7 +7,8 @@
         'is--error': validateState === 'error',
         'is--validating': validateState === 'validating',
         'is--success': validateState === 'success',
-        'is--required': isRequired || required
+        'is--required': isRequired || required,
+        'is--two-line': $slots.labelSecondLine
       }
     ]"
   >
@@ -15,7 +16,6 @@
       v-if="label || $slots.label"
       :for="labelFor"
       class="sp-form-item__label"
-      :class="{ 'is--two-line': $slots.labelSecondLine }"
       :style="labelStyle"
     >
       <slot name="label">{{ label }}</slot>
@@ -96,6 +96,10 @@ export default {
     labelTipWidth: {
       type: [String, Number],
       default: '230'
+    },
+    forUpload: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -233,7 +237,12 @@ export default {
       const validator = new AsyncValidator(descriptor)
       const model = {}
 
-      model[this.prop] = this.fieldValue
+      let fieldValueCopy = JSON.parse(JSON.stringify(this.fieldValue))
+      // 上传文件只应该看已经上传成功的
+      if (this.forUpload) {
+        fieldValueCopy = fieldValueCopy.filter(item => item.status === 'success')
+      }
+      model[this.prop] = fieldValueCopy
 
       validator.validate(model, { firstFields: true }, (errors, invalidFields) => {
         this.validateState = !errors ? 'success' : 'error'
@@ -339,14 +348,6 @@ export default {
     padding-right: 56px;
     box-sizing: border-box;
 
-    &.is--two-line {
-      line-height: 20px;
-    }
-
-    &.is--two-line .sp-popup-tip__modal {
-      top: 24px;
-    }
-
     &__second-line {
       font-size: 12px;
       line-height: 17px;
@@ -369,6 +370,14 @@ export default {
     }
   }
 
+  &.is--two-line &__label {
+    line-height: 20px;
+
+    .sp-popup-tip__modal {
+      top: 24px;
+    }
+  }
+
   &__content {
     line-height: 36px;
     position: relative;
@@ -388,6 +397,12 @@ export default {
 
     .sp-upload {
       padding-top: 8px;
+    }
+  }
+
+  &.is--two-line &__content {
+    .sp-upload {
+      padding-top: 0;
     }
   }
 

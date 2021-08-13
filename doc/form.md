@@ -121,6 +121,7 @@
     <sp-form-item
       label="靓照"
       prop="picture"
+      for-upload
       :rules="[
         { required: true, message: '靓照不能为空'}
       ]"
@@ -138,14 +139,17 @@
     </sp-form-item>
     <!-- 多文件上传 -->
     <sp-form-item
-      label="认证文件"
       prop="files"
+      for-upload
       :rules="[
         { required: true, message: '认证文件不能为空'}
       ]"
     >
+      <template slot="label">认证文件</template>
+      <template slot="labelSecondLine">form-item必须加for-upload</template>
       <sp-upload
         :files="validateForm1.files"
+        ref="filesUploader"
         action="/api/upload"
         example-image="https://i.epay.126.net/a/ge/static/img/ex_supplier.5f209565.png"
         example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
@@ -155,7 +159,7 @@
       >
         多文件上传
         <div slot="desc">上传文件说明，可多行</div>
-        <div slot="tip">其他说明，可能很多字很多字很多字</div>
+        <div slot="tip">注意：最终提交，upload组件需要自行调用getSuccessUploadFiles方法拿到只上传成功的文件</div>
       </sp-upload>
     </sp-form-item>
     <!-- 按钮 -->
@@ -164,7 +168,7 @@
         type="primary"
         @click="submitForm('validateForm1')"
       >提交</sp-button>
-      <sp-button @click="handleResetForm1">重置</sp-button>
+      <sp-button plain @click="handleResetForm1">重置</sp-button>
     </sp-form-item>
   </sp-form>
 </template>
@@ -195,15 +199,21 @@
     },
     methods: {
       submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!')
-            console.log(this.validateForm1)
-          } else {
-            console.log('error submit')
-            return false
-          }
+        this.$refs[formName].validate().then(() => {
+          alert('submit!')
+          console.log(this.validateForm1)
+        }).catch(() => {
+          console.log('error submit')
         })
+        // 或者写成
+        // this.$refs[formName].validate((valid) => {
+        //   if (valid) {
+        //     alert('submit!')
+        //     console.log(this.validateForm1)
+        //   } else {
+        //     console.log('error submit')
+        //   }
+        // })
       },
       resetForm(formName) {
         this.$refs[formName].resetFields()
@@ -218,8 +228,8 @@
         this.resetForm('validateForm1')
         console.log(this.validateForm1)
       },
-      handleFilesChange(list) {
-        this.validateForm1.files = list
+      handleFilesChange(allFiles) {
+        this.validateForm1.files = allFiles
       },
       processFilesResult(item) {
         return item.path
@@ -273,7 +283,7 @@
         type="primary"
         @click="submitForm('validateForm2')"
       >提交</sp-button>
-      <sp-button @click="resetForm('validateForm2')">重置</sp-button>
+      <sp-button plain @click="resetForm('validateForm2')">重置</sp-button>
     </sp-form-item>
   </sp-form>
 </template>
@@ -341,7 +351,7 @@
         type="primary"
         @click="submitForm('validateForm3')"
       >提交</sp-button>
-      <sp-button @click="resetForm('validateForm3')">重置</sp-button>
+      <sp-button plain @click="resetForm('validateForm3')">重置</sp-button>
     </sp-form-item>
   </sp-form>
 </template>
@@ -403,7 +413,7 @@
 ### label两行自定义样式
 在`slot`为`labelSecondLine`的template中自定义第两行的内容。
 
-:::demo 通过`two-line`的添加
+:::demo 通过`labelSecondLine`slot的添加
 ```vue
 <template>
   <sp-form
@@ -411,7 +421,6 @@
     class="sp-form-demo"
   >
     <sp-form-item
-      two-line
       :rules="[
         { required: true, message: '银行所在地'}
       ]"
@@ -420,7 +429,7 @@
       <template slot="labelSecondLine">Bank Location</template>
       <sp-input placeholder="银行所在地" />
     </sp-form-item>
-    <sp-form-item two-line>
+    <sp-form-item>
       <template slot="label">账户类型</template>
       <template slot="labelSecondLine">
         <a style="color: #1977ea" href="">Account Type</a>
@@ -465,6 +474,7 @@
 | label | 标签文本 | string | — | — |
 | label-width | 表单域标签的的宽度，例如 '50px' | string |       —       | — |
 | label-tip-width | 标签文本悬浮提示的宽度 | string/number | — | 230 |
+| for-upload | 如果form-item中校验对象是upload的话，就必须加该标签，否则文件上传失败也认为通过 | boolean | — | false |
 | required | 是否必填，如不设置，则会根据校验规则自动生成（暂时，需要特别样式，所以可忽略） | boolean | — | false |
 | rules    | 表单验证规则 | object | — | — |
 | error    | 表单域验证错误信息, 设置该值会使表单验证状态变为`error`，并显示该错误信息 | string | — | — |
@@ -536,14 +546,11 @@
     },
     methods: {
       submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!')
-            console.log(this.validateForm1)
-          } else {
-            console.log('error submit')
-            return false
-          }
+        this.$refs[formName].validate().then(() => {
+          alert('submit!')
+          console.log(this.validateForm1)
+        }).catch(() => {
+          console.log('error submit')
         })
       },
       resetForm(formName) {
@@ -559,8 +566,8 @@
         this.resetForm('validateForm1')
         console.log(this.validateForm1)
       },
-      handleFilesChange(list) {
-        this.validateForm1.files = list
+      handleFilesChange(allFiles) {
+        this.validateForm1.files = allFiles
       },
       processFilesResult(item) {
         return item.path
