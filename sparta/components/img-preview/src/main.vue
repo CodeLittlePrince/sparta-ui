@@ -13,8 +13,6 @@
 </template>
 
 <script>
-import PopManage from 'sparta/model/PopManage'
-
 export default {
   name: 'SpImgPreview',
 
@@ -24,10 +22,6 @@ export default {
       visible: false,
       zIndex: 1,
     }
-  },
-
-  mounted() {
-    this.zIndex = PopManage.zIndex
   },
 
   methods: {

@@ -1,17 +1,17 @@
 import Vue from 'vue'
 import Main from './main.vue'
+import PopManage from 'sparta/model/PopManage'
+
 let ImgPreviewConstructor = Vue.extend(Main)
 
 const ImgPreview = () => {
-  return function(imgUrl) {
-    const instance = new ImgPreviewConstructor({
-      data: {
-        imgUrl,
-      }
-    })
+  const instance = new ImgPreviewConstructor()
+  instance.vm = instance.$mount()
+  document.body.appendChild(instance.vm.$el)
 
-    instance.vm = instance.$mount()
-    document.body.appendChild(instance.vm.$el)
+  return function(imgUrl) {
+    instance.vm.imgUrl = imgUrl
+    instance.vm.zIndex = PopManage.zIndex
     instance.vm.visible = true
   }
 }

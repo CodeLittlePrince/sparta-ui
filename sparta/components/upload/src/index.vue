@@ -303,6 +303,9 @@ export default {
     isIE9() {
       return navigator.appVersion.indexOf('MSIE 9.0') > -1
     },
+    isIE10() {
+      return window.navigator.userAgent.indexOf('MSIE') >= 1
+    },
     showUploadBtn() {
       return !this.limit || this.uploadFiles.length < this.limit
     }
@@ -332,6 +335,15 @@ export default {
       if (!this.$refs.reference || !this.$refs.reference.value) {
         return
       }
+
+      // 当limit为1，并且不允许批量上传，并且已经有1个文件上传过了
+      // 那说明，这个upload肯定是用户点击了“重新上传”按钮触发的
+      const isReUploading = this.limit == 1 && !this.multiple && this.uploadFiles.length === 1
+      if (isReUploading) {
+        this.uploadFiles.pop()
+      }
+      
+      // 区分IE9和其它浏览器的上传
       if (this.isIE9) {
         this._uploadByIframe()
       } else {
@@ -376,12 +388,6 @@ export default {
     },
 
     _uploadFiles(files) {
-      // 当limit为1，并且不允许批量上传，并且已经有1个文件上传过了
-      // 那说明，这个upload肯定是用户点击了“重新上传”按钮触发的
-      const isReUploading = this.limit == 1 && !this.multiple && this.uploadFiles.length === 1
-      if (isReUploading) {
-        this.uploadFiles.pop()
-      }
       // 超过文件数量限制处理
       if (this.limit && this.uploadFiles.length + files.length > this.limit) {
         this.onExceed(files, this.uploadFiles)
@@ -399,9 +405,6 @@ export default {
     },
 
     _uploadByXHR(rawFile) {
-      // 清理之前数据
-      this.$refs.reference.value = null
-
       // 勾子调用
       this.beforeUpload(rawFile)
 
@@ -428,18 +431,37 @@ export default {
           file.status = 'success'
           this._emitChange()
           delete this.request[uid]
-          this.$refs.reference.value = null
+          this._resetUploadValue()
         },
         onError: err => {
           const file = this._getFile(rawFile)
           this.onError(err, file, rawFile)
           file.status = 'fail'
           delete this.request[uid]
-          this.$refs.reference.value = null
+          this._resetUploadValue()
         }
       }
       const req = httpRequest(options)
       this.request[uid] = req
+    },
+
+    // 为了某些浏览器，比如IE，上传同一文件触发change事件而存在
+    _resetUploadValue() {
+      if (this.isIE9) {
+        // 解决IE9上传同一张图片无法触发change
+        this.hiddenform.reset()
+      } else if (this.isIE10) {
+        // 解决IE10上传同一张图片无法触发change
+        let form = document.createElement('form')
+        const ele = this.$refs.reference
+        let nextSibling = ele.nextSibling
+        let parentNode = ele.parentNode
+        form.appendChild(this.$refs.reference)
+        form.reset()
+        parentNode.insertBefore(ele, nextSibling)
+        form = null
+      }
+      this.$refs.reference.value = null
     },
 
     /**
@@ -598,8 +620,7 @@ export default {
       }
       // 删除form
       setTimeout(() => {
-        this.$refs.reference.value = null
-        this.hiddenform.reset() // 解决IE9上传同一张图片无法触发change
+        this._resetUploadValue()
         document.body.removeChild(form)
       }, 0)
     },
