@@ -763,7 +763,7 @@ export default {
       margin: -1px -11px;
       float: left;
 
-      .sp-select__input {
+      .sp-select__input-box {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
       }

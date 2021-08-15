@@ -409,7 +409,9 @@ export default {
     },
 
     handleBlurSelectInput() {
-      this.isFocus = false
+      if (!this.visible) {
+        this.isFocus = false
+      }
       // 如果filterable开启了，用户输入的值在options中不存在的话，清空
       if (this.filterable) {
         let matchedItem = null
@@ -687,6 +689,7 @@ export default {
   &.isFocus &__suffix {
     background-color: $select-suffix-background-color-focus;
     color: #fff;
+    border-color: $select-suffix-background-color-focus;
   }
 
   .is--disabled &__suffix {
