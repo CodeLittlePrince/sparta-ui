@@ -11,7 +11,12 @@ const config = Object.assign(webpackConfigBase.config, {
   devtool: 'eval-source-map', // 定位会有问题，还是用eval-source-map好了
   // 入口
   entry: {
-    app: [webpackConfigBase.resolve('index.js')]
+    app: [
+      // https://babeljs.io/docs/en/babel-plugin-syntax-dynamic-import#working-with-webpack-and-babelpreset-env
+      'core-js/modules/es.promise',
+      'core-js/modules/es.array.iterator',
+      webpackConfigBase.resolve('index.js')
+    ]
   },
   // 输出
   output: {
