@@ -122,8 +122,12 @@ export default {
     background-color: $button-default-fill--hover;
   }
 
-  &:focus,
-  &:active {
+  &:active,
+  &:active:focus {
+    background-color: $button-default-fill--active;
+  }
+
+  &:focus {
     background-color: $button-default-fill--focus;
   }
 
@@ -145,9 +149,13 @@ export default {
       color: $color-primary;
     }
 
-    &:focus,
-    &:active {
-      background: $button-default-fill--focus;
+    &:active,
+    &:active:focus {
+      background-color: $button-plain-fill--active;
+    }
+
+    &:focus {
+      background-color: $button-plain-fill--focus;
     }
   }
 
@@ -204,6 +212,17 @@ export default {
       background-color: $button-primary-fill--focus;
       border-color: $button-primary-border--focus;
     }
+
+    &:active,
+    &:active:focus {
+      background-color: $button-primary-fill--active;
+      border-color: $button-primary-border--active;
+    }
+
+    &:focus {
+      background-color: $button-primary-fill--focus;
+      border-color: $button-primary-border--focus;
+    }
   }
   &--medium {
     @include button-size($button-medium-font-size, $button-medium-min-width, $button-medium-height);
@@ -216,8 +235,8 @@ export default {
   }
   &--text {
     border-color: transparent;
-    color: $button-text-color;
     background: transparent;
+    color: $button-text-color;
     padding: 0;
     min-width: auto;
     height: auto;
@@ -228,10 +247,16 @@ export default {
       color: $button-text-color--hover;
     }
 
-    &:focus,
-    &:active {
+    &:active,
+    &:active:focus {
       border-color: transparent;
       background-color: transparent;
+      color: $button-text-color--active;
+    }
+
+    &:focus {
+      background-color: transparent;
+      border-color: transparent;
       color: $button-text-color--focus;
     }
 

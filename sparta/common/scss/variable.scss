@@ -103,7 +103,8 @@ $button-default-color: $color-primary;
 $button-default-fill: #e6f1ff;
 $button-default-border: #e6f1ff;
 $button-default-fill--hover: #d8e8fe;
-$button-default-fill--focus: #cde0fa;
+$button-default-fill--focus: $button-default-fill;
+$button-default-fill--active: #cde0fa;
 
 $button-color--disabled: #c7cbd1;
 $button-fill--disabled: #f0f3f7;
@@ -111,7 +112,8 @@ $button-border--disabled: $border-color-lighter;
 
 $button-plain-fill: #fff;
 $button-plain-fill--hover: #e6f1ff;
-$button-plain-fill--focus: #d8e8fe;
+$button-plain-fill--focus: $button-plain-fill;
+$button-plain-fill--active: #d8e8fe;
 
 $button-plain-border--disabled: #e4e8ef;
 $button-plain-color--disabled: #c7cbd1;
@@ -121,12 +123,15 @@ $button-primary-color: #fff;
 $button-primary-fill: $color-primary;
 $button-primary-fill--hover: #0c6bdf;
 $button-primary-border--hover: #0c6bdf;
-$button-primary-fill--focus: #215cbd;
-$button-primary-border--focus: #215cbd;
+$button-primary-fill--focus: $button-primary-fill;
+$button-primary-border--focus: $button-primary-border;
+$button-primary-fill--active: #215cbd;
+$button-primary-border--active: #215cbd;
 
 $button-text-color: $color-primary;
 $button-text-color--hover: #0c6bdf;
-$button-text-color--focus: #215cbd;
+$button-text-color--focus: $button-text-color;
+$button-text-color--active: #215cbd;
 $button-text-color--disabled: #c7cbd1;
 /* Checkbox
 -------------------------- */
