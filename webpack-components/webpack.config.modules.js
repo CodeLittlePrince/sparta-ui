@@ -36,7 +36,8 @@ const config = Object.assign(webpackConfigBase.config, {
     library: '[name]',
     libraryTarget: 'umd',
     umdNamedDefine: true,
-    globalObject: 'this'
+    globalObject: 'this',
+    publicPath: '../',
   },
   externals: {
     vue: {
