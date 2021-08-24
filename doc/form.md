@@ -578,11 +578,3 @@
     }
   }
 </script>
-
-<style>
-.components--main {
-  .sp-form-demo {
-    width: 500px;
-  }
-}
-</style>

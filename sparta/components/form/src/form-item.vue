@@ -398,6 +398,11 @@ export default {
     .sp-upload {
       padding-top: 8px;
     }
+
+    .sp-input,
+    .sp-select {
+      width: 400px;
+    }
   }
 
   &.is--two-line &__content {

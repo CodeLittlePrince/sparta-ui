@@ -2,7 +2,6 @@
   <div
     class="sp-select"
     :class="{ isFocus, cursorPoiner, 'is--disabled': disabled, 'is--readonly': readonly }"
-    :style="`width: ${width}px;`"
     @click="handleSelfClick"
   >
     <div
@@ -131,10 +130,6 @@ export default {
     readonly: {
       type: Boolean,
       default: false
-    },
-    width:  {
-      type: [String, Number],
-      default: 240
     },
     height: {
       type: [String, Number],
@@ -537,7 +532,6 @@ export default {
 @import "~sparta/common/scss/variable";
 
 .sp-select {
-  font-size: 0;
   position: relative;
   display: block;
   margin: 0;

@@ -6,15 +6,17 @@
 :::demo 可自定义前置元素，一般是icon或者img
 ```vue
 <template>
-  <sp-select v-model="value8">
-    <i slot="prepend" :class="icon"></i>
-    <sp-option
-      v-for="item in list8"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value"
-    ></sp-option>
-  </sp-select>
+  <div class="select-demo">
+    <sp-select v-model="value8">
+      <i slot="prepend" :class="icon"></i>
+      <sp-option
+        v-for="item in list8"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      ></sp-option>
+    </sp-select>
+  </div>
 </template>
 
 <script>
@@ -50,15 +52,17 @@ export default{
 :::demo `v-model`的值为当前被选中的`sp-option`的 value 属性值，通过覆盖样式
 ```vue
 <template>
- <div class="customer-select">
-  <sp-select v-model="value8"  placeholder="已使用优惠抵扣￥1,000.00">
-    <sp-option
-      v-for="item in list8"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value"
-    ></sp-option>
-  </sp-select>
+  <div class="select-demo">
+    <div class="customer-select">
+      <sp-select v-model="value8"  placeholder="已使用优惠抵扣￥1,000.00">
+        <sp-option
+          v-for="item in list8"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></sp-option>
+      </sp-select>
+    </div>
  </div>
 </template>
 
@@ -120,16 +124,18 @@ export default{
 :::demo 可自定义select 显示元素
 ```vue
 <template>
-  <sp-select v-model="value8">
-    <i slot="prepend" :class="icon"></i>
-    <div slot="center">{{ valueText }}</div>
-    <sp-option
-      v-for="item in list8"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value"
-    ></sp-option>
-  </sp-select>
+  <div class="select-demo">
+    <sp-select v-model="value8">
+      <i slot="prepend" :class="icon"></i>
+      <div slot="center">{{ valueText }}</div>
+      <sp-option
+        v-for="item in list8"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      ></sp-option>
+    </sp-select>
+  </div>
 </template>
 
 <script>
@@ -172,14 +178,16 @@ export default{
 :::demo `v-model`的值为当前被选中的`sp-option`的 value 属性值
 ```vue
 <template>
-  <sp-select v-model="value1">
-    <sp-option
-      v-for="item in list1"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value"
-    ></sp-option>
-  </sp-select>
+  <div class="select-demo">
+    <sp-select v-model="value1">
+      <sp-option
+        v-for="item in list1"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      ></sp-option>
+    </sp-select>
+  </div>
 </template>
 
 <script>
@@ -219,8 +227,10 @@ export default{
 :::demo 为`sp-select`设置`disabled`属性，则整个选择器不可用
 ```vue
 <template>
-  <sp-select disabled>
-  </sp-select>
+  <div class="select-demo">
+    <sp-select disabled>
+    </sp-select>
+  </div>
 </template>
 ```
 :::
@@ -232,15 +242,17 @@ export default{
 :::demo 为`sp-select`设置`readonly`属性，则整个选择器不可用
 ```vue
 <template>
-  <sp-select v-model="value2" readonly>
-    <sp-option
-      v-for="item in list2"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value"
-      :disabled="item.value === 2"
-    ></sp-option>
-  </sp-select>
+  <div class="select-demo">
+    <sp-select v-model="value2" readonly>
+      <sp-option
+        v-for="item in list2"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+        :disabled="item.value === 2"
+      ></sp-option>
+    </sp-select>
+  </div>
 </template>
 ```
 :::
@@ -251,15 +263,17 @@ export default{
 :::demo 在`sp-option`中，设定`disabled`值为 true，即可禁用该选项
 ```vue
 <template>
-  <sp-select v-model="value2">
-    <sp-option
-      v-for="item in list2"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value"
-      :disabled="item.value === 2"
-    ></sp-option>
-  </sp-select>
+  <div class="select-demo">
+    <sp-select v-model="value2">
+      <sp-option
+        v-for="item in list2"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+        :disabled="item.value === 2"
+      ></sp-option>
+    </sp-select>
+  </div>
 </template>
 
 <script>
@@ -290,17 +304,19 @@ export default{
 :::demo 为`sp-select`设置`clearable`属性，则可将选择器清空。需要注意的是，clearable属性仅适用于单选。
 ```vue
 <template>
-  <sp-select
-    v-model="value3"
-    clearable
-  >
-    <sp-option
-      v-for="item in list3"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value"
-    ></sp-option>
-  </sp-select>
+  <div class="select-demo">
+    <sp-select
+      v-model="value3"
+      clearable
+    >
+      <sp-option
+        v-for="item in list3"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      ></sp-option>
+    </sp-select>
+  </div>
 </template>
 
 <script>
@@ -331,17 +347,19 @@ export default{
 :::demo 为sp-select添加filterable属性即可启用搜索功能。默认情况下，Select 会找出所有label属性包含输入值的选项。如果希望使用其他的搜索逻辑，可以通过传入一个filter-method来实现。filter-method为一个Function，它会在输入值发生变化时调用，参数为当前输入值。
 ```vue
 <template>
-  <sp-select
-    v-model="value4"
-    filterable
-  >
-    <sp-option
-      v-for="item in list4"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value"
-    ></sp-option>
-  </sp-select>
+  <div class="select-demo">
+    <sp-select
+      v-model="value4"
+      filterable
+    >
+      <sp-option
+        v-for="item in list4"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      ></sp-option>
+    </sp-select>
+  </div>
 </template>
 
 <script>
@@ -373,17 +391,19 @@ export default{
 :::demo 将自定义的 HTML 模板插入`sp-option`的 slot 中即可
 ```vue
 <template>
-  <sp-select v-model="value5">
-    <sp-option
-      v-for="item in list5"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value"
-    >
-      <span style="float: left">{{ item.label }}</span>
-      <span style="float: right;">{{ item.value }}</span>
-    </sp-option>
-  </sp-select>
+  <div class="select-demo">
+    <sp-select v-model="value5">
+      <sp-option
+        v-for="item in list5"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      >
+        <span style="float: left">{{ item.label }}</span>
+        <span style="float: right;">{{ item.value }}</span>
+      </sp-option>
+    </sp-select>
+  </div>
 </template>
 
 <script>
@@ -414,23 +434,25 @@ export default{
 :::demo 使用`sp-option-group`对备选项进行分组，它的label属性为分组名
 ```vue
 <template>
-  <sp-select v-model="value6">
-    <sp-option-group
-      v-for="group in list6"
-      :key="group.label"
-      :label="group.label"
-    >
-      <sp-option
-        v-for="item in group.options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
+  <div class="select-demo">
+    <sp-select v-model="value6">
+      <sp-option-group
+        v-for="group in list6"
+        :key="group.label"
+        :label="group.label"
       >
-        <span style="float: left">{{ item.label }}</span>
-        <span style="float: right;">{{ item.value }}</span>
-      </sp-option>
-    </sp-option-group>
-  </sp-select>
+        <sp-option
+          v-for="item in group.options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+          <span style="float: left">{{ item.label }}</span>
+          <span style="float: right;">{{ item.value }}</span>
+        </sp-option>
+      </sp-option-group>
+    </sp-select>
+  </div>
 </template>
 
 <script>
@@ -475,20 +497,22 @@ export default{
 :::demo 为`sp-select`设置`multiple`属性即可启用多选，此时`v-model`的值为当前选中值所组成的数组。
 ```vue
 <template>
-  <sp-select
-    v-model="value7"
-    multiple
-  >
-    <sp-option
-      v-for="item in list7"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value"
+  <div class="select-demo">
+    <sp-select
+      v-model="value7"
+      multiple
     >
-      <span style="float: left">{{ item.label }}</span>
-      <span style="float: right;padding-right: 20px;">{{ item.value }}</span>
-    </sp-option>
-  </sp-select>
+      <sp-option
+        v-for="item in list7"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      >
+        <span style="float: left">{{ item.label }}</span>
+        <span style="float: right;padding-right: 20px;">{{ item.value }}</span>
+      </sp-option>
+    </sp-select>
+  </div>
 </template>
 
 <script>
@@ -668,31 +692,36 @@ export default{
 </script>
 
 <style>
-  .customer-select {
-    .sp-select__input-box {
-      border: 1px dashed #ee4c4c;
-      background: rgba(238, 76, 76, 0.1);
-      color: #ee4c4c;
-      .sp-select__input-placeholder,.sp-select__input {
-        color: #ee4c4c;
-        background: rgba(238, 76, 76, 0.1);
-      }
-      .sp-select__suffix {
-        background: rgba(238, 76, 76, 0.1);
-        border: 0;
-        color: #ee4c4c;
-      }
-      .isFocus.sp-select__suffix i {
-        color: #ee4c4c;
-      }
+  .components--main .select-demo {
+    .sp-select {
+      width: 300px;
     }
-    .sp-select.isFocus .sp-select__input-box {
-      border-color: #ee4c4c;
-    }
-    .sp-select.isFocus .sp-select__suffix {
-      background: rgba(238, 76, 76, 0.1);
-      i {
+    .customer-select {
+      .sp-select__input-box {
+        border: 1px dashed #ee4c4c;
+        background: rgba(238, 76, 76, 0.1);
         color: #ee4c4c;
+        .sp-select__input-placeholder,.sp-select__input {
+          color: #ee4c4c;
+          background: rgba(238, 76, 76, 0.1);
+        }
+        .sp-select__suffix {
+          background: rgba(238, 76, 76, 0.1);
+          border: 0;
+          color: #ee4c4c;
+        }
+        .isFocus.sp-select__suffix i {
+          color: #ee4c4c;
+        }
+      }
+      .sp-select.isFocus .sp-select__input-box {
+        border-color: #ee4c4c;
+      }
+      .sp-select.isFocus .sp-select__suffix {
+        background: rgba(238, 76, 76, 0.1);
+        i {
+          color: #ee4c4c;
+        }
       }
     }
   }
