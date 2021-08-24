@@ -448,7 +448,7 @@
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
 | model   | 表单数据对象 | object      |                  —                |  — |
-| rules    | 表单验证规则 | object | — | — |
+| rules    | 表单验证规则 具体的规则文档见：https://github.com/yiminghe/async-validator | object | — | — |
 | label-width | 表单域标签的宽度，作为 Form 直接子元素的 form-item 会继承该值 | string | — | — |
 | show-message  | 是否显示校验错误信息 | boolean | — | true |
 | status-icon  | 是否在输入框中显示校验结果反馈图标 | boolean | — | false |
@@ -478,7 +478,7 @@
 | label-tip-width | 标签文本悬浮提示的宽度 | string/number | — | 230 |
 | for-upload | 如果form-item中校验对象是upload的话，就必须加该标签，否则文件上传失败也认为通过 | boolean | — | false |
 | required | 是否必填，如不设置，则会根据校验规则自动生成（暂时，需要特别样式，所以可忽略） | boolean | — | false |
-| rules    | 表单验证规则 | object | — | — |
+| rules    | 表单验证规则 具体的规则文档见：https://github.com/yiminghe/async-validator | object | — | — |
 | error    | 表单域验证错误信息, 设置该值会使表单验证状态变为`error`，并显示该错误信息 | string | — | — |
 | show-message  | 是否显示校验错误信息 | boolean | — | true |
 
