@@ -3,7 +3,8 @@
     class="sp-step-item"
     :class="{
       'is--finish': isFinish,
-      'is--comming': spStep.position < index
+      'is--comming': spStep.position < index,
+      'is--current': spStep.position == index
     }"
   >
     <div class="sp-step-item__tag">
