@@ -296,26 +296,6 @@ export default {
         <template slot="prepend">Mex$</template>
       </sp-input>
     </div>
-    <div style="margin-top: 15px;">
-      <sp-input
-        placeholder="请输入内容"
-        v-model="input12"
-        class="input-with-select"
-        style="width: 400px;">
-        <sp-select
-          v-model="select"
-          width="100"
-          height="36px"
-          slot="prepend"
-          placeholder="请选择"
-        >
-          <sp-option label="餐厅名" value="1"></sp-option>
-          <sp-option label="订单号" value="2"></sp-option>
-          <sp-option label="用户电话" value="3"></sp-option>
-        </sp-select>
-        <sp-button slot="append" icon="sp-icon-search"></sp-button>
-      </sp-input>
-    </div>
   </div>
 </template>
 

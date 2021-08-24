@@ -445,6 +445,7 @@ export default {
   font-size: 14px;
 
   .sp-textarea__inner {
+    position: relative;
     display: block;
     resize: vertical;
     padding: 7px 10px;
@@ -539,6 +540,7 @@ export default {
   }
 
   &__inner {
+    position: relative;
     -webkit-appearance: none;
     background-color: #fff;
     background-image: none;
@@ -843,7 +845,6 @@ export default {
     bottom: $input-height - 6px;
     left: 0;
     right: 0;
-    z-index: -1;
     background-color: #e6f1ff;
     border-radius: $input-border-radius;
     font-size: 16px;
