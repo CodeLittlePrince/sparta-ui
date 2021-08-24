@@ -1,5 +1,5 @@
 <template>
-  <form class="sp-form">
+  <form ref="form" class="sp-form">
     <slot></slot>
   </form>
 </template>
@@ -26,7 +26,11 @@ export default {
     validateOnRuleChange: {
       type: Boolean,
       default: true
-    }
+    },
+    scrollWhenError: {
+      type: Boolean,
+      default: false
+    },
   },
 
   data() {
@@ -55,6 +59,7 @@ export default {
       }
     })
   },
+  
   methods: {
     resetFields() {
       if (!this.model) {
@@ -112,6 +117,19 @@ export default {
           }
         })
       })
+
+      if (this.scrollWhenError && !valid) {
+        this.$nextTick(() => {
+          if (this.$refs.form) {
+            const errorItems = this.$refs.form.getElementsByClassName('is--error')
+            if (errorItems.length) {
+              errorItems[0].scrollIntoView({
+                behavior: 'smooth'
+              })
+            }
+          }
+        })
+      }
 
       if (promise) {
         return promise
