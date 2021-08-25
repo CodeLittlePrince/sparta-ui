@@ -278,6 +278,15 @@ export default {
       type: Function,
       default: function() {}
     },
+    responseValidate: {
+      type: Function,
+      default: response => {
+        return {
+          pass: response.status == 200,
+          errMsg: response.message
+        }
+      }
+    },
     beforeUpload: {
       type: Function,
       default: function() {}
@@ -421,6 +430,7 @@ export default {
         data: this.data,
         filename: this.name,
         action: this.action,
+        responseValidate: this.responseValidate,
         onProgress: e => {
           const file = this._getFile(rawFile)
           this.onProgress(e, file, rawFile)
@@ -443,7 +453,7 @@ export default {
           file.status = 'fail'
           delete this.request[uid]
           this._resetUploadValue()
-          this.toastError('服务器开小差了，请稍后重试')
+          this.toastError(err instanceof Error ? '服务器开小差了，请稍后重试' : err)
         }
       }
       const req = httpRequest(options)

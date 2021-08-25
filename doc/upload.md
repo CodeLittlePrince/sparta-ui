@@ -197,6 +197,36 @@ export default{
 ```
 :::
 
+### 文件上传后response校验
+在业务中，往往会根据后端给的response，进行状态码的判断，来觉定这个上传事务是否成功，如果失败，就应该触发onError的事件和行为。
+
+:::demo `responseValidate`为函数，入参为服务端返回的数据，通过return的pass值来觉得是否真的上传成功，如果失败，还需要多返回一个errMsg作为报错文案；
+```vue
+<template>
+  <div class="sp-upload-demo">
+    <sp-upload
+      action="/api/upload/error"
+      :response-validate="responseValidate"
+      @change="handleChange"
+    ></sp-upload>
+  </div>
+</template>
+
+<script>
+export default{
+  methods: {
+    responseValidate(response) {
+      return {
+        pass: response.status == 200,
+        errMsg: response.message
+      }
+    }
+  }
+}
+</script>
+```
+:::
+
 ### 禁用
 
 :::demo 使用`disabled`即可。
@@ -245,6 +275,7 @@ export default{
 | type | 文件列表的类型 | string | text/picture| text |
 | disabled | 是否禁用 | boolean | — | false |
 | on-exceed | 文件超出个数限制时的钩子 | function(files, fileList) | — | - |
+| response-validate | 入参为服务端返回的数据，通过return的pass值来觉得是否真的上传成功，如果失败，还需要多返回一个errMsg作为报错文案 | function(response) | — | response => { return { pass: response.status == 200, errMsg: response.message }} |
 
 ### Slot
 | name | 说明 |
@@ -277,6 +308,12 @@ export default{
     },
     onExceed1() {
       this.$sparta.error('最多上传1张图片')
+    },
+    responseValidate(response) {
+      return {
+        pass: response.status == 200,
+        errMsg: response.message
+      }
     }
   }
 }

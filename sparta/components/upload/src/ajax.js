@@ -54,7 +54,16 @@ export default function upload(option) {
     if (xhr.status < 200 || xhr.status >= 300) {
       return option.onError(getError(action, option, xhr))
     }
-    option.onSuccess(getBody(xhr))
+    const response = getBody(xhr)
+
+    if (response) {
+      const validateResult = option.responseValidate(response)
+      if (validateResult.pass) {
+        option.onSuccess(response)
+      } else {
+        option.onError(validateResult.errMsg)
+      }
+    }
   }
   // 上传进度处理
   if (xhr.upload) {

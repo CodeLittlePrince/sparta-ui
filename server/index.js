@@ -72,6 +72,18 @@ app.use(async (ctx, next) => {
         fileUrl: `${upStream.path.replace(uploadDir, '/uploadFiles')}`
       }
       ctx.set('Content-Type', 'text/plain; charset=utf-8')
+    } else if (ctx.url === '/api/upload/error' && 'POST' === ctx.method) {
+      ctx.body = {
+        'code':'10000000',
+        'message':'图片入库失败(from服务器)',
+        'result':{
+          'fileUrl':'https://nos.netease.com/epay-platform/defede4d001c417da4d87e7a8764f5f8.jpg',
+          'fileName':'avatar.jpg',
+          'suffix':'jpg'
+        },
+        'status':'402'
+      }
+      ctx.set('Content-Type', 'text/plain; charset=utf-8')
     // 返回文件
     } else if (ctx.path.startsWith('/uploadFiles') && 'GET' === ctx.method) {
       await send(
