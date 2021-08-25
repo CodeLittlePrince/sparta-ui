@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import Toast from 'sparta/components/toast'
+
 export default {
   name: 'SpForm',
 
@@ -31,6 +33,10 @@ export default {
       type: Boolean,
       default: false
     },
+    validateFailTip: {
+      type: Boolean,
+      default: true
+    }
   },
 
   data() {
@@ -48,6 +54,7 @@ export default {
   },
 
   created() {
+    this.toastError = Toast('error')
     this.$on('sp.form.addField', (field) => {
       if (field) {
         this.fields.push(field)
@@ -123,6 +130,12 @@ export default {
           if (this.$refs.form) {
             const errorItems = this.$refs.form.getElementsByClassName('is--error')
             if (errorItems.length) {
+              // 错误提示
+              const errorTipElem = errorItems[0].querySelector('.sp-form-item__error')
+              if (this.validateFailTip && errorTipElem && errorTipElem.innerText) {
+                this.toastError(errorTipElem.innerText)
+              }
+              // 滚动到错误位置
               errorItems[0].scrollIntoView({
                 behavior: 'smooth'
               })
