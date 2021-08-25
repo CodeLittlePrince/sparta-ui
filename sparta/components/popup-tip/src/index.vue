@@ -14,6 +14,7 @@
         :style="{
           'width': widthComputed,
           'color': color,
+          'z-index': modalZIndex
         }"
       >
         <slot name="popup"></slot>
@@ -25,6 +26,8 @@
 </template>
 
 <script>
+import PopManage from 'sparta/model/PopManage'
+
 export default {
   name: 'SpPopupTip',
 
@@ -53,6 +56,12 @@ export default {
     },
   },
 
+  data() {
+    return {
+      modalZIndex: 100
+    }
+  },
+
   computed: {
     widthComputed() {
       let rst = this.width
@@ -62,6 +71,11 @@ export default {
       }
       return rst
     }
+  },
+
+  mounted() {
+    new PopManage()
+    this.modalZIndex = PopManage.zIndex
   }
 }
 </script>
@@ -85,7 +99,6 @@ export default {
   &__modal {
     display: none;
     position: absolute;
-    z-index: 100;
     font-size: 12px;
     line-height: 1.5;
     color: $color-text-secondary;

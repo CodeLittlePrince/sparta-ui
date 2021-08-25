@@ -29,7 +29,13 @@
       </div>
       <template v-if="tipFormat && tipFormat(value)">
         <transition name="sp-fade">
-          <div v-show="isFocus" class="sp-input-group__format-tip">{{ tipFormat(value) }}</div>
+          <div
+            v-show="isFocus"
+            class="sp-input-group__format-tip"
+            :style="{
+              'z-index': formatTipZIndex
+            }"
+          >{{ tipFormat(value) }}</div>
         </transition>
       </template>
       <input
@@ -161,6 +167,7 @@
 <script>
 import Emitter from 'sparta/common/js/mixins/emitter'
 import calcTextareaHeight from './calcTextareaHeight'
+import PopManage from 'sparta/model/PopManage'
 
 export default {
   name: 'SpInput',
@@ -299,6 +306,7 @@ export default {
   mounted() {
     this.resizeTextarea()
     this.updateIconOffset()
+    this.setFormatTipZIndex()
   },
 
   updated() {
@@ -421,6 +429,11 @@ export default {
     updateIconOffset() {
       this.calcIconOffset('prefix')
       this.calcIconOffset('suffix')
+    },
+
+    setFormatTipZIndex() {
+      new PopManage()
+      this.formatTipZIndex = PopManage.zIndex
     },
 
     handleClear() {
@@ -842,7 +855,7 @@ export default {
 
   &__format-tip {
     position: absolute;
-    bottom: $input-height - 6px;
+    bottom: $input-height + 4px;
     left: 0;
     right: 0;
     background-color: #e6f1ff;
@@ -852,7 +865,7 @@ export default {
     font-weight: 600;
     color: $color-text-regular;
     box-sizing: border-box;
-    padding: 7px 10px 13px;
+    padding: 7px 10px;
   }
 }
 </style>
