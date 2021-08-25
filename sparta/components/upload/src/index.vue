@@ -400,10 +400,7 @@ export default {
 
     _uploadFiles(files) {
       // 超过文件数量限制处理
-      if (this.limit && this.uploadFiles.length + files.length > this.limit) {
-        this.toastError(`最多上传${ this.limit }个文件`)
-        this.onExceed(files, this.uploadFiles)
-        this._resetUploadValue()
+      if (!this._limitValidate(files)) {
         return
       }
       // 文件遍历上传
@@ -415,6 +412,17 @@ export default {
         this._onStart(rawFile)
         this._uploadByXHR(rawFile)
       })
+    },
+
+    _limitValidate(files) {
+      if (this.limit && this.uploadFiles.length + files.length > this.limit) {
+        this.toastError(`最多上传${ this.limit }个文件`)
+        this.onExceed(files, this.uploadFiles)
+        this._resetUploadValue()
+        return false
+      }
+
+      return true
     },
 
     _uploadByXHR(rawFile) {
@@ -575,6 +583,10 @@ export default {
     },
 
     _uploadByIframe() {
+      // 超过文件数量限制处理
+      if (!this._limitValidate([file])) {
+        return
+      }
       // IE9只能通过form方式上传文件，但要做到无刷新上传，就得借助iframe
       // this.$refs.reference.value
       let namePieces = this.$refs.reference.value.split('\\')

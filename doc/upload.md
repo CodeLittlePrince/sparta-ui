@@ -128,6 +128,14 @@ export default{
 <template>
   <div class="sp-upload-demo">
     <sp-upload
+      action="/api/upload"
+      :limit="3"
+      multiple
+      :process-result="processResult"
+      @change="handleChange"
+    ></sp-upload>
+    <div style="margin-top: 10px;"></div>
+    <sp-upload
       type="picture"
       action="/api/upload"
       multiple
