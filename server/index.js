@@ -69,7 +69,10 @@ app.use(async (ctx, next) => {
       const upStream = fs.createWriteStream(`${uploadDir}/${Math.random().toString()}.${ext}`)		// 创建可写流
       reader.pipe(upStream)	// 可读流通过管道写入可写流
       ctx.body = {
-        fileUrl: `${upStream.path.replace(uploadDir, '/uploadFiles')}`
+        'result':{
+          fileUrl: `${upStream.path.replace(uploadDir, '/uploadFiles')}`,
+        },
+        'status':'200'
       }
       ctx.set('Content-Type', 'text/plain; charset=utf-8')
     } else if (ctx.url === '/api/upload/error' && 'POST' === ctx.method) {

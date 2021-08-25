@@ -264,7 +264,7 @@ export default {
     },
     processResult: {
       type: Function,
-      default: item => item.fileUrl
+      default: item => item.result.fileUrl
     },
     onProgress: {
       type: Function,
