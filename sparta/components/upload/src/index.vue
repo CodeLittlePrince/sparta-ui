@@ -189,6 +189,7 @@
 </template>
 
 <script>
+import Toast from 'sparta/components/toast'
 import Emitter from 'sparta/common/js/mixins/emitter'
 import httpRequest from './ajax'
 
@@ -318,6 +319,7 @@ export default {
   },
 
   mounted() {
+    this.toastError = Toast('error')
     this._initUploadFilesData()
   },
 
@@ -390,7 +392,9 @@ export default {
     _uploadFiles(files) {
       // 超过文件数量限制处理
       if (this.limit && this.uploadFiles.length + files.length > this.limit) {
+        this.toastError(`最多上传${ this.limit }个文件`)
         this.onExceed(files, this.uploadFiles)
+        this._resetUploadValue()
         return
       }
       // 文件遍历上传

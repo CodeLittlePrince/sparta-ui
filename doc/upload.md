@@ -140,6 +140,16 @@ export default{
     >添加图片</sp-upload>
   </div>
 </template>
+
+<script>
+export default{
+  methods: {
+    onExceed() {
+      console.log('exceed')
+    },
+  }
+}
+</script>
 ```
 :::
 
@@ -263,7 +273,7 @@ export default{
       return url + '?w=200'
     },
     onExceed() {
-      this.$sparta.error('最多上传3张图片')
+      console.log('exceed')
     },
     onExceed1() {
       this.$sparta.error('最多上传1张图片')
