@@ -443,6 +443,7 @@ export default {
           file.status = 'fail'
           delete this.request[uid]
           this._resetUploadValue()
+          this.toastError('服务器开小差了，请稍后重试')
         }
       }
       const req = httpRequest(options)
