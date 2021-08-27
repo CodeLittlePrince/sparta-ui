@@ -30,7 +30,7 @@ export default {
     value: {},
     label: {
       type: [String, Boolean, Number],
-      deafaul: ''
+      default: ''
     },
     disabled: {
       type: Boolean,
