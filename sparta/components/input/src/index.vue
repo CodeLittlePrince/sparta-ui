@@ -235,6 +235,10 @@ export default {
     tipFormat: {
       type: Function,
       default: null
+    },
+    filterChar: {
+      type: [RegExp, Array],
+      default: null
     }
   },
 
@@ -296,6 +300,10 @@ export default {
   watch: {
     value(val) {
       this.setCurrentValue(val)
+    },
+
+    currentValue(newVal) {
+      this.filterCharForValue(newVal)
     }
   },
 
@@ -314,6 +322,27 @@ export default {
   },
 
   methods: {
+    filterCharForValue(newVal) {
+      if (newVal === '') return
+
+      const filterChar = this.filterChar
+      if (filterChar) {
+        const isArray = filterChar instanceof Array
+        const isRegExp = filterChar instanceof RegExp
+        
+        if (isArray) {
+          for (let i = 0; i < this.filterChar.length; i++) {
+            const ele = this.filterChar[i]
+            newVal = newVal.replace(new RegExp(ele, 'g'), '')
+          }
+        } else if (isRegExp) {
+          newVal = newVal.replace(filterChar, '')
+        }
+
+        this.$emit('input', newVal)
+        this.setCurrentValue(newVal)
+      }
+    },
     focus() {
       (this.$refs.input || this.$refs.textarea).focus()
     },
