@@ -241,7 +241,6 @@ export default {
         fieldValueCopy = fieldValueCopy.filter(item => item.status === 'success')
       }
       model[this.prop] = fieldValueCopy
-
       validator.validate(model, { firstFields: true }, (errors, invalidFields) => {
         this.validateState = !errors ? 'success' : 'error'
         this.validateMessage = errors ? errors[0].message : ''

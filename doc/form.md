@@ -170,6 +170,10 @@
         @click="submitForm('validateForm1')"
       >提交</sp-button>
       <sp-button plain @click="handleResetForm1">重置</sp-button>
+      <sp-button
+        type="primary"
+        @click="validateFormPart('validateForm1')"
+      >部分提交</sp-button>
     </sp-form-item>
   </sp-form>
 </template>
@@ -215,6 +219,14 @@
         //     console.log('error submit')
         //   }
         // })
+      },
+      validateFormPart(formName) {
+        this.$refs[formName].validate(null, ['name', 'password']).then(() => {
+          alert('submit!')
+          console.log(this.validateForm1)
+        }).catch(() => {
+          console.log('error submit')
+        })
       },
       resetForm(formName) {
         this.$refs[formName].resetFields()
@@ -460,7 +472,7 @@
 
 | 方法名      | 说明          | 参数
 |---------- |-------------- | --------------
-| validate | 对整个表单进行校验的方法，参数为一个回调函数。该回调函数会在校验结束后被调用，并传入两个参数：是否校验成功和未通过校验的字段。若不传入回调函数，则会返回一个 promise | Function(callback: Function(boolean, object))
+| validate | 对整个表单进行校验的方法，参数为一个回调函数。该回调函数会在校验结束后被调用，并传入两个参数：是否校验成功和未通过校验的字段。若不传入回调函数，则会返回一个 promise；validate的第二个参数为支持部分字段校验，不传则为全部字段校验 | Function(callback: Function(boolean, object), partFields)
 | resetFields | 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果 | —
 | clearValidate | 移除表单项的校验结果。传入待移除的表单项的 prop 属性或者 prop 组成的数组，如不传则移除整个表单的校验结果果 | Function(props: array | string)
 
@@ -550,6 +562,14 @@
     methods: {
       submitForm(formName) {
         this.$refs[formName].validate().then(() => {
+          alert('submit!')
+          console.log(this.validateForm1)
+        }).catch(() => {
+          console.log('error submit')
+        })
+      },
+      validateFormPart(formName) {
+        this.$refs[formName].validate(null, ['name', 'password']).then(() => {
           alert('submit!')
           console.log(this.validateForm1)
         }).catch(() => {

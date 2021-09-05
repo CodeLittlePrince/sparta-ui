@@ -90,7 +90,7 @@ export default {
       })
     },
 
-    validate(callback) {
+    validate(callback, partFields) {
       if (!this.model) {
         console.warn('[Sparta Warn][Form]model is required for validate to work!')
         return
@@ -113,13 +113,19 @@ export default {
         callback(true)
       }
       let invalidFields = {}
-      this.fields.forEach(field => {
+      
+      let fields = this.fields
+      // 支持部分校验，传入prop的数组即可
+      if (partFields) {
+        fields = fields.filter(vm => partFields.includes(vm.prop))
+      }
+      fields.forEach(field => {
         field.validate('', (message, field) => {
           if (message) {
             valid = false
           }
           invalidFields = Object.assign({}, invalidFields, field)
-          if (typeof callback === 'function' && ++count === this.fields.length) {
+          if (typeof callback === 'function' && ++count === fields.length) {
             callback(valid, invalidFields)
           }
         })
