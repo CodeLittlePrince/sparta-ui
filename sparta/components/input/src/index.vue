@@ -239,6 +239,11 @@ export default {
     filterChar: {
       type: [RegExp, Array],
       default: null
+    },
+    transformCase: {
+      type: String,
+      default: '',
+      validator: val => ['', 'upper', 'lower'].includes(val)
     }
   },
 
@@ -303,7 +308,7 @@ export default {
     },
 
     currentValue(newVal) {
-      this.filterCharForValue(newVal)
+      this.preProcessCurrentValue(newVal)
     }
   },
 
@@ -322,40 +327,50 @@ export default {
   },
 
   methods: {
-    filterCharForValue(newVal) {
-      if (newVal === '') return
+    preProcessCurrentValue(newVal) {
+      if (newVal === '') return newVal
 
+      let result = this.filterCharForValue(newVal)
+      result = this.transformCharCase(result)
+
+      if (result !== newVal) {
+        this.$emit('input', result)
+        this.setCurrentValue(result)
+      }
+    },
+
+    transformCharCase(newVal) {
+      if (!this.transformCase) return newVal
+      
+      if (this.transformCase === 'upper') {
+        newVal = newVal.toLocaleUpperCase()
+      } else {
+        newVal = newVal.toLocaleLowerCase()
+      }
+
+      return newVal
+    },
+
+    filterCharForValue(newVal) {
       const filterChar = this.filterChar
 
       if (filterChar) {
         const isArray = filterChar instanceof Array
         const isRegExp = filterChar instanceof RegExp
-        let matched = false
         
         if (isArray) {
           for (let i = 0; i < this.filterChar.length; i++) {
             const ele = this.filterChar[i]
             const regrex = new RegExp(ele, 'g')
 
-            if (regrex.test(ele)) {
-              matched = true
-            }
-
             newVal = newVal.replace(regrex, '')
           }
         } else if (isRegExp) {
-          if (filterChar.test(newVal)) {
-            matched = true
-          }
-
           newVal = newVal.replace(filterChar, '')
         }
-
-        if (matched) {
-          this.$emit('input', newVal)
-          this.setCurrentValue(newVal)
-        }
       }
+
+      return newVal
     },
     focus() {
       (this.$refs.input || this.$refs.textarea).focus()

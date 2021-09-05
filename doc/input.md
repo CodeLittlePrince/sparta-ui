@@ -177,6 +177,47 @@ export default {
 ```
 :::
 
+### 转换英文大小写
+通过transform-case属性来转换英文大小写。
+
+:::demo transform-case值可选，分别是：lower、upper。
+```vue
+<template>
+  <div class="sp-input-demo">
+    <sp-input
+      v-model="value16"
+      transform-case="lower"
+      placeholder="转为小写"
+    ></sp-input>
+    <sp-input
+      v-model="value17"
+      transform-case="upper"
+      placeholder="转为大写"
+    ></sp-input>
+  </div>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        value16: '',
+        value17: '',
+      }
+    },
+    watch: {
+      value16(val) {
+        console.log(val)
+      },
+      value17(val) {
+        console.log(val)
+      },
+    }
+  }
+</script>
+```
+:::
+
 ### 格式化提示
 :::demo 使用`tipFormat`属性即可得到一个有格式化提示的输入框
 ```vue
@@ -435,6 +476,8 @@ export default {
         value13: '',
         value14: '',
         value15: '',
+        value16: '',
+        value17: '',
         select: ''
       }
     },
@@ -446,6 +489,12 @@ export default {
         console.log(val)
       },
       value15(val) {
+        console.log(val)
+      },
+      value16(val) {
+        console.log(val)
+      },
+      value17(val) {
         console.log(val)
       },
     },
