@@ -150,7 +150,7 @@ export default {
     ></sp-input>
     <sp-input
       v-model="value15"
-      :filter-char="/[A|B|C]/g"
+      :filter-char="/[^a-zA-Z]/g"
       placeholder="用正则过滤"
     ></sp-input>
   </div>

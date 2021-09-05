@@ -326,21 +326,35 @@ export default {
       if (newVal === '') return
 
       const filterChar = this.filterChar
+
       if (filterChar) {
         const isArray = filterChar instanceof Array
         const isRegExp = filterChar instanceof RegExp
+        let matched = false
         
         if (isArray) {
           for (let i = 0; i < this.filterChar.length; i++) {
             const ele = this.filterChar[i]
-            newVal = newVal.replace(new RegExp(ele, 'g'), '')
+            const regrex = new RegExp(ele, 'g')
+
+            if (regrex.test(ele)) {
+              matched = true
+            }
+
+            newVal = newVal.replace(regrex, '')
           }
         } else if (isRegExp) {
+          if (filterChar.test(newVal)) {
+            matched = true
+          }
+
           newVal = newVal.replace(filterChar, '')
         }
 
-        this.$emit('input', newVal)
-        this.setCurrentValue(newVal)
+        if (matched) {
+          this.$emit('input', newVal)
+          this.setCurrentValue(newVal)
+        }
       }
     },
     focus() {
@@ -422,8 +436,8 @@ export default {
     },
 
     setCurrentValue(value) {
-      if (this.isOnComposition && value === this.valueBeforeComposition) return
       this.currentValue = value
+      if (this.isOnComposition && value === this.valueBeforeComposition) return
       if (this.isOnComposition) return
       this.$nextTick(this.resizeTextarea)
       if (this.validateEvent && this.currentValue === this.value) {
