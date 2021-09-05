@@ -285,6 +285,11 @@ export default{
 | on-exceed | 文件超出个数限制时的钩子 | function(files, fileList) | — | - |
 | response-validate | 入参为服务端返回的数据，通过return的pass值来觉得是否真的上传成功，如果失败，还需要多返回一个errMsg作为报错文案 | function(response) | — | response => { return { pass: response.status == 200, errMsg: response.message }} |
 
+### Methods
+| 方法名      | 说明          | 参数
+|---------- |-------------- | --------------
+| getSuccessUploadFiles | 获取上传成功了的文件列表（为什么不直接在change事件回调参数中？是因为当组件用到:files属性后，那:files的值必须得是整个无论上传成功还是失败的文件列表，否则会影响显示，所有为了误用，干脆就不暴露出来，而是通过方式的形式在需要的时候使用） | —
+
 ### Slot
 | name | 说明 |
 |------|--------|
