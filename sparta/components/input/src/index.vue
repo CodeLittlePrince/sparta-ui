@@ -820,6 +820,8 @@ export default {
     border-radius: $input-border-radius;
     padding: 0 10px;
     width: 1px;
+    min-width: 16px;
+    text-align: center;
     white-space: nowrap;
     overflow: hidden;
 
