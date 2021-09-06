@@ -107,7 +107,7 @@ export default {
     cursor: pointer;
     font-size: 0;
     color: $radio-color;
-    margin-right: 20px;
+    margin-right: 40px;
     line-height: 20px;
     height: 20px;
     display: inline-block;
