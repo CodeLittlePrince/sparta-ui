@@ -366,7 +366,7 @@ export default {
     },
 
     handleFilePreview(item) {
-      if (item.type === 'image') {
+      if (item.fileType === 'image') {
         this.$sparta.imgPreview(this._getImgUrl(item))
       } else {
         window.open(item.fileUrl)
@@ -391,7 +391,7 @@ export default {
     _initUploadFilesData() {
       this.uploadFiles = this.files.map(item => {
         item.status = 'success'
-        item.type = 'image'
+        item.fileType = item.fileType || 'image'
         item.percentage = 100
         item.uid = Date.now() + this.uidIndex++
         return item
@@ -532,7 +532,7 @@ export default {
         fileType: rawFile.type.startsWith('image') ? 'image' : 'file'
       }
       // 预显示
-      if (this.type === 'picture' && !this.isIE9) {
+      if (this.fileType === 'picture' && !this.isIE9) {
         try {
           file.urlBase64 = URL.createObjectURL(rawFile)
         } catch (err) {
@@ -574,7 +574,7 @@ export default {
           status: item.status,
           fileType: item.fileType
         }
-        if (this.type === 'picture' && !this.isIE9) {
+        if (this.fileType === 'picture' && !this.isIE9) {
           data.urlBase64 = item.urlBase64
         }
         rst.push(data)
