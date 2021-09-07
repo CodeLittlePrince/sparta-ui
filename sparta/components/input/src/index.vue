@@ -256,7 +256,8 @@ export default {
       isHover: false,
       isFocus: false,
       isOnComposition: false,
-      valueBeforeComposition: null
+      valueBeforeComposition: null,
+      formatTipZIndex: 1
     }
   },
 
