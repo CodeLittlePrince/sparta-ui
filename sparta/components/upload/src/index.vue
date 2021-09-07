@@ -526,6 +526,7 @@ export default {
         status: 'ready',
         uid: rawFile.uid,
         fileName: rawFile.name,
+        suffix: this._getFileSuffix(rawFile.name),
         size: rawFile.size,
         percentage: 0,
         raw: rawFile,
@@ -553,6 +554,7 @@ export default {
         if (item.status === 'success') {
           let data = {
             fileName: item.fileName,
+            suffix: this._getFileSuffix(item.fileName),
             fileUrl: item.fileUrl,
             fileType: item.fileType
           }
@@ -570,6 +572,7 @@ export default {
         const item = copy[i]
         let data = {
           fileName: item.fileName,
+          suffix: this._getFileSuffix(item.fileName),
           fileUrl: item.fileUrl,
           status: item.status,
           fileType: item.fileType
@@ -593,7 +596,8 @@ export default {
       const file = {
         uid: Date.now() + this.uidIndex++,
         status: 'ready',
-        fileName: namePieces[namePieces.length - 1]
+        fileName: namePieces[namePieces.length - 1],
+        suffix: this._getFileSuffix(namePieces[namePieces.length - 1]),
       }
       this.uploadFiles.push(file)
       const now = Date.now()
@@ -671,6 +675,16 @@ export default {
 
     _parsePercentage(val) {
       return parseInt(val, 10)
+    },
+
+    _getFileSuffix(fileName) {
+      if (!fileName) return ''
+
+      const pieces = fileName.split('.')
+      
+      if (pieces.length === 1) return ''
+      
+      return '.' + pieces[pieces.length - 1]
     }
   }
 }

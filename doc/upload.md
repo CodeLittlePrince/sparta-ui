@@ -45,7 +45,7 @@ export default{
       action="/api/upload"
       example-image="https://i.epay.126.net/a/ge/static/img/ex_supplier.5f209565.png"
       example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
-      :files="[{name: 'food.jpg', url: 'https://cn.vuejs.org/images/logo.png'}]"
+      :files="[{fileName: 'food.jpg', fileUrl: 'https://cn.vuejs.org/images/logo.png'}]"
       @change="handleChange"
       multiple
     >
