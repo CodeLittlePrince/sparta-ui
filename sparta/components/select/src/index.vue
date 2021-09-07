@@ -255,6 +255,9 @@ export default {
           }
         }
       }
+    },
+    spOptions() {
+      this.setCurrentValue(this.value, true)
     }
   },
   
@@ -294,9 +297,9 @@ export default {
       })
     },
     
-    setCurrentValue(val) {
+    setCurrentValue(val, noTrigger) {
       this.currentValue = val
-      if (this.validateEvent) {
+      if (this.validateEvent && !noTrigger) {
         this.dispatch('SpFormItem', 'sp.form.change', [val])
       }
       // 设置输入框显示文案
