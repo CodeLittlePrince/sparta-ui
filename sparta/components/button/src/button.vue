@@ -111,6 +111,7 @@ export default {
   user-select: none;
   padding: 0 10px;
   border-radius: 4px;
+  font-size: $button-font-size;
 
   & + & {
     margin-left: 10px;
