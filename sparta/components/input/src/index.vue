@@ -402,10 +402,10 @@ export default {
           const ele = this.filterChar[i]
           const regrex = new RegExp(ele, 'g')
 
-          newVal = newVal.replace(regrex, '')
+          newVal = String(newVal).replace(regrex, '')
         }
       } else if (isRegExp) {
-        newVal = newVal.replace(filterChar, '')
+        newVal = String(newVal).replace(filterChar, '')
       }
 
       return newVal
