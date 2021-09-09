@@ -309,7 +309,9 @@ export default {
     },
 
     currentValue(newVal) {
-      this.preProcessCurrentValue(newVal)
+      if (this.filterChar || this.transformCase) {
+        this.preProcessCurrentValue(newVal)
+      }
     }
   },
 
@@ -330,14 +332,50 @@ export default {
   methods: {
     preProcessCurrentValue(newVal) {
       if (newVal === '') return newVal
-
       let result = this.filterCharForValue(newVal)
       result = this.transformCharCase(result)
+
+      // 修正偏移
+      this._fixInputCursorPos(result, newVal)
 
       if (result !== newVal) {
         this.$emit('input', result)
         this.setCurrentValue(result)
       }
+    },
+
+    _getInputCursorPos() {
+      const type = this.type === 'textarea' ? 'textarea' : 'input'
+      const inputNode = this.$refs[type]
+      
+      if (!inputNode) return 0
+
+      return inputNode.selectionStart || 0 // 记录当前光标位置
+    },
+
+    _fixInputCursorPos(result, newVal) {
+      if (result === newVal) return
+
+      // 因为filterCharForValue和transformCharCase会导致光标踢到末尾去，所以需要修正光标
+      let cursorPos = this._getInputCursorPos()
+      // 修正偏移 - 记录原来光标位置
+      // 如果filterCharForValue过滤了某些字符，比如银行卡号输入框不允许输入`.`，光标这时取到的还会是`.`之后的坐标，所以需要修正
+      // 如果为经过formatterInput前的值，经过formatterInput之后的值去格式化后不相同，才需要偏移
+      cursorPos -= newVal.length - result.length
+      // 修正偏移 - 移动光标到正确位置
+
+      this.$nextTick(() => {
+        const type = this.type === 'textarea' ? 'textarea' : 'input'
+        const inputNode = this.$refs[type]
+
+        if (!inputNode) return 0
+
+        // 有些类型比如type为email，不支持这个方法，不支持就罢了
+        try {
+          inputNode.setSelectionRange(cursorPos, cursorPos)
+          // eslint-disable-next-line no-empty
+        } catch {}
+      })
     },
 
     transformCharCase(newVal) {
@@ -353,22 +391,21 @@ export default {
     },
 
     filterCharForValue(newVal) {
+      if (!this.filterChar) return newVal
+
       const filterChar = this.filterChar
+      const isArray = filterChar instanceof Array
+      const isRegExp = filterChar instanceof RegExp
+      
+      if (isArray) {
+        for (let i = 0; i < this.filterChar.length; i++) {
+          const ele = this.filterChar[i]
+          const regrex = new RegExp(ele, 'g')
 
-      if (filterChar) {
-        const isArray = filterChar instanceof Array
-        const isRegExp = filterChar instanceof RegExp
-        
-        if (isArray) {
-          for (let i = 0; i < this.filterChar.length; i++) {
-            const ele = this.filterChar[i]
-            const regrex = new RegExp(ele, 'g')
-
-            newVal = newVal.replace(regrex, '')
-          }
-        } else if (isRegExp) {
-          newVal = newVal.replace(filterChar, '')
+          newVal = newVal.replace(regrex, '')
         }
+      } else if (isRegExp) {
+        newVal = newVal.replace(filterChar, '')
       }
 
       return newVal
