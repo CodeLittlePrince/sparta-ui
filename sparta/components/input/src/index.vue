@@ -478,9 +478,10 @@ export default {
     },
 
     handleInput(event) {
+      if (this.isOnComposition) return
+
       const value = event.target.value
       this.setCurrentValue(value)
-      if (this.isOnComposition) return
       this.$emit('input', value)
     },
 
@@ -489,9 +490,10 @@ export default {
     },
 
     setCurrentValue(value) {
-      this.currentValue = value
-      if (this.isOnComposition && value === this.valueBeforeComposition) return
       if (this.isOnComposition) return
+      if (value === this.valueBeforeComposition) return
+
+      this.currentValue = value
       this.$nextTick(this.resizeTextarea)
       if (this.validateEvent && this.currentValue === this.value) {
         this.dispatch('SpFormItem', 'sp.form.change', [value])

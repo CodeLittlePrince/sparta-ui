@@ -30,6 +30,20 @@
       <div slot="labelTip">靓仔，有什么疑问吗？</div>
       <div slot="tip">输入你的名字吧，靓仔!</div>
     </sp-form-item>
+    <sp-form-item
+      label="银行编号"
+      prop="localBankCode"
+      :rules="[
+        { required: true, message: '请输入3位数字Bank Code' },
+      ]"
+    >
+      <sp-input
+        v-model="validateForm1.localBankCode"
+        maxlength="3"
+        :filter-char="/[^\d]/g"
+        placeholder="请输入3位数字Bank Code"
+      />
+    </sp-form-item>
      <!-- 姓名 -->
     <sp-form-item
       prop="password"
@@ -184,6 +198,7 @@
       return {
         validateForm1: {
           name: '',
+          localBankCode: '',
           password: '',
           age: '',
           birth: '',
@@ -510,6 +525,7 @@
       return {
         validateForm1: {
           name: '',
+          localBankCode: '',
           password: '',
           age: '',
           birth: '',
