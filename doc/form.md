@@ -147,7 +147,6 @@
         type="picture"
         example-image="https://i.epay.126.net/a/ge/static/img/ex_supplier.5f209565.png"
         example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
-        :processResult="processPictureResult"
         @change="handlePictureChange"
         :limit="1"
       ></sp-upload>
@@ -168,7 +167,6 @@
         action="/api/upload"
         example-image="https://i.epay.126.net/a/ge/static/img/ex_supplier.5f209565.png"
         example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
-        :process-result="processFilesResult"
         @change="handleFilesChange"
         multiple
       >
@@ -249,18 +247,12 @@
       handlePictureChange(list) {
         this.validateForm1.picture = list
       },
-      processPictureResult(item) {
-        return item.fileUrl
-      },
       handleResetForm1() {
         this.resetForm('validateForm1')
         console.log(this.validateForm1)
       },
       handleFilesChange(allFiles) {
         this.validateForm1.files = allFiles
-      },
-      processFilesResult(item) {
-        return item.fileUrl
       },
       onExceed() {
         this.$sparta.error('最多上传3张图片')
@@ -598,18 +590,12 @@
       handlePictureChange(list) {
         this.validateForm1.picture = list
       },
-      processPictureResult(item) {
-        return item.fileUrl
-      },
       handleResetForm1() {
         this.resetForm('validateForm1')
         console.log(this.validateForm1)
       },
       handleFilesChange(allFiles) {
         this.validateForm1.files = allFiles
-      },
-      processFilesResult(item) {
-        return item.fileUrl
       },
       onExceed() {
         this.$sparta.error('最多上传3张图片')

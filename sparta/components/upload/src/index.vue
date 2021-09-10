@@ -44,7 +44,7 @@
             </div>
           </div>
         </div>
-        <p v-show="uploadFiles.length" class="sp-upload-file__text">以下为已上传文件：</p>
+        <p v-show="uploadFiles.length" class="sp-upload-file__text">以下为上传文件：</p>
         <!-- 展示 -->
         <ul class="sp-upload-file__show">
           <li
@@ -324,6 +324,7 @@ export default {
   watch: {
     files(val) {
       this.uploadFiles = val
+      this._initUploadFilesData()
     }
   },
 
@@ -390,10 +391,14 @@ export default {
      */
     _initUploadFilesData() {
       this.uploadFiles = this.files.map(item => {
-        item.status = 'success'
-        item.fileType = item.fileType || 'image'
-        item.percentage = 100
-        item.uid = Date.now() + this.uidIndex++
+        // status没有值说明是外部通过:files直接传入的情况（场景一般是表单回填）
+        // 这种情况需要初始化成规范格式，不然会影响最后的取值
+        if (!item.status) {
+          item.status = 'success'
+          item.fileType = item.fileType || 'image'
+          item.percentage = 100
+          item.uid = Date.now() + this.uidIndex++
+        }
         return item
       })
     },
