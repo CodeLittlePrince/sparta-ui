@@ -90,7 +90,7 @@ export default {
       })
     },
 
-    validate(callback, partFields) {
+    validate(callback, showErrorToast = true, partFields) {
       if (!this.model) {
         console.warn('[Sparta Warn][Form]model is required for validate to work!')
         return
@@ -138,7 +138,7 @@ export default {
             if (errorItems.length) {
               // 错误提示
               const errorTipElem = errorItems[0].querySelector('.sp-form-item__error')
-              if (this.validateFailTip && errorTipElem && errorTipElem.innerText) {
+              if (this.validateFailTip && errorTipElem && errorTipElem.innerText && showErrorToast) {
                 this.toastError(errorTipElem.innerText)
               }
               // 滚动到错误位置
