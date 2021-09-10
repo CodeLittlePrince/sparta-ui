@@ -131,7 +131,7 @@ export default {
         })
       })
 
-      if (this.scrollWhenError && !valid) {
+      if (!valid) {
         this.$nextTick(() => {
           if (this.$refs.form) {
             const errorItems = this.$refs.form.getElementsByClassName('is--error')
@@ -142,9 +142,11 @@ export default {
                 this.toastError(errorTipElem.innerText)
               }
               // 滚动到错误位置
-              errorItems[0].scrollIntoView({
-                behavior: 'smooth'
-              })
+              if (this.scrollWhenError) {
+                errorItems[0].scrollIntoView({
+                  behavior: 'smooth'
+                })
+              }
             }
           }
         })
