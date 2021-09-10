@@ -790,6 +790,7 @@ export default {
     }
 
     &__item {
+      width: 304px;
       position: relative;
       margin-top: 3px;
       font-size: 0;
