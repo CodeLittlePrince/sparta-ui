@@ -29,6 +29,7 @@ import SpStepItem from './components/step-item'
 import ImgPreview from './components/img-preview'
 import Form from './components/form'
 import FormItem from './components/form-item'
+import FormSubmitBtns from './components/form-submit-btns'
 import Tag from './components/tag'
 import Table from './components/table'
 import TableCell from './components/table-cell'
@@ -72,6 +73,7 @@ const components = [
   SpStepItem,
   Form,
   FormItem,
+  FormSubmitBtns,
   Tag,
   Table,
   TableCell,
@@ -135,6 +137,7 @@ export {
   SpStepItem,
   Form,
   FormItem,
+  FormSubmitBtns,
   Tag,
   Table,
   TableCell,

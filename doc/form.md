@@ -176,17 +176,29 @@
       </sp-upload>
     </sp-form-item>
     <!-- 按钮 -->
-    <sp-form-item>
-      <sp-button
-        type="primary"
-        @click="submitForm('validateForm1')"
-      >提交</sp-button>
-      <sp-button plain @click="handleResetForm1">重置</sp-button>
-      <sp-button
-        type="primary"
-        @click="validateFormPart('validateForm1')"
-      >部分提交</sp-button>
-    </sp-form-item>
+    <sp-form-submit-btns>
+      <sp-form-item
+        prop="agree"
+        :rules="[{
+          validator: () => { return validateForm1.agree },
+          message: '请阅读用户服务协议'
+        }]"
+      >
+        <sp-checkbox v-model="validateForm1.agree">
+          <span>我已阅读并同意</span>
+          <a href="/paymentpromise" target="_blank">《网易跨境付款服务补充协议》</a>
+        </sp-checkbox>
+        <sp-button
+          type="primary"
+          @click="submitForm('validateForm1')"
+        >提交</sp-button>
+        <sp-button plain @click="handleResetForm1">重置</sp-button>
+        <sp-button
+          type="primary"
+          @click="validateFormPart('validateForm1')"
+        >部分提交</sp-button>
+      </sp-form-item>
+    </sp-form-submit-btns>
   </sp-form>
 </template>
 
@@ -204,7 +216,8 @@
           cities: [],
           favoriteFruit: '',
           picture: [],
-          files: []
+          files: [],
+          agree: false
         },
         favouriteList: [
           { label: '唱歌', value: 'sing' },
@@ -525,7 +538,8 @@
           cities: [],
           favoriteFruit: '',
           picture: [],
-          files: []
+          files: [],
+          agree: false
         },
         favouriteList: [
           { label: '唱歌', value: 'sing' },
