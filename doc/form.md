@@ -174,6 +174,7 @@
         <div slot="desc">上传文件说明，可多行</div>
         <div slot="tip">注意：最终提交，upload组件需要自行调用getSuccessUploadFiles方法拿到只上传成功的文件</div>
       </sp-upload>
+      <div slot="error" slot-scope="scope">{{ scope.error }}<a style="color: #1977ea">（by hello kitty）</a></div>
     </sp-form-item>
     <!-- 按钮 -->
     <sp-form-submit-btns>
@@ -186,7 +187,7 @@
       >
         <sp-checkbox v-model="validateForm1.agree">
           <span>我已阅读并同意</span>
-          <a href="/paymentpromise" target="_blank">《网易跨境付款服务补充协议》</a>
+          <a>《网易跨境付款服务补充协议》</a>
         </sp-checkbox>
         <sp-button
           type="primary"
