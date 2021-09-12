@@ -29,13 +29,17 @@ export default {
       type: Boolean,
       default: true
     },
+    validateFailTip: {
+      type: Boolean,
+      default: true
+    },
     scrollWhenError: {
       type: Boolean,
       default: false
     },
-    validateFailTip: {
-      type: Boolean,
-      default: true
+    scrollOffsetTop: {
+      type: [Number, String],
+      default: 0
     }
   },
 
@@ -143,9 +147,18 @@ export default {
               }
               // 滚动到错误位置
               if (this.scrollWhenError) {
-                errorItems[0].scrollIntoView({
-                  behavior: 'smooth'
-                })
+                // 如果有scrollOffsetTop，说明scrollIntoView不满足需求，比如网易跨境顶部有个fixed的head，需要额外滚动一定距离
+                if (this.scrollOffsetTop) {
+                  const distance = this._getDistanceToBody(errorItems[0]) + Number(this.scrollOffsetTop)
+                  window.scroll({
+                    top: distance,
+                    behavior: 'smooth'
+                  })
+                } else {
+                  errorItems[0].scrollIntoView({
+                    behavior: 'smooth'
+                  })
+                }
               }
             }
           }
@@ -155,6 +168,16 @@ export default {
       if (promise) {
         return promise
       }
+    },
+
+    _getDistanceToBody(element) {
+      let distance = element.offsetTop
+
+      if (element.offsetParent !== null) {
+        distance += this._getDistanceToBody(element.offsetParent)
+      }
+
+      return distance
     }
   }
 }

@@ -11,7 +11,7 @@
     ref="validateForm1"
     label-width="150px"
     class="sp-form-demo"
-    scrollWhenError
+    scroll-when-error
   >
     <!-- 姓名 -->
     <sp-form-item
@@ -486,8 +486,9 @@
 | show-message  | 是否显示校验错误信息 | boolean | — | true |
 | status-icon  | 是否在输入框中显示校验结果反馈图标 | boolean | — | false |
 | validate-on-rule-change  | 是否在 `rules` 属性改变后立即触发一次验证 | boolean | — | true |
-| scrollWhenError | 当有错误信息的时候，是否滚动定位到对应位置 | boolean | — | false |
-| validateFailTip | 当有错误信息的时候，是否提示错误信息 | boolean | — | true |
+| validate-fail-tip | 当有错误信息的时候，是否提示错误信息 | boolean | — | true |
+| scroll-when-error | 当有错误信息的时候，是否滚动定位到对应位置 | boolean | — | false |
+| scroll-offset-top | 如果有scroll-offset-top，说明默认的scrollIntoView滚动方式不满足需求，比如网易跨境顶部有个fixed的head，需要额外滚动一定距离 | number/string | — | 0 |
 
 ### Form Methods
 
