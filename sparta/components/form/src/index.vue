@@ -94,7 +94,7 @@ export default {
       })
     },
 
-    validate(callback, showErrorToast = true, partFields) {
+    validate(callback, partFields) {
       if (!this.model) {
         console.warn('[Sparta Warn][Form]model is required for validate to work!')
         return
@@ -120,7 +120,8 @@ export default {
       
       let fields = this.fields
       // 支持部分校验，传入prop的数组即可
-      if (partFields) {
+      const hasPartFields = partFields && partFields.length
+      if (hasPartFields) {
         fields = fields.filter(vm => partFields.includes(vm.prop))
       }
       fields.forEach(field => {
@@ -142,11 +143,16 @@ export default {
             if (errorItems.length) {
               // 错误提示
               const errorTipElem = errorItems[0].querySelector('.sp-form-item__error')
-              if (this.validateFailTip && errorTipElem && errorTipElem.innerText && showErrorToast) {
+              if (
+                this.validateFailTip &&
+                errorTipElem &&
+                errorTipElem.innerText &&
+                !hasPartFields
+              ) {
                 this.toastError(errorTipElem.innerText)
               }
-              // 滚动到错误位置
-              if (this.scrollWhenError) {
+              // 滚动到错误位置;部分校验就不用滚动了(因为场景基本都是输入或者选择完后立马触发)
+              if (this.scrollWhenError && !hasPartFields) {
                 // 如果有scrollOffsetTop，说明scrollIntoView不满足需求，比如网易跨境顶部有个fixed的head，需要额外滚动一定距离
                 if (this.scrollOffsetTop) {
                   const distance = this._getDistanceToBody(errorItems[0]) + Number(this.scrollOffsetTop)
