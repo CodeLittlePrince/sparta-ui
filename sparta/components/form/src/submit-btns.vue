@@ -30,5 +30,10 @@ export default {
       }
     }
   }
+
+  .sp-form-item__content {
+    font-size: 0;
+    line-height: inherit;
+  }
 }
 </style>
