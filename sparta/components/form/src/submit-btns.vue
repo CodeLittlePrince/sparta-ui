@@ -23,6 +23,7 @@ export default {
 
     .sp-checkbox__text {
       font-size: 12px;
+      color: #97a2b5;
 
       a {
         color: $color-primary;
