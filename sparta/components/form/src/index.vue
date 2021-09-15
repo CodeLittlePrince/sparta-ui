@@ -153,17 +153,27 @@ export default {
               }
               // 滚动到错误位置;部分校验就不用滚动了(因为场景基本都是输入或者选择完后立马触发)
               if (this.scrollWhenError && !hasPartFields) {
+                const supportSmoothScroll = 'scrollBehavior' in document.documentElement.style
                 // 如果有scrollOffsetTop，说明scrollIntoView不满足需求，比如网易跨境顶部有个fixed的head，需要额外滚动一定距离
                 if (this.scrollOffsetTop) {
                   const distance = this._getDistanceToBody(errorItems[0]) + Number(this.scrollOffsetTop)
-                  window.scroll({
-                    top: distance,
-                    behavior: 'smooth'
-                  })
+                  
+                  if (supportSmoothScroll) {
+                    window.scrollTo({
+                      top: distance,
+                      behavior: 'smooth'
+                    })
+                  } else {
+                    window.scrollTo(0, distance)
+                  }
                 } else {
-                  errorItems[0].scrollIntoView({
-                    behavior: 'smooth'
-                  })
+                  if (supportSmoothScroll) {
+                    errorItems[0].scrollIntoView({
+                      behavior: 'smooth'
+                    })
+                  } else {
+                    errorItems[0].scrollIntoView()
+                  }
                 }
               }
             }
