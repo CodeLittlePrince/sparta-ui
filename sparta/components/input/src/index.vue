@@ -334,7 +334,6 @@ export default {
       if (newVal === '') return newVal
       let result = this.filterCharForValue(newVal)
       result = this.transformCharCase(result)
-
       // 修正偏移
       this._fixInputCursorPos(result, newVal)
 
@@ -355,6 +354,7 @@ export default {
 
     _fixInputCursorPos(result, newVal) {
       if (result === newVal) return
+      if (!this.isFocus) return // 没focus绝对不能修正，因为会setSelectionRange，导致某些场景永远失焦不了
 
       // 因为filterCharForValue和transformCharCase会导致光标踢到末尾去，所以需要修正光标
       let cursorPos = this._getInputCursorPos()
