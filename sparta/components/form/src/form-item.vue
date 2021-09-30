@@ -235,7 +235,8 @@ export default {
       const validator = new AsyncValidator(descriptor)
       const model = {}
 
-      let fieldValueCopy = JSON.parse(JSON.stringify(this.fieldValue))
+      let fieldValueCopy = tool.clonedeep(this.fieldValue)
+
       // 上传文件只应该看已经上传成功的
       if (this.forUpload) {
         fieldValueCopy = fieldValueCopy.filter(item => item.status === 'success')

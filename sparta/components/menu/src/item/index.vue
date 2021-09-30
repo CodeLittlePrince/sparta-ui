@@ -162,7 +162,7 @@ export default {
         return
       }
       if (this.parentIsPage || !hasChild) {
-        this.$emit('select', this.data[this.indexKey], tool.deepClone(this.data))
+        this.$emit('select', this.data[this.indexKey], tool.clonedeep(this.data))
       } else {
         this._toggleCollapse(e)
       }
@@ -172,14 +172,14 @@ export default {
      */
     _handleOpen(e) {
       e.stopPropagation()
-      this.$emit('open', this.data[this.indexKey], tool.deepClone(this.data))
+      this.$emit('open', this.data[this.indexKey], tool.clonedeep(this.data))
     },
     /**
      * 折叠条目
      */
     _handleClose(e) {
       e.stopPropagation()
-      this.$emit('close', this.data[this.indexKey], tool.deepClone(this.data))
+      this.$emit('close', this.data[this.indexKey], tool.clonedeep(this.data))
     },
     /**
      * 切换折叠
@@ -196,7 +196,7 @@ export default {
       if (this.unique) {
         this.$parent.$children.forEach(vc => {
           if (vc !== this) {
-            this.$emit('close', vc.data.index, tool.deepClone(vc.data))
+            this.$emit('close', vc.data.index, tool.clonedeep(vc.data))
           }
         })
       }

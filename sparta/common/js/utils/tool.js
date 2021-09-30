@@ -1,21 +1,6 @@
-function noop() {}
+import clonedeep from 'lodash.clonedeep'
 
-/**
- * 深拷贝
- * @param {object/array} obj 需要深拷贝的对象或数组
- * @return 对象或数组
- */
-function deepClone(obj) {
-  let result = {}
-  for (const name in obj) {
-    if (typeof obj[name] === 'object') {
-      result[name] = deepClone(obj[name])
-    } else {
-      result[name] = obj[name]
-    }
-  }
-  return result
-}
+function noop() {}
 
 /**
  * 通过.分割型字符串在对象中找到对应的值
@@ -72,7 +57,7 @@ function getPropByPath(obj, path, strict) {
 
 export default {
   noop,
-  deepClone,
+  clonedeep,
   getValueByPath,
   getPropByPath
 }
