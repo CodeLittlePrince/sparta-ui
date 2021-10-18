@@ -173,6 +173,10 @@ export default {
     color: $radio-color-disabled;
   }
 
+  &__wrap.is--disabled &__text {
+    color: $radio-color-disabled;
+  }
+
   &__wrap.is--disabled.is--checked &__inner {
     &::after {
       background: $radio-border-color-disabled;
