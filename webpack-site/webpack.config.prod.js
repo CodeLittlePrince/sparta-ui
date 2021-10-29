@@ -6,6 +6,8 @@ const webpackConfigBase = require('./webpack.config.base.js')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const WebpackBar = require('webpackbar')
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
+const smp = new SpeedMeasurePlugin()
 
 const ANALYZE = process.env.ANALYZE === 'active'
 const ONLINE = process.env.ONLINE === 'active'
@@ -27,7 +29,7 @@ const vendors = [
 ]
 
 // webpack配置
-const config = Object.assign(webpackConfigBase.config, {
+const config = smp.wrap(Object.assign(webpackConfigBase.config, {
   mode: 'production',
   // You should configure your server to disallow access to the Source Map file for normal users!
   // devtool: 'source-map', // 因为需要PE支持，暂时先不生成吧
@@ -67,6 +69,7 @@ const config = Object.assign(webpackConfigBase.config, {
   performance: {
     hints: 'warning'
   },
+  stats: 'errors-warnings',
   plugins: [
     new WebpackBar(),
     // make sure to include the plugin for the magic
@@ -114,7 +117,7 @@ const config = Object.assign(webpackConfigBase.config, {
     // 加署名
     new webpack.BannerPlugin('Copyright by 网易支付 https://epay.163.com/'),
   ]
-})
+}))
 
 // analyze的话，进行文件可视化分析
 if (ANALYZE) {

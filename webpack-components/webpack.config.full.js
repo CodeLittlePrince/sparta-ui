@@ -4,6 +4,8 @@ const webpackConfigBase = require('./webpack.config.base.js')
 const TerserPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
+const smp = new SpeedMeasurePlugin()
 const extractCSS =
   new MiniCssExtractPlugin(
     {
@@ -12,7 +14,7 @@ const extractCSS =
   )
 
 // webpack配置
-const config = Object.assign(webpackConfigBase.config, {
+const config = smp.wrap(Object.assign(webpackConfigBase.config, {
   mode: 'production',
   entry: {
     index: webpackConfigBase.resolve('index.js')
@@ -43,6 +45,7 @@ const config = Object.assign(webpackConfigBase.config, {
       new OptimizeCSSAssetsPlugin()
     ]
   },
+  stats: 'errors-warnings',
   // loaders处理
   module: {
     noParse: /^vue$/,
@@ -110,6 +113,6 @@ const config = Object.assign(webpackConfigBase.config, {
       }
     })
   ]
-})
+}))
 
 module.exports = config
