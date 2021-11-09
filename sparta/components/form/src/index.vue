@@ -1,5 +1,5 @@
 <template>
-  <form ref="form" class="sp-form">
+  <form ref="form" class="sp-form" @keydown="handleKeydown">
     <slot></slot>
   </form>
 </template>
@@ -40,7 +40,7 @@ export default {
     scrollOffsetTop: {
       type: [Number, String],
       default: 0
-    }
+    },
   },
 
   data() {
@@ -72,6 +72,14 @@ export default {
   },
   
   methods: {
+    handleKeydown(e) {
+      if(e.keyCode === 13) {
+        e.preventDefault()
+        e.stopPropagation()
+        this.$emit('enter')
+      }
+    },
+
     resetFields() {
       if (!this.model) {
         process.env.NODE_ENV !== 'production' &&

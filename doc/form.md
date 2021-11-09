@@ -12,6 +12,7 @@
     label-width="150px"
     class="sp-form-demo"
     scroll-when-error
+    @enter="submitForm('validateForm1')"
   >
     <!-- 姓名 -->
     <sp-form-item
@@ -502,6 +503,7 @@
 | 事件名称 | 说明    | 回调参数  |
 |--------- |-------- |---------- |
 | validate | 任一表单项被校验后触发 | 被校验的表单项 prop 值，校验是否通过，错误消息（如果存在） |
+| enter | 用户在表单内按回车触发 | - |
 
 ### Form-Item Attributes
 
