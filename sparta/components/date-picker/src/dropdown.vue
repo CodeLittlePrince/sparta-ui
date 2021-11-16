@@ -91,12 +91,9 @@ export default {
     }
 
     .sp-time-picker {
-      width: 280px;
-      height: 275px;
-
       &-pane {
         width: 33.3%;
-        max-height: 275px;
+        max-height: 188px;
       }
     }
   }

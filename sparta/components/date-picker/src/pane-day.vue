@@ -3,7 +3,7 @@
     <!-- 头部 -->
     <div class="sp-date-picker-pane-day__header">
       <a
-        class="sp-icon-d-arrow-left"
+        class="sp-icon-arrow-double-left"
         title="上一年"
         @click="handleLastYear"
       ></a>
@@ -30,7 +30,7 @@
         @click="handleNextMonth"
       ></a>
       <a
-        class="sp-icon-d-arrow-right"
+        class="sp-icon-arrow-double-right"
         title="下一年"
         @click="handleNextYear"
       ></a>
@@ -88,7 +88,7 @@
             </th>
           </tr>
         </thead>
-        <tbody class="sp-date-picker-pane-day__tbody">
+        <tbody class="sp-date-picker-pane-day__tbody" @click="handleSelectDay($event)" @mousemove="handleMouseMove($event)">
           <tr
             v-for="(line, lineIndex) in 7"
             :key="line"
@@ -99,20 +99,16 @@
               :key="index"
               class="sp-date-picker-pane-day__cell"
               :class="{
-                'is-last-month-cell': item.lastMonth,
-                'is-next-month-cell': item.nextMonth,
-                'is-today': `${calYear}-${calMonth}-${item.value}` ===
+                'is--last-month-cell': item.lastMonth,
+                'is--next-month-cell': item.nextMonth,
+                'is--today': `${calYear}-${calMonth}-${item.value}` ===
                   `${nowYear}-${+nowMonth}-${+nowDay}` &&
                   !item.lastMonth &&
                   !item.nextMonth,
-                'is-disabled': item.disabled,
-                'is-checked':
-                  `${calYear}-${calMonth}-${item.value}` ===
-                  `${year}-${+month}-${+day}` &&
-                  !item.lastMonth &&
-                  !item.nextMonth
+                'is--disabled': item.disabled,
+                'is--enabled': !item.disabled,
+                ...getCellClass(item)
               }"
-              @click="handleSelectDay(item, $event)"
             >
               <div class="sp-date-picker-pane-day__date">{{ item.value }}</div>
             </td>
@@ -133,7 +129,14 @@ export default {
   mixins: [Emitter],
   
   props: {
-    value: String,
+    value: [String, Array], // daterange是Array类型,date是string
+    type: {
+      type: String,
+      default: 'date',
+      validator(val) {
+        return ['date', 'daterange'].indexOf(val) > -1
+      }
+    },
     visible: {
       type: Boolean,
       default: true
@@ -146,42 +149,9 @@ export default {
     year: [Number, String],
     month: [Number, String],
     day: [Number, String],
-    disableYear: {
+    disableDate: {
       type: Function,
       default: () => false
-    },
-    disableMonth: {
-      type: Function,
-      default: () => false
-    },
-    disableDay: {
-      type: Function,
-      default: () => false
-    },
-    // 以start为起始，此前的项全都disable
-    start: {
-      type: String,
-      default: ''
-    },
-    // 以end为结尾，此后的项全都disable
-    end: {
-      type: String,
-      default: ''
-    },
-  },
-
-  data() {
-    return {
-      dateValue: this.value,
-      weekList: [
-        { label: '一', value: 0 },
-        { label: '二', value: 1 },
-        { label: '三', value: 2 },
-        { label: '四', value: 3 },
-        { label: '五', value: 4 },
-        { label: '六', value: 5 },
-        { label: '日', value: 6 }
-      ]
     }
   },
 
@@ -203,26 +173,10 @@ export default {
       let dateList = Array.from(
         { length: currentMonthLength },
         (val, index) => {
-          let beforeStart = false
-          let afterEnd = false
-          let formatTime = `${this.calYear}-${format.formatNumberTo2digits(this.calMonth + 1)}-${format.formatNumberTo2digits(index + 1)}`
-          if (this.start && formatTime < this.start) {
-            // 在start之前的项目需要disable
-            beforeStart = true
-          }
-          if (this.end && this.end < formatTime) {
-            // 在end后的项目需要disable
-            afterEnd = true
-          }
           return {
             currentMonth: true,
             value: index + 1,
-            disabled:
-              this.disableYear(this.calYear) ||
-              this.disableMonth(this.calMonth + 1) ||
-              this.disableDay(index + 1) ||
-              beforeStart ||
-              afterEnd
+            disabled: this.disableDate(new Date(this.calYear, this.calMonth, index + 1))
           }
         }
       )
@@ -236,92 +190,80 @@ export default {
       ).getDate()
       // 在1号前插入上个月日期
       for (let i = 0, len = startDay; i < len; i++) {
-        let beforeStart = false
-        let afterEnd = false
-        let formatTime = `${this.calYear}-${format.formatNumberTo2digits(this.calMonth)}-${format.formatNumberTo2digits(lastMonthLength - i)}`
-        if (this.start && formatTime < this.start) {
-          // 在start之前的项目需要disable
-          beforeStart = true
-        }
-        if (this.end && this.end < formatTime) {
-          // 在end后的项目需要disable
-          afterEnd = true
-        }
         dateList = [
           {
             lastMonth: true,
             value: lastMonthLength - i,
-            disabled:
-              this.disableYear(this.calYear) ||
-              this.disableMonth(this.calMonth) ||
-              this.disableDay(lastMonthLength - i) ||
-              beforeStart ||
-              afterEnd
+            disabled: this.disableDate(new Date(this.calYear, this.calMonth -1, lastMonthLength - i))
           }
         ].concat(dateList)
       }
       // 补全剩余位置,至少14天，则 i < 15
       for (let i = 1, item = 1; i < 15; i++, item++) {
-        let beforeStart = false
-        let afterEnd = false
-        let formatTime = `${this.calYear}-${format.formatNumberTo2digits(this.calMonth + 2)}-${format.formatNumberTo2digits(i)}`
-        if (this.start && formatTime < this.start) {
-          // 在start之前的项目需要disable
-          beforeStart = true
-        }
-        if (this.end && this.end < formatTime) {
-          // 在end后的项目需要disable
-          afterEnd = true
-        }
         dateList[dateList.length] = {
           nextMonth: true,
           value: i,
-          disabled:
-            this.disableYear(this.calYear) ||
-            this.disableMonth(this.calMonth + 2) ||
-            this.disableDay(i) ||
-            beforeStart ||
-            afterEnd
+          disabled: this.disableDate(new Date(this.calYear, this.calMonth + 1, i))
         }
       }
       return dateList
     }
   },
 
-  watch: {
-    value(val) {
-      this.dateValue = val
-    }
-  },
-
   methods: {
-    handleSelectDay(item, e) {
-      if (!item.disabled && -1 === e.target.parentNode.className.indexOf('is-checked')) {
-        // 赋值 当前 nowValue,用于控制样式突出显示当前月份日期
-        this.$emit('calDayChange', item.value)
+    handleSelectDay(e) {
+      let target = e.target
+      if (target.tagName === 'DIV') {
+        target = target.parentNode
+      }
+      if (target.tagName !== 'TD') return
+      const row = target.parentNode.rowIndex - 2
+      const column = target.cellIndex
+      const item = this.dateList[row * 7 + column]
+      
+      if (!item.disabled) {
         // 选择了上个月
         let month = this.calMonth
         if (item.lastMonth) month--
         // 选择了下个月
         if (item.nextMonth) month++
-        this.$emit('calMonthChange', month)
         // 获取选中日期的 date
         let selectDay = new Date(this.calYear, month, item.value)
         // 赋值
-        this.dateValue = format.formatDate(selectDay.getTime())
-        const pieces = this.dateValue.split('-')
+        const dateValue = format.formatDate(selectDay.getTime())
+        const pieces = dateValue.split('-')
         this.$emit('yearChange', +pieces[0])
-        this.$emit('monthChange', +pieces[1])
-        this.$emit('dayChange', +pieces[2])
-        this.$emit('modelChange', this.dateValue)
+        this.$emit('monthChange', +pieces[1] - 1)
+        this.$emit('dayChange', +pieces[2]) // TODO
+
+        this.$emit('modelChange', { date: dateValue, type: 'click' })
         this.$emit('daySelect')
       }
     },
+    
+    handleMouseMove(e) {
+      if(this.type !== 'daterange') return
+      let target = e.target
+      if (target.tagName === 'DIV') {
+        target = target.parentNode
+      }
+      if (target.tagName !== 'TD') return
+      const row = target.parentNode.rowIndex - 2
+      const column = target.cellIndex
+      const item = this.dateList[row * 7 + column]
+      
+      if (!item.disabled) {
+        // 选择了上个月
+        let month = this.calMonth
+        if (item.lastMonth) month--
+        // 选择了下个月
+        if (item.nextMonth) month++
+        // 获取选中日期的 date
+        let selectDay = new Date(this.calYear, month, item.value)
+        // 赋值
+        const dateValue = format.formatDate(selectDay.getTime())
 
-    // 确认是否为当前月份
-    validateDate(item) {
-      if (this.nowValue === item.value && item.currentMonth) {
-        return true
+        this.$emit('modelChange', { date: dateValue, type: 'hover' })
       }
     },
 
@@ -373,7 +315,25 @@ export default {
 
     handleSwitchMonth() {
       this.$emit('switchMonth')
-    }
+    },
+    getCellClass(item) {
+      let checkedDayList = []
+      const currentDate = `${this.calYear}-${format.formatNumberTo2digits(this.calMonth + 1)}-${format.formatNumberTo2digits(item.value)}`
+      let currentTime = format.modifyDate(currentDate).getTime()
+      if(this.type === 'daterange') { // 日期范围
+        checkedDayList = this.value || []
+        checkedDayList = checkedDayList.map(item => item.substr(0, 10))
+      } else {
+        checkedDayList = [`${this.year}-${format.formatNumberTo2digits(+this.month + 1)}-${format.formatNumberTo2digits(+this.day)}`]
+      }
+
+      return {
+        'is--checked': checkedDayList.includes(currentDate) && !item.lastMonth && !item.nextMonth,
+        'is--ranging': this.type !== 'daterange' || checkedDayList.length < 2
+          ? false
+          : currentTime < format.modifyDate(checkedDayList[1]).getTime() && currentTime > format.modifyDate(checkedDayList[0]).getTime() && !item.lastMonth && !item.nextMonth,
+      }
+    },
   }
 }
 </script>
@@ -383,16 +343,16 @@ export default {
 @import "sparta/common/scss/mixin";
 
 .sp-date-picker-pane-day {
+  padding: 5px 0;
   width: $date-picker-pane-width;
   float: left;
   box-sizing: border-box;
-  border-left: $date-picker-pane-border;
 
   &__header {
     position: relative;
     height: $date-picker-pane__header-height;
+    margin-bottom: 6px;
     text-align: center;
-    border-bottom: $date-picker-pane__header-border;
 
     a {
       color: $date-picker-pane__header-color;
@@ -407,18 +367,19 @@ export default {
     }
 
     span a {
-      font-size: 16px;
+      font-size: $date-picker-pane-font-size;
       color: $date-picker-pane__header-color;
       font-weight: 500;
     }
 
-    .sp-icon-d-arrow-left,
+    .sp-icon-arrow-double-left,
     .sp-icon-arrow-left {
       position: absolute;
       display: inline-block;
+      color: $date-picker-pane__header-icon-color;
     }
 
-    .sp-icon-d-arrow-left {
+    .sp-icon-arrow-double-left {
       left: 7px;
     }
 
@@ -426,13 +387,14 @@ export default {
       left: 29px;
     }
 
-    .sp-icon-d-arrow-right,
+    .sp-icon-arrow-double-right,
     .sp-icon-arrow-right {
       position: absolute;
       display: inline-block;
+      color: $date-picker-pane__header-icon-color;
     }
 
-    .sp-icon-d-arrow-right {
+    .sp-icon-arrow-double-right {
       right: 7px;
     }
 
@@ -446,51 +408,137 @@ export default {
   }
 
   &__body {
-    padding: 8px 12px;
-    font-size: 14px;
+    font-size: $date-picker-pane-font-size;
+  }
+
+  &__table {
+    width: 182px;
+    margin: 0 6px;
   }
 
   &__column-header, &__cell {
-    width: 37px;
-    padding: 4px 0;
-    line-height: 18px;
+    line-height: 17px;
     text-align: center;
   }
 
   &__cell {
     cursor: pointer;
-
-    &.is-next-month-cell,
-    &.is-last-month-cell {
+    padding: 1px 0;
+    width: 26px;
+    &.is--next-month-cell,
+    &.is--last-month-cell {
       color: $date-picker-pane__cell--is-ln-month-color;
+    }
+    &:first-child {
+      border-radius: 50% 0 0 50%;
+      overflow: hidden;
+    }
+    &:last-child {
+      border-radius: 0 50% 50% 0;
     }
   }
 
   &__date {
-    margin: 0 6px;
-    padding: 3px 0;
+    height: 21px;
+    width: 21px;
+    line-height: 21px;
+    text-align: center;
+    display: inline-block;
   }
 
   &__date:hover {
-    background-color: $date-picker-pane__cell-background-hover;
     color: $date-picker-pane__cell-color-hover;
   }
 
-  &__cell.is-today &__date {
-    background-color: $date-picker-pane__cell--is-today-background;
-    color: $date-picker-color;
-    border-radius: $date-picker-pane__cell--is-today-border-radius;
+  &__cell.is--today &__date {
+    color: $color-primary;
+    border-radius: 50%;
+  }
+  &__cell.is--ranging {
+    position: relative;
+    &:before {
+      position: absolute;
+      top: 2px;
+      right: 0;
+      bottom: 2px;
+      left: -6px;
+      background: #e6f7ff;
+      border-radius: 0 26px 26px 0;
+      content: '';
+    }
+    + .is--checked {
+      position: relative;
+      &:before {
+        position: absolute;
+        top: 2px;
+        right: 7px;
+        bottom: 2px;
+        left: -6px;
+        background: #e6f7ff;
+        content: '';
+      }
+    }
+    > div {
+      position: relative;
+      z-index: 1;
+    }
   }
 
-  &__cell.is-checked &__date {
-    background-color: $date-picker-pane__cell--is-checked-background;
-    color: $date-picker-pane__cell--is-checked-color;
-    border-radius: $date-picker-pane__cell--is-checked-border-radius;
+  &__cell.is--checked {
+    + .is--ranging {
+      &:before {
+        left: -7px;
+      }
+    }
+    
+    .sp-date-picker-pane-day__date {
+      position: relative;
+      color: #fff;
+      z-index: 1;
+      background-color:
+      $date-picker-pane__cell--is-checked-background;
+      color: $date-picker-pane__cell--is-checked-color;
+      border-radius: 50%;
+    }
   }
 
-  &__cell.is-disabled &__date {
-    color: $date-picker-pane__cell--is-disabled-color;
+  &__cell.is--disabled {
+    position: relative;
     cursor: not-allowed;
+    &:before {
+      position: absolute;
+      top: 2px;
+      right: 0;
+      bottom: 2px;
+      left: -6px;
+      background: $date-picker-pane__cell--is-disabled-background;
+      content: '';
+      border-radius: 0 26px 26px 0;
+    }
+    > div {
+      position: relative;
+      z-index: 1;
+      color: $date-picker-pane__cell--is-disabled-color;
+    }
+    &:hover {
+      color: $date-picker-pane__cell--is-disabled-color;
+      background: transparent;
+    }
+  }
+  &__cell.is--enabled {
+    + .is--disabled {
+      border-top-left-radius: 50%;
+      border-bottom-left-radius: 50%;
+      overflow: hidden;
+    }
+  }
+  
+  &__cell.is--last-month-cell {
+    + .is--ranging {
+      border-top-left-radius: 50%;
+      border-bottom-left-radius: 50%;
+      overflow: hidden;
+    }
   }
 }
 </style>

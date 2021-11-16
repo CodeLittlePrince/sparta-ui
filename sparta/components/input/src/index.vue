@@ -87,7 +87,7 @@
       </span>
       <!-- 后置内容 -->
       <span
-        v-if="$slots.suffix || suffixIcon || showClear || validateState && needStatusIcon"
+        v-if="$slots.suffix || suffixIcon || clearable || validateState && needStatusIcon"
         class="sp-input__suffix"
       >
         <span class="sp-input__suffix-inner">
@@ -99,11 +99,13 @@
               :class="suffixIcon"
             />
           </template>
-          <i
-            v-else
-            class="sp-input__icon sp-icon-close-bold sp-input__clear"
-            @click.stop="handleClear"
-          />
+          <transition name="sp-fade">
+            <i
+              v-if="showClear"
+              class="sp-input__icon sp-icon-close-bold sp-input__clear"
+              @click.stop="handleClear"
+            />
+          </transition>
         </span>
         <i
           v-if="validateState"
@@ -548,7 +550,7 @@ export default {
     color: #fff;
     background-color: $color-text-tip;
     font-size: 12px;
-    line-height: 16px;
+    line-height: 18px;
     cursor: pointer;
   }
 
@@ -678,7 +680,7 @@ export default {
 
   &--prefix {
     .sp-input__inner {
-      padding-left: 30px;
+      padding-left: 35px;
     }
   }
 
