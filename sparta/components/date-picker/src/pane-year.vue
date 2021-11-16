@@ -3,19 +3,19 @@
     <!-- 头部 -->
     <div class="sp-date-picker-pane-year__header">
       <a
-        class="sp-icon-d-arrow-left"
+        class="sp-icon-arrow-double-left"
         title="上一年代"
         @click="handleSwitchLastDecade"
       ></a>
 
-      <span class="sp-date-picker-pane-year__header">
+      <span>
         {{ lastDecadeEndYear + 1 }}
         -
         {{ nextDecadeStartYear - 1 }}
       </span>
 
       <a
-        class="sp-icon-d-arrow-right"
+        class="sp-icon-arrow-double-right"
         title="下一年代"
         @click="handleSwitchNextDecade"
       ></a>
@@ -38,11 +38,9 @@
               :key="index"
               class="sp-date-picker-pane-year__cell"
               :class="{
-                'is-last-decode-cell': item.lastDecadeEndYear,
-                'is-next-decode-cell': item.nextDecadeStartYear,
-                'is-currentYear': item.value == currentYear,
-                'is-disabled': item.disabled,
-                'is-checked':
+                'is--current-year': item.value == currentYear,
+                'is--disabled': item.disabled,
+                'is--checked':
                   item.value == year &&
                   !item.lastDecadeEndYear &&
                   !item.nextDecadeStartYear
@@ -74,10 +72,10 @@ export default {
     },
     year: [Number, String],
     calYear: [Number, String],
-    disableYear: {
+    disableDate: {
       type: Function,
       default: () => false
-    }
+    },
   },
 
   data() {
@@ -97,7 +95,7 @@ export default {
       if (this.calYearValue) {
         for (let i = 0; i <= this.nextDecadeStartYear - this.lastDecadeEndYear; i++) {
           rst.push({
-            disabled: this.disableYear(this.lastDecadeEndYear + i),
+            disabled: this.calYear !== this.lastDecadeEndYear + i && this.disableDate(new Date(this.lastDecadeEndYear + i, 0, 1)) && this.disableDate(new Date(this.lastDecadeEndYear + i, 11, 31)),
             lastDecadeEndYear: i === 0,
             nextDecadeStartYear: i === this.nextDecadeStartYear - this.lastDecadeEndYear,
             value: this.lastDecadeEndYear + i
@@ -142,17 +140,17 @@ export default {
 @import "sparta/common/scss/mixin";
 
 .sp-date-picker-pane-year {
+  padding: 6px 0 4px;
   width: $date-picker-pane-width;
   float: left;
   box-sizing: border-box;
-  border-left: $date-picker-pane-border;
 
   &__header {
     position: relative;
     height: $date-picker-pane__header-height;
     text-align: center;
-    border-bottom: $date-picker-pane__header-border;
-    font-size: 16px;
+    font-size: 12px;
+    margin-bottom: 6px;
 
     span, a {
       color: $date-picker-pane__header-color;
@@ -169,32 +167,19 @@ export default {
       }
     }
 
-    .sp-icon-d-arrow-left,
-    .sp-icon-arrow-left {
+    .sp-icon-arrow-double-right,
+    .sp-icon-arrow-double-left {
       position: absolute;
       display: inline-block;
+      color: $date-picker-pane__header-icon-color;
     }
 
-    .sp-icon-d-arrow-left {
+    .sp-icon-arrow-double-left {
       left: 7px;
     }
 
-    .sp-icon-arrow-left {
-      left: 29px;
-    }
-
-    .sp-icon-d-arrow-right,
-    .sp-icon-arrow-right {
-      position: absolute;
-      display: inline-block;
-    }
-
-    .sp-icon-d-arrow-right {
+    .sp-icon-arrow-double-right {
       right: 7px;
-    }
-
-    .sp-icon-arrow-right {
-      right: 29px;
     }
 
     &-ym-select {
@@ -203,49 +188,46 @@ export default {
   }
 
   &__body {
-    padding: 8px 12px;
-    font-size: 14px;
+    font-size: 12px;
   }
 
   &__table {
-    width: 100%;
+    width: $date-picker-pane-width;
+    height: 155px;
   }
 
   &__column-header, &__cell {
-    width: 37px;
-    padding: 15px 0;
-    line-height: 18px;
     text-align: center;
   }
 
-  &__cell {
-    cursor: pointer;
-  }
-
   &__date {
-    margin: 0 6px;
-    padding: 3px 0;
+    width: 42px;
+    height: 20px;
+    line-height: 20px;
+    margin: 9px 10px;
+    cursor: pointer;
   }
 
   &__date:hover {
     background-color: $date-picker-pane__cell-background-hover;
     color: $date-picker-pane__cell-color-hover;
+    border-radius: $date-picker-pane__cell--is-checked-border-radius;
   }
 
-  &__cell.is-currentYear &__date {
-    background-color: $date-picker-pane__cell--is-today-background;
-    color: $date-picker-color;
-    border-radius: $date-picker-pane__cell--is-today-border-radius;
+  &__cell.is--current-year &__date {
+    color: $date-picker-pane__cell-color-hover;
   }
 
-  &__cell.is-checked &__date {
+  &__cell.is--checked &__date {
     background-color: $date-picker-pane__cell--is-checked-background;
     color: $date-picker-pane__cell--is-checked-color;
     border-radius: $date-picker-pane__cell--is-checked-border-radius;
   }
 
-  &__cell.is-disabled &__date {
+  &__cell.is--disabled &__date {
     color: $date-picker-pane__cell--is-disabled-color;
+    background-color: $date-picker-pane__cell--is-disabled-background;
+    border-radius: $date-picker-pane__cell--is-checked-border-radius;
     cursor: not-allowed;
   }
 }

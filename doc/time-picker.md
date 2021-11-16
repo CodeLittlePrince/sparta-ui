@@ -61,13 +61,33 @@ export default{
       :disableHour="handleDisableHour"
     />
   </div>
+  <br />
+  <div class="sp-time-pikcer-demo">
+    <sp-time-picker
+      v-model="time5"
+      :disableTime="disableTime"
+    />
+  </div>
 </template>
 
 <script>
 export default{
   data() {
     return {
-      time3: ''
+      time3: '',
+      time5: ''
+    }
+  },
+  methods: {
+    handleDisableHour() {
+      return [1, 2, 3]
+    },
+    disableTime(){
+      return {
+        disableHour: () => [10, 20], // 0-23
+        disableMinute: () => [20, 30], // 0-59
+        disableSecond: () => [55, 56] // 0-59
+      }
     }
   }
 }
@@ -106,7 +126,10 @@ export default{
 | value    | 绑定值，默认格式必须为aa:bb:cc的字符串   | string  | — | — |
 | needSecond | 是否需要填写分 | boolean | — | true |
 | disabled | 是否禁用 | boolean | — | true |
-| disableHour | 是否禁用时间指定的条目 | Function | — | () => false |
+| disableHour | 禁用时指定的条目 | Function | — | () => [] |
+| disableMinute | 禁用分指定的条目 | Function | — | () => [] |
+| disableSecond | 禁用秒指定的条目 | Function | — | () => [] |
+| disableTime | 禁用时间指定的条目，优先级高于disableHour/disableMinute/disableSecond | Function | — | () => {} |
 
 <script>
 export default{
@@ -115,7 +138,8 @@ export default{
       time1: '12:11:30',
       time2: '',
       time3: '',
-      time4: '07:07:07'
+      time4: '07:07:07',
+      time5: ''
     }
   },
   watch: {
@@ -124,8 +148,15 @@ export default{
     }
   },
   methods: {
-    handleDisableHour(hour) {
-      return -1 < ['01', '02', '03'].indexOf(hour)
+    handleDisableHour() {
+      return [1, 2, 3]
+    },
+    disableTime(){
+      return {
+        disableHour: () => [10, 20], // 0-23
+        disableMinute: () => [20, 30], // 0-59
+        disableSecond: () => [55, 56] // 0-59
+      }
     }
   }
 }

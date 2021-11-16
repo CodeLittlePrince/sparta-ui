@@ -119,7 +119,7 @@ export default {
               index: '4-4-5'
             },
             {
-              title: 'DatePicker 日期选择框',
+              title: 'DatePicker 日期选择框（新）',
               link: '/date-picker',
               index: '4-4-6'
             },

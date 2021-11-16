@@ -51,7 +51,18 @@ const formatNumberTo2digits = function(number) {
   return rst
 }
 
+/**
+ * 将日期格式转换为各个浏览器都兼容的格式
+ * 例子
+ * 2021-11-02 00:00:00 => 2021/11/02T00:00:00
+ */
+const modifyDate = function modifyDate(date) {
+  if (!date) return date
+  return new Date(date.replace(/-/g,'/'))
+}
+
 export default {
   formatDate,
-  formatNumberTo2digits
+  formatNumberTo2digits,
+  modifyDate
 }
