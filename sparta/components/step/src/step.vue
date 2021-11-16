@@ -49,8 +49,11 @@ export default {
 <style lang="scss">
 @import "sparta/common/scss/mixin";
 .sp-step {
+  font-size: 0;
+
   &.align-center {
     text-align: center;
+    vertical-align: top;
     .sp-step-ul {
       display: inline-block;
     }

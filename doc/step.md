@@ -95,7 +95,7 @@
 ```vue
 <template>
   <div class="md-demo-step">
-    <sp-step position="1" align-center need-arrow space="300">
+    <sp-step position="1" align-center need-arrow space="40">
       <sp-step-item>Step1</sp-step-item>
       <sp-step-item>Step2</sp-step-item>
       <sp-step-item>Step3</sp-step-item>
