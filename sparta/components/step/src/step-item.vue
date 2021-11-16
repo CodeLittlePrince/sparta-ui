@@ -7,6 +7,7 @@
       'is--current': spStep.position == index
     }"
   >
+    <div class="sp-step-item__line" :style="{'width': `${ spStep.space }px`}"></div>
     <div class="sp-step-item__tag">
       <i v-if="isFinish" class="sp-icon-check" />
       <template v-else>{{ index + 1 }}</template>
@@ -48,6 +49,11 @@ export default {
   float: left;
   font-size: 0;
   @include clearfix();
+  &:last-child {
+    .sp-step-item__line {
+      display: none;
+    }
+  }
 
   &__tag {
     float: left;
@@ -91,9 +97,8 @@ export default {
     color: #b6babf;
   }
 
-  &::before {
-    float: left;
-    content: "";
+  &__line {
+    float: right;
     width: 80px;
     height: 2px;
     background-color: #c7cbd1;
