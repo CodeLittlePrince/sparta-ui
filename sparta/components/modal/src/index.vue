@@ -168,7 +168,7 @@ export default {
 
       if (newVal) {
         quene.forEach(modal => {
-          if (this !== modal) {
+          if (this !== modal && modal.visible) {
             modal.toggleVisible(false)
           }
         })
