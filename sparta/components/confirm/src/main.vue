@@ -1,6 +1,7 @@
 <template>
   <sp-modal
     v-model="visible"
+    :width="width"
     class="sp-confirm"
     :title="title"
     @after-leave="handleAfterLeave"
@@ -11,13 +12,19 @@
     >
       {{ message }}
     </div>
-    <div slot="foot">
+    <div class="sp-confirm__foot">
       <sp-button
-        type="default"
+        v-if="cancelText"
+        plain
+        size="mini"
+        :loading="cancelBtnLoading"
         @click="handleCancel"
       >{{ cancelText }}</sp-button>
       <sp-button
+        v-if="confirmText"
         type="primary"
+        size="mini"
+        :loading="confirmBtnLoading"
         @click="handleConfirm"
       >{{ confirmText }}</sp-button>
     </div>
@@ -40,18 +47,24 @@ export default {
       visible: false,
       title: '提示',
       message: '',
+      hideAfterCancel: true,
       hideAfterConfirm: true,
+      width: 418,
       cancelFunc: tool.noop,
       confirmFunc: tool.noop,
       cancelText: '取消',
       confirmText: '确定',
-      align: 'left'
+      align: 'center',
+      cancelBtnLoading: false,
+      confirmBtnLoading: false,
     }
   },
 
   methods: {
     handleCancel() {
-      this.visible = false
+      if (this.hideAfterCancel) {
+        this.visible = false
+      }
       this.cancelFunc && this.cancelFunc(this)
     },
 
@@ -77,12 +90,12 @@ export default {
 @import "~sparta/common/scss/variable";
 
 .sp-confirm {
-  font-size: $confirm-font-size;
 
   &__body {
+    font-size: $confirm-font-size;
     color: $confirm-body-color;
-    padding: 20px 0 30px;
-    line-height: 1.4;
+    line-height: 1.5;
+    padding: 32px 0;
 
     &.align-left {
       text-align: left;
@@ -94,6 +107,18 @@ export default {
 
     &.align-right {
       text-align: right;
+    }
+  }
+
+  &__foot {
+    text-align: center;
+    padding-bottom: 16px;
+    font-size: 0;
+    height: 28px;
+
+    .sp-button {
+      min-width: 72px;
+      height: 28px;
     }
   }
 }

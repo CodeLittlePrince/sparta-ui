@@ -18,10 +18,10 @@ export default{
   methods: {
     show1() {
       this.$sparta.confirm({
-        title: '我是一个大标题',
+        title: '我是标题',
         message: '我是主体文案',
-        cancelText: '算了',
-        confirmText: '好吧',
+        cancelText: '取消',
+        confirmText: '确定',
         cancelFunc: vm => {
           console.log(vm.visible)
         },
@@ -75,8 +75,8 @@ export default{
   methods: {
     show3() {
       this.$sparta.confirm({
-        message: '我在中间',
-        align: 'center'
+        message: '我在左边',
+        align: 'left'
       })
     }
   }
@@ -120,23 +120,25 @@ export default{
 |---------- |-------- |---------- |-------------  |-------- |
 | title     | 标题   | string | -  |     '提示'    |
 | message     | 主体文案   | string | -  |     ''    |
-| align     | 主体文案对齐方式   | string | left/center/right  |     'left'    |
+| align     | 主体文案对齐方式   | string | left/center/right  |     'center'    |
 | cancelText     | 取消按钮文案   | string | -  |     '取消'    |
 | confirmText     | 确认按钮文案   | string | -  |     '确定'    |
+| hideAfterCancel   | 点击取消后，是否让弹窗消失   | boolean | -  |     true    |
 | hideAfterConfirm   | 点击确定后，是否让弹窗消失   | boolean | -  |     true    |
-| hideAfterConfirm   | 点击确定后，是否让弹窗消失   | boolean | -  |     true    |
-| cancelFunc     | 取消回调   | function | -  |     ()=>{}    |
-| confirmFunc     | 确定回调   | function | -  |     ()=>{}    |
+| cancelFunc     | 取消回调，回调参数为vm   | function | -  |     ()=>{}    |
+| confirmFunc     | 确定回调，回调参数为vm   | function | -  |     ()=>{}    |
+| cancelBtnLoading     | 控制取消按钮loading态   | function | -  |     false   |
+| confirmBtnLoading     | 控制确定按钮loading态   | function | -  |     false   |
 
 <script>
 export default{
   methods: {
     show1() {
       this.$sparta.confirm({
-        title: '我是一个大标题',
+        title: '我是标题',
         message: '我是主体文案',
-        cancelText: '算了',
-        confirmText: '好吧',
+        cancelText: '取消',
+        confirmText: '确定',
         cancelFunc: vm => {
           console.log(vm.visible)
         },
@@ -150,8 +152,8 @@ export default{
     },
     show3() {
       this.$sparta.confirm({
-        message: '我在中间',
-        align: 'center'
+        message: '我在左边',
+        align: 'left'
       })
     },
     show4() {
@@ -159,6 +161,7 @@ export default{
         message: '确定要删除吗？',
         hideAfterConfirm: false,
         confirmFunc: vm => {
+          vm.confirmBtnLoading = true
           // 可以通过下面语句关闭弹窗
           // vm.visible = false
         }

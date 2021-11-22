@@ -16,7 +16,7 @@ Modal 模态弹窗
     <div class="content">
       <p>我是modal1的内容</p>
       <sp-button type="default" @click="visible1 = false">取消</sp-button>
-      <sp-button type="primary" @click="visible2 = true">确定</sp-button>
+      <sp-button type="primary" @click="visible1 = false">确定</sp-button>
     </div>
   </sp-modal>
 </template>

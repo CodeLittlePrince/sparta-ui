@@ -198,6 +198,13 @@ export default {
       border-radius: inherit;
     }
   }
+
+  &.is--plain.is--loading {
+    position: relative;
+    pointer-events: none;
+    color: rgba($color-primary, 0.5);
+  }
+  
   &--primary {
     background-color: $button-primary-fill;
     border-color: $button-primary-border;
@@ -233,6 +240,9 @@ export default {
   }
   &--mini {
     @include button-size($button-mini-font-size, $button-mini-min-width, $button-mini-height);
+    & [class*="sp-icon-"] {
+      font-size: 12px;
+    }
   }
   &--text {
     border-color: transparent;

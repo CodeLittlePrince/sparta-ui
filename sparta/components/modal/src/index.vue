@@ -248,6 +248,15 @@ export default {
         line-height: 20px;
         overflow-y: auto;
       }
+
+      .sp-form  {
+        padding-top: 20px;
+        padding-bottom: 14px;
+
+        .sp-form-submit-btns {
+          margin-top: 4px;
+        }
+      }
     }
   }
 
@@ -271,6 +280,10 @@ export default {
 
       .sp-form  {
         padding-top: 26px;
+
+        .sp-form-submit-btns {
+          margin-top: 22px;
+        }
       }
     }
 
