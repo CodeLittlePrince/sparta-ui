@@ -182,7 +182,7 @@ export default {
           index: '5-1',
           child: [
             {
-              title: 'Modal 模态弹窗',
+              title: 'Modal 模态弹窗（新）',
               link: '/modal',
               index: '5-1-1'
             },

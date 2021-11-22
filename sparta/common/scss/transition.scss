@@ -57,3 +57,13 @@
   opacity: 0;
   transform: translateY(-30px);
 }
+
+.sp-modal-fade-out-enter-active,
+.sp-modal-fade-out-leave-active {
+  transition: all 0.3s;
+}
+.sp-modal-fade-out-enter,
+.sp-modal-fade-out-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}

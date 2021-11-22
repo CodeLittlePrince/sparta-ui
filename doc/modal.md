@@ -137,9 +137,266 @@ export default{
 export default{
   data() {
     return {
-      visible5: false
+      visible5: false,
+      visible6: false
     }
   },
+}
+</script>
+```
+:::
+
+### 全屏弹窗
+:::demo 通过`fullscreen`弹窗是否全屏展示
+```vue
+<template>
+  <sp-button type="primary" @click="visible7 = true">全屏弹窗</sp-button>
+  <sp-modal
+    class="components--main__sp-modal"
+    v-model="visible7"
+    fullscreen
+  >
+    <h3>弹框标题</h3>
+    <sp-form
+      :model="validateForm1"
+      ref="validateForm1"
+      label-width="150px"
+      class="sp-form-demo"
+      scroll-when-error
+      @enter="submitForm('validateForm1')"
+    >
+      <!-- 姓名 -->
+      <sp-form-item
+        prop="name"
+        label="姓名"
+        labelTipWidth="150px"
+        :rules="[
+          { required: true, message: '姓名不能为空'}
+        ]"
+      >
+        <sp-input
+          v-model="validateForm1.name"
+          placeholder="请输入"
+          autocomplete="off"
+        ></sp-input>
+        <div slot="labelTip">靓仔，有什么疑问吗？</div>
+        <div slot="tip">输入你的名字吧，靓仔!</div>
+      </sp-form-item>
+      <sp-form-item
+        label="银行编号"
+        prop="localBankCode"
+        :rules="[
+          { required: true, message: '请输入3位数字Bank Code' },
+        ]"
+      >
+        <sp-input
+          v-model="validateForm1.localBankCode"
+          maxlength="3"
+          :filter-char="/[^\d]/g"
+          placeholder="请输入3位数字Bank Code"
+        />
+      </sp-form-item>
+      <!-- 姓名 -->
+      <sp-form-item
+        prop="password"
+        label="支付密码"
+        :rules="[
+          { required: true, message: '支付密码不能为空'}
+        ]"
+      >
+        <sp-password-input
+          v-model="validateForm1.password"
+        ></sp-password-input>
+        <div slot="tip">输入你的支付密码!</div>
+      </sp-form-item>
+      <!-- 年龄 -->
+      <sp-form-item
+        label="年龄"
+        prop="age"
+        :rules="[
+          { required: true, message: '年龄不能为空'},
+          { type: 'number', message: '年龄必须为数字'}
+        ]"
+      >
+        <sp-input
+          v-model.number="validateForm1.age"
+          placeholder="请输入"
+          autocomplete="off"
+        />
+      </sp-form-item>
+      <!-- 出生日期 -->
+      <sp-form-item
+        label="出生日期"
+        prop="birth"
+        :rules="[
+          { required: true, message: '出生日期不能为空'}
+        ]"
+      >
+        <sp-date-picker v-model="validateForm1.birth" />
+      </sp-form-item>
+      <!-- 爱好 -->
+      <sp-form-item
+        label="爱好"
+        prop="favorite"
+        :rules="[
+          { required: true, message: '爱好不能为空'}
+        ]"
+      >
+        <sp-select v-model="validateForm1.favorite">
+          <sp-option
+            v-for="item in favouriteList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </sp-select>
+      </sp-form-item>
+      <!-- 喜欢城市 -->
+      <sp-form-item
+        label="喜欢城市"
+        prop="cities"
+        :rules="[
+          { required: true, message: '喜欢城市不能为空'}
+        ]"
+      >
+        <sp-checkbox-group 
+          v-model="validateForm1.cities"
+          :max="2">
+          <sp-checkbox
+            v-for="city in citiesList"
+            :label="city"
+            :key="city"
+          >{{city}}</sp-checkbox>
+        </sp-checkbox-group>
+        <div slot="tip">最多选两个</div>
+      </sp-form-item>
+      <!-- 性别 -->
+      <sp-form-item
+        label="最喜欢的水果"
+        prop="favoriteFruit"
+        :rules="[
+          { required: true, message: '性别不能为空'}
+        ]"
+      >
+        <sp-radio-group v-model="validateForm1.favoriteFruit">
+          <sp-radio label="apple">苹果</sp-radio>
+          <sp-radio label="banana">香蕉</sp-radio>
+          <sp-radio label="pear">梨</sp-radio>
+        </sp-radio-group>
+      </sp-form-item>
+      <!-- 靓照 -->
+      <sp-form-item
+        label="靓照"
+        prop="picture"
+        for-upload
+        :rules="[
+          { required: true, message: '靓照不能为空'}
+        ]"
+      >
+        <sp-upload
+          :files="validateForm1.picture"
+          action="/api/upload"
+          type="picture"
+          example-image="https://i.epay.126.net/a/ge/static/img/ex_supplier.5f209565.png"
+          example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
+          @change="handlePictureChange"
+          :limit="1"
+        ></sp-upload>
+      </sp-form-item>
+      <!-- 多文件上传 -->
+      <sp-form-item
+        prop="files"
+        for-upload
+        :rules="[
+          { required: true, message: '认证文件不能为空'}
+        ]"
+      >
+        <template slot="label">认证文件</template>
+        <template slot="labelSecondLine">form-item必须加for-upload</template>
+        <sp-upload
+          :files="validateForm1.files"
+          ref="filesUploader"
+          action="/api/upload"
+          example-image="https://i.epay.126.net/a/ge/static/img/ex_supplier.5f209565.png"
+          example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
+          @change="handleFilesChange"
+          multiple
+        >
+          多文件上传
+          <div slot="desc">上传文件说明，可多行</div>
+          <div slot="tip">注意：最终提交，upload组件需要自行调用getSuccessUploadFiles方法拿到只上传成功的文件</div>
+        </sp-upload>
+        <div slot="error" slot-scope="scope">{{ scope.error }}<a style="color: #1977ea">（by hello kitty）</a></div>
+      </sp-form-item>
+      <!-- 按钮 -->
+      <sp-form-submit-btns>
+        <sp-form-item
+          prop="agree"
+          :rules="[{
+            validator: () => { return validateForm1.agree },
+            message: '请阅读用户服务协议'
+          }]"
+        >
+          <sp-checkbox v-model="validateForm1.agree">
+            <span>我已阅读并同意</span>
+            <a>《网易跨境付款服务补充协议》</a>
+          </sp-checkbox>
+          <sp-button
+            type="primary"
+            @click="submitForm('validateForm1')"
+          >提交</sp-button>
+        </sp-form-item>
+      </sp-form-submit-btns>
+    </sp-form>
+  </sp-modal>
+</template>
+
+<script>
+export default{
+  data() {
+    return {
+      visible7: false,
+      validateForm1: {
+        name: '',
+        localBankCode: '',
+        password: '',
+        age: '',
+        birth: '',
+        favorite: '',
+        cities: [],
+        favoriteFruit: '',
+        picture: [],
+        files: [],
+        agree: false
+      },
+      favouriteList: [
+        { label: '唱歌', value: 'sing' },
+        { label: '跳舞', value: 'dance' },
+        { label: '篮球', value: 'basketball' },
+        { label: '电影', value: 'movie' }
+      ],
+      citiesList: ['上海', '北京', '广州', '深圳']
+    }
+  },
+  methods: {
+    submitForm(formName) {
+      this.$refs[formName].validate().then(() => {
+        alert('submit!')
+        console.log(this.validateForm1)
+      }).catch(() => {
+        console.log('error submit')
+      })
+    },
+    handlePictureChange(list) {
+      this.validateForm1.picture = list
+    },
+    handleFilesChange(allFiles) {
+      this.validateForm1.files = allFiles
+    },
+    onExceed() {
+      this.$sparta.error('最多上传3张图片')
+    },
+  }
 }
 </script>
 ```
@@ -150,8 +407,9 @@ export default{
 |---------- |-------- |---------- |-------------  |-------- |
 | value | 控制 modal 的可见不可见 | boolean | — | false |
 | width | 设置 modal 的宽度| string/number | — | 500 |
-| title | 设置 modal 的标题文案 | string | — | '提示' |
+| title | 设置 modal 的标题文案（fullscreen模式不再需要） | string | — | '提示' |
 | hasClose | 设置 modal 的close按钮是否显示 | boolean | — | true |
+| fullscreen | 全屏模式 | boolean | — | false |
 
 ### Slot
 | name | 说明 |
@@ -177,6 +435,27 @@ export default{
       visible4: false,
       visible5: false,
       visible6: false,
+      visible7: false,
+      validateForm1: {
+        name: '',
+        localBankCode: '',
+        password: '',
+        age: '',
+        birth: '',
+        favorite: '',
+        cities: [],
+        favoriteFruit: '',
+        picture: [],
+        files: [],
+        agree: false
+      },
+      favouriteList: [
+        { label: '唱歌', value: 'sing' },
+        { label: '跳舞', value: 'dance' },
+        { label: '篮球', value: 'basketball' },
+        { label: '电影', value: 'movie' }
+      ],
+      citiesList: ['上海', '北京', '广州', '深圳']
     }
   },
   methods: {
@@ -185,7 +464,24 @@ export default{
     },
     closeHandle() {
       console.log('close')
-    }
+    },
+    submitForm(formName) {
+      this.$refs[formName].validate().then(() => {
+        alert('submit!')
+        console.log(this.validateForm1)
+      }).catch(() => {
+        console.log('error submit')
+      })
+    },
+    handlePictureChange(list) {
+      this.validateForm1.picture = list
+    },
+    handleFilesChange(allFiles) {
+      this.validateForm1.files = allFiles
+    },
+    onExceed() {
+      this.$sparta.error('最多上传3张图片')
+    },
   }
 }
 </script>
@@ -198,6 +494,12 @@ export default{
       .sp-button {
         margin-top: 20px
       }
+    }
+    h3 {
+      line-height: 28px;
+      font-size: 20px;
+      font-weight: 600;
+      padding-top: 23px;
     }
   }
 </style>

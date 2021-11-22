@@ -1,7 +1,7 @@
 <template>
-  <div class="sp-modal">
+  <div class="sp-modal" :class="{ 'is--fullscreen': fullscreen }">
     <transition
-      name="sp-modal-fade"
+      :name="fullscreen ? 'sp-modal-fade-out' : 'sp-modal-fade'"
       @after-leave="handleAfterLeave"
     >
       <div
@@ -11,7 +11,7 @@
       >
         <div
           class="sp-modal-content"
-          :style="{ width: `${width}px` }"
+          :style="{ width: fullscreen ? '1200px' : `${width}px` }"
         >
           <div
             v-if="hasClose"
@@ -21,13 +21,13 @@
             <i class="sp-icon-close"></i>
           </div>
           <!-- head -->
-          <div class="sp-modal__head">
+          <div v-if="!fullscreen" class="sp-modal__head">
             <slot name="head">
               <div v-if="title" class="sp-modal__title">{{ title }}</div>
             </slot>
           </div>
           <!-- body -->
-          <div class="sp-modal__body" :style="{ 'max-height': maxBodyHeight }">
+          <div class="sp-modal__body" :style="{ 'max-height': fullscreen ? `calc(100vh - 47px - 54px)` : maxBodyHeight }">
             <slot></slot>
           </div>
         </div>
@@ -75,6 +75,10 @@ export default {
     'unique': {
       type: Boolean,
       default: false,
+    },
+    'fullscreen': {
+      type: Boolean,
+      default: false
     }
   },
   
@@ -214,7 +218,6 @@ export default {
       box-sizing: border-box;
 
       .sp-modal__head {
-
         .sp-modal__title {
           font-size: 16px;
           line-height: 22px;
@@ -247,14 +250,50 @@ export default {
       }
     }
   }
-}
 
-.sp-modal__mask {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: $modal-mask-background;
+  &__mask {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: $modal-mask-background;
+  }
+
+  &.is--fullscreen {
+
+    .sp-modal-content {
+      padding: 47px 0 54px 40px;
+      top: 0;
+      left: 50%;
+      transform: translate(0, 0);
+      margin-left: -600px; // 为了IE，没法用translate方式
+
+      .sp-form  {
+        padding-top: 26px;
+      }
+    }
+
+    .sp-modal__head {
+      .sp-modal__title {
+        font-size: 20px;
+        line-height: 28px;
+        font-weight: 600;
+        color: $color-text-regular;
+      }
+    }
+
+    .sp-modal__head__close {
+      right: -4px;
+      .sp-icon-close {
+        font-size: 26px;
+        font-weight: normal;
+      }
+    }
+
+    .sp-modal__mask {
+      background-color: #fff;
+    }
+  }
 }
 </style>
