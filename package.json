@@ -22,7 +22,7 @@
     "lint:css": "stylelint \"./site/**/*.(vue|scss)\" --syntax scss",
     "commit": "git-cz",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
-    "np": "npm run lib && np --yolo"
+    "release": "npm run lib && np --yolo"
   },
   "husky": {
     "hooks": {
