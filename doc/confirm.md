@@ -115,11 +115,44 @@ export default{
 ```
 :::
 
+### 内容使用VNode方式定义
+:::demo 只需要`messge`的值设置为VNode的方式即可，使用jsx的语法
+```vue
+<template>
+  <sp-button
+    type="primary"
+    @click="showVNode"
+  >confirm</sp-button>
+</template>
+
+<script>
+export default{
+  methods: {
+    showVNode() {
+      this.$sparta.confirm({
+        title: '我是标题',
+        message: (
+          <div>
+            <div>我是vnode渲染出来的内容</div>
+            <span style="color: #1977ea; cursor: pointer" onClick={ this.yell }>click</span>
+          </div>
+        )
+      })
+    },
+    yell() {
+      alert('yell')
+    }
+  }
+}
+</script>
+```
+:::
+
 ### Options
 | 参数       | 说明     | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
 | title     | 标题   | string | -  |     '提示'    |
-| message     | 主体文案   | string | -  |     ''    |
+| message     | 主体文案   | string/vnode | -  |     ''    |
 | align     | 主体文案对齐方式   | string | left/center/right  |     'center'    |
 | cancelText     | 取消按钮文案   | string | -  |     '取消'    |
 | confirmText     | 确认按钮文案   | string | -  |     '确定'    |
@@ -166,6 +199,20 @@ export default{
           // vm.visible = false
         }
       })
+    },
+    showVNode() {
+      this.$sparta.confirm({
+        title: '我是标题',
+        message: (
+          <div>
+            <div>我是vnode渲染出来的内容</div>
+            <span style="color: #1977ea; cursor: pointer" onClick={ this.yell }>click</span>
+          </div>
+        )
+      })
+    },
+    yell() {
+      alert('yell')
     }
   }
 }

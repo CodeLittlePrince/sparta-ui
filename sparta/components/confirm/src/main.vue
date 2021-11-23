@@ -1,36 +1,3 @@
-<template>
-  <sp-modal
-    v-model="visible"
-    :width="width"
-    class="sp-confirm"
-    :title="title"
-    @after-leave="handleAfterLeave"
-  >
-    <div
-      class="sp-confirm__body"
-      :class="`align-${align}`"
-    >
-      {{ message }}
-    </div>
-    <div class="sp-confirm__foot">
-      <sp-button
-        v-if="cancelText"
-        plain
-        size="mini"
-        :loading="cancelBtnLoading"
-        @click="handleCancel"
-      >{{ cancelText }}</sp-button>
-      <sp-button
-        v-if="confirmText"
-        type="primary"
-        size="mini"
-        :loading="confirmBtnLoading"
-        @click="handleConfirm"
-      >{{ confirmText }}</sp-button>
-    </div>
-  </sp-modal>
-</template>
-
 <script>
 import SpModal from 'sparta/components/modal'
 import tool from 'sparta/common/js/utils/tool'
@@ -81,7 +48,52 @@ export default {
     
     _destroyElement() {
       this.$destroy(true)
+    },
+    
+    _handleInput(val) {
+      this.visible = val
     }
+  },
+
+  render() {
+    return (
+      <sp-modal
+        value={ this.visible }
+        onInput={ this._handleInput }
+        width={ this.width }
+        class="sp-confirm"
+        title={ this.title }
+        onAfterLeave={ this.handleAfterLeave }
+      >
+        <div
+          class={`sp-confirm__body align-${this.align}`}
+        >
+          { this.message }
+        </div>
+        <div class="sp-confirm__foot">
+          {
+            this.cancelText ?
+              <sp-button
+                plain
+                size="mini"
+                loading={ this.cancelBtnLoading }
+                onClick={ this.handleCancel }
+              >{ this.cancelText }</sp-button>
+              : ''
+          }
+          {
+            this.confirmText ?
+              <sp-button
+                type="primary"
+                size="mini"
+                loading={ this.confirmBtnLoading }
+                onClick={ this.handleConfirm }
+              >{ this.confirmText }</sp-button>
+              : ''
+          }
+        </div>
+      </sp-modal>
+    )
   }
 }
 </script>
