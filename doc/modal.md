@@ -106,6 +106,75 @@ export default{
 ```
 :::
 
+### 控制弹窗优先级
+:::demo 通过`priority`控制弹窗是否显示。priority是unique的一种特殊方式，它会通过判断优先级来决定是否关闭已经出现了的弹窗。
+```vue
+<template>
+  <sp-button type="primary" @click="handleShowTwoModal">show two modal</sp-button>
+  <sp-modal
+    class="components--main__sp-modal"
+    priority="2"
+    v-model="visible8"
+  >
+    <div class="content">
+      <p>我是优先级高的Modal</p>
+      <sp-button type="primary" @click="visible8 = false">确定</sp-button>
+    </div>
+  </sp-modal>
+  <sp-modal 
+    class="components--main__sp-modal"
+    v-model="visible9"
+  >
+    <div class="content">
+      <p>我是普通的Modal</p>
+      <sp-button type="primary" @click="visible9 = false">确定</sp-button>
+    </div>
+  </sp-modal>
+  <sp-modal 
+    class="components--main__sp-modal"
+    unique
+    v-model="visible10"
+  >
+    <div class="content">
+      <p>我是unique的Modal</p>
+      <sp-button type="primary" @click="visible10 = false">确定</sp-button>
+    </div>
+  </sp-modal>
+  <sp-modal 
+    class="components--main__sp-modal"
+    priority="1"
+    v-model="visible11"
+  >
+    <div class="content">
+      <p>我是优先级低的Modal</p>
+      <sp-button type="primary" @click="visible11 = false">确定</sp-button>
+    </div>
+  </sp-modal>
+</template>
+
+<script>
+export default{
+  data() {
+    return {
+      visible8: false,
+      visible9: false,
+      visible10: false,
+      visible11: false,
+    }
+  },
+  methods() {
+    handleShowTwoModal() {
+      this.visible8 = true
+      this.visible9 = true
+      this.visible10 = true
+      this.visible11 = true
+    }
+  }
+}
+</script>
+```
+:::
+
 ### head自定义
 :::demo 通过`title`控制标题文案；或者通过`slot`定制更多样的顶部
 ```vue
@@ -409,6 +478,8 @@ export default{
 | width | 设置 modal 的宽度| string/number | — | 500 |
 | title | 设置 modal 的标题文案（fullscreen模式不再需要） | string | — | '提示' |
 | hasClose | 设置 modal 的close按钮是否显示 | boolean | — | true |
+| unique | 设置 modal 是否为唯一展示 | boolean | — | false |
+| priority | 设置 modal 的优先级，弹窗根据优先级只展示一个 | string/number | — | 0 |
 | fullscreen | 全屏模式 | boolean | — | false |
 
 ### Slot
@@ -436,6 +507,10 @@ export default{
       visible5: false,
       visible6: false,
       visible7: false,
+      visible8: false,
+      visible9: false,
+      visible10: false,
+      visible11: false,
       validateForm1: {
         name: '',
         localBankCode: '',
@@ -482,6 +557,12 @@ export default{
     onExceed() {
       this.$sparta.error('最多上传3张图片')
     },
+    handleShowTwoModal() {
+      this.visible8 = true
+      this.visible9 = true
+      this.visible10 = true
+      this.visible11 = true
+    }
   }
 }
 </script>

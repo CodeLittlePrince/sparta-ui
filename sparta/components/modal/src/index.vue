@@ -68,13 +68,14 @@ export default {
       type: Boolean,
       default: true
     },
-    'priority': {
-      type: [String, Number],
-      default: 0
-    },
     'unique': {
       type: Boolean,
       default: false,
+    },
+    // priority是unique的一种特殊方式，它会通过判断优先级来决定是否关闭已经出现了的弹窗
+    'priority': {
+      type: [String, Number],
+      default: 0
     },
     'fullscreen': {
       type: Boolean,
@@ -94,19 +95,21 @@ export default {
   
   watch: {
     value(newVal) {
-      if (newVal === true) {
-        this.modalValue = true
+      if (newVal) {
+        if (this.hasPriorityModalShown()) {
+          this.showByPriority()
+        } else if (this.unique) {
+          this.modalManageHandle()
+        } else {
+          this.modalValue = true
+        }
       } else {
         this.modalValue = false
-      }
-
-      if (this.unique) {
-        this.modalManageHandle(newVal)
       }
     },
     
     modalValue(newVal) {
-      if (newVal === true) {
+      if (newVal) {
         this.visible = newVal
         this.openHandle()
       } else {
@@ -167,16 +170,46 @@ export default {
       document.body.style.overflow = 'hidden'
     },
 
-    modalManageHandle(newVal) {
+    modalManageHandle() {
+      this.closeOtherModals()
+    },
+
+    hasPriorityModalShown() {
       const { quene } = this.modalManage
 
-      if (newVal) {
-        quene.forEach(modal => {
-          if (this !== modal && modal.visible) {
-            modal.toggleVisible(false)
-          }
-        })
+      return quene.some(item => {
+        return 0 < item.priority && item.visible
+      })
+    },
+
+    showByPriority() {
+      const { quene } = this.modalManage
+
+      const hasHigherPriority = quene.some(item => {
+        if (this === item) {
+          return false
+        } else {
+          return item.visible && (this.priority < item.priority)
+        }
+      })
+
+      if (hasHigherPriority) {
+        this.modalValue = false
+      } else {
+        this.closeOtherModals()
       }
+    },
+
+    closeOtherModals() {
+      const { quene } = this.modalManage
+
+      quene.forEach(modal => {
+        if (this !== modal && modal.visible) {
+          modal.toggleVisible(false)
+        }
+      })
+
+      this.modalValue = true
     },
 
     handleAfterLeave() {
