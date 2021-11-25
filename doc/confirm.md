@@ -162,6 +162,8 @@ export default{
 | confirmFunc     | 确定回调，回调参数为vm   | function | -  |     ()=>{}    |
 | cancelBtnLoading     | 控制取消按钮loading态   | function | -  |     false   |
 | confirmBtnLoading     | 控制确定按钮loading态   | function | -  |     false   |
+| closeOnHashChange    | 是否在 hashchange 时关闭   | boolean | -  |     true   |
+| closeOnPopstate    | 是否在 活动历史记录条目更改 时关闭   | boolean | -  |     true   |
 
 <script>
 export default{

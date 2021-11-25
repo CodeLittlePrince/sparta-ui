@@ -24,7 +24,13 @@ export default {
       align: 'center',
       cancelBtnLoading: false,
       confirmBtnLoading: false,
+      closeOnHashChange: true,
+      closeOnPopstate: true,
     }
+  },
+
+  mounted() {
+    this._addUrlChangeListener()
   },
 
   methods: {
@@ -52,6 +58,24 @@ export default {
     
     _handleInput(val) {
       this.visible = val
+    },
+
+    _addUrlChangeListener() {
+      if (this.closeOnHashChange) {
+        window.addEventListener('hashchange', this._destroyElement)
+      }
+      if (this.closeOnPopstate) {
+        window.addEventListener('popstate', this._destroyElement)
+      }
+    },
+
+    _removeUrlChangeListener() {
+      if (this.closeOnHashChange) {
+        window.removeEventListener('hashchange', this._destroyElement)
+      }
+      if (this.closeOnPopstate) {
+        window.removeEventListener('popstate', this._destroyElement)
+      }
     }
   },
 
@@ -59,11 +83,11 @@ export default {
     return (
       <sp-modal
         value={ this.visible }
-        onInput={ this._handleInput }
+        on-input={ this._handleInput }
         width={ this.width }
         class="sp-confirm"
         title={ this.title }
-        onAfterLeave={ this.handleAfterLeave }
+        on-after-leave={ this.handleAfterLeave }
       >
         <div
           class={`sp-confirm__body align-${this.align}`}
