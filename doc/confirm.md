@@ -22,8 +22,8 @@ export default{
         message: '我是主体文案',
         cancelText: '取消',
         confirmText: '确定',
-        cancelFunc: vm => {
-          console.log(vm.visible)
+        cancelFunc: (vm, action) => {
+          console.log(vm.visible, action)
         },
         confirmFunc: vm => {
           console.log(vm.visible)
@@ -104,6 +104,7 @@ export default{
         message: '确定要删除吗？',
         hideAfterConfirm: false,
         confirmFunc: vm => {
+          vm.confirmBtnLoading = true
           // 可以通过下面语句关闭弹窗
           // vm.visible = false
         }
@@ -158,12 +159,13 @@ export default{
 | confirmText     | 确认按钮文案   | string | -  |     '确定'    |
 | hideAfterCancel   | 点击取消后，是否让弹窗消失   | boolean | -  |     true    |
 | hideAfterConfirm   | 点击确定后，是否让弹窗消失   | boolean | -  |     true    |
-| cancelFunc     | 取消回调，回调参数为vm   | function | -  |     ()=>{}    |
+| cancelFunc     | 取消回调，回调参数为(vm, action), action 为 'cancel' / 'close'  | function | -  |     ()=>{}    |
 | confirmFunc     | 确定回调，回调参数为vm   | function | -  |     ()=>{}    |
 | cancelBtnLoading     | 控制取消按钮loading态   | function | -  |     false   |
 | confirmBtnLoading     | 控制确定按钮loading态   | function | -  |     false   |
 | closeOnHashChange    | 是否在 hashchange 时关闭   | boolean | -  |     true   |
 | closeOnPopstate    | 是否在 活动历史记录条目更改 时关闭   | boolean | -  |     true   |
+| hasClose   | 右上角是否有关闭按钮   | boolean | -  |     true    |
 
 <script>
 export default{
@@ -174,8 +176,8 @@ export default{
         message: '我是主体文案',
         cancelText: '取消',
         confirmText: '确定',
-        cancelFunc: vm => {
-          console.log(vm.visible)
+        cancelFunc: (vm, action) => {
+          console.log(vm.visible, action)
         },
         confirmFunc: vm => {
           console.log(vm.visible)

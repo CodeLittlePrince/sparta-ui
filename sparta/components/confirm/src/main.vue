@@ -26,6 +26,7 @@ export default {
       confirmBtnLoading: false,
       closeOnHashChange: true,
       closeOnPopstate: true,
+      hasClose: true,
     }
   },
 
@@ -38,7 +39,7 @@ export default {
       if (this.hideAfterCancel) {
         this.visible = false
       }
-      this.cancelFunc && this.cancelFunc(this)
+      this.cancel('cancel')
     },
 
     handleConfirm() {
@@ -50,6 +51,15 @@ export default {
 
     handleAfterLeave() {
       this._destroyElement()
+    },
+
+    handleCloseBtnClick() {
+      this.visible = false
+      this.cancel('close')
+    },
+
+    cancel(action) {
+      this.cancelFunc && this.cancelFunc(this, action)
     },
     
     _destroyElement() {
@@ -88,7 +98,18 @@ export default {
         class="sp-confirm"
         title={ this.title }
         on-after-leave={ this.handleAfterLeave }
+        has-close={ false }
       >
+        {
+          this.hasClose ?
+            <div
+              class="sp-modal__head__close"
+              on-click={ this.handleCloseBtnClick }
+            >
+              <i class="sp-icon-close"></i>
+            </div>
+            : ''
+        }
         <div
           class={`sp-confirm__body align-${this.align}`}
         >
