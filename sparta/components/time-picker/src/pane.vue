@@ -93,7 +93,7 @@ export default {
 @import "sparta/common/scss/mixin";
 
 .sp-time-picker-pane {
-  width: $time-picker-pane-width;
+  width: 33.3%;
   float: left;
   max-height: $time-picker-pane-max-height;
   box-sizing: border-box;

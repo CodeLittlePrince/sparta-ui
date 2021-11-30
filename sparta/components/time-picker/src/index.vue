@@ -22,13 +22,14 @@
         <div
           v-show="visible"
           class="sp-time-picker__dropdown__box"
+          :class="{'is--disable-second': !needSecond}"
         >
           <!-- 时 -->
           <sp-time-picker-pane :index="hourIndex">
             <sp-time-picker-option
               v-for="(item, index) in hourList"
               :key="item"
-              :disabled="disableHour(item)"
+              :disabled="_disableHour(item)"
               type="hour"
               :text="item"
               :index="index"
@@ -40,7 +41,7 @@
             <sp-time-picker-option
               v-for="(item, index) in minuteList"
               :key="item"
-              :disabled="disableMinute(item)"
+              :disabled="_disableMinute(item)"
               type="minute"
               :text="item"
               :index="index"
@@ -56,7 +57,7 @@
             <sp-time-picker-option
               v-for="(item, index) in secondList"
               :key="item"
-              :disabled="disableSecond(item)"
+              :disabled="_disableSecond(item)"
               type="second"
               :text="item"
               :index="index"
@@ -101,17 +102,21 @@ export default {
       type: Boolean,
       default: false
     },
+    disableTime : {
+      type: Function,
+      default: () => { return {} }
+    },
     disableHour: {
       type: Function,
-      default: () => false
+      default: () => []
     },
     disableMinute: {
       type: Function,
-      default: () => false
+      default: () => []
     },
     disableSecond: {
       type: Function,
-      default: () => false
+      default: () => []
     }
   },
 
@@ -316,6 +321,21 @@ export default {
       if (type === 'second') {
         this.secondIndex = -1
       }
+    },
+    _disableHour(item) {
+      const { disableHour } = this.disableTime()
+      const disableList = disableHour ? disableHour() : this.disableHour()
+      return (disableList || []).includes(+item)
+    },
+    _disableMinute(item) {
+      const { disableMinute } = this.disableTime()
+      const disableList = disableMinute ? disableMinute() : this.disableMinute()
+      return (disableList || []).includes(+item)
+    },
+    _disableSecond(item) {
+      const { disableSecond } = this.disableTime()
+      const disableList = disableSecond ? disableSecond() : this.disableSecond()
+      return (disableList || []).includes(+item)
     }
   }
 }
@@ -327,4 +347,10 @@ export default {
 .sp-time-picker {
   color: $time-picker-color;
 }
+.sp-time-picker__dropdown__box.is--disable-second{
+  .sp-time-picker-pane{
+    width: 50%;
+  }
+}
+
 </style>

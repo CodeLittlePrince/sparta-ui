@@ -85,6 +85,7 @@ export default {
     box-shadow: $float-box-shadow-box;
     box-sizing: border-box;
     background-color: $time-picker-pane-background;
+    width: 200px;
   }
 }
 </style>

@@ -87,7 +87,7 @@
       </span>
       <!-- 后置内容 -->
       <span
-        v-if="$slots.suffix || suffixIcon || showClear || validateState && needStatusIcon"
+        v-if="$slots.suffix || suffixIcon || clearable || validateState && needStatusIcon"
         class="sp-input__suffix"
       >
         <span class="sp-input__suffix-inner">
@@ -99,11 +99,13 @@
               :class="suffixIcon"
             />
           </template>
-          <i
-            v-else
-            class="sp-input__icon sp-icon-close-bold sp-input__clear"
-            @click.stop="handleClear"
-          />
+          <transition name="sp-fade">
+            <i
+              v-if="showClear"
+              class="sp-input__icon sp-icon-close-bold sp-input__clear"
+              @click.stop="handleClear"
+            />
+          </transition>
         </span>
         <i
           v-if="validateState"
@@ -548,7 +550,7 @@ export default {
     color: #fff;
     background-color: $color-text-tip;
     font-size: 12px;
-    line-height: 16px;
+    line-height: 18px;
     cursor: pointer;
   }
 
@@ -582,6 +584,24 @@ export default {
       outline: none;
       border-color: $color-primary;
       box-shadow: $input-box-shadow-focus;
+    }
+    /* safari 浏览器密码输入框默认钥匙去除 */
+    &::-webkit-credentials-auto-fill-button {
+      display: none !important;
+      visibility: hidden;
+      pointer-events: none;
+      position: absolute;
+      right: 0;
+    }
+    /* safari 浏览器密码输入框默认眼睛和xx去除 */
+    &::-ms-clear, &::-ms-reveal {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+    /*去掉搜狗浏览器密码软盘*/
+    &::-webkit-input-safebox-button{
+      display: none;
     }
   }
 
@@ -678,7 +698,7 @@ export default {
 
   &--prefix {
     .sp-input__inner {
-      padding-left: 30px;
+      padding-left: 35px;
     }
   }
 
@@ -732,7 +752,7 @@ export default {
   }
 
   &--prefix &__placeholder {
-    padding-left: 30px;
+    padding-left: 35px;
   }
 
   &--suffix &__placeholder {
@@ -868,4 +888,5 @@ export default {
     padding: 7px 10px;
   }
 }
+
 </style>

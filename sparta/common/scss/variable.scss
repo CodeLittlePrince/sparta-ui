@@ -267,24 +267,27 @@ $time-picker-option-color--is-disabled: #c0c4cc;
 
 /* DatePicker
 -------------------------- */
-$date-picker-color: $color-text-primary;
+$date-picker-color: $color-text-regular;
 $date-picker-border: $border-base;
 $date-picker-border-radius: 4px;
 $date-picker-pane-border: $border-base;
 $date-picker-pane-background: #fff;
-$date-picker-pane-width: 280px;
-$date-picker-pane__header-height: 40px;
-$date-picker-pane__header-icon-color: rgba(0, 0, 0, 0.3);
-$date-picker-pane__header-color: $color-text-primary;
+$date-picker-pane-width: 194px;
+$date-picker-pane-font-size: 12px;
+$date-picker-pane__header-height: 17px;
+$date-picker-pane__header-icon-color: #c7cbd1;
+$date-picker-pane__header-color: $color-text-regular;
 $date-picker-pane__header-a-hover-color: $color-primary;
 $date-picker-pane__header-border: 1px solid #e8e8e8;
-$date-picker-pane__cell--is-disabled-color: $color-text-secondary;
+$date-picker-pane__cell--is-disabled-color: #c7cbd1;
+$date-picker-pane__cell--is-disabled-background: #f0f3f7;
 $date-picker-pane__cell--is-checked-background: $color-primary;
 $date-picker-pane__cell--is-checked-color: #fff;
-$date-picker-pane__cell--is-checked-border-radius: 4px;
+$date-picker-pane__cell--is-checked-border-radius: 2px;
 $date-picker-pane__cell--is-today-background: $color-primary-light-7;
-$date-picker-pane__cell--is-today-border-radius: 4px;
-$date-picker-pane__cell--is-ln-month-color: rgba(0, 0, 0, 0.3);
+$date-picker-pane__cell--is-today-border-radius: 2px;
+$date-picker-pane__cell--is-ranging-background: #e6f1ff;
+$date-picker-pane__cell--is-ln-month-color: #c7cbd1;
 $date-picker-pane__cell-background-hover: #f5f7fa;
 $date-picker-pane__cell-color-hover: $color-primary;
 $date-picker-range-icon-color: #c0c4cc;
