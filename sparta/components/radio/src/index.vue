@@ -5,6 +5,7 @@
       { 'is--disabled': disabled },
       { 'is--checked': checked },
     ]"
+    @click="handleClick"
   >
     <!-- 小圆圈 -->
     <span class="sp-radio">
@@ -74,6 +75,10 @@ export default {
         this.$emit('change', this.model)
         this.isGroup && this.dispatch('SpRadioGroup', 'handleChange', this.model)
       })
+    },
+
+    handleClick() {
+      this.$emit('click', this.model)
     }
   }
 }

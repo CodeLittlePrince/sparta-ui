@@ -131,6 +131,7 @@ export default {
 | 事件名称 | 说明                   | 回调参数              |
 | -------- | ---------------------- | --------------------- |
 | change   | 绑定值变化时触发的事件 | 选中的 Radio label 值 |
+| click   | 点击事件，不管值有没有变化 | 已选中的 Radio label 值 |
 
 ### Radio Button Attributes
 
