@@ -182,17 +182,17 @@ export default {
           index: '5-1',
           child: [
             {
-              title: 'Modal 模态弹窗',
+              title: 'Modal 模态弹窗（新）',
               link: '/modal',
               index: '5-1-1'
             },
             {
-              title: 'Toast 全局提示',
+              title: 'Toast 全局提示（新）',
               link: '/toast',
               index: '5-1-2'
             },
             {
-              title: 'Confirm 全局确认',
+              title: 'Confirm 全局确认（新）',
               link: '/confirm',
               index: '5-1-3'
             },

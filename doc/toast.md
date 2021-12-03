@@ -31,19 +31,15 @@ export default{
 ```vue
 <template>
   <sp-button
-    type="success"
     @click="showSuccess"
   >success</sp-button>
   <sp-button
-    type="warning"
     @click="showWarning"
   >warning</sp-button>
   <sp-button
-    type="info"
     @click="showInfo"
   >info</sp-button>
   <sp-button
-    type="danger"
     @click="showError"
   >error</sp-button>
 </template>

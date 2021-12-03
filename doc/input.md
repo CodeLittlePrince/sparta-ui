@@ -136,6 +136,88 @@ export default {
 ```
 :::
 
+### 输入格式限制
+通过filter-char属性来限制哪些字符不能输入。
+
+:::demo filter-char有两种类型可以作为限制规则，分别是：Array、Regrex。
+```vue
+<template>
+  <div class="sp-input-demo">
+    <sp-input
+      v-model="value14"
+      :filter-char="['A', 'B']"
+      placeholder="用Array过滤"
+    ></sp-input>
+    <sp-input
+      v-model="value15"
+      :filter-char="/[^a-zA-Z]/g"
+      placeholder="用正则过滤"
+    ></sp-input>
+  </div>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        value14: '',
+        value15: '',
+      }
+    },
+    watch: {
+      value14(val) {
+        console.log(val)
+      },
+      value15(val) {
+        console.log(val)
+      },
+    }
+  }
+</script>
+```
+:::
+
+### 转换英文大小写
+通过transform-case属性来转换英文大小写。
+
+:::demo transform-case值可选，分别是：lower、upper。
+```vue
+<template>
+  <div class="sp-input-demo">
+    <sp-input
+      v-model="value16"
+      transform-case="lower"
+      placeholder="转为小写"
+    ></sp-input>
+    <sp-input
+      v-model="value17"
+      transform-case="upper"
+      placeholder="转为大写"
+    ></sp-input>
+  </div>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        value16: '',
+        value17: '',
+      }
+    },
+    watch: {
+      value16(val) {
+        console.log(val)
+      },
+      value17(val) {
+        console.log(val)
+      },
+    }
+  }
+</script>
+```
+:::
+
 ### 格式化提示
 :::demo 使用`tipFormat`属性即可得到一个有格式化提示的输入框
 ```vue
@@ -343,7 +425,8 @@ export default {
 | form | 原生属性 | string | — | — |
 | label | 输入框关联的label文字 | string | — | — |
 | tabindex | 输入框的tabindex | string | - | - |
-| tipFormat | 格式化提示的格式定义 | Function | - | val => val
+| tip-format | 格式化提示的格式定义 | Function | - | val => val
+| filter-char | 限制哪些字符不能输入。 | array / regrex | - | null
 
 ### Input Slots
 | name | 说明 |
@@ -391,13 +474,29 @@ export default {
         input11: '',
         input12: '',
         value13: '',
+        value14: '',
+        value15: '',
+        value16: '',
+        value17: '',
         select: ''
       }
     },
     watch: {
       value1(val) {
         console.log(val)
-      }
+      },
+      value14(val) {
+        console.log(val)
+      },
+      value15(val) {
+        console.log(val)
+      },
+      value16(val) {
+        console.log(val)
+      },
+      value17(val) {
+        console.log(val)
+      },
     },
     methods: {
       tipFormat(val) {
@@ -412,7 +511,7 @@ export default {
           }
         }
         return result
-      }
+      },
     }
   }
 </script>

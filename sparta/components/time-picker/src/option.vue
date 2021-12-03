@@ -2,7 +2,7 @@
   <li
     class="sp-time-picker-option"
     :class="{
-      'is-selected': isSelect,
+      'is--selected': isSelect,
       'is-disabled': disabled,
       'is-hover': hover
     }"
@@ -129,7 +129,7 @@ export default {
     background-color: $select-dropdown-item-background-hover;
   }
 
-  &.is-selected {
+  &.is--selected {
     color: $time-picker-option-color--is-selected;
     font-weight: bold;
   }

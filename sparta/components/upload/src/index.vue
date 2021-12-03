@@ -44,7 +44,7 @@
             </div>
           </div>
         </div>
-        <p v-show="uploadFiles.length" class="sp-upload-file__text">以下为已上传文件：</p>
+        <p v-show="uploadFiles.length" class="sp-upload-file__text">以下为上传文件：</p>
         <!-- 展示 -->
         <ul class="sp-upload-file__show">
           <li
@@ -67,18 +67,18 @@
             <i v-else-if="item.status === 'fail'" class="sp-icon-warning-circle" />
             <i v-else class="sp-icon-file" />
             <a
-              v-if="item.url"
+              v-if="item.fileUrl"
               class="sp-upload-file__item-name"
-              :href="item.url"
-              :title="item.name"
+              :href="item.fileUrl"
+              :title="item.fileName"
               target="_blank"
-            >{{ item.name }}</a>
+            >{{ item.fileName }}</a>
             <!-- 文件名 -->
             <span
               v-else
-              :title="item.name"
+              :title="item.fileName"
               class="sp-upload-file__item-name"
-            >{{ item.name }}</span>
+            >{{ item.fileName }}</span>
             <!-- 错误提示 -->
             <span
               v-if="item.status === 'fail'"
@@ -110,18 +110,18 @@
           >
             <div class="sp-upload-picture__item-info">
               <img
-                v-if="item.status === 'success' && (item.type === 'image' || isIE9)"
+                v-if="item.status === 'success' && (item.fileType === 'image' || isIE9)"
                 :src="_getImgUrl(item)"
                 alt=""
               >
               <!-- 不是图片的文件兼容 -->
               <div
-                v-if="item.status === 'success' && item.type !== 'image' && !isIE9"
+                v-if="item.status === 'success' && item.fileType !== 'image' && !isIE9"
                 class="sp-upload-picture__item-info-file"
               >
                 <i class="sp-icon-file"></i>
                 <div class="sp-upload-picture__item-info-name">
-                  {{ item.name }}
+                  {{ item.fileName }}
                 </div>
               </div>
               <!-- 上传中 -->
@@ -230,7 +230,7 @@ export default {
     // 上传时http参数的文件参数名
     name: {
       type: String,
-      default: 'myFile'
+      default: 'file'
     },
     // 上传地址
     action: {
@@ -324,6 +324,7 @@ export default {
   watch: {
     files(val) {
       this.uploadFiles = val
+      this._initUploadFilesData()
     }
   },
 
@@ -366,10 +367,10 @@ export default {
     },
 
     handleFilePreview(item) {
-      if (item.type === 'image') {
+      if (item.fileType === 'image') {
         this.$sparta.imgPreview(this._getImgUrl(item))
       } else {
-        window.open(item.url)
+        window.open(item.fileUrl)
       }
     },
 
@@ -390,10 +391,14 @@ export default {
      */
     _initUploadFilesData() {
       this.uploadFiles = this.files.map(item => {
-        item.status = 'success'
-        item.type = 'image'
-        item.percentage = 100
-        item.uid = Date.now() + this.uidIndex++
+        // status没有值说明是外部通过:files直接传入的情况（场景一般是表单回填）
+        // 这种情况需要初始化成规范格式，不然会影响最后的取值
+        if (!item.status) {
+          item.status = 'success'
+          item.fileType = item.fileType || 'image'
+          item.percentage = 100
+          item.uid = Date.now() + this.uidIndex++
+        }
         return item
       })
     },
@@ -449,7 +454,7 @@ export default {
           const file = this._getFile(rawFile)
           this.onSuccess(res, rawFile)
           res = this.processResult(res)
-          file.url = res
+          file.fileUrl = res
           file.status = 'success'
           this._emitChange()
           delete this.request[uid]
@@ -525,14 +530,15 @@ export default {
       let file = {
         status: 'ready',
         uid: rawFile.uid,
-        name: rawFile.name,
+        fileName: rawFile.name,
+        suffix: this._getFileSuffix(rawFile.name),
         size: rawFile.size,
         percentage: 0,
         raw: rawFile,
-        type: rawFile.type.startsWith('image') ? 'image' : 'file'
+        fileType: rawFile.type.startsWith('image') ? 'image' : 'file'
       }
       // 预显示
-      if (this.type === 'picture' && !this.isIE9) {
+      if (this.fileType === 'picture' && !this.isIE9) {
         try {
           file.urlBase64 = URL.createObjectURL(rawFile)
         } catch (err) {
@@ -552,9 +558,10 @@ export default {
         const item = copy[i]
         if (item.status === 'success') {
           let data = {
-            name: item.name,
-            url: item.url,
-            type: item.type
+            fileName: item.fileName,
+            suffix: this._getFileSuffix(item.fileName),
+            fileUrl: item.fileUrl,
+            fileType: item.fileType
           }
           rst.push(data)
         }
@@ -569,12 +576,13 @@ export default {
       for (let i = 0, len = copy.length; i < len; i++) {
         const item = copy[i]
         let data = {
-          name: item.name,
-          url: item.url,
+          fileName: item.fileName,
+          suffix: this._getFileSuffix(item.fileName),
+          fileUrl: item.fileUrl,
           status: item.status,
-          type: item.type
+          fileType: item.fileType
         }
-        if (this.type === 'picture' && !this.isIE9) {
+        if (this.fileType === 'picture' && !this.isIE9) {
           data.urlBase64 = item.urlBase64
         }
         rst.push(data)
@@ -593,7 +601,8 @@ export default {
       const file = {
         uid: Date.now() + this.uidIndex++,
         status: 'ready',
-        name: namePieces[namePieces.length - 1]
+        fileName: namePieces[namePieces.length - 1],
+        suffix: this._getFileSuffix(namePieces[namePieces.length - 1]),
       }
       this.uploadFiles.push(file)
       const now = Date.now()
@@ -639,7 +648,7 @@ export default {
       try {
         const resData = iframe.contentDocument.body.textContent || iframe.contentWindow.document.body.textContent
         // 处理数据 。。。
-        this.uploadFiles[index].url = this.processResult(JSON.parse(resData))
+        this.uploadFiles[index].fileUrl = this.processResult(JSON.parse(resData))
         this.uploadFiles[index].status = 'success'
         this._emitChange()
       } catch (e) {
@@ -666,11 +675,21 @@ export default {
     },
 
     _getImgUrl(item) {
-      return (this.isIE9 || !item.urlBase64) ? item.url : item.urlBase64
+      return (this.isIE9 || !item.urlBase64) ? item.fileUrl : item.urlBase64
     },
 
     _parsePercentage(val) {
       return parseInt(val, 10)
+    },
+
+    _getFileSuffix(fileName) {
+      if (!fileName) return ''
+
+      const pieces = fileName.split('.')
+      
+      if (pieces.length === 1) return ''
+      
+      return '.' + pieces[pieces.length - 1]
     }
   }
 }
@@ -771,6 +790,7 @@ export default {
     }
 
     &__item {
+      width: 304px;
       position: relative;
       margin-top: 3px;
       font-size: 0;

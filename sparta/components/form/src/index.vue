@@ -1,5 +1,5 @@
 <template>
-  <form ref="form" class="sp-form">
+  <form ref="form" class="sp-form" @keydown="handleKeydown">
     <slot></slot>
   </form>
 </template>
@@ -29,14 +29,18 @@ export default {
       type: Boolean,
       default: true
     },
+    validateFailTip: {
+      type: Boolean,
+      default: true
+    },
     scrollWhenError: {
       type: Boolean,
       default: false
     },
-    validateFailTip: {
-      type: Boolean,
-      default: true
-    }
+    scrollOffsetTop: {
+      type: [Number, String],
+      default: 0
+    },
   },
 
   data() {
@@ -68,6 +72,14 @@ export default {
   },
   
   methods: {
+    handleKeydown(e) {
+      if(e.keyCode === 13) {
+        e.preventDefault()
+        e.stopPropagation()
+        this.$emit('enter')
+      }
+    },
+
     resetFields() {
       if (!this.model) {
         process.env.NODE_ENV !== 'production' &&
@@ -90,7 +102,7 @@ export default {
       })
     },
 
-    validate(callback) {
+    validate(callback, partFields) {
       if (!this.model) {
         console.warn('[Sparta Warn][Form]model is required for validate to work!')
         return
@@ -113,32 +125,65 @@ export default {
         callback(true)
       }
       let invalidFields = {}
-      this.fields.forEach(field => {
+      
+      let fields = this.fields
+      // 支持部分校验，传入prop的数组即可
+      const hasPartFields = partFields && partFields.length
+      if (hasPartFields) {
+        fields = fields.filter(vm => partFields.includes(vm.prop))
+      }
+      fields.forEach(field => {
         field.validate('', (message, field) => {
           if (message) {
             valid = false
           }
           invalidFields = Object.assign({}, invalidFields, field)
-          if (typeof callback === 'function' && ++count === this.fields.length) {
+          if (typeof callback === 'function' && ++count === fields.length) {
             callback(valid, invalidFields)
           }
         })
       })
 
-      if (this.scrollWhenError && !valid) {
+      if (!valid) {
         this.$nextTick(() => {
           if (this.$refs.form) {
             const errorItems = this.$refs.form.getElementsByClassName('is--error')
             if (errorItems.length) {
               // 错误提示
               const errorTipElem = errorItems[0].querySelector('.sp-form-item__error')
-              if (this.validateFailTip && errorTipElem && errorTipElem.innerText) {
+              if (
+                this.validateFailTip &&
+                errorTipElem &&
+                errorTipElem.innerText &&
+                !hasPartFields
+              ) {
                 this.toastError(errorTipElem.innerText)
               }
-              // 滚动到错误位置
-              errorItems[0].scrollIntoView({
-                behavior: 'smooth'
-              })
+              // 滚动到错误位置;部分校验就不用滚动了(因为场景基本都是输入或者选择完后立马触发)
+              if (this.scrollWhenError && !hasPartFields) {
+                const supportSmoothScroll = 'scrollBehavior' in document.documentElement.style
+                // 如果有scrollOffsetTop，说明scrollIntoView不满足需求，比如网易跨境顶部有个fixed的head，需要额外滚动一定距离
+                if (this.scrollOffsetTop) {
+                  const distance = this._getDistanceToBody(errorItems[0]) + Number(this.scrollOffsetTop)
+                  
+                  if (supportSmoothScroll) {
+                    window.scrollTo({
+                      top: distance,
+                      behavior: 'smooth'
+                    })
+                  } else {
+                    window.scrollTo(0, distance)
+                  }
+                } else {
+                  if (supportSmoothScroll) {
+                    errorItems[0].scrollIntoView({
+                      behavior: 'smooth'
+                    })
+                  } else {
+                    errorItems[0].scrollIntoView()
+                  }
+                }
+              }
             }
           }
         })
@@ -147,6 +192,16 @@ export default {
       if (promise) {
         return promise
       }
+    },
+
+    _getDistanceToBody(element) {
+      let distance = element.offsetTop
+
+      if (element.offsetParent !== null) {
+        distance += this._getDistanceToBody(element.offsetParent)
+      }
+
+      return distance
     }
   }
 }

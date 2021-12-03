@@ -121,7 +121,8 @@ export default{
     <div>
       <sp-date-picker
         v-model="time5"
-        showTime
+        :show-time="true"
+        @change="handleDateChange"
       ></sp-date-picker>
     </div>
     <div style="margin-top: 20px">
@@ -131,8 +132,7 @@ export default{
         start-placeholder="开始日期"
         end-placeholder="结束日期"
         :default-time="['00:00:00', '23:59:59']"
-        showTime
-        @change="handleDaterangeChange"
+        :show-time="true"
       ></sp-date-picker>
     </div>
 </template>
@@ -146,7 +146,7 @@ export default{
     }
   },
   methods: {
-    handleDaterangeChange(value){
+    handleDateChange(value){
       console.log('change', value)
     }
   }
@@ -163,7 +163,7 @@ export default{
     <div>
       <sp-date-picker
         v-model="time7"
-        showTime
+        :show-time="true"
         :disable-time="disabledDateTime"
       ></sp-date-picker>
     </div>
@@ -175,7 +175,7 @@ export default{
         end-placeholder="结束日期"
         :default-time="['00:00:00', '23:59:59']"
         :disable-time="disabledRangeTime"
-        showTime
+        :show-time="true"
       ></sp-date-picker>
     </div>
 </template>
@@ -226,14 +226,12 @@ export default{
       <sp-date-picker
         type="month"
         v-model="month"
-        @change="handleDaterangeChange"
       ></sp-date-picker>
     </div>
     <div style="margin-top: 20px">
       <p class="sp-date-pikcer-demo-p">年: {{ year }}</p>
       <sp-date-picker
         v-model="year"
-        @change="handleDaterangeChange"
         type="year"
       ></sp-date-picker>
     </div>
@@ -257,17 +255,17 @@ export default{
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
 | value    | 绑定值，默认格式必须为yyyy-MM-dd的字符串或long类型,showTime模式下格式必须为yyyy-MM-dd hh:mm:ss或long类型   | string/number  | — | — |
+| type | 日期组件类型 | string | date/daterange/month/year | date |
+| value-format | 可选，绑定值的格式。不指定则绑定值为 long 类型 | number/string | yyyy-MM-dd / yyyy-MM-dd hh:mm:ss | — |
+| default-time | 选中日期后的默认具体时刻 | 非范围选择时：string / 范围选择时：string[] | 非范围选择时：形如12:00:00的字符串；范围选择时：数组，长度为 2，每项值为字符串，形如12:00:00，第一项指定开始日期的时刻，第二项指定结束日期的时刻。不指定会使用时刻 00:00:00 | 00:00:00 / ['00:00:00', '23:59:59'] |
+| showTime | 是否显示时分秒。仅在type为date/daterange时生效 | boolean | — | false |
 | disabled | 是否禁用 | boolean | — | true |
 | disabledDate | 设置禁用状态，参数为当前日期，要求返回 Boolean | Function | — | function (new Date()) => false |
 | disabledTime | 不可选择的时间 | Function | — | function () => {} |
-| type | 日期组件类型 | string | date/daterange | date |
 | placeholder | 非范围选择时的占位内容 | string | — | 请选择日期 |
 | start-placeholder | 类型为daterange情况下的开始placeholder文案 | string | — | 开始日期 |
 | end-placeholder | 类型为daterange情况下的结束placeholder文案 | string | — | 结束日期 |
-| showTime | 是否显示时分秒 | boolean | — | false |
 | clearable | 是否展示清空按钮 | boolean | — | false |
-| default-time | 选中日期后的默认具体时刻 | 非范围选择时：string / 范围选择时：string[] | 非范围选择时：形如12:00:00的字符串；范围选择时：数组，长度为 2，每项值为字符串，形如12:00:00，第一项指定开始日期的时刻，第二项指定结束日期的时刻。不指定会使用时刻 00:00:00 | 00:00:00 / ['00:00:00', '23:59:59'] |
-| value-format | 可选，绑定值的格式。不指定则绑定值为 long 类型 | number/string | yyyy-MM-dd / yyyy-MM-dd hh:mm:ss | — |
 
 ### Events
 | 事件名称      | 说明    | 回调参数      | 
@@ -336,6 +334,9 @@ export default{
     handleDaterangeChange(value){
       console.log('change', value)
     },
+    handleDateChange(value){
+      console.log('change', value)
+    }
   }
 }
 </script>

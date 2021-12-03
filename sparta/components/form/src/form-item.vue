@@ -46,13 +46,11 @@
       </div>
       <div class="sp-form-item__error">
         <transition name="sp-zoom-in-top">
-          <div v-if="validateState === 'error' && showMessage && form.showMessage">
+          <div v-show="validateState === 'error' && showMessage && form.showMessage">
             <slot
               name="error"
               :error="validateMessage"
-            >
-              {{ validateMessage }}
-            </slot>
+            >{{ validateMessage }}</slot>
           </div>
         </transition>
       </div>
@@ -237,13 +235,13 @@ export default {
       const validator = new AsyncValidator(descriptor)
       const model = {}
 
-      let fieldValueCopy = JSON.parse(JSON.stringify(this.fieldValue))
+      let fieldValueCopy = tool.clonedeep(this.fieldValue)
+
       // 上传文件只应该看已经上传成功的
       if (this.forUpload) {
         fieldValueCopy = fieldValueCopy.filter(item => item.status === 'success')
       }
       model[this.prop] = fieldValueCopy
-
       validator.validate(model, { firstFields: true }, (errors, invalidFields) => {
         this.validateState = !errors ? 'success' : 'error'
         this.validateMessage = errors ? errors[0].message : ''
@@ -418,6 +416,7 @@ export default {
     padding: 3px 0 6px;
     min-height: 26px;
     box-sizing: border-box;
+    will-change: transform;
   }
 
   &.is--error {

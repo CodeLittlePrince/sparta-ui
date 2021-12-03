@@ -5,6 +5,7 @@
       { 'is--disabled': disabled },
       { 'is--checked': checked },
     ]"
+    @click="handleClick"
   >
     <!-- 小圆圈 -->
     <span class="sp-radio">
@@ -31,7 +32,7 @@ export default {
     value: {},
     label: {
       type: [String, Boolean, Number],
-      deafaul: ''
+      default: ''
     },
     disabled: {
       type: Boolean,
@@ -74,6 +75,10 @@ export default {
         this.$emit('change', this.model)
         this.isGroup && this.dispatch('SpRadioGroup', 'handleChange', this.model)
       })
+    },
+
+    handleClick() {
+      this.$emit('click', this.model)
     }
   }
 }
@@ -107,7 +112,7 @@ export default {
     cursor: pointer;
     font-size: 0;
     color: $radio-color;
-    margin-right: 20px;
+    margin-right: 40px;
     line-height: 20px;
     height: 20px;
     display: inline-block;
@@ -170,6 +175,10 @@ export default {
 
   &__wrap.is--disabled {
     cursor: not-allowed;
+    color: $radio-color-disabled;
+  }
+
+  &__wrap.is--disabled &__text {
     color: $radio-color-disabled;
   }
 

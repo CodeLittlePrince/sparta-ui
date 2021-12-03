@@ -1,7 +1,7 @@
 <template>
-  <div class="sp-modal">
+  <div class="sp-modal" :class="{ 'is--fullscreen': fullscreen }">
     <transition
-      name="sp-modal-fade"
+      :name="fullscreen ? 'sp-modal-fade-out' : 'sp-modal-fade'"
       @after-leave="handleAfterLeave"
     >
       <div
@@ -11,26 +11,24 @@
       >
         <div
           class="sp-modal-content"
-          :style="`margin-top: ${top}; width: ${width}px`"
+          :style="{ width: fullscreen ? '1200px' : `${width}px` }"
         >
+          <div
+            v-if="hasClose"
+            class="sp-modal__head__close"
+            @click="modalValue = false"
+          >
+            <i class="sp-icon-close"></i>
+          </div>
           <!-- head -->
-          <div class="sp-modal__head">
-            <span>{{ title }}</span>
-            <div
-              v-if="hasClose"
-              class="sp-modal__head__close"
-              @click="modalValue = false"
-            >
-              <i class="sp-icon-close"></i>
-            </div>
+          <div v-if="!fullscreen" class="sp-modal__head">
+            <slot name="head">
+              <div v-if="title" class="sp-modal__title">{{ title }}</div>
+            </slot>
           </div>
           <!-- body -->
-          <div class="sp-modal__body">
+          <div class="sp-modal__body" :style="{ 'max-height': fullscreen ? `calc(100vh - 47px - 54px)` : maxBodyHeight }">
             <slot></slot>
-          </div>
-          <!-- foot -->
-          <div class="sp-modal__foot">
-            <slot name="foot"></slot>
           </div>
         </div>
       </div>
@@ -48,6 +46,7 @@
 
 <script>
 import PopManage from 'sparta/model/PopManage'
+import ModalManage from 'sparta/model/ModalManage'
 
 export default {
   name: 'SpModal',
@@ -61,10 +60,6 @@ export default {
       type: [String, Number],
       default: 500,
     },
-    'top': {
-      type: String,
-      default: '15vh'
-    },
     'title': {
       type: String,
       default: '提示'
@@ -72,26 +67,49 @@ export default {
     'hasClose': {
       type: Boolean,
       default: true
+    },
+    'unique': {
+      type: Boolean,
+      default: false,
+    },
+    // priority是unique的一种特殊方式，它会通过判断优先级来决定是否关闭已经出现了的弹窗
+    'priority': {
+      type: [String, Number],
+      default: 0
+    },
+    'fullscreen': {
+      type: Boolean,
+      default: false
     }
   },
+  
   data() {
     return {
       visible: this.value,
       modalValue: this.value,
       modalWrapperZIndex: 1,
       modalMaskZIndex: 1,
+      maxBodyHeight: 'initial'
     }
   },
+  
   watch: {
     value(newVal) {
-      if (newVal === true) {
-        this.modalValue = true
+      if (newVal) {
+        if (this.hasPriorityModalShown()) {
+          this.showByPriority()
+        } else if (this.unique) {
+          this.modalManageHandle()
+        } else {
+          this.modalValue = true
+        }
       } else {
         this.modalValue = false
       }
     },
+    
     modalValue(newVal) {
-      if (newVal === true) {
+      if (newVal) {
         this.visible = newVal
         this.openHandle()
       } else {
@@ -99,16 +117,27 @@ export default {
       }
     }
   },
+
   mounted() {
     const popManage = new PopManage()
     this.modalMaskZIndex = PopManage.zIndex
     popManage.zIndexIncrease()
     this.modalWrapperZIndex = PopManage.zIndex
+
+    this.modalManage = ModalManage.getInstance()
+    this.modalManage.add(this)
+
+    this.setModalContentMaxHeight()
+
     document.body.appendChild(this.$el)
   },
+
   beforeDestroy() {
+    this.modalManage.remove(this)
+
     document.body.removeChild(this.$el)
   },
+
   methods: {
     closeHandle() {
       // 是否所有的modal都已经为不可见了
@@ -131,6 +160,7 @@ export default {
       // 配合model
       this.$emit('input', this.visible)
     },
+
     openHandle() {
       this.visible = true
       // 传出show事件
@@ -139,9 +169,60 @@ export default {
       this.$emit('input', this.visible)
       document.body.style.overflow = 'hidden'
     },
+
+    modalManageHandle() {
+      this.closeOtherModals()
+    },
+
+    hasPriorityModalShown() {
+      const { quene } = this.modalManage
+
+      return quene.some(item => {
+        return 0 < item.priority && item.visible
+      })
+    },
+
+    showByPriority() {
+      const { quene } = this.modalManage
+
+      const hasHigherPriority = quene.some(item => {
+        if (this === item) {
+          return false
+        } else {
+          return item.visible && (this.priority < item.priority)
+        }
+      })
+
+      if (hasHigherPriority) {
+        this.modalValue = false
+      } else {
+        this.closeOtherModals()
+      }
+    },
+
+    closeOtherModals() {
+      const { quene } = this.modalManage
+
+      quene.forEach(modal => {
+        if (this !== modal && modal.visible) {
+          modal.toggleVisible(false)
+        }
+      })
+
+      this.modalValue = true
+    },
+
     handleAfterLeave() {
       this.$emit('after-leave')
-    }
+    },
+
+    toggleVisible(val) {
+      this.$emit('input', val)
+    },
+
+    setModalContentMaxHeight() {
+      this.maxBodyHeight = `${ Math.round(window.innerHeight * 0.8) }px`
+    },
   }
 }
 </script>
@@ -150,6 +231,7 @@ export default {
 @import "~sparta/common/scss/variable";
 
 .sp-modal {
+
   &-wrap {
     position: fixed;
     top: 0;
@@ -157,48 +239,107 @@ export default {
     bottom: 0;
     left: 0;
     overflow: auto;
+
     .sp-modal-content {
-      position: relative;
-      margin: 0 auto 50px;
+      padding: 20px 20px 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       background: $modal-background;
       border-radius: $modal-border-radius;
       box-sizing: border-box;
+
       .sp-modal__head {
-        padding: 10px 12px 9px;
-        span {
-          font-size: $modal-head-font-size;
-          color: $color-text-secondary;
-        }
-        .sp-modal__head__close {
-          position: absolute;
-          top: 9px;
-          right: 10px;
-          padding: 0;
-          border: none;
-          outline: none;
-          cursor: pointer;
-          .sp-icon-close {
-            font-size: $modal-icon-font-size;
-            color: $modal-icon-color;
-          }
+        .sp-modal__title {
+          font-size: 16px;
+          line-height: 22px;
+          font-weight: 600;
+          color: $color-text-regular;
         }
       }
+
+      .sp-modal__head__close {
+        position: absolute;
+        top: 8px;
+        right: 9px;
+        padding: 0;
+        border: none;
+        outline: none;
+        cursor: pointer;
+
+        .sp-icon-close {
+          font-size: 14px;
+          color: $color-text-tip;
+          font-weight: bold;
+        }
+      }
+
       .sp-modal__body {
-        padding: 0 26px;
+        color: $color-text-regular;
+        font-size: 14px;
+        line-height: 20px;
+        overflow-y: auto;
       }
-      .sp-modal__foot {
-        text-align: center;
-        padding: 0 26px 19px;
+
+      .sp-form  {
+        padding-top: 20px;
+        padding-bottom: 14px;
+
+        .sp-form-submit-btns {
+          margin-top: 4px;
+        }
       }
     }
   }
-}
-.sp-modal__mask {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: $modal-mask-background;
+
+  &__mask {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: $modal-mask-background;
+  }
+
+  &.is--fullscreen {
+
+    .sp-modal-content {
+      padding: 47px 0 54px 40px;
+      top: 0;
+      left: 50%;
+      transform: translate(0, 0);
+      margin-left: -600px; // 为了IE，没法用translate方式
+
+      .sp-form  {
+        padding-top: 26px;
+
+        .sp-form-submit-btns {
+          margin-top: 22px;
+        }
+      }
+    }
+
+    .sp-modal__head {
+      .sp-modal__title {
+        font-size: 20px;
+        line-height: 28px;
+        font-weight: 600;
+        color: $color-text-regular;
+      }
+    }
+
+    .sp-modal__head__close {
+      right: -4px;
+      .sp-icon-close {
+        font-size: 26px;
+        font-weight: normal;
+      }
+    }
+
+    .sp-modal__mask {
+      background-color: #fff;
+    }
+  }
 }
 </style>

@@ -11,7 +11,8 @@
     ref="validateForm1"
     label-width="150px"
     class="sp-form-demo"
-    scrollWhenError
+    scroll-when-error
+    @enter="submitForm('validateForm1')"
   >
     <!-- 姓名 -->
     <sp-form-item
@@ -29,6 +30,20 @@
       ></sp-input>
       <div slot="labelTip">靓仔，有什么疑问吗？</div>
       <div slot="tip">输入你的名字吧，靓仔!</div>
+    </sp-form-item>
+    <sp-form-item
+      label="银行编号"
+      prop="localBankCode"
+      :rules="[
+        { required: true, message: '请输入3位数字Bank Code' },
+      ]"
+    >
+      <sp-input
+        v-model="validateForm1.localBankCode"
+        maxlength="3"
+        :filter-char="/[^\d]/g"
+        placeholder="请输入3位数字Bank Code"
+      />
     </sp-form-item>
      <!-- 姓名 -->
     <sp-form-item
@@ -133,7 +148,6 @@
         type="picture"
         example-image="https://i.epay.126.net/a/ge/static/img/ex_supplier.5f209565.png"
         example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
-        :processResult="processPictureResult"
         @change="handlePictureChange"
         :limit="1"
       ></sp-upload>
@@ -154,7 +168,6 @@
         action="/api/upload"
         example-image="https://i.epay.126.net/a/ge/static/img/ex_supplier.5f209565.png"
         example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
-        :process-result="processFilesResult"
         @change="handleFilesChange"
         multiple
       >
@@ -162,15 +175,32 @@
         <div slot="desc">上传文件说明，可多行</div>
         <div slot="tip">注意：最终提交，upload组件需要自行调用getSuccessUploadFiles方法拿到只上传成功的文件</div>
       </sp-upload>
+      <div slot="error" slot-scope="scope">{{ scope.error }}<a style="color: #1977ea">（by hello kitty）</a></div>
     </sp-form-item>
     <!-- 按钮 -->
-    <sp-form-item>
-      <sp-button
-        type="primary"
-        @click="submitForm('validateForm1')"
-      >提交</sp-button>
-      <sp-button plain @click="handleResetForm1">重置</sp-button>
-    </sp-form-item>
+    <sp-form-submit-btns>
+      <sp-form-item
+        prop="agree"
+        :rules="[{
+          validator: () => { return validateForm1.agree },
+          message: '请阅读用户服务协议'
+        }]"
+      >
+        <sp-checkbox v-model="validateForm1.agree">
+          <span>我已阅读并同意</span>
+          <a>《网易跨境付款服务补充协议》</a>
+        </sp-checkbox>
+        <sp-button
+          type="primary"
+          @click="submitForm('validateForm1')"
+        >提交</sp-button>
+        <sp-button plain @click="handleResetForm1">重置</sp-button>
+        <sp-button
+          type="primary"
+          @click="validateFormPart('validateForm1')"
+        >部分提交</sp-button>
+      </sp-form-item>
+    </sp-form-submit-btns>
   </sp-form>
 </template>
 
@@ -180,6 +210,7 @@
       return {
         validateForm1: {
           name: '',
+          localBankCode: '',
           password: '',
           age: '',
           birth: '',
@@ -187,7 +218,8 @@
           cities: [],
           favoriteFruit: '',
           picture: [],
-          files: []
+          files: [],
+          agree: false
         },
         favouriteList: [
           { label: '唱歌', value: 'sing' },
@@ -216,14 +248,19 @@
         //   }
         // })
       },
+      validateFormPart(formName) {
+        this.$refs[formName].validate(null, ['name', 'password']).then(() => {
+          alert('submit!')
+          console.log(this.validateForm1)
+        }).catch(() => {
+          console.log('error submit')
+        })
+      },
       resetForm(formName) {
         this.$refs[formName].resetFields()
       },
       handlePictureChange(list) {
         this.validateForm1.picture = list
-      },
-      processPictureResult(item) {
-        return item.fileUrl
       },
       handleResetForm1() {
         this.resetForm('validateForm1')
@@ -231,9 +268,6 @@
       },
       handleFilesChange(allFiles) {
         this.validateForm1.files = allFiles
-      },
-      processFilesResult(item) {
-        return item.fileUrl
       },
       onExceed() {
         this.$sparta.error('最多上传3张图片')
@@ -453,14 +487,15 @@
 | show-message  | 是否显示校验错误信息 | boolean | — | true |
 | status-icon  | 是否在输入框中显示校验结果反馈图标 | boolean | — | false |
 | validate-on-rule-change  | 是否在 `rules` 属性改变后立即触发一次验证 | boolean | — | true |
-| scrollWhenError | 当有错误信息的时候，是否滚动定位到对应位置 | boolean | — | false |
-| validateFailTip | 当有错误信息的时候，是否提示错误信息 | boolean | — | true |
+| validate-fail-tip | 当有错误信息的时候，是否提示错误信息 | boolean | — | true |
+| scroll-when-error | 当有错误信息的时候，是否滚动定位到对应位置 | boolean | — | false |
+| scroll-offset-top | 如果有scroll-offset-top，说明默认的scrollIntoView滚动方式不满足需求，比如网易跨境顶部有个fixed的head，需要额外滚动一定距离 | number/string | — | 0 |
 
 ### Form Methods
 
 | 方法名      | 说明          | 参数
 |---------- |-------------- | --------------
-| validate | 对整个表单进行校验的方法，参数为一个回调函数。该回调函数会在校验结束后被调用，并传入两个参数：是否校验成功和未通过校验的字段。若不传入回调函数，则会返回一个 promise | Function(callback: Function(boolean, object))
+| validate | 对整个表单进行校验的方法，参数为一个回调函数。该回调函数会在校验结束后被调用，并传入2个参数：是否校验成功和未通过校验的字段。若不传入回调函数，则会返回一个 promise；validate的第二个参数为支持部分字段校验，不传则为全部字段校验 | Function(callback: Function(boolean, object), partFields)
 | resetFields | 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果 | —
 | clearValidate | 移除表单项的校验结果。传入待移除的表单项的 prop 属性或者 prop 组成的数组，如不传则移除整个表单的校验结果果 | Function(props: array | string)
 
@@ -468,6 +503,7 @@
 | 事件名称 | 说明    | 回调参数  |
 |--------- |-------- |---------- |
 | validate | 任一表单项被校验后触发 | 被校验的表单项 prop 值，校验是否通过，错误消息（如果存在） |
+| enter | 用户在表单内按回车触发 | - |
 
 ### Form-Item Attributes
 
@@ -498,6 +534,7 @@
       return {
         validateForm1: {
           name: '',
+          localBankCode: '',
           password: '',
           age: '',
           birth: '',
@@ -505,7 +542,8 @@
           cities: [],
           favoriteFruit: '',
           picture: [],
-          files: []
+          files: [],
+          agree: false
         },
         favouriteList: [
           { label: '唱歌', value: 'sing' },
@@ -556,14 +594,19 @@
           console.log('error submit')
         })
       },
+      validateFormPart(formName) {
+        this.$refs[formName].validate(null, ['name', 'password']).then(() => {
+          alert('submit!')
+          console.log(this.validateForm1)
+        }).catch(() => {
+          console.log('error submit')
+        })
+      },
       resetForm(formName) {
         this.$refs[formName].resetFields()
       },
       handlePictureChange(list) {
         this.validateForm1.picture = list
-      },
-      processPictureResult(item) {
-        return item.fileUrl
       },
       handleResetForm1() {
         this.resetForm('validateForm1')
@@ -571,9 +614,6 @@
       },
       handleFilesChange(allFiles) {
         this.validateForm1.files = allFiles
-      },
-      processFilesResult(item) {
-        return item.fileUrl
       },
       onExceed() {
         this.$sparta.error('最多上传3张图片')

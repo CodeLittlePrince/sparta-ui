@@ -3,9 +3,9 @@
     v-show="visible"
     class="sp-option"
     :class="{
-      'is-selected': isSelect,
-      'is-disabled': disabled,
-      'is-hover': hover && !disabled
+      'is--selected': isSelect,
+      'is--disabled': disabled,
+      'is--hover': hover && !disabled
     }"
     @click.stop="handleClick(value, label)"
     @mouseover="handleMouseover"
@@ -110,14 +110,14 @@ $option-height: 34px;
   box-sizing: border-box;
   transition: background-color 0.1s;
   cursor: pointer;
-  &.is-hover {
+  &.is--hover {
     background-color: $select-dropdown-item-background-hover;
   }
-  &.is-selected {
+  &.is--selected {
     color: $color-primary;
     font-weight: 700;
   }
-  &.is-disabled {
+  &.is--disabled {
     color: $opiton-color-disabled;
     cursor: not-allowed;
   }
