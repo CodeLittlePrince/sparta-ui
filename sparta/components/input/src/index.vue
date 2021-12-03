@@ -683,6 +683,24 @@ export default {
       border-color: $color-primary;
       box-shadow: $input-box-shadow-focus;
     }
+    /* safari 浏览器密码输入框默认钥匙去除 */
+    &::-webkit-credentials-auto-fill-button {
+      display: none !important;
+      visibility: hidden;
+      pointer-events: none;
+      position: absolute;
+      right: 0;
+    }
+    /* safari 浏览器密码输入框默认眼睛和xx去除 */
+    &::-ms-clear, &::-ms-reveal {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+    /*去掉搜狗浏览器密码软盘*/
+    &::-webkit-input-safebox-button{
+      display: none;
+    }
   }
 
   &__suffix {
@@ -832,7 +850,7 @@ export default {
   }
 
   &--prefix &__placeholder {
-    padding-left: 30px;
+    padding-left: 35px;
   }
 
   &--suffix &__placeholder {
@@ -970,4 +988,5 @@ export default {
     padding: 7px 10px;
   }
 }
+
 </style>

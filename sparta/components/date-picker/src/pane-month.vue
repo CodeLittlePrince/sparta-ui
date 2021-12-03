@@ -8,9 +8,12 @@
         @click="handleSwitchLastDecade"
       ></a>
 
-      <span>
+      <a
+        title="选择年份"
+        @click="handleSwitchYear"
+      >
         {{ calYear }}
-      </span>
+      </a>
 
       <a
         class="sp-icon-arrow-double-right"
@@ -25,14 +28,14 @@
         cellspacing="0"
         role="grid"
       >
-        <tbody class="sp-date-picker-pane-month__tbody">
+        <tbody class="sp-date-picker-pane-month__tbody" @click="handleMonthSelect($event)">
           <tr
             v-for="(line, lineIndex) in 5"
             :key="line"
             class="sp-date-picker-pane-month__week"
           >
             <td
-              v-for="(item, index) in yearList.slice((lineIndex - 1) * 3, lineIndex * 3)"
+              v-for="(item, index) in monthList.slice((lineIndex - 1) * 3, lineIndex * 3)"
               :key="index"
               class="sp-date-picker-pane-month__cell"
               :class="{
@@ -46,7 +49,6 @@
                   !item.lastYearEndMonth &&
                   !item.nextYearStartMonth
               }"
-              @click="handleMonthSelect(item)"
             >
               <div class="sp-date-picker-pane-month__date">{{ item.name }}</div>
             </td>
@@ -94,7 +96,7 @@ export default {
     currentYear() {
       return new Date().getFullYear()
     },
-    yearList() {
+    monthList() {
       let rst = []
       if (this.calMonthValue) {
         rst = [
@@ -127,7 +129,15 @@ export default {
   },
 
   methods: {
-    handleMonthSelect(item) {
+    handleMonthSelect(e) {
+      let target = e.target
+      if (target.tagName === 'DIV') {
+        target = target.parentNode
+      }
+      if (target.tagName !== 'TD') return
+      const row = target.parentNode.rowIndex - 1
+      const column = target.cellIndex
+      const item = this.monthList[row * 3 + column]
       if (!item.disabled) {
         this.$emit('calMonthChange', item.value)
         this.$emit('monthSelect')
@@ -138,6 +148,9 @@ export default {
     },
     handleSwitchNextDecade() {
       this.$emit('calYearChange', this.calYear + 1)
+    },
+    handleSwitchYear() {
+      this.$emit('switchYear')
     },
     _getDayCountOfMonth(year, month) {
       if (month === 3 || month === 5 || month === 8 || month === 10) {

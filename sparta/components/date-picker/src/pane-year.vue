@@ -27,7 +27,7 @@
         cellspacing="0"
         role="grid"
       >
-        <tbody class="sp-date-picker-pane-year__tbody">
+        <tbody class="sp-date-picker-pane-year__tbody" @click="handleSelectDate($event)">
           <tr
             v-for="(line, lineIndex) in 5"
             :key="line"
@@ -45,7 +45,6 @@
                   !item.lastDecadeEndYear &&
                   !item.nextDecadeStartYear
               }"
-              @click="handleSelectDate(item)"
             >
               <div class="sp-date-picker-pane-year__date">{{ item.value }}</div>
             </td>
@@ -119,7 +118,15 @@ export default {
   },
 
   methods: {
-    handleSelectDate(item) {
+    handleSelectDate(e) {
+      let target = e.target
+      if (target.tagName === 'DIV') {
+        target = target.parentNode
+      }
+      if (target.tagName !== 'TD') return
+      const row = target.parentNode.rowIndex - 1
+      const column = target.cellIndex
+      const item = this.yearList[row * 3 + column]
       if (!item.disabled) {
         this.$emit('calYearChange', item.value)
         this.$emit('yearSelect')

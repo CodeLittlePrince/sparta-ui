@@ -98,17 +98,7 @@
               v-for="(item, index) in dateList.slice((lineIndex - 1) * 7, lineIndex * 7)"
               :key="index"
               class="sp-date-picker-pane-day__cell"
-              :class="{
-                'is--last-month-cell': item.lastMonth,
-                'is--next-month-cell': item.nextMonth,
-                'is--today': `${calYear}-${calMonth}-${item.value}` ===
-                  `${nowYear}-${+nowMonth}-${+nowDay}` &&
-                  !item.lastMonth &&
-                  !item.nextMonth,
-                'is--disabled': item.disabled,
-                'is--enabled': !item.disabled,
-                ...getCellClass(item)
-              }"
+              :class="getCellClass(item)"
             >
               <div class="sp-date-picker-pane-day__date">{{ item.value }}</div>
             </td>
@@ -169,7 +159,7 @@ export default {
         this.calMonth + 1,
         0
       ).getDate()
-      //先将当月的日期塞入dateList
+      // 先将当月的日期塞入dateList
       let dateList = Array.from(
         { length: currentMonthLength },
         (val, index) => {
@@ -234,7 +224,7 @@ export default {
         const pieces = dateValue.split('-')
         this.$emit('yearChange', +pieces[0])
         this.$emit('monthChange', +pieces[1] - 1)
-        this.$emit('dayChange', +pieces[2]) // TODO
+        this.$emit('dayChange', +pieces[2])
 
         this.$emit('modelChange', { date: dateValue, type: 'click' })
         this.$emit('daySelect')
@@ -328,6 +318,14 @@ export default {
       }
 
       return {
+        'is--last-month-cell': item.lastMonth,
+        'is--next-month-cell': item.nextMonth,
+        'is--today': `${this.calYear}-${this.calMonth}-${item.value}` ===
+                  `${this.nowYear}-${+this.nowMonth}-${+this.nowDay}` &&
+                  !item.lastMonth &&
+                  !item.nextMonth,
+        'is--disabled': item.disabled,
+        'is--enabled': !item.disabled,
         'is--checked': checkedDayList.includes(currentDate) && !item.lastMonth && !item.nextMonth,
         'is--ranging': this.type !== 'daterange' || checkedDayList.length < 2
           ? false
