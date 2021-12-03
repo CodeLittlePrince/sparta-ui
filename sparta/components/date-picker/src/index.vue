@@ -1379,6 +1379,11 @@ export default {
   }
 
   &-range, &.is--range {
+    &.is--focus  {
+      outline: none;
+      border-color: $color-primary;
+      box-shadow: $input-box-shadow-focus;
+    }
     width: 400px;
     background-image: none;
     border: $data-picker-range-border;
@@ -1440,19 +1445,6 @@ export default {
         .sp-date-picker-pane-day {
           border-left: none;
         }
-      }
-    }
-  }
-
-  &.is--focus  {
-    outline: none;
-    border-color: $color-primary;
-    box-shadow: $input-box-shadow-focus;
-    .sp-date-picker-sigle-input {
-      .sp-input__inner{
-        outline: none;
-        border-color: $color-primary;
-        box-shadow: $input-box-shadow-focus;
       }
     }
   }
