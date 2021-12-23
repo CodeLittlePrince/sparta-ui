@@ -11,7 +11,8 @@ const ImgPreview = () => {
 
   return function(imgUrl) {
     instance.vm.imgUrl = imgUrl
-    instance.vm.zIndex = PopManage.zIndex
+    const popManage = PopManage.getInstance()
+    instance.vm.zIndex = popManage.getZIndex()
     instance.vm.visible = true
   }
 }

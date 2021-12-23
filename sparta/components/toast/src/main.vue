@@ -34,8 +34,12 @@ export default {
     }
   },
 
+  created() {
+    const popManage = PopManage.getInstance()
+    this.zIndex = popManage.getZIndex()
+  },
+
   mounted() {
-    this.zIndex = PopManage.zIndex
     this.startTimer()
   },
 

@@ -73,9 +73,9 @@ export default {
     }
   },
 
-  mounted() {
-    new PopManage()
-    this.modalZIndex = PopManage.zIndex
+  created() {
+    const popManage = PopManage.getInstance()
+    this.modalZIndex = popManage.getZIndex()
   }
 }
 </script>

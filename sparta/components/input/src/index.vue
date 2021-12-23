@@ -319,12 +319,12 @@ export default {
 
   created() {
     this.$on('inputSelect', this.select)
+    this.setFormatTipZIndex()
   },
 
   mounted() {
     this.resizeTextarea()
     this.updateIconOffset()
-    this.setFormatTipZIndex()
   },
 
   updated() {
@@ -532,8 +532,10 @@ export default {
     },
 
     setFormatTipZIndex() {
-      new PopManage()
-      this.formatTipZIndex = PopManage.zIndex
+      if (!this.tipFormat) return
+
+      const popManage = PopManage.getInstance()
+      this.formatTipZIndex = popManage.getZIndex()
     },
 
     handleClear() {

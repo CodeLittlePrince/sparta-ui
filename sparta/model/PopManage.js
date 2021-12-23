@@ -1,29 +1,18 @@
 // 管理所有弹窗或类弹窗的层级zIndex
 class PopManage {
-  static id = 0
-  static popInstances = {}
-  static zIndex = 2000
+
   constructor() {
-    PopManage.id ++
-    this.id = PopManage.id
-    PopManage.zIndex += this.id
+    this.instance = null
+    this.zIndex = 2000
   }
-  getInstances() {
-    return PopManage.popInstances
+
+  static getInstance() {
+    if (this.instance) return this.instance
+    return this.instance = new PopManage()
   }
-  register(instance) {
-    instance && (PopManage.popInstances[this.id] = instance)
-  }
-  deregister() {
-    PopManage.id --
-    delete PopManage.popInstances[this.id]
-  }
-  zIndexIncrease() {
-    PopManage.id ++
-    PopManage.zIndex ++
-  }
-  nextZIndex() {
-    return PopManage.zIndex + 1
+
+  getZIndex() {
+    return this.zIndex++
   }
 }
 
