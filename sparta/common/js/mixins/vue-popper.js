@@ -68,6 +68,11 @@ export default {
     }
   },
 
+  created() {
+    const popManage = PopManage.getInstance()
+    this.zIndex = popManage.getZIndex()
+  },
+
   methods: {
     createPopper() {
       if (this.$isServer) return
@@ -104,7 +109,7 @@ export default {
       if (typeof options.onUpdate === 'function') {
         this.popperJS.onUpdate(options.onUpdate)
       }
-      this.popperJS._popper.style.zIndex = PopManage.zIndex
+      this.popperJS._popper.style.zIndex = this.zIndex
       this.popperElm.addEventListener('click', stop)
     },
 
@@ -113,7 +118,7 @@ export default {
       if (popperJS) {
         popperJS.update()
         if (popperJS._popper) {
-          popperJS._popper.style.zIndex = PopManage.zIndex
+          popperJS._popper.style.zIndex = this.zIndex
         }
       } else {
         this.createPopper()

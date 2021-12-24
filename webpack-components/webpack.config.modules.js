@@ -28,7 +28,11 @@ if (files) {
 // webpack配置
 const config = Object.assign(webpackConfigBase.config, {
   mode: 'production',
-  entry: componentEntryMap,
+  entry: {
+    ...componentEntryMap,
+    'ModalManage': webpackConfigBase.resolve('model/ModalManage'),
+    'PopManage': webpackConfigBase.resolve('model/PopManage'),
+  },
   output: {
     path: webpackConfigBase.resolve('../lib'),
     filename: '[name]/index.js',
@@ -40,12 +44,24 @@ const config = Object.assign(webpackConfigBase.config, {
     publicPath: '../',
   },
   externals: {
-    vue: {
+    'vue': {
       root: 'Vue',
       commonjs: 'vue',
       commonjs2: 'vue',
       amd: 'vue'
-    }
+    },
+    'sparta/model/ModalManage': 'sparta-ui/lib/ModalManage',
+    'sparta/model/PopManage': 'sparta-ui/lib/PopManage',
+  },
+  optimization: {
+    // 压缩js
+    minimizer: [
+      new TerserPlugin({
+        cache: true,
+        parallel: true
+      }),
+      new OptimizeCSSAssetsPlugin()
+    ],
   },
   // loaders处理
   module: {
@@ -91,16 +107,6 @@ const config = Object.assign(webpackConfigBase.config, {
         exclude: /node_modules/,
         loader: 'vue-loader'
       }
-    ]
-  },
-  optimization: {
-    // 压缩js
-    minimizer: [
-      new TerserPlugin({
-        cache: true,
-        parallel: true
-      }),
-      new OptimizeCSSAssetsPlugin()
     ]
   },
   plugins: [

@@ -118,15 +118,17 @@ export default {
     }
   },
 
-  mounted() {
-    const popManage = new PopManage()
-    this.modalMaskZIndex = PopManage.zIndex
-    popManage.zIndexIncrease()
-    this.modalWrapperZIndex = PopManage.zIndex
-
+  created() {
+    // 控制z-index
+    const popManage = PopManage.getInstance()
+    this.modalMaskZIndex = popManage.getZIndex()
+    this.modalWrapperZIndex = popManage.getZIndex()
+    // 控制唯一弹窗或者弹窗优先级
     this.modalManage = ModalManage.getInstance()
     this.modalManage.add(this)
+  },
 
+  mounted() {
     this.setModalContentMaxHeight()
 
     document.body.appendChild(this.$el)
