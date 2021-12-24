@@ -24,6 +24,7 @@
       autocomplete="new-password"
       @focus="handleFocus"
       @blur="handleBlur"
+      @keydown="handleKeydown"
     >
   </div>
 </template>
@@ -111,6 +112,15 @@ export default {
     },
     handleClick() {
       this.$refs.input && this.$refs.input.focus()
+    },
+
+    handleKeydown(e) {
+      const key = e.key && e.key.toLowerCase()
+      // 限制键盘的上下左右键，避免影响光标
+      if(['arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(key)) {
+        e.preventDefault()
+        e.stopPropagation()
+      }
     }
   }
 }
