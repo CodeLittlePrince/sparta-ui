@@ -61,6 +61,7 @@ export default {
       // 单选情况，select做处理
       if (!this.spSelect.multiple) {
         this.spSelect.$emit('input', value)
+        this.spSelect.$emit('select', value)
         this.spSelect.inputText = label
         this.spSelect.visible = false
       } else if (this.spSelect.multiple) {
