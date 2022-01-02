@@ -14,6 +14,33 @@
     scroll-when-error
     @enter="submitForm('validateForm1')"
   >
+    <!-- 时间区间 -->
+    <sp-form-item
+      prop="timeSelectList"
+      label="时间区间"
+      labelTipWidth="150px"
+      :rules="[
+        { required: true, message: '时间区间不能为空'}
+      ]"
+    >
+    <sp-time-select 
+      type="timeselectrange" 
+      v-model="validateForm1.timeSelectList" 
+      clearable />
+    </sp-form-item>
+    <!-- 时间 -->
+     <sp-form-item
+      prop="timeSelect"
+      label="时间"
+      labelTipWidth="150px"
+      :rules="[
+        { required: true, message: '时间不能为空'}
+      ]"
+    >
+      <sp-time-select
+        v-model="validateForm1.timeSelect"
+      ></sp-time-select>
+    </sp-form-item>
     <!-- 姓名 -->
     <sp-form-item
       prop="name"
@@ -209,6 +236,8 @@
     data() {
       return {
         validateForm1: {
+          timeSelect: '',
+          timeSelectList: [],
           name: '',
           localBankCode: '',
           password: '',
@@ -533,6 +562,8 @@
     data() {
       return {
         validateForm1: {
+          timeSelect: '',
+          timeSelectList: [],
           name: '',
           localBankCode: '',
           password: '',
