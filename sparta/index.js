@@ -39,9 +39,10 @@ import TabPane from './components/tab-pane'
 import Pagination from './components/pagination'
 import Modal from './components/modal'
 import Toast from './components/toast'
-import confrim from './components/confirm'
+import confirm from './components/confirm'
 import PasswordInput from './components/password-input'
 import PopupTip from './components/popup-tip'
+import TimeSelect from './components/time-select'
 
 const components = [
   Row,
@@ -84,6 +85,7 @@ const components = [
   Modal,
   PasswordInput,
   PopupTip,
+  TimeSelect
 ]
 
 let Sparta = {}
@@ -99,7 +101,7 @@ Sparta.install = Vue => {
   Vue.prototype.$sparta.success = Toast('success')
   Vue.prototype.$sparta.warning = Toast('warning')
   Vue.prototype.$sparta.info = Toast('info')
-  Vue.prototype.$sparta.confirm = confrim
+  Vue.prototype.$sparta.confirm = confirm
 }
 
 
@@ -150,4 +152,5 @@ export {
   PopupTip,
   ImgPreview,
   Toast,
+  TimeSelect
 }

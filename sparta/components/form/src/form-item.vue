@@ -458,6 +458,11 @@ export default {
         box-shadow: $input-box-shadow-focus-error;
       }
     }
+
+    .sp-time-select__range {
+      border-color: $color-danger;
+      box-shadow: $input-box-shadow-focus-error;
+    }
   }
 
   &--feedback {

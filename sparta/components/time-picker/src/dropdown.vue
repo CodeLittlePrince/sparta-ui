@@ -75,7 +75,7 @@ export default {
 @import "~sparta/common/scss/variable";
 @import "sparta/common/scss/mixin";
 
-.sp-time-picker__dropdown {
+.sp-time-picker-dropdown {
   margin: 5px 0;
 
   &__box {
