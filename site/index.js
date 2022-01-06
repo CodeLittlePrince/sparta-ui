@@ -1,4 +1,4 @@
-import 'common/scss'
+import 'site/common/scss'
 import Vue from 'vue'
 import './plugins'
 import './components'

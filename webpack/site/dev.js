@@ -42,10 +42,10 @@ async function serve() {
         }
       },
       disableHostCheck: true, // 为了手机可以访问
-      contentBase: webpackConfigBase.resolve('dev'), // 本地服务器所加载的页面所在的目录
+      contentBase: webpackConfigBase.resolve('site/dev'), // 本地服务器所加载的页面所在的目录
       watchContentBase: true,
       inline: true, // 实时刷新
-      hot: true  // 使用热加载插件 HotModuleReplacementPlugin
+      hot: true // 使用热加载插件 HotModuleReplacementPlugin
     }
   )
   

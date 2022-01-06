@@ -14,7 +14,7 @@ const extractCSS =
 
 // 读取所有的组件名和对应的index.js路径
 let componentEntryMap = {}
-const cPath = webpackConfigBase.resolve('components')
+const cPath = webpackConfigBase.resolve('sparta/components')
 const files = fs.readdirSync(cPath)
 if (files) {
   files.forEach(name => {
@@ -30,11 +30,11 @@ const config = Object.assign(webpackConfigBase.config, {
   mode: 'production',
   entry: {
     ...componentEntryMap,
-    'ModalManage': webpackConfigBase.resolve('model/ModalManage'),
-    'PopManage': webpackConfigBase.resolve('model/PopManage'),
+    'ModalManage': webpackConfigBase.resolve('sparta/model/ModalManage'),
+    'PopManage': webpackConfigBase.resolve('sparta/model/PopManage'),
   },
   output: {
-    path: webpackConfigBase.resolve('../lib'),
+    path: webpackConfigBase.resolve('lib'),
     filename: '[name]/index.js',
     chunkFilename: '[name]/[id].js',
     library: '[name]',

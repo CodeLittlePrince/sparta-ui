@@ -1,4 +1,4 @@
-const proxyConfig = require('../webpack-site/proxy.config')
+const proxyConfig = require('../webpack/site/proxy.config')
 const Koa = require('koa')
 const send = require('koa-send')
 const fs = require('fs')
