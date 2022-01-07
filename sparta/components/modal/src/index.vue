@@ -288,6 +288,10 @@ export default {
         padding-top: 20px;
         padding-bottom: 14px;
 
+        .sp-form-item__label {
+          padding-right: 36px;
+        }
+
         .sp-form-submit-btns {
           margin-top: 4px;
         }
@@ -315,6 +319,10 @@ export default {
 
       .sp-form  {
         padding-top: 26px;
+
+        .sp-form-item__label {
+          padding-right: 56px;
+        }
 
         .sp-form-submit-btns {
           margin-top: 22px;
