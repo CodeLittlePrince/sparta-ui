@@ -12,9 +12,49 @@ Modal 模态弹窗
     v-model="visible1"
     @show="showHandle"
     @close="closeHandle"
+    width="650"
   >
     <div class="content">
       <p>我是modal1的内容</p>
+      <sp-form
+      :model="validateForm1"
+      ref="validateForm1"
+      label-width="150px"
+      class="sp-form-demo"
+      scroll-when-error
+      @enter="submitForm('validateForm1')"
+      >
+        <!-- 姓名 -->
+        <sp-form-item
+          prop="name"
+          label="姓名"
+          labelTipWidth="150px"
+          :rules="[
+            { required: true, message: '姓名不能为空'}
+          ]"
+        >
+          <sp-input
+            v-model="validateForm1.name"
+            placeholder="请输入"
+            autocomplete="off"
+          ></sp-input>
+          <div slot="labelTip">靓仔，有什么疑问吗？</div>
+        </sp-form-item>
+        <sp-form-item
+          label="银行编号"
+          prop="localBankCode"
+          :rules="[
+            { required: true, message: '请输入3位数字Bank Code' },
+          ]"
+        >
+          <sp-input
+            v-model="validateForm1.localBankCode"
+            maxlength="3"
+            :filter-char="/[^\d]/g"
+            placeholder="请输入3位数字Bank Code"
+          />
+        </sp-form-item>
+      </sp-form>
       <sp-button type="default" @click="visible1 = false">取消</sp-button>
       <sp-button type="primary" @click="visible1 = false">确定</sp-button>
     </div>
