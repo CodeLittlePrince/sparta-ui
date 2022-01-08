@@ -5,7 +5,7 @@
       <sp-time-picker-option
         v-for="(item, index) in hourList"
         :key="item"
-        :disabled="_disableHour(item)"
+        :disabled="_disabledHour(item)"
         type="hour"
         :text="item"
         :index="index"
@@ -17,7 +17,7 @@
       <sp-time-picker-option
         v-for="(item, index) in minuteList"
         :key="item"
-        :disabled="_disableMinute(item)"
+        :disabled="_disabledMinute(item)"
         type="minute"
         :text="item"
         :index="index"
@@ -33,7 +33,7 @@
       <sp-time-picker-option
         v-for="(item, index) in secondList"
         :key="item"
-        :disabled="_disableSecond(item)"
+        :disabled="_disabledSecond(item)"
         type="second"
         :text="item"
         :index="index"
@@ -65,15 +65,15 @@ export default {
       type: Boolean,
       default: true
     },
-    disableHour: {
+    disabledHour: {
       type: Function,
       default: () => []
     },
-    disableMinute: {
+    disabledMinute: {
       type: Function,
       default: () => []
     },
-    disableSecond: {
+    disabledSecond: {
       type: Function,
       default: () => []
     }
@@ -240,16 +240,16 @@ export default {
         this.secondIndex = -1
       }
     },
-    _disableHour(item) {
-      const disableList = this.disableHour() || []
+    _disabledHour(item) {
+      const disableList = this.disabledHour() || []
       return disableList.includes(+item)
     },
-    _disableMinute(item) {
-      const disableList = this.disableMinute() || []
+    _disabledMinute(item) {
+      const disableList = this.disabledMinute() || []
       return disableList.includes(+item)
     },
-    _disableSecond(item) {
-      const disableList = this.disableSecond() || []
+    _disabledSecond(item) {
+      const disableList = this.disabledSecond() || []
       return disableList.includes(+item)
     }
   }

@@ -139,7 +139,7 @@ export default {
     year: [Number, String],
     month: [Number, String],
     day: [Number, String],
-    disableDate: {
+    disabledDate: {
       type: Function,
       default: () => false
     }
@@ -166,7 +166,7 @@ export default {
           return {
             currentMonth: true,
             value: index + 1,
-            disabled: this.disableDate(new Date(this.calYear, this.calMonth, index + 1))
+            disabled: this.disabledDate(new Date(this.calYear, this.calMonth, index + 1))
           }
         }
       )
@@ -184,7 +184,7 @@ export default {
           {
             lastMonth: true,
             value: lastMonthLength - i,
-            disabled: this.disableDate(new Date(this.calYear, this.calMonth -1, lastMonthLength - i))
+            disabled: this.disabledDate(new Date(this.calYear, this.calMonth -1, lastMonthLength - i))
           }
         ].concat(dateList)
       }
@@ -193,7 +193,7 @@ export default {
         dateList[dateList.length] = {
           nextMonth: true,
           value: i,
-          disabled: this.disableDate(new Date(this.calYear, this.calMonth + 1, i))
+          disabled: this.disabledDate(new Date(this.calYear, this.calMonth + 1, i))
         }
       }
       return dateList

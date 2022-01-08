@@ -33,13 +33,13 @@ export default {
 
 ### 不可选择的日期
 
-:::demo 通过`disableDate`控制
+:::demo 通过`disabledDate`控制
 ```vue
 <template>
   <div class="sp-date-pikcer-demo">
     <sp-date-picker
       v-model="time2"
-      :disable-date="disableDate"
+      :disabled-date="disabledDate"
     />
   </div>
 </template>
@@ -52,7 +52,7 @@ export default{
     }
   },
   methods: {
-    disableDate(date) {
+    disabledDate(date) {
       return date.getTime() > Date.now()
     }
   }
@@ -157,14 +157,14 @@ export default{
 
 ### 禁用时分秒
 
-:::demo 通过`disableTime`禁用
+:::demo 通过`disabledTime`禁用
 ```vue
 <template>
     <div>
       <sp-date-picker
         v-model="time7"
         :show-time="true"
-        :disable-time="disabledDateTime"
+        :disabled-time="disabledDateTime"
       ></sp-date-picker>
     </div>
     <div style="margin-top: 20px">
@@ -174,7 +174,7 @@ export default{
         start-placeholder="开始日期"
         end-placeholder="结束日期"
         :default-time="['00:00:00', '23:59:59']"
-        :disable-time="disabledRangeTime"
+        :disabled-time="disabledRangeTime"
         :show-time="true"
       ></sp-date-picker>
     </div>
@@ -191,23 +191,23 @@ export default{
   methods: {
     disabledDateTime(){
       return {
-        disableHour: () => [10, 20], // 0-23
-        disableMinute: () => [20, 30], // 0-59
-        disableSecond: () => [55, 56] // 0-59
+        disabledHour: () => [10, 20], // 0-23
+        disabledMinute: () => [20, 30], // 0-59
+        disabledSecond: () => [55, 56] // 0-59
       }
     },
     disabledRangeTime(type){
       if (type === 'start') {
         return {
-          disableHour: () => [13, 16],
-          disableMinute: () => [20, 30],
-          disableSecond: () => [55, 56]
+          disabledHour: () => [13, 16],
+          disabledMinute: () => [20, 30],
+          disabledSecond: () => [55, 56]
         }
       }
       return {
-        disableHour: () => [20, 22],
-        disableMinute: () => [30, 59],
-        disableSecond: () => [55, 56]
+        disabledHour: () => [20, 22],
+        disabledMinute: () => [30, 50],
+        disabledSecond: () => [55, 56]
       }
     }
   }
@@ -304,7 +304,7 @@ export default{
     }
   },
   methods: {
-    disableDate(date) {
+    disabledDate(date) {
       return date.getTime() > Date.now()
     },
     disabaleRange(date){
@@ -312,23 +312,23 @@ export default{
     },
     disabledDateTime(){
       return {
-        disableHour: () => [10, 20], // 0-23
-        disableMinute: () => [20, 30], // 0-59
-        disableSecond: () => [55, 56] // 0-59
+        disabledHour: () => [10, 20], // 0-23
+        disabledMinute: () => [20, 30], // 0-59
+        disabledSecond: () => [55, 56] // 0-59
       }
     },
     disabledRangeTime(type){
       if (type === 'start') {
         return {
-          disableHour: () => [13, 16],
-          disableMinute: () => [20, 30],
-          disableSecond: () => [55, 56]
+          disabledHour: () => [13, 16],
+          disabledMinute: () => [20, 30],
+          disabledSecond: () => [55, 56]
         }
       }
       return {
-        disableHour: () => [20, 22],
-        disableMinute: () => [30, 59],
-        disableSecond: () => [55, 56]
+        disabledHour: () => [20, 22],
+        disabledMinute: () => [30, 50],
+        disabledSecond: () => [55, 56]
       }
     },
     handleDaterangeChange(value){

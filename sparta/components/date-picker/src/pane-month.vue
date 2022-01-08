@@ -77,7 +77,7 @@ export default {
     calMonth: [Number, String],
     year: [Number, String],
     month: [Number, String],
-    disableDate: {
+    disabledDate: {
       type: Function,
       default: () => false
     }
@@ -98,7 +98,7 @@ export default {
     },
     monthList() {
       let rst = []
-      if (this.calMonthValue) {
+      if (this.calMonthValue || this.calMonthValue === 0) {
         rst = [
           { name: '1月' },
           { name: '2月' },
@@ -116,8 +116,8 @@ export default {
         rst.forEach((item, index) => {
           item.value = index
           item.disabled =
-            this.disableDate(new Date(this.calYear, index, 1)) &&
-            this.disableDate(new Date(this.calYear, index, this._getDayCountOfMonth(this.calYear, index)))
+            this.disabledDate(new Date(this.calYear, index, 1)) &&
+            this.disabledDate(new Date(this.calYear, index, this._getDayCountOfMonth(this.calYear, index)))
         })
       }
       return rst
