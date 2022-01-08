@@ -71,7 +71,7 @@ export default {
     },
     year: [Number, String],
     calYear: [Number, String],
-    disableDate: {
+    disabledDate: {
       type: Function,
       default: () => false
     },
@@ -94,7 +94,7 @@ export default {
       if (this.calYearValue) {
         for (let i = 0; i <= this.nextDecadeStartYear - this.lastDecadeEndYear; i++) {
           rst.push({
-            disabled: this.calYear !== this.lastDecadeEndYear + i && this.disableDate(new Date(this.lastDecadeEndYear + i, 0, 1)) && this.disableDate(new Date(this.lastDecadeEndYear + i, 11, 31)),
+            disabled: this.calYear !== this.lastDecadeEndYear + i && this.disabledDate(new Date(this.lastDecadeEndYear + i, 0, 1)) && this.disabledDate(new Date(this.lastDecadeEndYear + i, 11, 31)),
             lastDecadeEndYear: i === 0,
             nextDecadeStartYear: i === this.nextDecadeStartYear - this.lastDecadeEndYear,
             value: this.lastDecadeEndYear + i

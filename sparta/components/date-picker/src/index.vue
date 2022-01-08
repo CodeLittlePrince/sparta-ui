@@ -2,7 +2,7 @@
   <div
     ref="spDatePicker"
     class="sp-date-picker"
-    :class="{'is--focus': isDateFocus, 'is--range': isRangeType }"
+    :class="{'is--focus': isDateFocus, 'is--range': isRangeType, 'is--disabled': disabled }"
   >
     <!-- 非范围型date-picker -->
     <div
@@ -40,7 +40,7 @@
                   :day="day"
                   :cal-year="calYear"
                   :cal-month="calMonth"
-                  :disable-date="disableDate"
+                  :disabled-date="disabledDate"
                   :now-year="nowYear"
                   :now-month="nowMonth"
                   :now-day="nowDay"
@@ -63,7 +63,7 @@
                 :month="month"
                 :cal-year="calYear"
                 :cal-month="calMonth"
-                :disable-date="disableDate"
+                :disabled-date="disabledDate"
                 @calYearChange="handleCalYearChange"
                 @calMonthChange="handleCalMonthChange"
                 @switchYear="handleSwitchYear"
@@ -74,15 +74,15 @@
               <sp-date-picker-pane-year
                 :year="year"
                 :cal-year="calYear"
-                :disable-date="disableDate"
+                :disabled-date="disabledDate"
                 @calYearChange="handleCalYearChange"
                 @yearSelect="handleYearSelect"
               />
             </div>
             <div v-show="visiblePaneTime">
               <sp-date-picker-pane-time
-                v-model="time" :disable-hour="disableTime().disableHour" :disable-minute="disableTime().disableMinute"
-                :disable-second="disableTime().disableSecond"
+                v-model="time" :disabled-hour="disabledTime().disabledHour" :disabled-minute="disabledTime().disabledMinute"
+                :disabled-second="disabledTime().disabledSecond"
               />
             </div>
             <!-- 底部 -->
@@ -165,7 +165,7 @@
                       :day="dayStart"
                       :cal-year="calYearStart"
                       :cal-month="calMonthStart"
-                      :disable-date="disableDate"
+                      :disabled-date="disabledDate"
                       :now-year="nowYear"
                       :now-month="nowMonth"
                       :now-day="nowDay"
@@ -186,7 +186,7 @@
                     :month="monthStart"
                     :cal-year="calYearStart"
                     :cal-month="calMonthStart"
-                    :disable-date="disableDate"
+                    :disabled-date="disabledDate"
                     @calYearChange="handleCalYearStartChange"
                     @calMonthChange="handleCalMonthStartChange"
                     @monthSelect="handleMonthStartSelect"
@@ -197,15 +197,15 @@
                   <sp-date-picker-pane-year
                     :year="yearStart"
                     :cal-year="calYearStart"
-                    :disable-date="disableDate"
+                    :disabled-date="disabledDate"
                     @calYearChange="handleCalYearStartChange"
                     @yearSelect="handleYearStartSelect"
                   />
                 </div>
                 <div v-show="visiblePaneTimeStart">
                   <sp-date-picker-pane-time
-                    v-model="timeStart" :disable-hour="disableTime('start').disableHour" :disable-minute="disableTime('start').disableMinute"
-                    :disable-second="disableTime('start').disableSecond"
+                    v-model="timeStart" :disabled-hour="disabledTime('start').disabledHour" :disabled-minute="disabledTime('start').disabledMinute"
+                    :disabled-second="disabledTime('start').disabledSecond"
                   />
                 </div>
               </div>
@@ -221,7 +221,7 @@
                       :day="dayEnd"
                       :cal-year="calYearEnd"
                       :cal-month="calMonthEnd"
-                      :disable-date="disableDate"
+                      :disabled-date="disabledDate"
                       :now-year="nowYear"
                       :now-month="nowMonth"
                       :now-day="nowDay"
@@ -243,7 +243,7 @@
                     :month="monthEnd"
                     :cal-year="calYearEnd"
                     :cal-month="calMonthEnd"
-                    :disable-date="disableDate"
+                    :disabled-date="disabledDate"
                     @calYearChange="handleCalYearEndChange"
                     @calMonthChange="handleCalMonthEndChange"
                     @monthSelect="handleMonthEndSelect"
@@ -254,15 +254,15 @@
                   <sp-date-picker-pane-year
                     :year="yearEnd"
                     :cal-year="calYearEnd"
-                    :disable-date="disableDate"
+                    :disabled-date="disabledDate"
                     @calYearChange="handleCalYearEndChange"
                     @yearSelect="handleYearEndSelect"
                   />
                 </div>
                 <div v-show="visiblePaneTimeEnd">
                   <sp-date-picker-pane-time
-                    v-model="timeEnd" :disable-hour="disableTime('end').disableHour" :disable-minute="disableTime('end').disableMinute"
-                    :disable-second="disableTime('end').disableSecond"
+                    v-model="timeEnd" :disabled-hour="disabledTime('end').disabledHour" :disabled-minute="disabledTime('end').disabledMinute"
+                    :disabled-second="disabledTime('end').disabledSecond"
                   />
                 </div>
               </div>
@@ -329,32 +329,32 @@ export default {
       type: Boolean,
       default: false
     },
-    disableDate: {
+    disabledDate: {
       type: Function,
       default: () => false
     },
     /**
      *  date : () => {
-          disableHour: () => [10, 20], // 0-23
-          disableMinute: () => [20, 30], // 0-59
-          disableSecond: () => [55, 56] // 0-59
+          disabledHour: () => [10, 20], // 0-23
+          disabledMinute: () => [20, 30], // 0-59
+          disabledSecond: () => [55, 56] // 0-59
         }
         daterange: function(type) {
           if (type === 'start') {
             return {
-              disableHour: () => [13, 16],
-              disableMinute: () => [20, 30],
-              disableSecond: () => [55, 56]
+              disabledHour: () => [13, 16],
+              disabledMinute: () => [20, 30],
+              disabledSecond: () => [55, 56]
             }
           }
           return {
-            disableHour: () => [20, 22],
-            disableMinute: () => [30, 59],
-            disableSecond: () => [55, 56]
+            disabledHour: () => [20, 22],
+            disabledMinute: () => [30, 59],
+            disabledSecond: () => [55, 56]
           }
         }
      */
-    disableTime: {
+    disabledTime: {
       type: Function,
       default: () => { return {} }
     },
@@ -496,8 +496,8 @@ export default {
           this.isRangeType &&
           val &&
           val instanceof Array &&
-          this._valiate(displayValue[0]) &&
-          this._valiate(displayValue[1])
+          this._valiate(displayValue[0], 'start') &&
+          this._valiate(displayValue[1], 'end')
         ) {
           const [start, end] = displayValue
           this.modelStart = start
@@ -518,6 +518,7 @@ export default {
         if (this.isRangeType) {
           this.modelStart = ''
           this.modelEnd = ''
+          this.rangeDateList = []
         } else {
           this.model = ''
         }
@@ -638,12 +639,12 @@ export default {
       }
     },
     _setDefaultRange() {
-      if (this.modelStart && this._valiate(this.modelStart)) {
+      if (this.modelStart && this._valiate(this.modelStart, 'start')) {
         this._calDateStart()
       } else {
         this._resetDateStart()
       }
-      if (this.modelEnd && !this.isRangeDateInSamePane && this._valiate(this.modelEnd)) {
+      if (this.modelEnd && !this.isRangeDateInSamePane && this._valiate(this.modelEnd, 'end')) {
         this._calDateEnd()
       } else {
         this._resetDateEnd()
@@ -702,13 +703,13 @@ export default {
       }
     },
     _calDateStart() {
-      if (this._valiate(this.modelStart)) {
+      if (this._valiate(this.modelStart, 'start')) {
         this._setValuesStart()
         if(!this.isRangeDateInSamePane && !this.isRangeSelecting) this._setCalValuesStart()
       }
     },
     _calDateEnd() {
-      if (this._valiate(this.modelEnd)) {
+      if (this._valiate(this.modelEnd, 'end')) {
         this._setValuesEnd()
         if(!this.isRangeDateInSamePane) this._setCalValuesEnd()
       }
@@ -809,8 +810,9 @@ export default {
     },
     /**
      * 校验时间格式
+     * @param index start end (范围起始)
      */
-    _valiate(time) {
+    _valiate(time, index) {
       if (!time) {
         return false
       }
@@ -844,22 +846,23 @@ export default {
       ) {
         return false
       }
+      const {disabledHour, disabledMinute, disabledSecond} = this.disabledTime?.(index)
       // showTime情况还需要判断时，分，秒
       const hour = +timePieces[0]
       const minute = +timePieces[1]
       const second = +timePieces[2]
       if (this.showTime) {
         if (
-          hour < 0 || 23 < hour ||
-          minute < 0 || 59 < minute ||
-          second < 0 || 59 < second
+          hour < 0 || 23 < hour || disabledHour?.()?.includes(hour) ||
+          minute < 0 || 59 < minute || disabledMinute?.()?.includes(minute) ||
+          second < 0 || 59 < second || disabledSecond?.()?.includes(second)
         ) {
           return false
         }
       }
 
       // 防止用户自主输入disabled的条目
-      return !this.disableDate(new Date(year, month - 1, day, hour || 0, minute || 0, second || 0))
+      return !this.disabledDate(new Date(year, month - 1, day, hour || 0, minute || 0, second || 0))
     },
     handleInput() {
       if (this._valiate(this.model)) {
@@ -929,7 +932,7 @@ export default {
       // 如果有yearStart，monthStart，dayStart
       // 且格式验证未通过，则用之前保存的值
       if (
-        !this._valiate(this.modelStart) &&
+        !this._valiate(this.modelStart, 'start') &&
         this.yearStart && this.monthStart !== '' && this.dayStart
       ) {
         const year = this.yearStart
@@ -946,7 +949,7 @@ export default {
         }
         this.modelStart = rst
       } else if (
-        !this._valiate(this.modelStart) &&
+        !this._valiate(this.modelStart, 'start') &&
         !(this.yearStart && this.monthStart !== '' && this.dayStart)
       ) {
         this.modelStart = ''
@@ -954,7 +957,7 @@ export default {
       }
       // end
       if (
-        !this._valiate(this.modelEnd) &&
+        !this._valiate(this.modelEnd, 'end') &&
         this.yearEnd && this.monthEnd !== '' && this.dayEnd
       ) {
         const year = this.yearEnd
@@ -971,7 +974,7 @@ export default {
         }
         this.modelEnd = rst
       } else if (
-        !this._valiate(this.modelEnd) &&
+        !this._valiate(this.modelEnd, 'end') &&
         !(this.yearEnd && this.monthEnd !== '' && this.dayEnd)
       ) {
         this.modelEnd = ''
@@ -1446,6 +1449,16 @@ export default {
           border-left: none;
         }
       }
+    }
+  }
+
+  &.is--disabled {
+    color: $date-picker-pane__cell--is-disabled-color;
+    background-color: $date-picker-pane__cell--is-disabled-background;
+    border-radius: $date-picker-pane__cell--is-checked-border-radius;
+    cursor: not-allowed;
+    &:hover{
+      border-color: $border-color-base;
     }
   }
 
