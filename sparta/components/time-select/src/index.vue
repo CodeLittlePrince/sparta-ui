@@ -319,13 +319,11 @@ export default {
   },
 
   created() {
-    if (this.disabled) return
     document.addEventListener('click', this.handleOtherAreaClick)
   },
 
 
   beforeDestroy() {
-    if (this.disabled) return
     document.removeEventListener('click', this.handleOtherAreaClick)
   },
 
@@ -365,9 +363,8 @@ export default {
         this.oldTimeEnd = ''
       }
     },
-
     /**
-     * 点击其他区域触发事件
+     * 范围值结束时间点击
      */
     handleTimeEndClick(timeEnd) {
       this.timeEnd = timeEnd
@@ -375,7 +372,9 @@ export default {
 
       this._resetRangeAllVisible()
     },
-
+    /**
+     * 点击其他区域触发事件
+     */
     handleOtherAreaClick(e) {
       if (
         !this.isRangeType &&
