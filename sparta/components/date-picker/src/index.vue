@@ -610,9 +610,6 @@ export default {
   },
 
   created() {
-    if (this.disabled) {
-      return
-    }
     // 设置默认值
     this._setNow()
     if (this.isRangeType) {
@@ -624,9 +621,6 @@ export default {
   },
 
   beforeDestroy() {
-    if (this.disabled) {
-      return
-    }
     document.removeEventListener('click', this.handleOtherAreaClick)
   },
 
