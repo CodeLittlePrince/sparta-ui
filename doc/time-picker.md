@@ -164,6 +164,6 @@ export default{
 
 <style>
 .sp-time-pikcer-demo {
-  width: 200px;
+  width: 400px;
 }
 </style>

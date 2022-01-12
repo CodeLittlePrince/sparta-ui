@@ -13,7 +13,7 @@
           :placeholder="placeholder"
           prefix-icon="sp-icon-clock"
           :clearable="clearable"
-          @focus="visible = true"
+          @focus="handleInputFocus"
           @blur="handleTimeInputBlur"
           @clear="handleClear"
         />
@@ -394,6 +394,13 @@ export default {
         this._resetRangeAllVisible()
       }
     },
+    handleInputFocus() {
+      if (!this.disabled) {
+        this.visible = true
+        // 为了每次弹出dropdown，都会根据处的环境做适应
+        this.broadcast('SpTimePickerDropdown', 'updatePopper')
+      }
+    },
     /**
      * 范围点击
      */
@@ -490,12 +497,6 @@ export default {
 @import "~sparta/common/scss/mixin";
 @import "~sparta/common/scss/variable";
 .sp-time-select {
-  display: inline-block;
-  &.is--range {
-    .sp-time-select__content {
-      width: 240px;
-    }
-  }
   &.is--focus  {
     .sp-time-select__range {
       outline: none;
@@ -531,32 +532,23 @@ export default {
     }
   }
   &__range-end {
-    .sp-input, .sp-input__inner {
-      width: 100px;
-    }
-    &::before {
-      content: '';
-      display: inline-block;
-      width: 10px;
-      height: 1px;
-      vertical-align: middle;
-      margin-left: 8px;
-      background: $border-color-base;
+    .sp-input {
+     display: inline-table;
+      &::before {
+        content: '一';
+        width: 10px;
+        color: #d5d9e0;
+        display: table-cell;
+      }
     }
   }
   &__dropdown {
     &.is--single-dropdown {
-      .sp-time-picker-dropdown__box {
-        width: 200px;
-      }
       .sp-time-picker-pane {
         width: 100%;
       }
     }
     &.is--range-dropdown {
-      .sp-time-picker-dropdown__box {
-        width: 240px;
-      }
       .sp-time-picker-pane {
         width: 50%;
       }

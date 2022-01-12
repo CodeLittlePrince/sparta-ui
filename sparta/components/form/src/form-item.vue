@@ -397,6 +397,17 @@ export default {
       padding-top: 8px;
     }
 
+    .sp-time-select {
+      width: 194px;
+      &.is--range {
+        width: 240px;
+        .sp-input {
+          width: 100%;
+        }
+      }
+
+    }
+
     .sp-input,
     .sp-select {
       width: 400px;
