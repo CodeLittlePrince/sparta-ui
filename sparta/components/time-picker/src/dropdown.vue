@@ -59,7 +59,10 @@ export default {
     // 根据父元素设置宽度
     // 监听select的事件（那边会广播下发）
     this.$on('updatePopper', () => {
-      if (this.$parent.visible) {
+      if (this.$parent.visible || this.$parent.visibleTimeRange) {
+        // Popper有可能并不是一开始就出现在dom里的，所以放在更新时候
+        this.minWidth = this.$parent.$el.getBoundingClientRect().width + 'px'
+        
         // 更新Popper
         this.$nextTick(() => {
           this.updatePopper()
@@ -85,7 +88,6 @@ export default {
     box-shadow: $float-box-shadow-box;
     box-sizing: border-box;
     background-color: $time-picker-pane-background;
-    width: 200px;
   }
 }
 </style>

@@ -188,6 +188,6 @@ export default{
 
 <style>
 .sp-time-picker-demo {
-  width: 200px;
+  width: 400px;
 }
 </style>

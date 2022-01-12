@@ -26,7 +26,8 @@
     <sp-time-select 
       type="timeselectrange" 
       v-model="validateForm1.timeSelectList" 
-      clearable />
+      clearable></sp-time-select>
+      <div slot="tip">输入你的名字吧，靓仔!</div>
     </sp-form-item>
     <!-- 时间 -->
      <sp-form-item
@@ -40,6 +41,7 @@
       <sp-time-select
         v-model="validateForm1.timeSelect"
       ></sp-time-select>
+      <div slot="tip">输入你的名字吧，靓仔!</div>
     </sp-form-item>
     <!-- 姓名 -->
     <sp-form-item
