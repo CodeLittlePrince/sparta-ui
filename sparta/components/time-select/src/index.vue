@@ -25,7 +25,7 @@
       >
         <transition name="sp-zoom-in-top">
           <div v-show="visible" class="sp-time-picker-dropdown__box">
-            <sp-time-picker-pane :index="timeIndex(oldTime)">
+            <sp-time-picker-pane :index="timeIndex(inputTimeIndex)">
               <sp-time-picker-option
                 v-for="(item, index) in timeList"
                 :key="item"
@@ -56,6 +56,7 @@
             :placeholder="startPlaceholder"
             prefix-icon="sp-icon-clock"
             @blur="handleTimeStartInputBlur"
+            @input="handleTimeStartInput"
           />
         </div>
         <div class="sp-time-select__range-end">
@@ -76,7 +77,7 @@
       >
         <transition name="sp-zoom-in-top">
           <div v-show="visibleTimeRange" class="sp-time-picker-dropdown__box">
-            <sp-time-picker-pane :index="timeIndex(oldTimeStart)">
+            <sp-time-picker-pane :index="timeIndex(inputTimeStartIndex)">
               <sp-time-picker-option
                 v-for="(item, index) in timeList"
                 :key="item"
@@ -86,7 +87,7 @@
                 @click="handleTimeStartClick(item)"
               />
             </sp-time-picker-pane>
-            <sp-time-picker-pane :index="timeIndex(oldTimeEnd)">
+            <sp-time-picker-pane :index="timeIndex(inputTimeEndIndex)">
               <sp-time-picker-option
                 v-for="(item, index) in timeList"
                 :key="item"
@@ -183,9 +184,9 @@ export default {
     value: {},
     type: {
       type: String,
-      default: 'timeselect',
+      default: '',
       validator(val) {
-        return ['timeselect', 'timeselectrange'].includes(val)
+        return ['', 'range'].includes(val)
       }
     },
     clearable: { // 是否显示清除按钮
@@ -241,6 +242,7 @@ export default {
       visibleTimeRange: false, // 控制时间范围选择面板是否显示
       timeStart: '',
       oldTimeStart: '',
+      paneTimeStart: '',
       timeEnd: '',
       oldTimeEnd: '',
       isTimeSelectFocus: false,
@@ -249,7 +251,7 @@ export default {
 
   computed: {
     isRangeType() {
-      return this.type === 'timeselectrange'
+      return this.type === 'range'
     },
     minTime() {
       return this.pickerOptions.minTime || defaultPickerOption().minTime
@@ -281,23 +283,37 @@ export default {
     availableTimeList() {
       return this.timeList.filter(item => !this._compareTimeWithMinAndMax(item))
     },
+    inputTimeIndex() {
+      return this._checkTime() ? this.time : this.oldTime
+    },
+    inputTimeStartIndex() {
+      return this.isValidData(this.paneTimeStart, 'start') && !this._disableTimeStart(this.paneTimeStart) ? this.paneTimeStart : this.oldTimeStart
+    },
+    inputTimeEndIndex() {
+      return this._checkTimeEnd() ? this.timeEnd : this.oldTimeEnd
+    }
   },
 
   watch: {
     value: {
       immediate: true,
       handler(newVal) {
-        if(this.isRangeType && Array.isArray(newVal)) {
-          if(this.isValidData(newVal[0],'start')) {
-            this.timeStart = newVal[0]
-            this.oldTimeStart = newVal[0]
-          }
-          if(this.isValidData(newVal[1],'end')) {
-            this.timeEnd = newVal[1]
-            this.oldTimeEnd = newVal[1]
+        if(this.isRangeType) {
+          if(Array.isArray(newVal)) {
+            if(this.isValidData(newVal[0],'start') || !newVal[0]) {
+              this.timeStart = newVal[0]
+              this.paneTimeStart = this.timeStart
+              this.oldTimeStart = newVal[0]
+            }
+            if(this.isValidData(newVal[1],'end') || !newVal[1]) {
+              this.timeEnd = newVal[1]
+              this.oldTimeEnd = newVal[1]
+            }
+          } else {
+            this.handleRangeClear()
           }
         } else {
-          if(this.isValidData(newVal,'start')) {
+          if(this.isValidData(newVal,'start') || !newVal) {
             this.time = newVal
             this.oldTime = newVal
           }
@@ -306,15 +322,21 @@ export default {
     },
     oldTime() {
       this.$emit('input', this.oldTime)
-      this.dispatch('SpFormItem', 'sp.form.change', this.oldTime)
     },
-    oldTimeStart() {
-      this.$emit('input', [this.oldTimeStart, this.oldTimeEnd])
-      this.dispatch('SpFormItem', 'sp.form.change', [this.oldTimeStart, this.oldTimeEnd])
+    time() {
+      if(this._checkTime()) {
+        this.oldTime = this.time
+
+        this._dispatchTime()
+      }
+    },
+    timeEnd() {
+      if(this._checkTimeEnd()) {
+        this.oldTimeEnd = this.timeEnd
+      }
     },
     oldTimeEnd() {
-      this.$emit('input', [this.oldTimeStart, this.oldTimeEnd])
-      this.dispatch('SpFormItem', 'sp.form.change', [this.oldTimeStart, this.oldTimeEnd])
+      this._setRangeVal()
     },
   },
 
@@ -336,8 +358,8 @@ export default {
     },
 
     _disableTimeEnd(item) {
-      if(!this.timeStart || !this.isValidData(this.timeStart, 'start')) return true
-      return this.disabledTimeEnd(item) || compareTime(item, this.timeStart) <= 0 || this._compareTimeWithMinAndMax(item)
+      if(!this.paneTimeStart || !this.isValidData(this.paneTimeStart, 'start')) return true
+      return this.disabledTimeEnd(item) || compareTime(item, this.paneTimeStart) <= 0 || this._compareTimeWithMinAndMax(item)
     },
 
     _compareTimeWithMinAndMax(item) {
@@ -349,19 +371,14 @@ export default {
     handleTimeClick(time) {
       this.time = time
       this.oldTime = time
+      this._dispatchTime()
       this._resetAllVisible()
     },
     /**
      * 范围值开始时间点击
      */
     handleTimeStartClick(timeStart) {
-      this.timeStart = timeStart
-      this.oldTimeStart = timeStart
-
-      if(this.oldTimeEnd || this.timeEnd) {
-        this.timeEnd = ''
-        this.oldTimeEnd = ''
-      }
+      this.paneTimeStart = timeStart
     },
     /**
      * 范围值结束时间点击
@@ -369,6 +386,9 @@ export default {
     handleTimeEndClick(timeEnd) {
       this.timeEnd = timeEnd
       this.oldTimeEnd = timeEnd
+
+      this.timeStart = this.paneTimeStart
+      this.oldTimeStart = this.paneTimeStart
 
       this._resetRangeAllVisible()
     },
@@ -384,7 +404,7 @@ export default {
       ) {
         this._resetAllVisible()
       }
-      // timeselectrange 类型
+      // range 类型
       if (
         this.isRangeType &&
         !this.$el.contains(e.target) &&
@@ -399,6 +419,15 @@ export default {
         this.visible = true
         // 为了每次弹出dropdown，都会根据处的环境做适应
         this.broadcast('SpTimePickerDropdown', 'updatePopper')
+      }
+    },
+    handleTimeStartInput() {
+      if(this.isValidData(this.timeStart, 'start') && !this._disableTimeStart(this.timeStart)) {
+        if(this.oldTimeEnd && compareTime(this.timeStart, this.oldTimeEnd) >= 0 ) return
+        this.oldTimeStart = this.timeStart
+        this.paneTimeStart = this.timeStart
+
+        this._setRangeVal()
       }
     },
     /**
@@ -416,9 +445,9 @@ export default {
     * 清除不符合格式的时间值
     */
     handleTimeInputBlur() {
-      if(this.isValidData(this.time, 'start')) {
+      if(this._checkTime()) {
         this.oldTime = this.time
-      } else if(this.time) {
+      } else {
         this.time = this.oldTime
       }
     },
@@ -426,9 +455,14 @@ export default {
     * 清除不符合格式的时间范围开始值
     */
     handleTimeStartInputBlur() {
-      if(this.isValidData(this.timeStart, 'start')) {
+      if(this.isValidData(this.timeStart, 'start') && !this._disableTimeStart(this.timeStart)) {
+        if(this.oldTimeEnd && compareTime(this.timeStart, this.oldTimeEnd) >= 0 ) {
+          this.timeStart = this.oldTimeStart
+          return
+        }
         this.oldTimeStart = this.timeStart
-      } else if(this.timeStart) {
+        this.paneTimeStart = this.timeStart
+      } else {
         this.timeStart = this.oldTimeStart
       }
     },
@@ -436,9 +470,9 @@ export default {
     * 清除不符合格式的时间范围结束值
     */
     handleTimeEndInputBlur() {
-      if(this.isValidData(this.timeEnd, 'end')) {
+      if(this._checkTimeEnd()) {
         this.oldTimeEnd = this.timeEnd
-      } else if(this.timeEnd) {
+      } else {
         this.timeEnd = this.oldTimeEnd
       }
     },
@@ -448,7 +482,7 @@ export default {
     isValidData(val, type) {
       const inTimeList = this.availableTimeList.includes(val)
       if(type === 'end' && val && this.timeStart) {
-        return inTimeList && compareTime(val, this.timeStart) > 0
+        return inTimeList && compareTime(val, this.oldTimeStart) > 0
       }
       return inTimeList
     },
@@ -465,6 +499,7 @@ export default {
     handleRangeClear() {
       this.timeStart = ''
       this.timeEnd = ''
+      this.paneTimeStart = ''
       this.oldTimeStart = ''
       this.oldTimeEnd = ''
     },
@@ -473,6 +508,15 @@ export default {
      */
     timeIndex(val) {
       return this.timeList.findIndex(item => item === val)
+    },
+    _checkTime() {
+      return this.isValidData(this.time, 'start') && !this._disableTime(this.time)
+    },
+    _checkTimeEnd() {
+      return this.isValidData(this.timeEnd, 'end') && !this._disableTimeEnd(this.timeEnd)
+    },
+    _dispatchTime() {
+      this.dispatch('SpFormItem', 'sp.form.change', this.oldTime)
     },
     /**
      * 重置时间选择状态
@@ -486,6 +530,20 @@ export default {
     _resetRangeAllVisible() {
       this.isTimeSelectFocus = false
       this.visibleTimeRange = false
+
+      // 重置范围的临时值
+      this.paneTimeStart = this.oldTimeStart
+
+      // 当用户点击组件选择时间值，但只选择了开始时间的时候则将开始时间也清空
+      if(!this.oldTimeEnd || !this.timeEnd) {
+        this.timeStart = ''
+        this.oldTimeStart = ''
+      }
+    },
+    _setRangeVal() {
+      const rangeVal = !this.oldTimeStart && !this.oldTimeEnd ? [] : [this.oldTimeStart, this.oldTimeEnd]
+      this.$emit('input', rangeVal)
+      this.dispatch('SpFormItem', 'sp.form.change', rangeVal)
     }
   }
 
