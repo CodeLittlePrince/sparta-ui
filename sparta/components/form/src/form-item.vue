@@ -405,7 +405,11 @@ export default {
           width: 100%;
         }
       }
-
+      &__single {
+        .sp-input {
+          width: 194px;
+        }
+      }
     }
 
     .sp-input,

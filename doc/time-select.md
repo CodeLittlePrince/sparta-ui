@@ -66,7 +66,7 @@ export default{
   <div class="sp-time-picker-demo">
     <sp-time-select v-model="time2" 
     clearable 
-    type="timeselectrange"
+    type="range"
     :disabled-time-start="handleDisabledTimeStart"
     :disabled-time-end="handleDisabledTimeEnd"/>
   </div>
@@ -100,7 +100,7 @@ export default{
   <div class="sp-time-picker-demo">
     <sp-time-select v-model="time4" 
     clearable 
-    type="timeselectrange"
+    type="range"
     :picker-options="{ 
       step: '00:15', 
       start: '01:00', 
@@ -127,8 +127,8 @@ export default{
 ### Attributes
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
-| value    | 绑定值，<br/>type为timeselect的默认格式是字符串 <br/>type为timeselectrange的默认格式是字符串   | string/array  | — | — |
-| type | 时间选择组件类型 | string | timeselect/timeselectrange | timeselect |
+| value    | 绑定值，<br/>type为timeselect的默认格式是字符串 <br/>type为range的默认格式是字符串   | string/array  | — | — |
+| type | 时间选择组件类型 | string | —/range | timeselect |
 | disabled | 是否禁用 | boolean | — | true |
 | clearable | 是否显示清除按钮 | boolean | — | false |
 | pickerOptions | 当前选择器特有的选项参考下表 | Object | — | {} |
