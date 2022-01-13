@@ -557,7 +557,10 @@ export default{
 |    —    | Option 组件列表 |
 | prefix | select框头部图标 |
 | center | select选中值显示 |
-
+### Select Events
+|   事件名称 | 说明     |
+|---------|---------|
+| select | 选中 option 时，调用此函数 |
 ### Option Group Attributes
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |

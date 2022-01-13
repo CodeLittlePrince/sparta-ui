@@ -1,9 +1,9 @@
-const path = require('path')
 const isProduction = process.env.NODE_ENV === 'production'
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const VueLoaderPluginInstance = new VueLoaderPlugin()
 const hljs = require('highlight.js')
+const { alias, resolve } = require('../config')
 
 const extractCSS =
   new MiniCssExtractPlugin(
@@ -13,13 +13,8 @@ const extractCSS =
     }
   )
 
-// 减少路径书写
-function resolve(dir) {
-  return path.join(__dirname, '../site/' + dir)
-}
-
 // 网站图标配置
-const favicon = resolve('../favicon.ico')
+const favicon = resolve('favicon.ico')
 
 // 指定以__base64为后缀的svg转为base64
 const svgBase64Reg = /__base64\.(svg)(\?.*)?$/
@@ -32,20 +27,7 @@ const config = {
     // 扩展名，比如import 'app.vue'，扩展后只需要写成import 'app'就可以了
     extensions: ['.js', '.vue', '.scss', '.css', '.md'],
     // 取路径别名，方便在业务代码中import
-    alias: {
-      site: resolve('/'),
-      sparta: resolve('../sparta/'),
-      doc: resolve('../doc/'),
-      common: resolve('/common/'),
-      ajax: resolve('/common/js/ajax/'),
-      utils: resolve('/common/js/utils/'),
-      views: resolve('/views/'),
-      components: resolve('/components/'),
-      directives: resolve('/directives/'),
-      filters: resolve('/filters/'),
-      mixins: resolve('/mixins/'),
-      plugins: resolve('/plugins/')
-    }
+    alias,
   },
   // loaders处理
   module: {

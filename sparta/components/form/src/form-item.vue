@@ -397,6 +397,21 @@ export default {
       padding-top: 8px;
     }
 
+    .sp-time-select {
+      width: 194px;
+      &.is--range {
+        width: 240px;
+        .sp-input {
+          width: 100%;
+        }
+      }
+      &__single {
+        .sp-input {
+          width: 194px;
+        }
+      }
+    }
+
     .sp-input,
     .sp-select {
       width: 400px;
@@ -457,6 +472,11 @@ export default {
         border-color: $color-danger;
         box-shadow: $input-box-shadow-focus-error;
       }
+    }
+
+    .sp-time-select__range {
+      border-color: $color-danger;
+      box-shadow: $input-box-shadow-focus-error;
     }
   }
 

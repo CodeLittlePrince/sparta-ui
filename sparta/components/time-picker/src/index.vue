@@ -21,7 +21,7 @@
       <transition name="sp-zoom-in-top">
         <div
           v-show="visible"
-          class="sp-time-picker__dropdown__box"
+          class="sp-time-picker-dropdown__box"
           :class="{'is--disable-second': !needSecond}"
         >
           <!-- 时 -->

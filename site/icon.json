@@ -7,7 +7,6 @@
   "file",
   "check",
   "arrow-down-bold",
-  "arrow-up-bold",
   "arrow-right",
   "arrow-double-right",
   "arrow-left",
@@ -15,5 +14,6 @@
   "calendar",
   "search",
   "add-bold",
-  "loading"
+  "loading",
+  "clock"
 ]

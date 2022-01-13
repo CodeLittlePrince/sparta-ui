@@ -15,12 +15,12 @@ const config = Object.assign(webpackConfigBase.config, {
       // https://babeljs.io/docs/en/babel-plugin-syntax-dynamic-import#working-with-webpack-and-babelpreset-env
       'core-js/modules/es.promise',
       'core-js/modules/es.array.iterator',
-      webpackConfigBase.resolve('index.js')
+      webpackConfigBase.resolve('site/index.js')
     ]
   },
   // 输出
   output: {
-    path: webpackConfigBase.resolve('dev'),
+    path: webpackConfigBase.resolve('site/dev'),
     filename: '[name].js',
     globalObject: 'this'
   },
@@ -31,7 +31,7 @@ const config = Object.assign(webpackConfigBase.config, {
     // html 模板插件
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: webpackConfigBase.resolve('index.html')
+      template: webpackConfigBase.resolve('site/index.html')
     }),
     // 复制文件
     new CopyWebpackPlugin({
@@ -39,7 +39,7 @@ const config = Object.assign(webpackConfigBase.config, {
       // 复制favicon到dist
         {
           from: webpackConfigBase.favicon,
-          to: webpackConfigBase.resolve('dev')
+          to: webpackConfigBase.resolve('site/dev')
         }
       ]
     }),

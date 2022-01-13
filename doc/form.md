@@ -81,7 +81,40 @@
         { required: true, message: '出生日期不能为空'}
       ]"
     >
-      <sp-date-picker v-model="validateForm1.birth" />
+      <sp-date-picker 
+        v-model="validateForm1.birth" 
+        clearable
+        />
+    </sp-form-item>
+     <!-- 时间区间 -->
+    <sp-form-item
+      prop="timeSelectList"
+      label="时间区间"
+      labelTipWidth="150px"
+      :rules="[
+        { required: true, message: '时间区间不能为空'}
+      ]"
+    >
+    <sp-time-select 
+      type="range" 
+      v-model="validateForm1.timeSelectList" 
+      clearable></sp-time-select>
+      <div slot="tip">输入时间区间吧，靓仔!</div>
+    </sp-form-item>
+    <!-- 时间 -->
+     <sp-form-item
+      prop="timeSelect"
+      label="时间"
+      labelTipWidth="150px"
+      :rules="[
+        { required: true, message: '时间不能为空'}
+      ]"
+    >
+      <sp-time-select
+        v-model="validateForm1.timeSelect"
+        clearable
+      ></sp-time-select>
+      <div slot="tip">输入时间吧，靓仔!</div>
     </sp-form-item>
     <!-- 爱好 -->
     <sp-form-item
@@ -209,6 +242,8 @@
     data() {
       return {
         validateForm1: {
+          timeSelect: '',
+          timeSelectList: [],
           name: '',
           localBankCode: '',
           password: '',
@@ -533,6 +568,8 @@
     data() {
       return {
         validateForm1: {
+          timeSelect: '',
+          timeSelectList: [],
           name: '',
           localBankCode: '',
           password: '',

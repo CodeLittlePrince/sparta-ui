@@ -1,5 +1,5 @@
 <template>
-  <div class="sp-radio__group">
+  <div class="sp-radio-group">
     <slot></slot>
   </div>
 </template>
@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style lang="scss">
-.sp-radio__group {
+.sp-radio-group {
   font-size: 0;
 }
 </style>

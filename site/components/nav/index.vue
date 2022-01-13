@@ -15,7 +15,7 @@
 </template>
 
 <style lang="scss">
-  @import '~common/scss/variable';
+  @import '~site/common/scss/variable';
 
   .c-nav {
     position: relative;

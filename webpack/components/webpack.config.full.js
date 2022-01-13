@@ -17,10 +17,10 @@ const extractCSS =
 const config = smp.wrap(Object.assign(webpackConfigBase.config, {
   mode: 'production',
   entry: {
-    index: webpackConfigBase.resolve('index.js')
+    index: webpackConfigBase.resolve('sparta/index.js')
   },
   output: {
-    path: webpackConfigBase.resolve('../lib'),
+    path: webpackConfigBase.resolve('lib'),
     filename: 'index.js',
     library: 'sparta',
     libraryTarget: 'umd',
@@ -101,7 +101,7 @@ const config = smp.wrap(Object.assign(webpackConfigBase.config, {
     new CleanWebpackPlugin(
       'lib',
       {
-        root: webpackConfigBase.resolve('../')
+        root: webpackConfigBase.resolve('/')
       }
     ),
     // 抽离出css

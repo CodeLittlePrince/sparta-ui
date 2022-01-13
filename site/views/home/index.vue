@@ -9,8 +9,8 @@
 </template>
 
 <style lang="scss">
-@import '~common/scss/variable';
-@import '~common/scss/mixin';
+@import '~site/common/scss/variable';
+@import '~site/common/scss/mixin';
 
 .home {
   .content {
