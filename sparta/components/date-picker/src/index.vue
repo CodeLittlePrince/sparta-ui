@@ -128,6 +128,7 @@
       <div class="sp-date-picker-range-start">
         <sp-input
           v-model="modelStart"
+          class="sp-date-picker-range-input"
           :disabled="disabled"
           :placeholder="startPlaceholder"
           prefix-icon="sp-icon-calendar"
@@ -137,6 +138,7 @@
       <div class="sp-date-picker-range-end">
         <sp-input
           v-model="modelEnd"
+          class="sp-date-picker-range-input"
           :disabled="disabled"
           :clearable="clearable"
           :placeholder="endPlaceholder"
@@ -503,6 +505,10 @@ export default {
           this.modelStart = start
           this.modelEnd = end
           this.rangeDateList = displayValue
+          this.$nextTick(()=>{
+            this._setCalValuesStart()
+            this._setCalValuesEnd()
+          })
           return
         }
         // 普通类型
@@ -559,14 +565,14 @@ export default {
       if (!val) {
         this._resetDateStart()
       } else {
-        this._calDateStart()
+        this._setValuesStart()
       }
     },
     modelEnd(val) {
       if (!val) {
         this._resetDateEnd()
       } else {
-        this._calDateEnd()
+        this._setValuesEnd()
       }
     },
     time(val) {
@@ -783,6 +789,14 @@ export default {
         this.yearEnd = +pieces[0]
         this.monthEnd = +pieces[1] - 1
         this.dayEnd = +pieces[2]
+      }
+      if(this.isRangeDateInSamePane) {
+        if(this.monthEnd === 11) {
+          this.monthEnd = 0
+          this.yearEnd += 1
+        }else{
+          this.monthEnd += 1
+        }
       }
     },
 
@@ -1364,9 +1378,12 @@ export default {
 
 .sp-date-picker {
   color: $date-picker-color;
-  display: inline-block;
+  height: 38px;
   width: $date-picker-pane-width;
   box-sizing: border-box;
+  .sp-date-picker-sigle-input.sp-input {
+    width: 194px;
+  }
 
   &__dropdown__box {
     width: $date-picker-pane-width;
@@ -1399,6 +1416,9 @@ export default {
     &-start, &-end {
       width: 50%;
       float: left;
+      .sp-date-picker-range-input.sp-input {
+        width: 100%;
+      }
       .sp-input .sp-input__inner {
         border: none;
         &:focus {
@@ -1407,8 +1427,8 @@ export default {
       }
     }
     &-end {
-      .sp-input, .sp-input__inner {
-        width: 172px;
+      .sp-date-picker-range-input.sp-input, .sp-input__inner {
+        width: 177px;
       }
       &::before {
         content: '';

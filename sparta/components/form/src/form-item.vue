@@ -436,12 +436,20 @@ export default {
 
   &.is--error {
     & .sp-input__inner,
+    & .sp-date-picker.is--range,
     & .sp-textarea__inner {
       &, &:focus {
         border-color: $color-danger;
       }
       &:focus {
         box-shadow: $input-box-shadow-focus-error;
+      }
+    }
+
+    & .sp-date-picker.is--range .sp-input__inner {
+      &, &:focus {
+        border-color: transparent;
+        box-shadow: none
       }
     }
 
