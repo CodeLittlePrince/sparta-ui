@@ -15,6 +15,7 @@
           :clearable="clearable"
           @focus="handleInputFocus"
           @blur="handleTimeInputBlur"
+          @input="handleTimeInput"
           @clear="handleClear"
         />
       </div>
@@ -53,6 +54,7 @@
           <sp-input
             v-model="timeStart"
             :disabled="disabled"
+            :validate-event="false"
             :placeholder="startPlaceholder"
             prefix-icon="sp-icon-clock"
             @blur="handleTimeStartInputBlur"
@@ -63,10 +65,12 @@
           <sp-input
             v-model="timeEnd"
             :disabled="disabled"
+            :validate-event="false"
             :placeholder="endPlaceholder"
             :clearable="clearable"
             @clear="handleRangeClear"
             @blur="handleTimeEndInputBlur"
+            @input="handleTimeEndInput"
           />
         </div>
       </div>
@@ -110,7 +114,6 @@ const parseTime = function(time) {
   if (values.length >= 2) {
     const hours = parseInt(values[0], 10)
     const minutes = parseInt(values[1], 10)
-
     return {
       hours,
       minutes
@@ -118,43 +121,32 @@ const parseTime = function(time) {
   }
   return null
 }
-
 const compareTime = function(time1, time2) {
   const value1 = parseTime(time1)
   const value2 = parseTime(time2)
-
   const minutes1 = value1.minutes + value1.hours * 60
   const minutes2 = value2.minutes + value2.hours * 60
-
   if (minutes1 === minutes2) {
     return 0
   }
-
   return minutes1 > minutes2 ? 1 : -1
 }
-
 const formatTime = function(time) {
   return (time.hours < 10 ? '0' + time.hours : time.hours) + ':' + (time.minutes < 10 ? '0' + time.minutes : time.minutes)
 }
-
 const nextTime = function(time, step) {
   const timeValue = parseTime(time)
   const stepValue = parseTime(step)
-
   const next = {
     hours: timeValue.hours,
     minutes: timeValue.minutes
   }
-
   next.minutes += stepValue.minutes
   next.hours += stepValue.hours
-
   next.hours += Math.floor(next.minutes / 60)
   next.minutes = next.minutes % 60
-
   return formatTime(next)
 }
-
 const defaultPickerOption = () => ({
   start: '00:00',
   end: '24:00',
@@ -163,23 +155,18 @@ const defaultPickerOption = () => ({
   maxTime: '',
 }
 )
-
 import SpTimePickerDropdown from 'sparta/components/time-picker/src/dropdown'
 import SpTimePickerPane from 'sparta/components/time-picker/src/pane'
 import SpTimePickerOption from 'sparta/components/time-picker/src/option'
 import Emitter from 'sparta/common/js/mixins/emitter'
-
 export default {
   name: 'SpTimeSelect',
-
   components: {
     'sp-time-picker-dropdown': SpTimePickerDropdown,
     'sp-time-picker-pane': SpTimePickerPane,
     'sp-time-picker-option': SpTimePickerOption
   },
-
   mixins: [Emitter],
-
   props: {
     value: {},
     type: {
@@ -233,7 +220,6 @@ export default {
       }
     },
   },
-
   data() {
     return {
       visible: false,
@@ -248,7 +234,6 @@ export default {
       isTimeSelectFocus: false,
     }
   },
-
   computed: {
     isRangeType() {
       return this.type === 'range'
@@ -266,7 +251,6 @@ export default {
       if(!step) step = defaultPickerOption().step
       if(!minTime) minTime = defaultPickerOption().minTime
       if(!maxTime) maxTime = defaultPickerOption().maxTime
-
       const result = []
       if (start && end && step) {
         let current = start
@@ -277,7 +261,6 @@ export default {
           current = nextTime(current, step)
         }
       }
-
       return result.map(item => item.value)
     },
     availableTimeList() {
@@ -293,7 +276,6 @@ export default {
       return this._checkTimeEnd() ? this.timeEnd : this.oldTimeEnd
     }
   },
-
   watch: {
     value: {
       immediate: true,
@@ -301,21 +283,21 @@ export default {
         if(this.isRangeType) {
           if(Array.isArray(newVal)) {
             if(this.isValidData(newVal[0],'start') || !newVal[0]) {
-              this.timeStart = newVal[0]
+              this.timeStart = newVal[0] || ''
               this.paneTimeStart = this.timeStart
-              this.oldTimeStart = newVal[0]
+              this.oldTimeStart = this.timeStart
             }
             if(this.isValidData(newVal[1],'end') || !newVal[1]) {
-              this.timeEnd = newVal[1]
-              this.oldTimeEnd = newVal[1]
+              this.timeEnd = newVal[1] || ''
+              this.oldTimeEnd = this.timeEnd
             }
           } else {
             this.handleRangeClear()
           }
         } else {
           if(this.isValidData(newVal,'start') || !newVal) {
-            this.time = newVal
-            this.oldTime = newVal
+            this.time = newVal || ''
+            this.oldTime = this.time
           }
         }
       }
@@ -323,32 +305,16 @@ export default {
     oldTime() {
       this.$emit('input', this.oldTime)
     },
-    time() {
-      if(this._checkTime()) {
-        this.oldTime = this.time
-
-        this._dispatchTime()
-      }
-    },
-    timeEnd() {
-      if(this._checkTimeEnd()) {
-        this.oldTimeEnd = this.timeEnd
-      }
-    },
     oldTimeEnd() {
-      this._setRangeVal()
-    },
+      this._setRangeValChange()
+    }
   },
-
   created() {
     document.addEventListener('click', this.handleOtherAreaClick)
   },
-
-
   beforeDestroy() {
     document.removeEventListener('click', this.handleOtherAreaClick)
   },
-
   methods: {
     _disableTime(item) {
       return this.disabledTime(item) || this._compareTimeWithMinAndMax(item)
@@ -356,14 +322,30 @@ export default {
     _disableTimeStart(item) {
       return this.disabledTimeStart(item) || this._compareTimeWithMinAndMax(item)
     },
-
     _disableTimeEnd(item) {
       if(!this.paneTimeStart || !this.isValidData(this.paneTimeStart, 'start')) return true
       return this.disabledTimeEnd(item) || compareTime(item, this.paneTimeStart) <= 0 || this._compareTimeWithMinAndMax(item)
     },
-
     _compareTimeWithMinAndMax(item) {
       return compareTime(item, this.minTime || '-1:-1') <= 0 || compareTime(item, this.maxTime || '100:100') >= 0
+    },
+    /**
+     * 单个选择，时间选择框聚焦显示下拉面板
+     */
+    handleInputFocus() {
+      if (!this.disabled) {
+        this.visible = true
+        // 为了每次弹出dropdown，都会根据处的环境做适应
+        this.broadcast('SpTimePickerDropdown', 'updatePopper')
+      }
+    },
+    /**
+     * 单个选择，清除不符合格式的时间值
+     */
+    handleTimeInputBlur() {
+      if(!this._checkTime()) {
+        this.time = this.oldTime
+      }
     },
     /**
      * 单个选择，保存旧值，方便当用户输入不符合规范的值时恢复之前的值
@@ -371,29 +353,42 @@ export default {
     handleTimeClick(time) {
       this.time = time
       this.oldTime = time
-      this._dispatchTime()
       this._resetAllVisible()
     },
     /**
-     * 范围值开始时间点击
+     * 单个选择, 用户主动输入监听
+     */
+    handleTimeInput() {
+      if(this._checkTime()) {
+        this.oldTime = this.time
+      }
+    },
+    /**
+     * 单个选择, 清空时间
+     */
+    handleClear() {
+      this.time = ''
+      this.oldTime = ''
+    },
+    /**
+     * 范围选择，范围值开始时间点击
      */
     handleTimeStartClick(timeStart) {
       this.paneTimeStart = timeStart
     },
     /**
-     * 范围值结束时间点击
+     * 范围选择，范围值结束时间点击
      */
     handleTimeEndClick(timeEnd) {
       this.timeEnd = timeEnd
       this.oldTimeEnd = timeEnd
-
+      // 只有当结束时间选择的时候才算一次完整的选择，这个时候给开始值赋值
       this.timeStart = this.paneTimeStart
       this.oldTimeStart = this.paneTimeStart
-
       this._resetRangeAllVisible()
     },
     /**
-     * 点击其他区域触发事件
+     * 单个选择/范围选择，点击其他区域触发事件
      */
     handleOtherAreaClick(e) {
       if (
@@ -414,24 +409,28 @@ export default {
         this._resetRangeAllVisible()
       }
     },
-    handleInputFocus() {
-      if (!this.disabled) {
-        this.visible = true
-        // 为了每次弹出dropdown，都会根据处的环境做适应
-        this.broadcast('SpTimePickerDropdown', 'updatePopper')
-      }
-    },
+    /**
+     * 范围选择，范围开始时间输入监听
+     */
     handleTimeStartInput() {
       if(this.isValidData(this.timeStart, 'start') && !this._disableTimeStart(this.timeStart)) {
         if(this.oldTimeEnd && compareTime(this.timeStart, this.oldTimeEnd) >= 0 ) return
         this.oldTimeStart = this.timeStart
         this.paneTimeStart = this.timeStart
-
-        this._setRangeVal()
+        
+        this._setRangeValChange()
       }
     },
     /**
-     * 范围点击
+     * 范围选择，结束时间输入监听
+     */
+    handleTimeEndInput() {
+      if(this._checkTimeEnd()) {
+        this.oldTimeEnd = this.timeEnd
+      }
+    },
+    /**
+     * 范围选择，范围点击显示下拉面板
      */
     handleRangeClick() {
       if (!this.disabled) {
@@ -441,18 +440,9 @@ export default {
         this.broadcast('SpTimePickerDropdown', 'updatePopper')
       }
     },
+   
     /**
-    * 清除不符合格式的时间值
-    */
-    handleTimeInputBlur() {
-      if(this._checkTime()) {
-        this.oldTime = this.time
-      } else {
-        this.time = this.oldTime
-      }
-    },
-    /**
-    * 清除不符合格式的时间范围开始值
+    * 范围选择，清除不符合格式的时间范围开始值
     */
     handleTimeStartInputBlur() {
       if(this.isValidData(this.timeStart, 'start') && !this._disableTimeStart(this.timeStart)) {
@@ -467,17 +457,15 @@ export default {
       }
     },
     /**
-    * 清除不符合格式的时间范围结束值
+    * 范围选择，清除不符合格式的时间范围结束值
     */
     handleTimeEndInputBlur() {
-      if(this._checkTimeEnd()) {
-        this.oldTimeEnd = this.timeEnd
-      } else {
+      if(!this._checkTimeEnd()) {
         this.timeEnd = this.oldTimeEnd
       }
     },
     /**
-     * 验证时间值是否是符合格式的
+     * 单个选择/范围选择，验证时间值是否是符合格式的
      */
     isValidData(val, type) {
       const inTimeList = this.availableTimeList.includes(val)
@@ -485,13 +473,6 @@ export default {
         return inTimeList && compareTime(val, this.oldTimeStart) > 0
       }
       return inTimeList
-    },
-    /**
-     * 清空时间
-     */
-    handleClear() {
-      this.time = ''
-      this.oldTime = ''
     },
     /**
      * 清空时间范围的数据
@@ -504,50 +485,55 @@ export default {
       this.oldTimeEnd = ''
     },
     /**
-     * 点亮选择的值
+     * 单个选择/范围选择，点亮选择的值
      */
     timeIndex(val) {
       return this.timeList.findIndex(item => item === val)
     },
+    /**
+     * 单个选择, 检查值
+     */
     _checkTime() {
       return this.isValidData(this.time, 'start') && !this._disableTime(this.time)
     },
+    /**
+     * 范围选择, 检查结束时间值
+     */
     _checkTimeEnd() {
       return this.isValidData(this.timeEnd, 'end') && !this._disableTimeEnd(this.timeEnd)
     },
-    _dispatchTime() {
-      this.dispatch('SpFormItem', 'sp.form.change', this.oldTime)
+    /**
+     * 范围，触发值校验
+     */
+    _dispatchRangeTimeValidate(type) {
+      const rangeVal = !this.oldTimeStart && !this.oldTimeEnd ? [] : [this.oldTimeStart, this.oldTimeEnd]
+      this.dispatch('SpFormItem', type === 'blur' ? 'sp.form.blur' : 'sp.form.change', rangeVal)
     },
     /**
-     * 重置时间选择状态
+     * 单个选择，重置时间选择状态
      */
     _resetAllVisible() {
       this.visible = false
     },
     /**
-     * 重置时间范围选择状态
+     * 范围选择，重置时间范围选择状态
      */
     _resetRangeAllVisible() {
       this.isTimeSelectFocus = false
       this.visibleTimeRange = false
-
       // 重置范围的临时值
       this.paneTimeStart = this.oldTimeStart
-
-      // 当用户点击组件选择时间值，但只选择了开始时间的时候则将开始时间也清空
-      if(!this.oldTimeEnd || !this.timeEnd) {
-        this.timeStart = ''
-        this.oldTimeStart = ''
-      }
+      this._dispatchRangeTimeValidate('blur')
     },
-    _setRangeVal() {
+    /**
+     * 范围选择，触发值更新
+     */
+    _setRangeValChange() {
       const rangeVal = !this.oldTimeStart && !this.oldTimeEnd ? [] : [this.oldTimeStart, this.oldTimeEnd]
       this.$emit('input', rangeVal)
-      this.dispatch('SpFormItem', 'sp.form.change', rangeVal)
-    }
+      this._dispatchRangeTimeValidate('change')
+    },
   }
-
-
 }
 </script>
 
