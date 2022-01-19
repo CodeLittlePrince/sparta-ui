@@ -16,7 +16,7 @@
           <div
             v-if="hasClose"
             class="sp-modal__head__close"
-            @click="modalValue = false"
+            @click="handleCloseClick"
           >
             <i class="sp-icon-close"></i>
           </div>
@@ -80,6 +80,10 @@ export default {
     'fullscreen': {
       type: Boolean,
       default: false
+    },
+    'beforeClose': {
+      type: Function,
+      default: null
     }
   },
   
@@ -161,6 +165,16 @@ export default {
       this.visible = false
       // 配合model
       this.$emit('input', this.visible)
+    },
+
+    handleCloseClick() {
+      if (this.beforeClose) {
+        this.beforeClose(() => {
+          this.modalValue = false
+        })
+      } else {
+        this.modalValue = false
+      }
     },
 
     openHandle() {

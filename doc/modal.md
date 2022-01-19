@@ -81,6 +81,42 @@ export default{
 ```
 :::
 
+### before-close
+:::demo 通过`before-close`控制点击`x`时候的交互
+```vue
+<template>
+  <sp-button type="primary" @click="visible12 = true">show</sp-button>
+  <sp-modal
+    class="components--main__sp-modal"
+    v-model="visible12"
+    :before-close="beforeClose"
+  >
+    <div class="content">
+      <p>我是before-close的内容</p>
+      <sp-button type="default" @click="visible12 = false">取消</sp-button>
+      <sp-button type="primary" @click="visible12 = false">确定</sp-button>
+    </div>
+  </sp-modal>
+</template>
+
+<script>
+export default{
+  data() {
+    return {
+      visible12: false
+    }
+  },
+  methods: {
+    beforeClose(done) {
+      console.log('before-close')
+      done()
+    },
+  }
+}
+</script>
+```
+:::
+
 ### 唯一弹窗模式
 :::demo 设置`unique`属性为`true`，则弹窗只能同时存在最多一个
 ```vue
@@ -521,6 +557,7 @@ export default{
 | unique | 设置 modal 是否为唯一展示 | boolean | — | false |
 | priority | 设置 modal 的优先级，弹窗根据优先级只展示一个 | string/number | — | 0 |
 | fullscreen | 全屏模式 | boolean | — | false |
+| before-close | 关闭前的回调，会暂停 Modal 的关闭 | function(done)，done 用于关闭 Modal	 | — | — |
 
 ### Slot
 | name | 说明 |
@@ -551,6 +588,7 @@ export default{
       visible9: false,
       visible10: false,
       visible11: false,
+      visible12: false,
       validateForm1: {
         name: '',
         localBankCode: '',
@@ -602,7 +640,11 @@ export default{
       this.visible9 = true
       this.visible10 = true
       this.visible11 = true
-    }
+    },
+    beforeClose(done) {
+      console.log('before-close')
+      done()
+    },
   }
 }
 </script>
