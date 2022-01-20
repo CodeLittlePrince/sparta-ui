@@ -267,13 +267,13 @@ export default {
       return this.timeList.filter(item => !this._compareTimeWithMinAndMax(item))
     },
     inputTimeIndex() {
-      return this._checkTime() ? this.time : this.oldTime
+      return this.isValidTimeData(this.time) ? this.time : this.oldTime
     },
     inputTimeStartIndex() {
-      return this.isValidData(this.paneTimeStart, 'start') && !this._disableTimeStart(this.paneTimeStart) ? this.paneTimeStart : this.oldTimeStart
+      return this.isValidTimeStartData(this.paneTimeStart) ? this.paneTimeStart : this.oldTimeStart
     },
     inputTimeEndIndex() {
-      return this._checkTimeEnd() ? this.timeEnd : this.oldTimeEnd
+      return this.isValidTimeEndData(this.timeEnd) ? this.timeEnd : this.oldTimeEnd
     }
   },
   watch: {
@@ -282,12 +282,12 @@ export default {
       handler(newVal) {
         if(this.isRangeType) {
           if(Array.isArray(newVal)) {
-            if(this.isValidData(newVal[0],'start') || !newVal[0]) {
+            if(this.isValidTimeStartData(newVal[0]) || !newVal[0]) {
               this.timeStart = newVal[0] || ''
               this.paneTimeStart = this.timeStart
               this.oldTimeStart = this.timeStart
             }
-            if(this.isValidData(newVal[1],'end') || !newVal[1]) {
+            if(this.isValidTimeEndData(newVal[1]) || !newVal[1]) {
               this.timeEnd = newVal[1] || ''
               this.oldTimeEnd = this.timeEnd
             }
@@ -295,7 +295,7 @@ export default {
             this.handleRangeClear()
           }
         } else {
-          if(this.isValidData(newVal,'start') || !newVal) {
+          if(this.isValidTimeData(newVal) || !newVal) {
             this.time = newVal || ''
             this.oldTime = this.time
           }
@@ -323,7 +323,7 @@ export default {
       return this.disabledTimeStart(item) || this._compareTimeWithMinAndMax(item)
     },
     _disableTimeEnd(item) {
-      if(!this.paneTimeStart || !this.isValidData(this.paneTimeStart, 'start')) return true
+      if(!this.paneTimeStart || !this.availableTimeList.includes(this.paneTimeStart)) return true
       return this.disabledTimeEnd(item) || compareTime(item, this.paneTimeStart) <= 0 || this._compareTimeWithMinAndMax(item)
     },
     _compareTimeWithMinAndMax(item) {
@@ -343,7 +343,7 @@ export default {
      * 单个选择，清除不符合格式的时间值
      */
     handleTimeInputBlur() {
-      if(!this._checkTime()) {
+      if(!this.isValidTimeData(this.time)) {
         this.time = this.oldTime
       }
     },
@@ -353,13 +353,13 @@ export default {
     handleTimeClick(time) {
       this.time = time
       this.oldTime = time
-      this._resetAllVisible()
+      this._hideSingleDropdown()
     },
     /**
      * 单个选择, 用户主动输入监听
      */
     handleTimeInput() {
-      if(this._checkTime()) {
+      if(this.isValidTimeData(this.time)) {
         this.oldTime = this.time
       }
     },
@@ -371,6 +371,13 @@ export default {
       this.oldTime = ''
     },
     /**
+     * 单个选择, 验证时间值是否是符合格式的
+     */
+    isValidTimeData(val) {
+      return this.availableTimeList.includes(val) && !this._disableTime(val)
+    },
+
+    /**
      * 范围选择，范围值开始时间点击
      */
     handleTimeStartClick(timeStart) {
@@ -380,40 +387,38 @@ export default {
      * 范围选择，范围值结束时间点击
      */
     handleTimeEndClick(timeEnd) {
-      this.timeEnd = timeEnd
-      this.oldTimeEnd = timeEnd
       // 只有当结束时间选择的时候才算一次完整的选择，这个时候给开始值赋值
       this.timeStart = this.paneTimeStart
       this.oldTimeStart = this.paneTimeStart
-      this._resetRangeAllVisible()
+
+      // 当用户只修改了前面的值的时候，watcher oldTimeEnd 不会触发值更新，需要手动触发一下
+      if(this.oldTimeEnd === timeEnd) {
+        this.timeEnd = timeEnd
+        this.oldTimeEnd = timeEnd
+        this._setRangeValChange()
+      } else {
+        this.timeEnd = timeEnd
+        this.oldTimeEnd = timeEnd
+      }
+      this._restRangeRelative()
     },
     /**
      * 单个选择/范围选择，点击其他区域触发事件
      */
     handleOtherAreaClick(e) {
-      if (
-        !this.isRangeType &&
-        !this.$el.contains(e.target) &&
-        e.target != document.body &&
-        this.visible
-      ) {
-        this._resetAllVisible()
-      }
-      // range 类型
-      if (
-        this.isRangeType &&
-        !this.$el.contains(e.target) &&
-        e.target != document.body &&
-        this.visibleTimeRange
-      ) {
-        this._resetRangeAllVisible()
+      if(!this.$el.contains(e.target) && e.target != document.body) {
+        if(this.isRangeType) {
+          this.visibleTimeRange && this._restRangeRelative()
+        } else {
+          this.visible && this._hideSingleDropdown()
+        }
       }
     },
     /**
      * 范围选择，范围开始时间输入监听
      */
     handleTimeStartInput() {
-      if(this.isValidData(this.timeStart, 'start') && !this._disableTimeStart(this.timeStart)) {
+      if(this.isValidTimeStartData(this.timeStart)) {
         if(this.oldTimeEnd && compareTime(this.timeStart, this.oldTimeEnd) >= 0 ) return
         this.oldTimeStart = this.timeStart
         this.paneTimeStart = this.timeStart
@@ -425,7 +430,7 @@ export default {
      * 范围选择，结束时间输入监听
      */
     handleTimeEndInput() {
-      if(this._checkTimeEnd()) {
+      if(this.isValidTimeEndData(this.timeEnd)) {
         this.oldTimeEnd = this.timeEnd
       }
     },
@@ -445,7 +450,7 @@ export default {
     * 范围选择，清除不符合格式的时间范围开始值
     */
     handleTimeStartInputBlur() {
-      if(this.isValidData(this.timeStart, 'start') && !this._disableTimeStart(this.timeStart)) {
+      if(this.isValidTimeStartData(this.timeStart)) {
         if(this.oldTimeEnd && compareTime(this.timeStart, this.oldTimeEnd) >= 0 ) {
           this.timeStart = this.oldTimeStart
           return
@@ -460,19 +465,25 @@ export default {
     * 范围选择，清除不符合格式的时间范围结束值
     */
     handleTimeEndInputBlur() {
-      if(!this._checkTimeEnd()) {
+      if(!this.isValidTimeEndData(this.timeEnd)) {
         this.timeEnd = this.oldTimeEnd
       }
     },
     /**
-     * 单个选择/范围选择，验证时间值是否是符合格式的
-     */
-    isValidData(val, type) {
-      const inTimeList = this.availableTimeList.includes(val)
-      if(type === 'end' && val && this.timeStart) {
-        return inTimeList && compareTime(val, this.oldTimeStart) > 0
+    * 范围选择，验证开始时间值是否是符合格式的
+    */
+    isValidTimeStartData(val) {
+      return this.availableTimeList.includes(val) && !this._disableTimeStart(val)
+    },
+    /**
+    * 范围选择，验证结束时间值是否是符合格式的
+    */
+    isValidTimeEndData(val) {
+      const result = this.availableTimeList.includes(val) && !this._disableTimeEnd(val)
+      if(val && this.timeStart) {
+        return result && compareTime(val, this.oldTimeStart) > 0
       }
-      return inTimeList
+      return result
     },
     /**
      * 清空时间范围的数据
@@ -491,18 +502,6 @@ export default {
       return this.timeList.findIndex(item => item === val)
     },
     /**
-     * 单个选择, 检查值
-     */
-    _checkTime() {
-      return this.isValidData(this.time, 'start') && !this._disableTime(this.time)
-    },
-    /**
-     * 范围选择, 检查结束时间值
-     */
-    _checkTimeEnd() {
-      return this.isValidData(this.timeEnd, 'end') && !this._disableTimeEnd(this.timeEnd)
-    },
-    /**
      * 范围，触发值校验
      */
     _dispatchRangeTimeValidate(type) {
@@ -512,13 +511,13 @@ export default {
     /**
      * 单个选择，重置时间选择状态
      */
-    _resetAllVisible() {
+    _hideSingleDropdown() {
       this.visible = false
     },
     /**
      * 范围选择，重置时间范围选择状态
      */
-    _resetRangeAllVisible() {
+    _restRangeRelative() {
       this.isTimeSelectFocus = false
       this.visibleTimeRange = false
       // 重置范围的临时值
