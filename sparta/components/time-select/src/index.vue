@@ -385,6 +385,11 @@ export default {
       // 只有当结束时间选择的时候才算一次完整的选择，这个时候给开始值赋值
       this.timeStart = this.paneTimeStart
       this.oldTimeStart = this.paneTimeStart
+
+      // 当用户只修改了前面的值的时候，watcher oldTimeEnd 不会触发值更新，需要手动触发一下
+      if(this.oldTimeEnd === timeEnd) {
+        this._setRangeValChange()
+      }
       this._resetRangeAllVisible()
     },
     /**
