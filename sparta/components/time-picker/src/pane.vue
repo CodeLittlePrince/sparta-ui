@@ -40,7 +40,7 @@ export default {
     index(val) {
       this.activeIndex = val
       this.broadcast('SpTimePickerOption', 'IndexChange')
-      this._scrollToView()
+      val !== -1 && this._scrollToView()
     }
   },
 
