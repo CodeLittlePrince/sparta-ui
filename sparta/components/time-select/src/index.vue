@@ -26,7 +26,7 @@
       >
         <transition name="sp-zoom-in-top">
           <div v-show="visible" class="sp-time-picker-dropdown__box">
-            <sp-time-picker-pane :index="timeIndex(inputTimeIndex)">
+            <sp-time-picker-pane :index="getTimeIndexForSingle(inputTimeIndex)">
               <sp-time-picker-option
                 v-for="(item, index) in timeList"
                 :key="item"
@@ -81,7 +81,7 @@
       >
         <transition name="sp-zoom-in-top">
           <div v-show="visibleTimeRange" class="sp-time-picker-dropdown__box">
-            <sp-time-picker-pane :index="timeIndex(inputTimeStartIndex)">
+            <sp-time-picker-pane :index="getTimeStartIndexForRange(inputTimeStartIndex)">
               <sp-time-picker-option
                 v-for="(item, index) in timeList"
                 :key="item"
@@ -91,7 +91,7 @@
                 @click="handleTimeStartClick(item)"
               />
             </sp-time-picker-pane>
-            <sp-time-picker-pane :index="timeIndex(inputTimeEndIndex)">
+            <sp-time-picker-pane :index="timeEndIndexForRange">
               <sp-time-picker-option
                 v-for="(item, index) in timeList"
                 :key="item"
@@ -232,6 +232,7 @@ export default {
       timeEnd: '',
       oldTimeEnd: '',
       isTimeSelectFocus: false,
+      timeEndIndexForRange: -1,
     }
   },
   computed: {
@@ -290,6 +291,7 @@ export default {
             if(this.isValidTimeEndData(newVal[1]) || !newVal[1]) {
               this.timeEnd = newVal[1] || ''
               this.oldTimeEnd = this.timeEnd
+              this.timeEndIndexForRange = this.getTimeIndex(this.timeEnd)
             }
           } else {
             this.handleRangeClear()
@@ -382,6 +384,8 @@ export default {
      */
     handleTimeStartClick(timeStart) {
       this.paneTimeStart = timeStart
+
+      this.timeEndIndexForRange = -1
     },
     /**
      * 范围选择，范围值结束时间点击
@@ -400,7 +404,8 @@ export default {
         this.timeEnd = timeEnd
         this.oldTimeEnd = timeEnd
       }
-      this._restRangeRelative()
+
+      this._resetRangeRelative()
     },
     /**
      * 单个选择/范围选择，点击其他区域触发事件
@@ -408,7 +413,7 @@ export default {
     handleOtherAreaClick(e) {
       if(!this.$el.contains(e.target) && e.target != document.body) {
         if(this.isRangeType) {
-          this.visibleTimeRange && this._restRangeRelative()
+          this.visibleTimeRange && this._resetRangeRelative()
         } else {
           this.visible && this._hideSingleDropdown()
         }
@@ -498,8 +503,26 @@ export default {
     /**
      * 单个选择/范围选择，点亮选择的值
      */
-    timeIndex(val) {
+    getTimeIndex(val) {
       return this.timeList.findIndex(item => item === val)
+    },
+    /**
+     * 单个选择，点亮选择的时间值
+     */
+    getTimeIndexForSingle(val) {
+      if(val && this._disableTime(val)) {
+        return -1
+      }
+      return this.getTimeIndex(val)
+    },
+    /**
+     * 范围选择,点亮选择的时间开始值
+     */
+    getTimeStartIndexForRange(val) {
+      if(val && this._disableTimeStart(val)) {
+        return -1
+      }
+      return this.getTimeIndex(val)
     },
     /**
      * 范围，触发值校验
@@ -517,12 +540,16 @@ export default {
     /**
      * 范围选择，重置时间范围选择状态
      */
-    _restRangeRelative() {
+    _resetRangeRelative() {
       this.isTimeSelectFocus = false
       this.visibleTimeRange = false
       // 重置范围的临时值
       this.paneTimeStart = this.oldTimeStart
       this._dispatchRangeTimeValidate('blur')
+
+      this.$nextTick(() => {
+        this.timeEndIndexForRange = this.getTimeIndex(this.inputTimeEndIndex)
+      })
     },
     /**
      * 范围选择，触发值更新
