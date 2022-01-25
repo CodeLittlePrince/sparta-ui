@@ -58,13 +58,37 @@ export default{
 ```
 :::
 
-### 时间范围选择
+### 基础时间范围选择
 
 :::demo 通过`v-model`绑定时间数据
 ```vue
 <template>
   <div class="sp-time-picker-demo">
     <sp-time-select v-model="time2" 
+    clearable 
+    type="range"/>
+  </div>
+</template>
+
+<script>
+export default{
+  data() {
+    return {
+      time2: []
+    }
+  }
+}
+</script>
+```
+:::
+
+### 时间范围选择 - 设置禁用状态
+
+:::demo 通过`v-model`绑定时间数据
+```vue
+<template>
+  <div class="sp-time-picker-demo">
+    <sp-time-select v-model="time5" 
     clearable 
     type="range"
     :disabled-time-start="handleDisabledTimeStart"
@@ -76,7 +100,7 @@ export default{
 export default{
   data() {
     return {
-      time2: ['0:00', '24:00']
+      time5: ['00:00', '23:00']
     }
   },
   methods: {
@@ -102,11 +126,7 @@ export default{
     clearable 
     type="range"
     :picker-options="{ 
-      step: '00:15', 
-      start: '01:00', 
-      end: '20:00', 
-      minTime: '02:00', 
-      maxTime: '13:00'
+      step: '00:15'
     }"
     />
   </div>
@@ -117,6 +137,65 @@ export default{
   data() {
     return {
       time4: ['09:00', '11:00']
+    }
+  }
+}
+</script>
+```
+:::
+
+
+### 时间范围选择 设置时间可选范围
+
+:::demo 通过`v-model`绑定时间数据
+```vue
+<template>
+  <div class="sp-time-picker-demo">
+    <sp-time-select v-model="time6" 
+    clearable 
+    type="range"
+    :picker-options="{ 
+      start: '05:00',
+      end: '23:00'
+    }"
+    />
+  </div>
+</template>
+
+<script>
+export default{
+  data() {
+    return {
+      time6: []
+    }
+  }
+}
+</script>
+```
+:::
+
+### 时间范围选择 设置时间最大最小可选值
+
+:::demo 通过`v-model`绑定时间数据
+```vue
+<template>
+  <div class="sp-time-picker-demo">
+    <sp-time-select v-model="time7" 
+    clearable 
+    type="range"
+    :picker-options="{ 
+      minTime: '02:00',
+      maxTime: '22:00'
+    }"
+    />
+  </div>
+</template>
+
+<script>
+export default{
+  data() {
+    return {
+      time7: []
     }
   }
 }
@@ -154,8 +233,11 @@ export default{
     return {
       time1: '',
       time3: '',
-      time2: ['00:00', '23:00'],
-      time4: ['09:00', '11:00']
+      time2: [],
+      time4: ['09:00', '11:00'],
+      time5: ['00:00', '23:00'],
+      time6: [],
+      time7: []
     }
   },
   watch: {
@@ -170,7 +252,16 @@ export default{
     },
     time4(val) {
       console.log(val)
-    }
+    },
+    time5(val) {
+      console.log(val)
+    },
+    time6(val) {
+      console.log(val)
+    },
+    time7(val) {
+      console.log(val)
+    },
   },
   methods: {
     handleDisabledTime(currentVal) {
