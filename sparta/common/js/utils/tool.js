@@ -54,10 +54,16 @@ function getPropByPath(obj, path, strict) {
   }
 }
 
+async function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+
 
 export default {
   noop,
   clonedeep,
   getValueByPath,
-  getPropByPath
+  getPropByPath,
+  sleep
 }
