@@ -141,7 +141,9 @@ export default {
   beforeDestroy() {
     this.modalManage.remove(this)
 
-    document.body.removeChild(this.$el)
+    if (this.$el) {
+      document.body.removeChild(this.$el)
+    }
   },
 
   methods: {
