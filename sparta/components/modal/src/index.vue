@@ -141,8 +141,10 @@ export default {
   beforeDestroy() {
     this.modalManage.remove(this)
 
-    if (this.$el) {
+    try {
       document.body.removeChild(this.$el)
+    } catch {
+      // 防止父级容器dom消失后导致removeChild报错
     }
   },
 
