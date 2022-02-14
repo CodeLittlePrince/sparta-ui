@@ -1,5 +1,5 @@
 <template>
-  <div class="sp-pagination">
+  <div class="sp-pagination" :class="{'is--disabled': disabled}">
     <ul :class="`align-${ align }`">
       <!-- prev -->
       <li
@@ -89,6 +89,11 @@ export default {
     total : {
       type : [Number, String],
       default : 1
+    },
+    // 禁止状态
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -189,7 +194,7 @@ export default {
     },
 
     go(page) {
-      if (this.index !== page) {
+      if (this.index !== page && !this.disabled) {
         this.index = page
         // emit给父组件处理
         this.$emit('change', this.index, this.pageSize)
@@ -208,6 +213,14 @@ export default {
   text-align: center;
   @include clearfix();
 
+  &.is--disabled {
+    cursor: not-allowed;
+    li:not(.item--more) {
+      color: $pagination-item-color--is-disabled;
+      background-color: $pagination-item-background--is-disabled;
+    }
+  }
+
   .align-left {
     float: left;
   }
@@ -223,15 +236,15 @@ export default {
   li {
     user-select: none;
     float: left;
-    padding: 0 15px;
+    color: $pagination-item-color;
+    padding: 0 4px;
+    min-width: $pagination-item-height - 8;
     height: $pagination-item-height;
     line-height: $pagination-item-height;
     font-size: $pagination-item-font-size;
     text-align: center;
-    $pagination-item-background: #fff;
     border: $border-base;
     border-left: none;
-    cursor: pointer;
 
     &:first-child {
       border-top-left-radius: $pagination-border-radius;
@@ -239,7 +252,6 @@ export default {
       border-left: $border-base;
       margin-right: 10px;
       background-color: $pagination-item-prev-next-background;
-      padding: 0 12px;
     }
 
     &:last-child {
@@ -248,30 +260,38 @@ export default {
       border-left: $border-base;
       margin-left: 10px;
       background-color: $pagination-item-prev-next-background;
-      padding: 0 12px;
     }
 
     &:nth-child(2) {
       border-left: $border-base;
     }
 
-    &:hover {
-      background-color: $pagination-background;
-      color: $pagination-item-color;
+    &.item--more {
+      border-top: 1px solid #fff;
+      border-bottom: 1px solid #fff;
+      line-height: 20px;
     }
+  }
 
-    &.is-disabled,
-    &.is-disabled:hover {
-      cursor: not-allowed;
-      opacity: 0.5;
-      background-color: $pagination-background--is-disabled;
-    }
+  &:not(.is--disabled) li{
+      cursor: pointer;
+      &:hover {
+        background-color: $pagination-background;
+        color: $pagination-item-color--is-hover;
+      }
 
-    &.is-checked {
-      color: $pagination-item-color--is-checked;
-      background-color: $pagination-background--is-checked;
-      border-color: $pagination-border-color--is-checked;
-    }
+      &.is-disabled,
+      &.is-disabled:hover {
+        cursor: not-allowed;
+        opacity: 0.5;
+        background-color: $pagination-background--is-disabled;
+      }
+
+      &.is-checked {
+        color: $pagination-item-color--is-checked;
+        background-color: $pagination-background--is-checked;
+        border-color: $pagination-border-color--is-checked;
+      }
   }
 }
 </style>

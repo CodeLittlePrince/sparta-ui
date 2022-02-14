@@ -1,5 +1,8 @@
 <template>
-  <div class="sp-table">
+  <div
+    class="sp-table"
+    :class="{'is--no-footer': !hasFooter && !hasMore, 'is--disabled': disabled }"
+  >
     <!-- 表格头部 -->
     <div
       class="sp-table__head"
@@ -20,18 +23,15 @@
         </colgroup>
         <thead>
           <tr>
-            <th v-if="selection">
-              <sp-checkbox
-                v-if="selection"
-                v-model="checkAll"
-                :indeterminate="isIndeterminate"
-                @change="handleCheckAllChange"
-              />
-            </th>
+            <th v-if="selection"></th>
             <th
               v-for="(item, index) in children"
               :key="index"
-            >{{ item.componentOptions.propsData.label }}</th>
+            >
+              <slot :name="item.data.attrs['slot-name']">
+                {{ item.componentOptions.propsData.label }}
+              </slot>
+            </th>
           </tr>
         </thead>
       </table>
@@ -66,15 +66,17 @@
               <div class="sp-table-cell">
                 <sp-checkbox
                   v-model="checkedList[rIndex]"
+                  :disabled="disabled"
                   @change="handleCheck(rIndex, $event)"
                 />
               </div>
             </td>
             <td
-              v-for="(tdItem, cIndex ) in children"
+              v-for="(tdItem, cIndex) in children"
               :key="cIndex"
             >
               <sp-table-cell
+                :key="cIndex + tableKey"
                 :column="tdItem"
                 :list="list"
                 :c-index="cIndex"
@@ -84,6 +86,20 @@
           </tr>
         </tbody>
       </table>
+      <!-- append 插入至表格最后一行之后的内容 -->
+      <div v-if="hasMore || $slots.append" class="sp-table__append">
+        <slot name="append">
+          <div class="sp-table__append-show-more">
+            <sp-button
+              type="text"
+              :disabled="disabled"
+              @click="handleViewMore"
+            >
+              查看更多
+              <i class="sp-icon-arrow-down-bold"></i></sp-button>
+          </div>
+        </slot>
+      </div>
       <!-- 没有数据情况 -->
       <div
         v-show="(!list || !list.length) && !loading"
@@ -104,6 +120,45 @@
             class="sp-icon-loading"
           ></i>
           加载中...
+        </div>
+      </div>
+    </div>
+    <!-- 表格底部 -->
+    <div
+      v-if="hasFooter"
+      class="sp-table__footer"
+      :style="`width: ${tableWidth}`"
+    >
+      <div class="sp-table__footer-left">
+        <div class="sp-table__footer-left-content">
+          <sp-checkbox
+            v-if="selection"
+            v-model="checkAll"
+            :disabled="disabled"
+            :indeterminate="isIndeterminate"
+            :label="selectionAllLabel"
+            @change="handleCheckAllChange"
+          />
+          <div class="sp-table__footer-left-operation">
+            <slot name="footerLeftContent"></slot>
+          </div>
+        </div>
+      </div>
+      <div v-if="pagination" class="sp-table__footer-center">
+        <sp-pagination
+          :align="align"
+          :per-pages="perPages"
+          :page-index="pageIndex"
+          :disabled="paginationDisabled"
+          :total="total"
+          :page-size="pageSize"
+          @change="handlePageChange"
+        >
+        </sp-pagination>
+      </div>
+      <div class="sp-table__footer-right">
+        <div class="sp-table__footer-right-content">
+          <slot name="footerRightContent"></slot>
         </div>
       </div>
     </div>
@@ -137,13 +192,41 @@ export default {
       type: String,
       default: '--'
     },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
     selection: {
       type: Boolean,
       default: false
     },
     selectionWidth: {
       type: String,
-      default: '60'
+      default: '33'
+    },
+    pagination: {
+      type: Boolean,
+      default: false
+    },
+    paginationOption: {
+      type: Object,
+      default: () => ({})
+    },
+    paginationDisabled: {
+      type: Boolean,
+      default: false
+    },
+    hasMore: {
+      type: Boolean,
+      default: false
+    },
+    selectionAllLabel: {
+      type: String,
+      default: '全选'
+    },
+    enableUpdate: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -154,18 +237,33 @@ export default {
       checkedIndexs: [],
       checkedList: [],
       tableWidth: '100%',
-      showVScroll: false
+      showVScroll: false,
+      children: [],
+      tableKey: 0
     }
   },
 
   computed: {
-    children() {
-      return this.$slots.default.filter(item => {
-        return /SpTableColumn/.test(item.tag)
-      })
-    },
     isIE9() {
       return navigator.appVersion.indexOf('MSIE 9.0') > -1
+    },
+    perPages() {
+      return this.paginationOption && this.paginationOption.perPages || 7
+    },
+    pageIndex() {
+      return this.paginationOption && this.paginationOption.pageIndex || 1
+    },
+    pageSize() {
+      return this.paginationOption && this.paginationOption.pageSize || 10
+    },
+    total() {
+      return this.paginationOption && this.paginationOption.total || 1
+    },
+    align() {
+      return this.paginationOption && this.paginationOption.align || 'middle'
+    },
+    hasFooter() {
+      return this.selection || this.pagination || this.$slots.footerRightContent
     }
   },
 
@@ -178,7 +276,13 @@ export default {
       this.checkedList = []
       this._initCheckedList()
       this._emitChange()
+
+      this.tableKey = + new Date()
     }
+  },
+  
+  created() {
+    this.init()
   },
 
   mounted() {
@@ -187,8 +291,32 @@ export default {
     }
     this._initTableWidth()
   },
+
+  beforeUpdate() {
+    this.enableUpdate && this.init()
+  },
   
   methods: {
+    init() {
+      this.children = this.$slots.default.filter(item => {
+        return /SpTableColumn/.test(item.tag)
+      })
+    },
+    clearSelection() {
+      if(this.disabled) return
+      this.checkAll = false
+      this._setCheckState(false)
+    },
+    toggleAllSelection() {
+      if(this.disabled) return
+      this.checkAll = !this.checkAll
+      this._setCheckState(this.checkAll)
+    },
+    toggleRowSelection(index, selected) {
+      if(!this.disabled && typeof index === 'number' && typeof selected === 'boolean') {
+        this.handleCheck(index, selected)
+      }
+    },
     _initTableWidth() {
       let width = 0
       for (let i = 0, len = this.children.length; i < len; i++) {
@@ -216,7 +344,7 @@ export default {
       let len = this.list.length
       while(len) {
         len--
-        this.checkedList[len] = false
+        this.$set(this.checkedList, len, false)
       }
     },
 
@@ -249,26 +377,37 @@ export default {
         this.checkAll = false
       }
     },
+    _setCheckState(checkState) {
+      let len = this.list.length
+      while(len) {
+        len--
+        this.$set(this.checkedList, len, checkState)
+      }
+      this.isIndeterminate = false
+      this._emitChange()
+    },
     /**
      * 全选单选框点击
      */
     handleCheckAllChange(isChecked) {
-      let len = this.list.length
-      while(len) {
-        len--
-        this.checkedList[len] = isChecked
-      }
-      this.isIndeterminate = false
-      this._emitChange()
+      this._setCheckState(isChecked)
     },
     /**
      * 单选框单独点击
      */
     handleCheck(index, isChecked) {
       // 更新checkedList
-      this.checkedList[index] = isChecked
+      this.$set(this.checkedList, index, isChecked)
       this._processCheckBoxRelation()
       this._emitChange()
+    },
+
+    handlePageChange(index, pageSize) {
+      this.$emit('pagination-change', index, pageSize)
+    },
+
+    handleViewMore() {
+      this.$emit('table-view-more')
     }
   },
 }
@@ -283,7 +422,7 @@ export default {
   font-size: $table-font-size;
 
   &__head {
-    padding: 15px 24px;
+    padding: 15px 30px;
     text-align: left;
     color: $table-thead-color;
     border-bottom: $table-border;
@@ -296,13 +435,13 @@ export default {
     th {
       text-align: left; /* 为了IE */
       &:first-child {
-        padding-left: 16px;
+        padding-left: 10px;
       }
     }
   }
   &__body {
     position: relative;
-    padding: 0 24px;
+    padding: 0 30px;
     text-align: left;
     color: $table-tbody-color;
     min-height: $table-min-height;
@@ -311,10 +450,6 @@ export default {
     tr {
       border-bottom: $table-border;
 
-      &:last-child {
-        border-bottom: none;
-      }
-
       td {
         vertical-align: middle;
         line-height: 1.2;
@@ -322,7 +457,7 @@ export default {
 
         &:first-child {
           .sp-table-cell {
-            padding-left: 16px;
+            padding-left: 10px;
           }
         }
       }
@@ -333,6 +468,71 @@ export default {
       overflow: hidden;
     }
   }
+  &.is--no-footer {
+    .sp-table__body {
+      tr {
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+
+  &__footer {
+    position: relative;
+    height: 84px;
+    border-bottom: $table-border;
+    &-left {
+      position: absolute;
+      height: 100%;
+      top: 0;
+      left: 40px;
+      bottom: 0;
+      &-content {
+        height: 84px;
+        display: table-cell;
+        vertical-align: middle;
+      }
+
+      .sp-checkbox + span {
+        padding-left: 8px;
+      }
+
+      &-operation {
+        display: inline-block;
+        vertical-align: sub;
+      }
+    }
+    &-center {
+      height: 100%;
+      .sp-pagination {
+        padding-top: 27px;
+      }
+    }
+    &-right {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      height: 100%;
+      &-content {
+        height: 84px;
+        display: table-cell;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  &__append {
+    &-show-more {
+      padding: 15px 0 17px;
+      line-height: 18px;
+      height: 18px;
+      text-align: center;
+      border-bottom: 1px solid #e4e8ef;
+    }
+  }
+
   &__empty {
     height: $table-min-height;
     line-height: $table-min-height;
@@ -363,10 +563,23 @@ export default {
 
   &-cell {
     position: relative;
-    padding-right: 13px;
+    padding-right: 7px;
     box-sizing: border-box;
     word-break: break-all;
     line-height: 1.2;
+  }
+
+  &.is--disabled {
+    box-shadow: 0 1px 0 0 #dbdfe6;
+    background-color: #f5f7fa;
+    color: #97a2b5;
+    border-top: 1px solid #dbdfe6;
+    .sp-table__head {
+      background-color: #f5f7fa;
+    }
+    .sp-table__body {
+      color: $color-text-tip
+    }
   }
 }
 </style>
