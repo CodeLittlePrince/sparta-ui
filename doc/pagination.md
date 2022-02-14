@@ -28,6 +28,33 @@ export default{
 ```
 :::
 
+### 不可点击状态
+
+:::demo 直接引用`sp-pagination`加disabled属性即可
+```vue
+<template>
+  <sp-pagination
+    align="middle"
+    page-index="2"
+    total="160"
+    page-size="10"
+    disabled
+    @change="pageChange">
+  </sp-pagination>
+</template>
+
+<script>
+export default{
+  methods: {
+    pageChange(index, pageSize) {
+      console.log(index, pageSize)
+    }
+  }
+}
+</script>
+```
+:::
+
 ### Attributes
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |

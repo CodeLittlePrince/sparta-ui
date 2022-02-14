@@ -243,9 +243,9 @@ $tag-border-color--danger: $color-danger;
 /* Table
 -------------------------- */
 $table-font-size: 14px;
-$table-background: #fafafa;
-$table-border: $border-base;
-$table-thead-color: $color-text-primary;
+$table-background: #fff;
+$table-border: 1px solid #e4e8ef;
+$table-thead-color: $color-text-secondary;
 $table-tbody-color: $color-text-regular;
 $table-min-height: 60px;
 $table-loading-background: rgba(255, 255, 255, 0.5);
@@ -324,12 +324,15 @@ $tabs-item-color-disabled: #b6babf;
 /* Pagination
 -------------------------- */
 $pagination-item-background: #fff;
+$pagination-item-background--is-disabled: #f0f3f7;
+$pagination-item-color: #97a2b5;
+$pagination-item-color--is-disabled: #c7cbd1;
 $pagination-item-prev-next-background: #f0f3f7;
 $pagination-item-font-size: 14px;
-$pagination-item-height: 36px;
+$pagination-item-height: 26px;
 $pagination-border-radius: 2px;
 $pagination-background: #fff;
-$pagination-item-color: $color-primary;
+$pagination-item-color--is-hover: $color-primary;
 $pagination-background--is-disabled: #e0e7f1;
 $pagination-item-color--is-checked: #fff;
 $pagination-background--is-checked: $color-primary;

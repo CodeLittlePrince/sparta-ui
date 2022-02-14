@@ -3,7 +3,10 @@ export default {
   name: 'SpTableCell',
 
   props: {
-    column: null,
+    column: {
+      type: Object,
+      default: null
+    },
     list: {
       type: Array,
       default: () => []
@@ -17,15 +20,16 @@ export default {
       default: 0
     }
   },
-  
   render(h) {
     // 单元格里面的内容
     const row = this.list[this.rIndex]
-    let cell = row[this.column.componentOptions.propsData.prop]
+    let cell = this.column.componentOptions.propsData.prop ? row[this.column.componentOptions.propsData.prop] : row
     let cellCopy = cell === undefined ? undefined : JSON.parse(JSON.stringify(cell))
     const cellData = this.$parent.children[this.cIndex].data
     const formatter = cellData.attrs.formatter
-    if (cellData.scopedSlots) {
+    if (this.column.children) {
+      cellCopy = this.column.children
+    } else if(cellData.scopedSlots) {
       // 如果单元格中是template，则直接显示
       cellCopy = cellData.scopedSlots.default({
         cell: cellCopy,
@@ -51,6 +55,7 @@ export default {
     if (!isNaN(+cellWidth)) {
       cellWidth += 'px'
     }
+    
     // 渲染
     return h('div',
       {

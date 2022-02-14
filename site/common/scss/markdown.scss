@@ -265,7 +265,7 @@
       margin-bottom: 0;
     }
     
-    >a:not([href]) {
+    >a([href]) {
       color: inherit;
       text-decoration: none;
     }
