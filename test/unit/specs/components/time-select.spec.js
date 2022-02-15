@@ -193,7 +193,7 @@ describe('time-select', () => {
       await input.trigger('focus')
       await input.setValue('10:00')
       await input.trigger('blur')
-      expect(wrapper.vm.$refs.spTimeSelect.rangeTimeStart).to.be.equal('10:00')
+      expect(wrapper.vm.val).to.deep.equal([])
 
       await wrapper.setData({ val: ['08:00', '18:00'] })
       expect(wrapper.vm.val).to.deep.equal(['08:00', '18:00'])
@@ -384,7 +384,7 @@ describe('time-select', () => {
       const timeStartList = paneList.wrappers[0].findAll('.sp-time-picker-option')
       const timeEndList = paneList.wrappers[1].findAll('.sp-time-picker-option')
 
-      it('other 1', async () => {
+      it('查看开始时间的点亮逻辑和结束时间的disabled逻辑', async () => {
         // 查看开始时间的点亮逻辑和结束时间的disabled逻辑
         await inputList.wrappers[0].setValue('03:00')
         const selectedOption =  wrapper.find('.is--selected')
@@ -393,7 +393,7 @@ describe('time-select', () => {
       })
 
 
-      it('1', async () => {
+      it('初始时为空 先点选正常开始值，再输入正常结束值，注意点亮逻辑', async () => {
         await wrapper.setData({ val: [] })
         // 初始时为空 先点选正常开始值，再输入正常结束值，注意点亮逻辑
         await wrapper.find('.sp-time-select__range').trigger('click')
@@ -406,7 +406,7 @@ describe('time-select', () => {
         })
       })
   
-      it('2', async () => {
+      it('初始时为空 先点选正常开始值，再输入异常结束值，查看点亮逻辑', async () => {
         await wrapper.setData({ val: [] })
         // 初始时为空 先点选正常开始值，再输入异常结束值，注意点亮逻辑
         await timeStartList.wrappers[0].trigger('click')
@@ -417,7 +417,7 @@ describe('time-select', () => {
         await wrapper.setData({ val: [] })
       })
 
-      it('3', async () => {
+      it('初始时为空 先输入正常开始值，再点选正常结束值，查看点亮逻辑', async () => {
         await wrapper.setData({ val: [] })
         // 初始时为空 先输入正常开始值，再点选正常结束值，注意点亮逻辑
         await inputList.wrappers[0].setValue('01:00')
@@ -429,7 +429,7 @@ describe('time-select', () => {
       })
 
 
-      it('4', async () => {
+      it('初始时为空 先输入正常结束值，再输入异常开始值，注意点亮逻辑', async () => {
         await wrapper.setData({ val: [] })
         // 初始时为空 先输入正常结束值，再输入异常开始值，注意点亮逻辑
         await inputList.wrappers[1].setValue('15:00')
@@ -441,7 +441,7 @@ describe('time-select', () => {
       })
 
 
-      it('5', async () => {
+      it('初始时为空 先输入正常结束值，再输入正常开始值，注意点亮逻辑', async () => {
         await wrapper.setData({ val: [] })
         // 初始时为空 先输入正常结束值，再输入正常开始值，注意点亮逻辑
         await inputList.wrappers[1].setValue('13:00')
@@ -452,7 +452,7 @@ describe('time-select', () => {
         await wrapper.setData({ val: [] })
       })
 
-      it('6', async () => {
+      it('初始时有值 点选开始值，结束值选择面板点亮清空', async () => {
         // 初始时有值 点选开始值，结束值选择面板点亮清空
         await wrapper.setData({ val: ['02:00','18:00'] })
         await timeStartList.wrappers[12].trigger('click')
@@ -462,7 +462,7 @@ describe('time-select', () => {
         })
       })
 
-      it('7', async () => {
+      it('初始时有值 输入开始值，结束值选择面板点亮保持', async () => {
         // 初始时有值 输入开始值，结束值选择面板点亮保持
         await wrapper.setData({ val: ['02:00','18:00'] })
         await inputList.wrappers[0].setValue('11:00')
