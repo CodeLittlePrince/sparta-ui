@@ -4,10 +4,19 @@ class PopManage {
   constructor() {
     this.instance = null
     this.zIndex = 2000
+
+    if (PopManage.lock) {
+      return new Error('Cannot use new keyword to construct, please use PopManage.getInstance() instead.')
+    } else {
+      PopManage.lock = true
+    }
   }
 
+  static lock = true
   static getInstance() {
     if (this.instance) return this.instance
+
+    PopManage.lock = false
     return this.instance = new PopManage()
   }
 
