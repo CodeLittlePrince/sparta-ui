@@ -7,13 +7,11 @@
           :key="item.value"
           class="sp-tabs__item"
           :class="{
-            'is-checked': value === item.value,
-            'is-disabled': item.disabled
+            'is--checked': value === item.value,
+            'is--disabled': item.disabled
           }"
           @click="handleTabSelect(item.value, item.disabled)"
-        >
-          {{ item.tab }}
-        </li>
+        >{{ item.tab }}</li>
       </ul>
       <div class="sp-tabs__line"></div>
     </div>
@@ -61,7 +59,6 @@ export default {
 .sp-tabs {
   &__head {
     position: relative;
-    height: $tabs-height;
   }
 
   &__items {
@@ -76,7 +73,7 @@ export default {
     z-index: 1;
     width: 100%;
     bottom: 0;
-    height: 2px;
+    height: 1px;
     background-color: $tabs-line-color;
   }
 
@@ -84,26 +81,26 @@ export default {
     display: inline-block;
     box-sizing: border-box;
     margin-left: 32px;
-    padding: 0 16px;
-    height: $tabs-height;
-    line-height: $tabs-height;
+    padding: 0 20px;
+    line-height: 22px;
     transition: $transition-all;
     font-size: $tabs-font-size;
     text-decoration: none;
     border-bottom: $tabs-border-bottom;
+    padding-bottom: 18px;
+    color: #747d8c;
     cursor: pointer;
 
     &:first-child {
       margin-left: 0;
     }
 
-    &.is-checked {
+    &.is--checked {
       color: $tabs-item-color-active;
-      font-weight: $tabs-item-font-weight-active;
       border-color: $tabs-item-border-color-active;
     }
 
-    &.is-disabled {
+    &.is--disabled {
       color: $tabs-item-color-disabled;
       cursor: not-allowed;
     }

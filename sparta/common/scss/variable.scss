@@ -316,14 +316,12 @@ $upload-picture__btn--is--disabled-color: #c0c4cc;
 
 /* Tabs
 -------------------------- */
-$tabs-height: 40px;
-$tabs-font-size: 14px;
+$tabs-font-size: 16px;
 $tabs-border-bottom: 2px solid transparent;
-$tabs-line-color: #eee;
+$tabs-line-color: #dbdfe6;
 $tabs-item-color-active: $color-primary;
 $tabs-item-border-color-active: $color-primary;
-$tabs-item-font-weight-active: 500;
-$tabs-item-color-disabled: rgba(0, 0, 0, 0.25);
+$tabs-item-color-disabled: #b6babf;
 
 /* Pagination
 -------------------------- */

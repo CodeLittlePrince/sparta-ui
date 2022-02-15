@@ -160,7 +160,7 @@ export default {
               index: '4-5-2'
             },
             {
-              title: 'Tabs 标签页',
+              title: 'Tabs 标签页（新）',
               link: '/tabs',
               index: '4-5-3'
             },
