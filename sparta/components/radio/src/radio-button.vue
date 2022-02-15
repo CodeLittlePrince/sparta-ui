@@ -102,10 +102,9 @@ export default {
     position: relative;
     cursor: pointer;
     color: $radio-color;
-    margin-right: 10px;
     line-height: 34px;
     height: 36px;
-    min-width: 78px;
+    min-width: 136px;
     padding: 0 10px;
     border-radius: 18px;
     display: inline-block;
@@ -151,6 +150,7 @@ export default {
   &__wrap.is--text {
     border-color: transparent;
     background-color: transparent;
+    min-width: 98px;
     &:hover {
       color: $radio-button-text-hover;
       border-color: $radio-button-background-color-active;

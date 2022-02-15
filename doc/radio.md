@@ -150,6 +150,20 @@ export default{
       value3: 'apple',
       value4: 'Europe',
     }
+  },
+  watch: {
+    value1(val) {
+      console.log(val)
+    },
+    value2(val) {
+      console.log(val)
+    },
+    value3(val) {
+      console.log(val)
+    },
+    value4(val) {
+      console.log(val)
+    },
   }
 }
 </script>
