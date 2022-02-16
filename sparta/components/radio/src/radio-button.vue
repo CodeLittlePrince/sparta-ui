@@ -96,6 +96,7 @@ export default {
     vertical-align: middle;
     font-size: $radio-font-size;
     color: $color-text-regular;
+    transition: $transition-all;
   }
 
   &__wrap {
@@ -152,9 +153,9 @@ export default {
     background-color: transparent;
     min-width: 98px;
     &:hover {
-      color: $radio-button-text-hover;
-      border-color: $radio-button-background-color-active;
-      background-color: $radio-button-background-color-active;
+      .sp-radio-button__text {
+        color: $color-primary;
+      }
     }
     &.is--checked, &.is--checked:hover {
       border-color: $radio-button-background-color-active;
