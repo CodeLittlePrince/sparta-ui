@@ -164,13 +164,16 @@ export default {
         font-weight: 600;
       }
     }
-    &.is--disabled:hover {
+    &.is--disabled {
       border-color: transparent;
       background-color: #fff;
       .sp-radio-button__text {
         color: $radio-color-disabled;
         font-weight: normal;
       }
+    }
+    .sp-radio-button__text {
+      color: #97a2b5;
     }
   }
 }
