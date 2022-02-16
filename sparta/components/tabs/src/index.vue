@@ -13,7 +13,6 @@
           @click="handleTabSelect(item.value, item.disabled)"
         >{{ item.tab }}</li>
       </ul>
-      <div class="sp-tabs__line"></div>
     </div>
     <slot></slot>
   </div>
@@ -66,30 +65,34 @@ export default {
     z-index: 2;
     @include clearfix();
     font-size: 0;
-  }
-
-  &__line {
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    bottom: 0;
-    height: 1px;
-    background-color: $tabs-line-color;
+    border-bottom: 1px solid $tabs-line-color;
+    padding-left: 40px;
   }
 
   &__item {
+    position: relative;
     display: inline-block;
     box-sizing: border-box;
-    margin-left: 32px;
-    padding: 0 20px;
+    padding: 18px 0;
+    margin: 0 20px;
     line-height: 22px;
-    transition: $transition-all;
     font-size: $tabs-font-size;
     text-decoration: none;
-    border-bottom: $tabs-border-bottom;
-    padding-bottom: 18px;
     color: #747d8c;
     cursor: pointer;
+
+    &::after {
+      position: absolute;
+      z-index: 3;
+      content: "";
+      display: inline-block;
+      left: 0;
+      bottom: -1px;
+      width: 100%;
+      transition: $transition-all;
+      height: 2px;
+      background-color: transparent;
+    }
 
     &:first-child {
       margin-left: 0;
@@ -97,7 +100,10 @@ export default {
 
     &.is--checked {
       color: $tabs-item-color-active;
-      border-color: $tabs-item-border-color-active;
+
+      &::after {
+        background-color: $color-primary;
+      }
     }
 
     &.is--disabled {
