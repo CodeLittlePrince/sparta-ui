@@ -1,7 +1,10 @@
 <template>
   <div class="c-nav">
     <sp-row class="content">
-      <h1 class="logo">Sparta</h1>
+      <h1 class="logo">
+        Sparta
+        <img src="https://camo.githubusercontent.com/85514bb046f9cf80df055cc8f770d41fb85af6814f02e110590434eb5f8e7d68/68747470733a2f2f696d672e736869656c64732e696f2f6e706d2f762f7370617274612d75692e737667" alt="">
+      </h1>
       <ul class="menu">
         <li>
           <router-link to="/">首页</router-link>
