@@ -608,7 +608,6 @@ export default {
 
 
           this.paneRangeVal = []
-          this._dispatchRangeTimeValidate('blur')
           return
         }
         let isNeedClear = false
