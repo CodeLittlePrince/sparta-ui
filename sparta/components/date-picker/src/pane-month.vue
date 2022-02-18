@@ -68,7 +68,6 @@ export default {
   mixins: [Emitter],
   
   props: {
-    value: String,
     visible: {
       type: Boolean,
       default: true
@@ -85,7 +84,7 @@ export default {
 
   data() {
     return {
-      calMonthValue: this.value
+      calMonthValue: this.calMonth
     }
   },
 
@@ -122,10 +121,6 @@ export default {
       }
       return rst
     }
-  },
-
-  created() {
-    this.calMonthValue = this.calMonth
   },
 
   methods: {

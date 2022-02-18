@@ -64,7 +64,6 @@ export default {
   mixins: [Emitter],
   
   props: {
-    value: String,
     visible: {
       type: Boolean,
       default: true
@@ -79,7 +78,7 @@ export default {
 
   data() {
     return {
-      calYearValue: this.value,
+      calYearValue: this.calYear,
       lastDecadeEndYear: '',
       nextDecadeStartYear: ''
     }
@@ -93,11 +92,12 @@ export default {
       let rst = []
       if (this.calYearValue) {
         for (let i = 0; i <= this.nextDecadeStartYear - this.lastDecadeEndYear; i++) {
+          const year = this.lastDecadeEndYear + i
           rst.push({
-            disabled: this.calYear !== this.lastDecadeEndYear + i && this.disabledDate(new Date(this.lastDecadeEndYear + i, 0, 1)) && this.disabledDate(new Date(this.lastDecadeEndYear + i, 11, 31)),
+            disabled: this.disabledDate(new Date(year, 0, 1)) && this.disabledDate(new Date(year, 11, 31)),
             lastDecadeEndYear: i === 0,
             nextDecadeStartYear: i === this.nextDecadeStartYear - this.lastDecadeEndYear,
-            value: this.lastDecadeEndYear + i
+            value: year
           })
         }
       }
@@ -106,15 +106,17 @@ export default {
   },
 
   watch: {
-    calYearValue() {
-      let remainder = +this.calYearValue % 10
-      this.lastDecadeEndYear = +this.calYearValue - remainder - 1
-      this.nextDecadeStartYear = +this.calYearValue + 10 - remainder
-    }
-  },
-
-  created() {
-    this.calYearValue = this.calYear
+    calYear(newValue) {
+      this.calYearValue = newValue
+    },
+    calYearValue: {
+      immediate: true,
+      handler(newVal) {
+        let remainder = +newVal % 10
+        this.lastDecadeEndYear = +newVal - remainder - 1
+        this.nextDecadeStartYear = +newVal + 10 - remainder
+      }
+    },
   },
 
   methods: {
