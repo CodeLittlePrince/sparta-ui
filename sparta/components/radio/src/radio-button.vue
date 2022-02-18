@@ -96,16 +96,16 @@ export default {
     vertical-align: middle;
     font-size: $radio-font-size;
     color: $color-text-regular;
+    transition: $transition-all;
   }
 
   &__wrap {
     position: relative;
     cursor: pointer;
     color: $radio-color;
-    margin-right: 10px;
     line-height: 34px;
     height: 36px;
-    min-width: 78px;
+    min-width: 136px;
     padding: 0 10px;
     border-radius: 18px;
     display: inline-block;
@@ -151,10 +151,11 @@ export default {
   &__wrap.is--text {
     border-color: transparent;
     background-color: transparent;
+    min-width: 98px;
     &:hover {
-      color: $radio-button-text-hover;
-      border-color: $radio-button-background-color-active;
-      background-color: $radio-button-background-color-active;
+      .sp-radio-button__text {
+        color: $color-primary;
+      }
     }
     &.is--checked, &.is--checked:hover {
       border-color: $radio-button-background-color-active;
@@ -164,13 +165,16 @@ export default {
         font-weight: 600;
       }
     }
-    &.is--disabled:hover {
+    &.is--disabled {
       border-color: transparent;
       background-color: #fff;
       .sp-radio-button__text {
         color: $radio-color-disabled;
         font-weight: normal;
       }
+    }
+    .sp-radio-button__text {
+      color: #97a2b5;
     }
   }
 }

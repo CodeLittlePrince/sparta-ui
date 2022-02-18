@@ -7,15 +7,12 @@
           :key="item.value"
           class="sp-tabs__item"
           :class="{
-            'is-checked': value === item.value,
-            'is-disabled': item.disabled
+            'is--checked': value === item.value,
+            'is--disabled': item.disabled
           }"
           @click="handleTabSelect(item.value, item.disabled)"
-        >
-          {{ item.tab }}
-        </li>
+        >{{ item.tab }}</li>
       </ul>
-      <div class="sp-tabs__line"></div>
     </div>
     <slot></slot>
   </div>
@@ -61,7 +58,6 @@ export default {
 .sp-tabs {
   &__head {
     position: relative;
-    height: $tabs-height;
   }
 
   &__items {
@@ -69,41 +65,48 @@ export default {
     z-index: 2;
     @include clearfix();
     font-size: 0;
-  }
-
-  &__line {
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    bottom: 0;
-    height: 2px;
-    background-color: $tabs-line-color;
+    border-bottom: 1px solid $tabs-line-color;
+    padding-left: 40px;
   }
 
   &__item {
+    position: relative;
     display: inline-block;
     box-sizing: border-box;
-    margin-left: 32px;
-    padding: 0 16px;
-    height: $tabs-height;
-    line-height: $tabs-height;
-    transition: $transition-all;
+    padding: 18px 0;
+    margin: 0 20px;
+    line-height: 22px;
     font-size: $tabs-font-size;
     text-decoration: none;
-    border-bottom: $tabs-border-bottom;
+    color: #747d8c;
     cursor: pointer;
+
+    &::after {
+      position: absolute;
+      z-index: 3;
+      content: "";
+      display: inline-block;
+      left: 0;
+      bottom: -1px;
+      width: 100%;
+      transition: $transition-all;
+      height: 2px;
+      background-color: transparent;
+    }
 
     &:first-child {
       margin-left: 0;
     }
 
-    &.is-checked {
+    &.is--checked {
       color: $tabs-item-color-active;
-      font-weight: $tabs-item-font-weight-active;
-      border-color: $tabs-item-border-color-active;
+
+      &::after {
+        background-color: $color-primary;
+      }
     }
 
-    &.is-disabled {
+    &.is--disabled {
       color: $tabs-item-color-disabled;
       cursor: not-allowed;
     }

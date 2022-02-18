@@ -8,22 +8,22 @@
 <template>
   <sp-tabs v-model="tabsValue1">
     <sp-tab-pane
-      tab="tab1"
+      tab="TAB1"
       value="A"
     >
-      <div class="tabs-demo-content">tab1 page</div>
+      <div class="tabs-demo-content">TAB1 page</div>
     </sp-tab-pane>
     <sp-tab-pane
-      tab="tab2"
+      tab="TAB2"
       value="B"
     >
-      <div class="tabs-demo-content">tab2 page</div>
+      <div class="tabs-demo-content">TAB2 page</div>
     </sp-tab-pane>
     <sp-tab-pane
-      tab="tab3"
+      tab="TAB3"
       value="C"
     >
-      <div class="tabs-demo-content">tab3 page</div>
+      <div class="tabs-demo-content">TAB3 page</div>
     </sp-tab-pane>
   </sp-tabs>
 </template>
@@ -47,23 +47,23 @@ export default{
 <template>
   <sp-tabs v-model="tabsValue2">
     <sp-tab-pane
-      tab="tab1"
+      tab="TAB1"
       value="A"
     >
-      <div class="tabs-demo-content">tab1 page</div>
+      <div class="tabs-demo-content">TAB1 page</div>
     </sp-tab-pane>
     <sp-tab-pane
-      tab="tab2"
+      tab="TAB2"
       value="B"
       disabled
     >
-      <div class="tabs-demo-content">tab2 page</div>
+      <div class="tabs-demo-content">TAB2 page</div>
     </sp-tab-pane>
     <sp-tab-pane
-      tab="tab3"
+      tab="TAB3"
       value="C"
     >
-      <div class="tabs-demo-content">tab3 page</div>
+      <div class="tabs-demo-content">TAB3 page</div>
     </sp-tab-pane>
   </sp-tabs>
 </template>

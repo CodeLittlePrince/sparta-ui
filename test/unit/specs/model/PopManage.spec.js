@@ -1,14 +1,16 @@
 import PopManage from 'sparta/model/PopManage'
 
-const pm = PopManage.getInstance()
-
 describe('PopManage', () => {
-  it('getInstances', () => {
-    expect(pm.getInstances())
-      .to.be.an('object')
-  })
+  const instance = PopManage.getInstance()
+  const zIndex = instance.getZIndex()
+
   it('getZIndex', () => {
-    expect(pm.getZIndex())
-      .to.equal(2000)
+    expect(instance.getZIndex())
+    .to.equal(zIndex + 1)
+  })
+
+  it('getZIndex again', () => {
+    expect(instance.getZIndex())
+      .to.equal(zIndex + 2)
   })
 })

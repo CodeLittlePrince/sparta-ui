@@ -39,6 +39,18 @@ export default {
 <style lang="scss">
 .sp-radio-group {
   font-size: 0;
+
+  .sp-radio-button__wrap {
+    margin-left: 10px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &.is--text {
+      margin-left: 0;
+    }
+  }
 }
 </style>
 
