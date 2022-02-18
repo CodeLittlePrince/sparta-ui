@@ -1321,7 +1321,7 @@ export default {
       if(Array.isArray(value)) {
         return value.map((item, i) => this.formatValue(item, i))
       }
-      if(!this.showTime && this.defaultTime) {
+      if(!this.showTime) {
         const { hour, minute, second } = this.formatDefaultTime(index)
         value += ` ${hour}:${minute}:${second}`
       }
@@ -1342,15 +1342,15 @@ export default {
       let defaultSecond = '00'
       if(index === 0 && Array.isArray(this.defaultTime)) {
         time = this.defaultTime[0]
-      } else if (index === 1 && Array.isArray(this.defaultTime)) {
-        time = this.defaultTime[1]
+      } else if (index === 1) {
+        time = this.defaultTime?.[1]
         defaultHour = '23'
         defaultMinute = '59'
         defaultSecond = '59'
       } else if(index === undefined && this.defaultTime && typeof this.defaultTime === 'string') {
         time = this.defaultTime
       }
-      const [hour, minute, second] = time ? time.split(':') : []
+      const [hour, minute, second] = time?.split(':') || []
       return { hour: hour || defaultHour, minute: minute || defaultMinute, second: second || defaultSecond }
     },
     isValidDate(d) {
