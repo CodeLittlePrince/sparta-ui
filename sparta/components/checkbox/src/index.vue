@@ -153,11 +153,8 @@ export default {
 
   methods: {
     addToStore() {
-      if (
-        Array.isArray(this.model) &&
-        this.model.indexOf(this.label) === -1
-      ) {
-        this.model.push(this.label)
+      if (Array.isArray(this.model)) {
+        if (this.model.indexOf(this.label) === -1) this.model.push(this.label)
       } else {
         this.model = this.trueLabel || true
       }
