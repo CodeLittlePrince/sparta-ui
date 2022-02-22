@@ -228,6 +228,14 @@ export default {
         // 为了每次弹出dropdown，都会根据处的环境做适应
         this.broadcast('SpSelectDropdown', 'updatePopper')
       } else {
+        // 如果filterable开启了，用户输入的值在options中不存在的话，清空
+        if (this.filterable) {
+          const hasLabel = this.spOptions.some(item => item.label === this.inputText)
+          if (!hasLabel) {
+            this.inputText = ''
+            this.$emit('input', '')
+          }
+        }
         this.broadcast('SpSelectDropdown', 'destroyPopper')
       }
       // 触发form的校验
@@ -243,17 +251,15 @@ export default {
     inputText(val) {
       // 如果filterable开启，并且focus，根据用户输入过滤（搜索）相关的条目
       if (this.filterable && this.isFocus) {
-        // 如果用户输入刚好可以在条目中找到，则展示所有的条目
-        const hasSameLabel = this.spOptions.some(item => {
-          return item.label === val
-        })
         for (let i = 0, len = this.spOptions.length; i < len; i++) {
-          if (hasSameLabel || (this.spOptions[i].label.indexOf(val) !== -1)) {
+          if (this.spOptions[i].label.indexOf(val) !== -1) {
             this.spOptions[i].visible = true
           } else {
             this.spOptions[i].visible = false
           }
         }
+        // 为了每次弹出dropdown，都会根据处的环境做适应
+        this.broadcast('SpSelectDropdown', 'updatePopper')
       }
     },
     spOptions() {
@@ -410,7 +416,7 @@ export default {
       if (!this.visible) {
         this.isFocus = false
       }
-      // 如果filterable开启了，用户输入的值在options中不存在的话，清空
+      // 如果filterable开启了，用户输入的值在options中存在的话，将值透出
       if (this.filterable) {
         let matchedItem = null
         this.spOptions.forEach(item => {
@@ -420,9 +426,6 @@ export default {
         })
         if (matchedItem) {
           this.$emit('input', matchedItem.value)
-        } else {
-          this.inputText = ''
-          this.$emit('input', '')
         }
       }
       // 触发form的校验
