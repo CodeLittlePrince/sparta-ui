@@ -74,7 +74,7 @@
             @focus="isRangeFocus = true"
             @input="handleRangeTimeEndInput"
           ><i
-            v-show="isRangeTimeSelectFocus || isRangeTimeSelectHover"
+            v-show="clearable && (isRangeTimeSelectFocus || isRangeTimeSelectHover)"
             slot="suffix"
             class="sp-input__icon sp-icon-close-bold sp-input__clear sp-time-select__range-icon"
             @click.stop="handleRangeClear"
