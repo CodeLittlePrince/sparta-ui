@@ -126,14 +126,15 @@ describe('time-select', () => {
         return {
           val: [],
           disabled: false,
-          pickerOptions: {}
+          pickerOptions: {},
+          clearable: true,
         }
       },
       template: `
         <sp-time-select 
           ref="spTimeSelect" 
           v-model="val" 
-          clearable
+          :clearable="clearable"
           type="range" 
           :pickerOptions="pickerOptions">
         </sp-time-select>
@@ -548,7 +549,15 @@ describe('time-select', () => {
       expect(wrapper.vm.val).to.deep.equal([])
     })
 
-
+    it('clearable', async () => {
+      await wrapper.setData({ clearable: false })
+      await wrapper.setData({ val: ['02:00','18:00'] })
+      const input = wrapper.find('input')
+      await input.trigger('focus')
+      await expect(wrapper.find('.sp-icon-close-bold').isVisible()).to.be.false
+      await wrapper.setData({ clearable: true })
+      await wrapper.setData({ val: [] })
+    })
 
   })
 
