@@ -541,7 +541,8 @@ export default{
 ### Select Attributes
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
-| width | 设置宽度 | string/number | — | 240 |
+| height | 设置高度 | string/number | — | 36 |
+| readonly | 设置是否只读 | boolean | — | false |
 | multiple | 是否多选 | boolean | — | false |
 | disabled | 是否禁用 | boolean | — | false |
 | clearable | 是否可以清空选项 | boolean | — | false |
