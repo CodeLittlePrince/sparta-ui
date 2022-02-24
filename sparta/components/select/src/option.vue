@@ -60,6 +60,9 @@ export default {
       }
       // 单选情况，select做处理
       if (!this.spSelect.multiple) {
+        if(this.spSelect.filterable) {
+          this.spSelect.oldInputText = label
+        }
         this.spSelect.$emit('input', value)
         this.spSelect.$emit('select', value)
         this.spSelect.inputText = label

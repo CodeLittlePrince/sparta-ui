@@ -43,7 +43,7 @@
         class="sp-select__input-placeholder"
         @click="focusSelectInput"
       >
-        {{ placeholder }}
+        {{ oldInputText || placeholder }}
       </p>
       <div v-if="$slots.center" class="sp-select__center" @click="handleFocusSelectInput">
         <slot name="center"></slot>
@@ -185,7 +185,8 @@ export default {
       evOptionHoverIndex: -1,
       selected: [],
       selectInputBoxHeight: this.height - 2 + 'px',
-      currentValue: this.value
+      currentValue: this.value,
+      oldInputText: null
     }
   },
 
@@ -230,6 +231,12 @@ export default {
       } else {
         // 如果filterable开启了，用户输入的值在options中不存在的话，清空
         if (this.filterable) {
+          // 清空
+          if(this.oldInputText) {
+            this.inputText = this.oldInputText
+            this.oldInputText = null
+          }
+
           const hasLabel = this.spOptions.some(item => item.label === this.inputText)
           if (!hasLabel) {
             this.inputText = ''
@@ -346,6 +353,10 @@ export default {
      * 点击自身处理
      */
     handleSelfClick() {
+      if(this.filterable) {
+        this.oldInputText = this.inputText
+        this.inputText = ''
+      }
       if (!this.disableOperation) {
         // 原本可以在点击自身的时候切换下拉显示隐藏状态
         // 但是IE9上聚焦就会触发input事件
@@ -384,6 +395,10 @@ export default {
           this.spOptions[this.evOptionHoverIndex].selected = true
         }
       } else if (hoverItem) {
+        if(this.filterable) {
+          this.oldInputText = hoverItem.label
+        }
+
         this.$emit('input', hoverItem.value)
         this.inputText = hoverItem.label
         this.visible = false
@@ -397,6 +412,11 @@ export default {
         !this.readonly // 解决IE9上鬼畜bug
       ) {
         this.visible = true
+      }
+
+      const hasLabel = this.spOptions.some(item => item.label === this.inputText)
+      if(hasLabel && this.filterable) {
+        this.oldInputText = this.inputText
       }
     },
 
