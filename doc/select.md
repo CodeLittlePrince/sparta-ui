@@ -54,9 +54,9 @@ export default{
 <template>
   <div class="select-demo">
     <div class="customer-select">
-      <sp-select v-model="value8"  placeholder="已使用优惠抵扣￥1,000.00">
+      <sp-select v-model="value11"  placeholder="已使用优惠抵扣￥1,000.00">
         <sp-option
-          v-for="item in list8"
+          v-for="item in list11"
           :key="item.value"
           :label="item.label"
           :value="item.value"
@@ -70,16 +70,16 @@ export default{
 export default{
   data(){
     return {
-      list8: [
+      list11: [
         { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
         { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
         { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
       ],
-      value8: 1
+      value11: 1
     }
   },
   watch: {
-    value8(val) {
+    value11(val) {
       console.log(val)
     }
   }
@@ -125,8 +125,8 @@ export default{
 ```vue
 <template>
   <div class="select-demo">
-    <sp-select v-model="value8">
-      <i slot="prepend" :class="icon"></i>
+    <sp-select v-model="value10">
+      <i v-if="icon10" slot="prepend" :class="icon10"></i>
       <div slot="center">{{ valueText }}</div>
       <sp-option
         v-for="item in list8"
@@ -142,25 +142,25 @@ export default{
 export default{
   data(){
     return {
-      list8: [
+      list10: [
         { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
         { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
         { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
       ],
-      value8: 1
+      value10: ''
     }
   },
   watch: {
-    value8(val) {
+    value10(val) {
       console.log(val)
     }
   },
   computed: {
     icon() {
-      return (this.list8.find(item => item.value === this.value8) || {}).icon
+      return (this.list10.find(item => item.value === this.value10) || {}).icon
     },
     valueText() {
-      let label = (this.list8.find(item => item.value === this.value8) || {}).label
+      let label = (this.list10.find(item => item.value === this.value10) || {}).label
       if(label && label.length > 15) {
         label = `${ label.substr(0,9) }...@163.com`
       }
@@ -391,8 +391,8 @@ export default{
 ```vue
 <template>
   <div class="select-demo">
-    <sp-select v-model="value8" filterable>
-      <i v-if="icon" slot="prepend" :class="icon"></i>
+    <sp-select v-model="value9" filterable>
+      <i v-if="icon9" slot="prepend" :class="icon9"></i>
       <sp-option
         v-for="item in list9"
         :key="item.value"
@@ -703,6 +703,18 @@ export default{
         { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
       ],
       value9: 1,
+      list10: [
+        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
+        { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
+        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
+      ],
+      value10: 1,
+      list11: [
+        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
+        { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
+        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
+      ],
+      value11: 1
     }
   },
   watch: {
@@ -732,17 +744,26 @@ export default{
     },
     value9(val) {
       console.log(val)
+    },
+    value10(val) {
+      console.log(val)
+    },
+    value11(val) {
+      console.log(val)
     }
   },
   computed: {
     icon() {
       return (this.list8.find(item => item.value === this.value8) || {}).icon
     },
+    icon10() {
+      return (this.list10.find(item => item.value === this.value10) || {}).icon
+    },
     icon9() {
       return (this.list9.find(item => item.value === this.value9) || {}).icon
     },
     valueText() {
-      let label = (this.list8.find(item => item.value === this.value8) || {}).label
+      let label = (this.list10.find(item => item.value === this.value10) || {}).label
       if(label && label.length > 15) {
         label = `${ label.substr(0,9) }...@163.com`
       }
