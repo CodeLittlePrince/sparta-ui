@@ -33,7 +33,7 @@
       <!-- 非多选情况-->
       <!-- 前置元素 -->
       <div
-        v-if="$slots.prepend"
+        v-if="($slots.prepend && !filterable) || (filterable && !oldInputText && $slots.prepend)"
         class="sp-select__prepend"
       >
         <slot name="prepend"></slot>
@@ -192,7 +192,7 @@ export default {
 
   computed: {
     _readonly() {
-      return ((!this.isFocus || this.canNotFocus) && !this.filterable) || this.readonly
+      return !this.filterable || this.readonly
     },
     spOptionsAllDisabled() {
       return this.spOptions.every(option => option.disabled)
@@ -562,6 +562,7 @@ export default {
   display: block;
   margin: 0;
   padding: 0;
+  font-size: 0;
 
   &.is--disabled, &.is--disabled &__input-box {
     cursor: not-allowed;
@@ -619,13 +620,14 @@ export default {
         position: absolute;
         left: 0;
         top: 0;
-        right: 0;
+        right: 45px;
         bottom: 0;
-        padding: 0 45px 0 10px;
+        padding: 0 0 0 10px;
         z-index: 10;
         margin: 0;
         line-height: $select-height - 2;
         color: $color-text-placeholder;
+        overflow: hidden;
       }
     }
 

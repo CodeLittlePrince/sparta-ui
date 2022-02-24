@@ -8,7 +8,7 @@
 <template>
   <div class="select-demo">
     <sp-select v-model="value8">
-      <i slot="prepend" :class="icon"></i>
+      <i v-if="icon" slot="prepend" :class="icon"></i>
       <sp-option
         v-for="item in list8"
         :key="item.value"
@@ -385,6 +385,51 @@ export default{
 ```
 :::
 
+### 自定义select 自定义前置图标 + 可过滤（搜索）
+
+:::demo 自定义和filterable结合版
+```vue
+<template>
+  <div class="select-demo">
+    <sp-select v-model="value8" filterable>
+      <i v-if="icon" slot="prepend" :class="icon"></i>
+      <sp-option
+        v-for="item in list9"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      ></sp-option>
+    </sp-select>
+  </div>
+</template>
+
+<script>
+export default{
+  data(){
+    return {
+      list9: [
+        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
+        { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
+        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
+      ],
+      value9: 1
+    }
+  },
+  watch: {
+    value9(val) {
+      console.log(val)
+    }
+  },
+  computed: {
+    icon9() {
+      return (this.list9.find(item => item.value === this.value9) || {}).icon
+    }
+  }
+}
+</script>
+```
+:::
+
 ### 自定义模板
 可以自定义备选项
 
@@ -651,7 +696,13 @@ export default{
         { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
         { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
       ],
-      value8: ''
+      value8: '',
+      list9: [
+        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
+        { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
+        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
+      ],
+      value9: 1,
     }
   },
   watch: {
@@ -678,11 +729,17 @@ export default{
     },
     value8(val) {
       console.log(val)
+    },
+    value9(val) {
+      console.log(val)
     }
   },
   computed: {
     icon() {
       return (this.list8.find(item => item.value === this.value8) || {}).icon
+    },
+    icon9() {
+      return (this.list9.find(item => item.value === this.value9) || {}).icon
     },
     valueText() {
       let label = (this.list8.find(item => item.value === this.value8) || {}).label
