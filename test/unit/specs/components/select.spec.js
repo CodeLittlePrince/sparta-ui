@@ -4,11 +4,11 @@ import { createTest, createVue, destroyVM } from '../../util';
 
 const getTestData = function() {
   return [
-    { id: 1, name: 'cat', disabled: false },
-    { id: 2, name: 'dog', disabled: false  },
-    { id: 3, name: 'pig', disabled: false  },
-    { id: 4, name: 'tiger', disabled: false  },
-    { id: 5, name: 'elephant', disabled: false  }
+    { id: 1, name: 'cat', disabled: false, icon: 'sp-icon-file' },
+    { id: 2, name: 'dog', disabled: false, icon: 'sp-icon-check' },
+    { id: 3, name: 'pig', disabled: false, icon:'sp-icon-search'},
+    { id: 4, name: 'tiger', disabled: false, icon: 'sp-icon-file'   },
+    { id: 5, name: 'elephant', disabled: false, icon: 'sp-icon-check'  }
   ];
 };
 
@@ -520,5 +520,72 @@ describe('Select', () => {
       select.navigateOptions('prev');
       expect(wrapper.vm.val).to.deep.equal([2])
     })
+  })
+
+  describe('slot', () => {
+    const wrapper = mount({
+      data() {
+        return {
+          val: '',
+          optionsData: getTestData(),
+        }
+      },
+      computed: {
+        icon() {
+          return (this.optionsData.find(item => item.id === this.val) || {}).icon
+        }
+      },
+      template: `
+      <div>
+      <sp-button class="sp-select-other-button">测试slot</sp-button>
+        <sp-select 
+          ref="select"
+          filterable
+          v-model="val">
+          <i v-if="icon" slot="prepend" :class="icon"></i>
+          <sp-option 
+           v-for="(item, index) in optionsData"
+           :key="index"
+           :label="item.name"
+           :value="item.id" 
+           :disabled="item.disabled"
+          >
+          <span>{{ item.name }}</span>
+          </sp-option>
+        </sp-select>
+      </div>
+      `,
+      components: {
+        'sp-select': Select,
+      }
+    })
+    document.body.appendChild(wrapper.vm.$el)
+
+    it('slot', async () => {
+      await wrapper.find(".sp-select").trigger('click')
+      await wrapper.find(".sp-select__input").trigger('focus')
+      expect(wrapper.find('.sp-select-dropdown').isVisible()).to.be.true
+      await wrapper.find(".sp-select__input").setValue('piuu') // todo 模拟用户输入
+      await wrapper.find(".sp-select__input").trigger('focus')
+      expect(wrapper.find('.sp-select-list-emptyText').isVisible()).to.be.true
+
+      await wrapper.find(".sp-select__input").setValue('pi')
+      await wrapper.find(".sp-select__input").trigger('focus')
+      let options = wrapper.findAll(".sp-select-list .sp-option")
+      
+      expect(options.wrappers.filter(item => item.element.style.display !=='none').length).to.be.equal(1)
+      const select = wrapper.vm.$children[1];
+      select.navigateOptions('next')
+      select.handleInputEnter()
+      expect(wrapper.vm.val).to.be.equal(3)
+
+      await wrapper.find(".sp-select__input").trigger('blur')
+      await wrapper.find('.sp-select-other-button').trigger('click')
+      await wrapper.find(".sp-select").trigger('click')
+      await wrapper.find(".sp-select__input").trigger('focus')
+      expect(wrapper.find('.sp-select-dropdown').isVisible()).to.be.true
+      expect(options.wrappers.filter(item => item.element.style.display !=='none').length).to.be.equal(1)
+    })
+
   })
 })
