@@ -6,9 +6,6 @@
         <span class="tag">
           <span class="label">local</span><span class="version">v{{ version }}</span>
         </span>
-        <span class="tag">
-          <img src="https://camo.githubusercontent.com/85514bb046f9cf80df055cc8f770d41fb85af6814f02e110590434eb5f8e7d68/68747470733a2f2f696d672e736869656c64732e696f2f6e706d2f762f7370617274612d75692e737667" alt="">
-        </span>
       </h1>
       <ul class="menu">
         <li>
@@ -80,10 +77,6 @@ export default {
           color: #fff;
           border-top-right-radius: 4px;
           border-bottom-right-radius: 4px;
-        }
-
-        img {
-          vertical-align: middle;
         }
       }
     }
