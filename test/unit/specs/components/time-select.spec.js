@@ -554,9 +554,11 @@ describe('time-select', () => {
       await wrapper.setData({ val: ['02:00','18:00'] })
       const input = wrapper.find('input')
       await input.trigger('focus')
-      await expect(wrapper.find('.sp-icon-close-bold').isVisible()).to.be.false
+      expect(wrapper.find('.sp-icon-close-bold').isVisible()).to.be.false
       await wrapper.setData({ clearable: true })
       await wrapper.setData({ val: [] })
+      await input.trigger('focus')
+      expect(wrapper.find('.sp-icon-close-bold').isVisible()).to.be.false
     })
 
   })
