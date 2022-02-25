@@ -33,7 +33,7 @@
       <!-- 非多选情况-->
       <!-- 前置元素 -->
       <div
-        v-if="($slots.prepend && !filterable) || (filterable && !oldInputText && $slots.prepend)"
+        v-if="$slots.prepend && (!filterable || (filterable && !oldInputText && inputText))"
         class="sp-select__prepend"
       >
         <slot name="prepend"></slot>
@@ -353,7 +353,7 @@ export default {
      * 点击自身处理
      */
     handleSelfClick() {
-      if(this.filterable) {
+      if(this.filterable && this.inputText) {
         this.oldInputText = this.inputText
         this.inputText = ''
       }
@@ -563,6 +563,7 @@ export default {
   margin: 0;
   padding: 0;
   font-size: 0;
+  line-height: 1;
 
   &.is--disabled, &.is--disabled &__input-box {
     cursor: not-allowed;
