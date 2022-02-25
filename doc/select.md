@@ -708,7 +708,7 @@ export default{
         { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
         { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
       ],
-      value10: 1,
+      value10: '',
       list11: [
         { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
         { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },

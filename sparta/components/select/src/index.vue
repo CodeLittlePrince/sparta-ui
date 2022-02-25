@@ -33,13 +33,13 @@
       <!-- 非多选情况-->
       <!-- 前置元素 -->
       <div
-        v-if="$slots.prepend && (!filterable || (filterable && !oldInputText && inputText))"
+        v-if="showPrepend"
         class="sp-select__prepend"
       >
         <slot name="prepend"></slot>
       </div>
       <p
-        v-show="inputText === ''"
+        v-show="inputText === '' && !isOnComposition"
         class="sp-select__input-placeholder"
         @click="focusSelectInput"
       >
@@ -65,6 +65,9 @@
         @keydown.enter.prevent="handleInputEnter"
         @keydown.tab="visible = false"
         @keydown.esc.stop.prevent="visible = false"
+        @compositionstart="handleComposition"
+        @compositionupdate="handleComposition"
+        @compositionend="handleComposition"
       >
       <!-- 后缀icon -->
       <div
@@ -186,7 +189,8 @@ export default {
       selected: [],
       selectInputBoxHeight: this.height - 2 + 'px',
       currentValue: this.value,
-      oldInputText: null
+      oldInputText: null,
+      isOnComposition: false
     }
   },
 
@@ -208,6 +212,12 @@ export default {
     },
     disableOperation() {
       return this.disabled || this.readonly
+    },
+    showPrepend() {
+      return this.$slots.prepend && (
+        !this.filterable || (this.filterable && !this.oldInputText && this.inputText)
+        && (this.hasLabelInOptions())
+      )
     }
   },
 
@@ -237,7 +247,7 @@ export default {
             this.oldInputText = null
           }
 
-          const hasLabel = this.spOptions.some(item => item.label === this.inputText)
+          const hasLabel = this.hasLabelInOptions()
           if (!hasLabel) {
             this.inputText = ''
             this.$emit('input', '')
@@ -407,16 +417,25 @@ export default {
     },
 
     handleInputSelectInput() {
-      if (
-        this.inputText !== '' &&
-        !this.readonly // 解决IE9上鬼畜bug
-      ) {
+      if (!this.readonly) { // 解决IE9上鬼畜bug
         this.visible = true
       }
 
-      const hasLabel = this.spOptions.some(item => item.label === this.inputText)
+      const hasLabel = this.hasLabelInOptions()
       if(hasLabel && this.filterable) {
         this.oldInputText = this.inputText
+      }
+    },
+
+    handleComposition(event) {
+      if (event.type === 'compositionend') {
+        this.isOnComposition = false
+      } else {
+        const text = event.target.value
+        const lastCharacter = text[text.length - 1] || ''
+        const koreanReg = /([(\uAC00-\uD7AF)|(\u3130-\u318F)])+/gi
+        const isKorean = koreanReg.test(lastCharacter)
+        this.isOnComposition = !isKorean
       }
     },
 
@@ -480,6 +499,10 @@ export default {
       }
       // 更新数据
       this.$emit('input', values)
+    },
+
+    hasLabelInOptions() {
+      return this.spOptions.some(item => item.label === this.inputText)
     },
     /**
      * 聚焦到输入框
