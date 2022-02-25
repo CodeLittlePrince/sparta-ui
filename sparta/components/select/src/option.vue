@@ -82,7 +82,7 @@ export default {
         // 更新select的高度
         this.spSelect.updateTagboxHeight()
       }
-      this.spSelect.focusSelectInput()
+      this.spSelect.$refs.focusHelper.focus()
     },
     handleMouseover() {
       if (this.disabled) {

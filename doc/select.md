@@ -118,7 +118,7 @@ export default{
 ```
 :::
 
-### 自定义select 显示元素
+### 自定义center 显示元素
 适用广泛的基础单选（支持键盘控制）
 
 :::demo 可自定义select 显示元素
@@ -129,7 +129,7 @@ export default{
       <i v-if="icon10" slot="prepend" :class="icon10"></i>
       <div slot="center">{{ valueText }}</div>
       <sp-option
-        v-for="item in list8"
+        v-for="item in list10"
         :key="item.value"
         :label="item.label"
         :value="item.value"

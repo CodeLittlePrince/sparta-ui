@@ -1,6 +1,6 @@
 import { mount, shallowMount } from '@vue/test-utils'
 import Select from 'sparta/components/select'
-import { createTest, createVue, destroyVM } from '../../util';
+import { createTest, createVue, destroyVM , sleep } from '../../util';
 
 const getTestData = function() {
   return [
@@ -54,7 +54,7 @@ describe('Select', () => {
       },
       template: `
       <div>
-      <sp-button class="sp-select-other-button">测试</sp-button>
+      <sp-button class="sp-select-other-button">测试single</sp-button>
         <sp-select 
           ref="select"
           :height="height"
@@ -172,7 +172,7 @@ describe('Select', () => {
       }
       select.navigateOptions('prev');
       select.handleInputEnter()
-      expect(wrapper.vm.val).to.deep.equal(3)
+      expect(wrapper.vm.val).to.deep.equal(4)
 
       await wrapper.find('.sp-select').trigger('click')
       await wrapper.find('.sp-select__input').trigger('focus')
@@ -568,11 +568,9 @@ describe('Select', () => {
       await wrapper.find(".sp-select__input").setValue('piuu') // todo 模拟用户输入
       await wrapper.find(".sp-select__input").trigger('focus')
       expect(wrapper.find('.sp-select-list-emptyText').isVisible()).to.be.true
-
       await wrapper.find(".sp-select__input").setValue('pi')
       await wrapper.find(".sp-select__input").trigger('focus')
       let options = wrapper.findAll(".sp-select-list .sp-option")
-      
       expect(options.wrappers.filter(item => item.element.style.display !=='none').length).to.be.equal(1)
       const select = wrapper.vm.$children[1];
       select.navigateOptions('next')
@@ -584,7 +582,8 @@ describe('Select', () => {
       await wrapper.find(".sp-select").trigger('click')
       await wrapper.find(".sp-select__input").trigger('focus')
       expect(wrapper.find('.sp-select-dropdown').isVisible()).to.be.true
-      expect(options.wrappers.filter(item => item.element.style.display !=='none').length).to.be.equal(1)
+      options = wrapper.findAll(".sp-select-list .sp-option")
+      expect(options.wrappers.filter(item => item.element.style.display !=='none').length).to.be.equal(5)
     })
 
   })
