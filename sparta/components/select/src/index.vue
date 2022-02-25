@@ -34,24 +34,24 @@
       <!-- 非多选情况-->
       <!-- 前置元素 -->
       <div
-        v-if="showPrepend"
+        v-show="showPrepend"
         class="sp-select__prepend"
+        @click.stop="handleSelfClick"
       >
         <slot name="prepend"></slot>
       </div>
       <p
-        v-show="inputText === '' && !isOnComposition"
+        v-show="isIE && inputText === '' && !isOnComposition"
         class="sp-select__input-placeholder"
-        @click="focusSelectInput"
       >
-        {{ oldInputText || placeholder }}
+        {{ helperText }}
       </p>
       <div
-        v-if="$slots.center"
+        v-if="$slots.center && inputText"
         ref="center"
         class="sp-select__center"
         tabindex="0"
-        @click="handleFocusSelectInput"
+        @click.stop="handleSelfClick"
         @keydown.down.prevent="navigateOptions('next')"
         @keydown.up.prevent="navigateOptions('prev')"
         @keydown.enter.prevent="handleInputEnter"
@@ -68,11 +68,12 @@
         class="sp-select__input"
         :style="{ height: selectInputBoxHeight }"
         type="text"
+        :placeholder="placeholderText"
         :readonly="_readonly"
         :disabled="disabled"
         autocomplete="off"
         @input="handleInputSelectInput"
-        @focus="handleFocusSelectInput"
+        @focus="handleSelfClick"
         @blur="handleBlurSelectInput"
         @keydown.down.prevent="navigateOptions('next')"
         @keydown.up.prevent="navigateOptions('prev')"
@@ -85,9 +86,10 @@
       >
       <div
         ref="focusHelper"
+        class="sp-select__focus-helper"
         tabindex="1"
-        @keydown.down.prevent="handleHelperKeyOption"
-        @keydown.up.prevent="handleHelperKeyOption"
+        @keydown.down.prevent="handleSelfClick"
+        @keydown.up.prevent="handleSelfClick"
         @focus.stop="handleHelperFocus"
         @blur.stop="handleHelperBlur"
       ></div>
@@ -212,7 +214,7 @@ export default {
       selectInputBoxHeight: this.height - 2 + 'px',
       currentValue: this.value,
       oldInputText: null,
-      isOnComposition: false
+      isOnComposition: false,
     }
   },
 
@@ -239,7 +241,17 @@ export default {
       return this.$slots.prepend && (
         !this.filterable || (this.filterable && !this.oldInputText)
       )
-    }
+    },
+    isIE() {
+      return window.ActiveXObject || 'ActiveXObject' in window
+    },
+    helperText() {
+      return this.oldInputText || this.placeholder
+    },
+    placeholderText() {
+      // IE10和IE11上，如果有placeholder，input显示以后IE辣鸡浏览器会自动触发input事件
+      return this.isIE ? '' : this.helperText
+    },
   },
 
   watch: {
@@ -295,7 +307,12 @@ export default {
     },
     spOptions() {
       this.setCurrentValue(this.value, true)
-    }
+    },
+    isFocus(val) {
+      if (!val) {
+        this.oldInputText = null
+      }
+    },
   },
   
   mounted() {
@@ -383,6 +400,9 @@ export default {
         // input又会影响下拉显示状态，input事件又在click前触发
         // 导致显示Bug，因此，暂时降低体验处理
         this.visible = true
+        this.isFocus = true
+        this.focusSelectInput()
+        this.storeInputTextWhenFilterable()
       }
     },
     /**
@@ -433,11 +453,6 @@ export default {
       }
     },
 
-    handleHelperKeyOption() {
-      this.focusSelectInput()
-      this.$refs.spSelect.click()
-    },
-
     handleHelperFocus() {
       this.isFocus = true
       
@@ -459,22 +474,6 @@ export default {
         const koreanReg = /([(\uAC00-\uD7AF)|(\u3130-\u318F)])+/gi
         const isKorean = koreanReg.test(lastCharacter)
         this.isOnComposition = !isKorean
-      }
-    },
-
-    handleFocusSelectInput() {
-      if(this.filterable && this.inputText && this.hasLabelInOptions()) {
-        this.oldInputText = this.inputText
-        this.inputText = ''
-      }
-      if (!this.disableOperation) {
-        this.isFocus = true
-        // 如果filterable开启，并且用户输入为空，则展示所有条目
-        if (this.filterable && this.inputText.length === 0) {
-          for (let i = 0, len = this.spOptions.length; i < len; i++) {
-            this.spOptions[i].visible = true
-          }
-        }
       }
     },
 
@@ -528,11 +527,12 @@ export default {
      * 聚焦到输入框
      */
     focusSelectInput() {
-      if(this.$slots.center) {
-        this.$refs.center.focus()
-        this.handleFocusSelectInput()
-      } else {
-        this.$refs.selectInput.focus()
+      this.$refs.selectInput.focus()
+    },
+    storeInputTextWhenFilterable() {
+      if(this.filterable && this.inputText && this.hasLabelInOptions()) {
+        this.oldInputText = this.inputText
+        this.inputText = ''
       }
     },
     /**
@@ -737,6 +737,10 @@ export default {
 
   &.isFocus &__input-box {
     border-color: $select-input-border-color-focus;
+  }
+
+  &__focus-helper {
+    outline: none;
   }
 
   &__suffix {

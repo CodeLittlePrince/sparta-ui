@@ -81,11 +81,6 @@ describe('Select', () => {
     })
     document.body.appendChild(wrapper.vm.$el)
 
-    it('create', async () => {
-      expect(wrapper.find('.sp-select').exists()).to.be.true
-      expect(wrapper.find('.sp-select__input-placeholder').isVisible()).to.be.true
-    });
-
     it('set data', async () => {
      await wrapper.setData({ val: 3 })
      expect(wrapper.find('.sp-select__input').element.value).to.be.equal('pig')
@@ -407,7 +402,7 @@ describe('Select', () => {
   })
 
 
-  describe('handleFocusSelectInput', async () => {
+  describe('native input click', async () => {
     const wrapper = mount({
       data() {
         return {
@@ -446,11 +441,9 @@ describe('Select', () => {
       }
     })
 
-    it('handleFocusSelectInput', async () => {
+    it('click', async () => {
       await wrapper.find('.sp-select').trigger('click')
       await wrapper.find('.sp-select__input').trigger('click')
-      const select = wrapper.vm.$children[1];
-      select.handleFocusSelectInput()
       await wrapper.find('.sp-select__input').trigger('focus')
       expect(wrapper.find('.sp-select.isFocus').exists()).to.be.true
       await wrapper.find('.sp-select__input').setValue('pig')
