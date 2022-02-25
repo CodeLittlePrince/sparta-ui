@@ -64,7 +64,7 @@ export default {
           this.spSelect.oldInputText = label
         }
         this.spSelect.$emit('input', value)
-        this.spSelect.$emit('select', value)
+        this.spSelect.$emit('change', value)
         this.spSelect.inputText = label
         this.spSelect.visible = false
       } else if (this.spSelect.multiple) {

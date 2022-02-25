@@ -251,6 +251,7 @@ export default {
           if (!hasLabel) {
             this.inputText = ''
             this.$emit('input', '')
+            this.$emit('change', '')
           }
         }
         this.broadcast('SpSelectDropdown', 'destroyPopper')
@@ -410,6 +411,7 @@ export default {
         }
 
         this.$emit('input', hoverItem.value)
+        this.$emit('change', hoverItem.value)
         this.inputText = hoverItem.label
         this.visible = false
       }
@@ -457,14 +459,10 @@ export default {
       }
       // 如果filterable开启了，用户输入的值在options中存在的话，将值透出
       if (this.filterable) {
-        let matchedItem = null
-        this.spOptions.forEach(item => {
-          if (item.label === this.inputText) {
-            matchedItem = item
-          }
-        })
+        const matchedItem = this.spOptions.find(item => item.label === this.inputText)
         if (matchedItem) {
           this.$emit('input', matchedItem.value)
+          this.$emit('change', matchedItem.value)
         }
       }
       // 触发form的校验
@@ -476,7 +474,11 @@ export default {
     handleSuffixClick(e) {
       if (this.showClearIcon) {
         this.$emit('input', '')
+        this.$emit('change', '')
         this.inputText = ''
+        if (this.filterable) {
+          this.oldInputText = null
+        }
         this.$refs.selectInput.blur()
         this.visible = false
         e.stopPropagation()
@@ -499,6 +501,7 @@ export default {
       }
       // 更新数据
       this.$emit('input', values)
+      this.$emit('change', values)
     },
 
     hasLabelInOptions() {
