@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="spSelect"
     class="sp-select"
     :class="{ isFocus, cursorPoiner, 'is--disabled': disabled, 'is--readonly': readonly }"
     @click="handleSelfClick"
@@ -45,7 +46,20 @@
       >
         {{ oldInputText || placeholder }}
       </p>
-      <div v-if="$slots.center" class="sp-select__center" @click="handleFocusSelectInput">
+      <div
+        v-if="$slots.center"
+        ref="center"
+        class="sp-select__center"
+        tabindex="0"
+        @click="handleFocusSelectInput"
+        @keydown.down.prevent="navigateOptions('next')"
+        @keydown.up.prevent="navigateOptions('prev')"
+        @keydown.enter.prevent="handleInputEnter"
+        @keydown.tab="visible = false"
+        @keydown.esc.stop.prevent="visible = false"
+        @focus.stop="isFocus = true"
+        @blur.stop="isFocus = false"
+      >
         <slot name="center"></slot>
       </div>
       <input
@@ -69,6 +83,14 @@
         @compositionupdate="handleComposition"
         @compositionend="handleComposition"
       >
+      <div
+        ref="focusHelper"
+        tabindex="1"
+        @keydown.down.prevent="handleHelperKeyOption"
+        @keydown.up.prevent="handleHelperKeyOption"
+        @focus.stop="handleHelperFocus"
+        @blur.stop="handleHelperBlur"
+      ></div>
       <!-- 后缀icon -->
       <div
         ref="sp-select-suffix"
@@ -215,8 +237,7 @@ export default {
     },
     showPrepend() {
       return this.$slots.prepend && (
-        !this.filterable || (this.filterable && !this.oldInputText && this.inputText)
-        && (this.hasLabelInOptions())
+        !this.filterable || (this.filterable && !this.oldInputText)
       )
     }
   },
@@ -244,14 +265,6 @@ export default {
           // 清空
           if(this.oldInputText) {
             this.inputText = this.oldInputText
-            this.oldInputText = null
-          }
-
-          const hasLabel = this.hasLabelInOptions()
-          if (!hasLabel) {
-            this.inputText = ''
-            this.$emit('input', '')
-            this.$emit('change', '')
           }
         }
         this.broadcast('SpSelectDropdown', 'destroyPopper')
@@ -364,10 +377,6 @@ export default {
      * 点击自身处理
      */
     handleSelfClick() {
-      if(this.filterable && this.inputText) {
-        this.oldInputText = this.inputText
-        this.inputText = ''
-      }
       if (!this.disableOperation) {
         // 原本可以在点击自身的时候切换下拉显示隐藏状态
         // 但是IE9上聚焦就会触发input事件
@@ -415,18 +424,30 @@ export default {
         this.inputText = hoverItem.label
         this.visible = false
       }
-      this.focusSelectInput()
+      this.$refs.focusHelper.focus()
     },
 
     handleInputSelectInput() {
       if (!this.readonly) { // 解决IE9上鬼畜bug
         this.visible = true
       }
+    },
 
-      const hasLabel = this.hasLabelInOptions()
-      if(hasLabel && this.filterable) {
-        this.oldInputText = this.inputText
+    handleHelperKeyOption() {
+      this.focusSelectInput()
+      this.$refs.spSelect.click()
+    },
+
+    handleHelperFocus() {
+      this.isFocus = true
+      
+      if(this.filterable) {
+        this.oldInputText = null
       }
+    },
+
+    handleHelperBlur() {
+      this.isFocus = false
     },
 
     handleComposition(event) {
@@ -442,6 +463,10 @@ export default {
     },
 
     handleFocusSelectInput() {
+      if(this.filterable && this.inputText && this.hasLabelInOptions()) {
+        this.oldInputText = this.inputText
+        this.inputText = ''
+      }
       if (!this.disableOperation) {
         this.isFocus = true
         // 如果filterable开启，并且用户输入为空，则展示所有条目
@@ -456,14 +481,6 @@ export default {
     handleBlurSelectInput() {
       if (!this.visible) {
         this.isFocus = false
-      }
-      // 如果filterable开启了，用户输入的值在options中存在的话，将值透出
-      if (this.filterable) {
-        const matchedItem = this.spOptions.find(item => item.label === this.inputText)
-        if (matchedItem) {
-          this.$emit('input', matchedItem.value)
-          this.$emit('change', matchedItem.value)
-        }
       }
       // 触发form的校验
       if (this.validateEvent && !this.isFocus) {
@@ -512,6 +529,7 @@ export default {
      */
     focusSelectInput() {
       if(this.$slots.center) {
+        this.$refs.center.focus()
         this.handleFocusSelectInput()
       } else {
         this.$refs.selectInput.focus()
@@ -521,6 +539,7 @@ export default {
      * 通过键盘的上下键(up/down)控制hover的位置
      */
     navigateOptions(direction) {
+      if (this.readonly) return
       if (!this.visible) {
         this.visible = true
         return
@@ -590,6 +609,10 @@ export default {
   padding: 0;
   font-size: 0;
   line-height: 1;
+
+  *::selection {
+    background: transparent;
+  }
 
   &.is--disabled, &.is--disabled &__input-box {
     cursor: not-allowed;
