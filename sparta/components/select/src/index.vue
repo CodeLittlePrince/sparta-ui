@@ -275,7 +275,7 @@ export default {
         // 如果filterable开启了，用户输入的值在options中不存在的话，清空
         if (this.filterable) {
           // 清空
-          if(this.oldInputText) {
+          if (this.oldInputText) {
             this.inputText = this.oldInputText
           }
         }
@@ -309,8 +309,14 @@ export default {
       this.setCurrentValue(this.value, true)
     },
     isFocus(val) {
-      if (!val) {
-        this.oldInputText = null
+      if (this.filterable) {
+        if (!val) {
+          this.oldInputText = null
+
+          if (!this.hasLabelInOptions()) {
+            this.inputText = ''
+          }
+        }
       }
     },
   },
@@ -609,10 +615,6 @@ export default {
   padding: 0;
   font-size: 0;
   line-height: 1;
-
-  *::selection {
-    background: transparent;
-  }
 
   &.is--disabled, &.is--disabled &__input-box {
     cursor: not-allowed;
