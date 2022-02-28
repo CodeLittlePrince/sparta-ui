@@ -34,8 +34,10 @@ export default {
       this.visible = false
     },
     handleImageLoadEvent() {
-      const { width, height} = this.$refs.image || {}
-      if(height > width) {
+      const { width, height } = this.$refs.image || {}
+      const { innerWidth, innerHeight } = window
+
+      if ((innerWidth / innerHeight) > (width / height)) {
         this.imageStyle = { height: '100%' }
       } else {
         this.imageStyle = { width: '100%' }
