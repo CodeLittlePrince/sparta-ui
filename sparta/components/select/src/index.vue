@@ -291,16 +291,10 @@ export default {
         this.inputText = val.length ? ' ' : ''
       }
     },
-    inputText(val) {
+    inputText() {
       // 如果filterable开启，并且focus，根据用户输入过滤（搜索）相关的条目
       if (this.filterable && this.isFocus) {
-        for (let i = 0, len = this.spOptions.length; i < len; i++) {
-          if (this.spOptions[i].label.indexOf(val) !== -1) {
-            this.spOptions[i].visible = true
-          } else {
-            this.spOptions[i].visible = false
-          }
-        }
+        this.filterOptionsVisible()
         // 为了每次弹出dropdown，都会根据处的环境做适应
         this.broadcast('SpSelectDropdown', 'updatePopper')
       }
@@ -315,6 +309,7 @@ export default {
 
           if (!this.hasLabelInOptions()) {
             this.inputText = ''
+            this.filterOptionsVisible()
           }
         }
       }
@@ -337,6 +332,16 @@ export default {
   },
 
   methods: {
+    filterOptionsVisible() {
+      for (let i = 0, len = this.spOptions.length; i < len; i++) {
+        if (this.spOptions[i].label.indexOf(this.inputText) !== -1) {
+          this.spOptions[i].visible = true
+        } else {
+          this.spOptions[i].visible = false
+        }
+      }
+    },
+
     updateTagboxHeight() {
       this.$nextTick(() => {
         // 更新容器的高度
