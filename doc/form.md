@@ -210,6 +210,14 @@
       </sp-upload>
       <div slot="error" slot-scope="scope">{{ scope.error }}<a style="color: #1977ea">（by hello kitty）</a></div>
     </sp-form-item>
+    <sp-form-item label="备注" prop="note">
+      <sp-input
+        type="textarea"
+        autosize
+        placeholder="请输入内容"
+        v-model="validateForm1.note">
+      </sp-input>
+    </sp-form-item>
     <!-- 按钮 -->
     <sp-form-submit-btns>
       <sp-form-item
@@ -254,6 +262,7 @@
           favoriteFruit: '',
           picture: [],
           files: [],
+          note: '',
           agree: false
         },
         favouriteList: [
@@ -580,6 +589,7 @@
           favoriteFruit: '',
           picture: [],
           files: [],
+          note: '',
           agree: false
         },
         favouriteList: [
