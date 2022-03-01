@@ -4,6 +4,7 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const webpackConfigBase = require('./webpack.config.base.js')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const WebpackBar = require('webpackbar')
+const pkg = require('../../package.json')
 
 const config = Object.assign(webpackConfigBase.config, {
   mode: 'development',
@@ -42,6 +43,12 @@ const config = Object.assign(webpackConfigBase.config, {
           to: webpackConfigBase.resolve('site/dev')
         }
       ]
+    }),
+    // 定义全局常量
+    new webpack.DefinePlugin({
+      'process.env': {
+        VERSION: `'${pkg.version}'`,
+      }
     }),
     // 热替换插件
     new webpack.HotModuleReplacementPlugin(),

@@ -1,5 +1,10 @@
 <template>
-  <form ref="form" class="sp-form" @keydown="handleKeydown">
+  <form
+    ref="form"
+    class="sp-form"
+    @submit.prevent
+    @keydown="handleKeydown"
+  >
     <slot></slot>
   </form>
 </template>
@@ -73,9 +78,7 @@ export default {
   
   methods: {
     handleKeydown(e) {
-      if(e.keyCode === 13) {
-        e.preventDefault()
-        e.stopPropagation()
+      if(e.keyCode === 13 && e.target.tagName !== 'TEXTAREA') {
         this.$emit('enter')
       }
     },

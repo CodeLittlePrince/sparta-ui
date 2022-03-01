@@ -60,8 +60,11 @@ export default {
       }
       // 单选情况，select做处理
       if (!this.spSelect.multiple) {
+        if(this.spSelect.filterable) {
+          this.spSelect.oldInputText = label
+        }
         this.spSelect.$emit('input', value)
-        this.spSelect.$emit('select', value)
+        this.spSelect.$emit('change', value)
         this.spSelect.inputText = label
         this.spSelect.visible = false
       } else if (this.spSelect.multiple) {
@@ -79,7 +82,7 @@ export default {
         // 更新select的高度
         this.spSelect.updateTagboxHeight()
       }
-      this.spSelect.focusSelectInput()
+      this.spSelect.$refs.focusHelper.focus()
     },
     handleMouseover() {
       if (this.disabled) {

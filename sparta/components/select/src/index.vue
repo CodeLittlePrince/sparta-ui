@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="spSelect"
     class="sp-select"
     :class="{ isFocus, cursorPoiner, 'is--disabled': disabled, 'is--readonly': readonly }"
     @click="handleSelfClick"
@@ -33,19 +34,32 @@
       <!-- 非多选情况-->
       <!-- 前置元素 -->
       <div
-        v-if="$slots.prepend"
+        v-show="showPrepend"
         class="sp-select__prepend"
+        @click.stop="handleSelfClick"
       >
         <slot name="prepend"></slot>
       </div>
       <p
-        v-show="inputText === ''"
+        v-show="isIE && inputText === '' && !isOnComposition"
         class="sp-select__input-placeholder"
-        @click="focusSelectInput"
       >
-        {{ placeholder }}
+        {{ helperText }}
       </p>
-      <div v-if="$slots.center" class="sp-select__center" @click="handleFocusSelectInput">
+      <div
+        v-if="$slots.center && inputText"
+        ref="center"
+        class="sp-select__center"
+        tabindex="0"
+        @click.stop="handleSelfClick"
+        @keydown.down.prevent="navigateOptions('next')"
+        @keydown.up.prevent="navigateOptions('prev')"
+        @keydown.enter.prevent="handleInputEnter"
+        @keydown.tab="visible = false"
+        @keydown.esc.stop.prevent="visible = false"
+        @focus.stop="isFocus = true"
+        @blur.stop="isFocus = false"
+      >
         <slot name="center"></slot>
       </div>
       <input
@@ -54,18 +68,31 @@
         class="sp-select__input"
         :style="{ height: selectInputBoxHeight }"
         type="text"
+        :placeholder="placeholderText"
         :readonly="_readonly"
         :disabled="disabled"
         autocomplete="off"
         @input="handleInputSelectInput"
-        @focus="handleFocusSelectInput"
+        @focus="handleSelfClick"
         @blur="handleBlurSelectInput"
         @keydown.down.prevent="navigateOptions('next')"
         @keydown.up.prevent="navigateOptions('prev')"
         @keydown.enter.prevent="handleInputEnter"
         @keydown.tab="visible = false"
         @keydown.esc.stop.prevent="visible = false"
+        @compositionstart="handleComposition"
+        @compositionupdate="handleComposition"
+        @compositionend="handleComposition"
       >
+      <div
+        ref="focusHelper"
+        class="sp-select__focus-helper"
+        tabindex="1"
+        @keydown.down.prevent="handleSelfClick"
+        @keydown.up.prevent="handleSelfClick"
+        @focus.stop="handleHelperFocus"
+        @blur.stop="handleHelperBlur"
+      ></div>
       <!-- 后缀icon -->
       <div
         ref="sp-select-suffix"
@@ -185,13 +212,15 @@ export default {
       evOptionHoverIndex: -1,
       selected: [],
       selectInputBoxHeight: this.height - 2 + 'px',
-      currentValue: this.value
+      currentValue: this.value,
+      oldInputText: null,
+      isOnComposition: false,
     }
   },
 
   computed: {
     _readonly() {
-      return ((!this.isFocus || this.canNotFocus) && !this.filterable) || this.readonly
+      return !this.filterable || this.readonly
     },
     spOptionsAllDisabled() {
       return this.spOptions.every(option => option.disabled)
@@ -207,7 +236,22 @@ export default {
     },
     disableOperation() {
       return this.disabled || this.readonly
-    }
+    },
+    showPrepend() {
+      return this.$slots.prepend && (
+        !this.filterable || (this.filterable && !this.oldInputText)
+      )
+    },
+    isIE() {
+      return window.ActiveXObject || 'ActiveXObject' in window
+    },
+    helperText() {
+      return this.oldInputText || this.placeholder
+    },
+    placeholderText() {
+      // IE10和IE11上，如果有placeholder，input显示以后IE辣鸡浏览器会自动触发input事件
+      return this.isIE ? '' : this.helperText
+    },
   },
 
   watch: {
@@ -228,6 +272,13 @@ export default {
         // 为了每次弹出dropdown，都会根据处的环境做适应
         this.broadcast('SpSelectDropdown', 'updatePopper')
       } else {
+        // 如果filterable开启了，用户输入的值在options中不存在的话，清空
+        if (this.filterable) {
+          // 清空
+          if (this.oldInputText) {
+            this.inputText = this.oldInputText
+          }
+        }
         this.broadcast('SpSelectDropdown', 'destroyPopper')
       }
       // 触发form的校验
@@ -240,25 +291,29 @@ export default {
         this.inputText = val.length ? ' ' : ''
       }
     },
-    inputText(val) {
+    inputText() {
       // 如果filterable开启，并且focus，根据用户输入过滤（搜索）相关的条目
       if (this.filterable && this.isFocus) {
-        // 如果用户输入刚好可以在条目中找到，则展示所有的条目
-        const hasSameLabel = this.spOptions.some(item => {
-          return item.label === val
-        })
-        for (let i = 0, len = this.spOptions.length; i < len; i++) {
-          if (hasSameLabel || (this.spOptions[i].label.indexOf(val) !== -1)) {
-            this.spOptions[i].visible = true
-          } else {
-            this.spOptions[i].visible = false
-          }
-        }
+        this.filterOptionsVisible()
+        // 为了每次弹出dropdown，都会根据处的环境做适应
+        this.broadcast('SpSelectDropdown', 'updatePopper')
       }
     },
     spOptions() {
       this.setCurrentValue(this.value, true)
-    }
+    },
+    isFocus(val) {
+      if (this.filterable) {
+        if (!val) {
+          this.oldInputText = null
+
+          if (!this.hasLabelInOptions()) {
+            this.inputText = ''
+            this.filterOptionsVisible()
+          }
+        }
+      }
+    },
   },
   
   mounted() {
@@ -277,6 +332,16 @@ export default {
   },
 
   methods: {
+    filterOptionsVisible() {
+      for (let i = 0, len = this.spOptions.length; i < len; i++) {
+        if (this.spOptions[i].label.indexOf(this.inputText) !== -1) {
+          this.spOptions[i].visible = true
+        } else {
+          this.spOptions[i].visible = false
+        }
+      }
+    },
+
     updateTagboxHeight() {
       this.$nextTick(() => {
         // 更新容器的高度
@@ -346,6 +411,9 @@ export default {
         // input又会影响下拉显示状态，input事件又在click前触发
         // 导致显示Bug，因此，暂时降低体验处理
         this.visible = true
+        this.isFocus = true
+        this.focusSelectInput()
+        this.storeInputTextWhenFilterable()
       }
     },
     /**
@@ -378,52 +446,51 @@ export default {
           this.spOptions[this.evOptionHoverIndex].selected = true
         }
       } else if (hoverItem) {
+        if(this.filterable) {
+          this.oldInputText = hoverItem.label
+        }
+
         this.$emit('input', hoverItem.value)
+        this.$emit('change', hoverItem.value)
         this.inputText = hoverItem.label
         this.visible = false
       }
-      this.focusSelectInput()
+      this.$refs.focusHelper.focus()
     },
 
     handleInputSelectInput() {
-      if (
-        this.inputText !== '' &&
-        !this.readonly // 解决IE9上鬼畜bug
-      ) {
+      if (!this.readonly) { // 解决IE9上鬼畜bug
         this.visible = true
       }
     },
 
-    handleFocusSelectInput() {
-      if (!this.disableOperation) {
-        this.isFocus = true
-        // 如果filterable开启，并且用户输入为空，则展示所有条目
-        if (this.filterable && this.inputText.length === 0) {
-          for (let i = 0, len = this.spOptions.length; i < len; i++) {
-            this.spOptions[i].visible = true
-          }
-        }
+    handleHelperFocus() {
+      this.isFocus = true
+      
+      if(this.filterable) {
+        this.oldInputText = null
+      }
+    },
+
+    handleHelperBlur() {
+      this.isFocus = false
+    },
+
+    handleComposition(event) {
+      if (event.type === 'compositionend') {
+        this.isOnComposition = false
+      } else {
+        const text = event.target.value
+        const lastCharacter = text[text.length - 1] || ''
+        const koreanReg = /([(\uAC00-\uD7AF)|(\u3130-\u318F)])+/gi
+        const isKorean = koreanReg.test(lastCharacter)
+        this.isOnComposition = !isKorean
       }
     },
 
     handleBlurSelectInput() {
       if (!this.visible) {
         this.isFocus = false
-      }
-      // 如果filterable开启了，用户输入的值在options中不存在的话，清空
-      if (this.filterable) {
-        let matchedItem = null
-        this.spOptions.forEach(item => {
-          if (item.label === this.inputText) {
-            matchedItem = item
-          }
-        })
-        if (matchedItem) {
-          this.$emit('input', matchedItem.value)
-        } else {
-          this.inputText = ''
-          this.$emit('input', '')
-        }
       }
       // 触发form的校验
       if (this.validateEvent && !this.isFocus) {
@@ -434,7 +501,11 @@ export default {
     handleSuffixClick(e) {
       if (this.showClearIcon) {
         this.$emit('input', '')
+        this.$emit('change', '')
         this.inputText = ''
+        if (this.filterable) {
+          this.oldInputText = null
+        }
         this.$refs.selectInput.blur()
         this.visible = false
         e.stopPropagation()
@@ -457,21 +528,29 @@ export default {
       }
       // 更新数据
       this.$emit('input', values)
+      this.$emit('change', values)
+    },
+
+    hasLabelInOptions() {
+      return this.spOptions.some(item => item.label === this.inputText)
     },
     /**
      * 聚焦到输入框
      */
     focusSelectInput() {
-      if(this.$slots.center) {
-        this.handleFocusSelectInput()
-      } else {
-        this.$refs.selectInput.focus()
+      this.$refs.selectInput.focus()
+    },
+    storeInputTextWhenFilterable() {
+      if(this.filterable && this.inputText && this.hasLabelInOptions()) {
+        this.oldInputText = this.inputText
+        this.inputText = ''
       }
     },
     /**
      * 通过键盘的上下键(up/down)控制hover的位置
      */
     navigateOptions(direction) {
+      if (this.readonly) return
       if (!this.visible) {
         this.visible = true
         return
@@ -539,6 +618,8 @@ export default {
   display: block;
   margin: 0;
   padding: 0;
+  font-size: 0;
+  line-height: 1;
 
   &.is--disabled, &.is--disabled &__input-box {
     cursor: not-allowed;
@@ -596,13 +677,14 @@ export default {
         position: absolute;
         left: 0;
         top: 0;
-        right: 0;
+        right: 45px;
         bottom: 0;
-        padding: 0 45px 0 10px;
+        padding: 0 0 0 10px;
         z-index: 10;
         margin: 0;
         line-height: $select-height - 2;
         color: $color-text-placeholder;
+        overflow: hidden;
       }
     }
 
@@ -662,6 +744,10 @@ export default {
 
   &.isFocus &__input-box {
     border-color: $select-input-border-color-focus;
+  }
+
+  &__focus-helper {
+    outline: none;
   }
 
   &__suffix {

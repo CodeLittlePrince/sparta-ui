@@ -74,7 +74,7 @@
             @focus="isRangeFocus = true"
             @input="handleRangeTimeEndInput"
           ><i
-            v-show="isRangeTimeSelectFocus || isRangeTimeSelectHover"
+            v-show="showRangeClear"
             slot="suffix"
             class="sp-input__icon sp-icon-close-bold sp-input__clear sp-time-select__range-icon"
             @click.stop="handleRangeClear"
@@ -291,6 +291,13 @@ export default {
 
     rangeTimeEndIndexVal() {
       return this.paneRangeVal[1] || this.oldRangeTimeEnd
+    },
+
+    showRangeClear() {
+      return this.clearable
+      && (this.isRangeTimeSelectFocus || this.isRangeTimeSelectHover)
+      && this.value && this.value.length
+      && !this.disabled
     }
   },
   watch: {

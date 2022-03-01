@@ -413,7 +413,8 @@ export default {
     }
 
     .sp-input,
-    .sp-select {
+    .sp-select,
+    .sp-textarea {
       width: 400px;
     }
   }

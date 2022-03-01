@@ -8,7 +8,7 @@
 <template>
   <div class="select-demo">
     <sp-select v-model="value8">
-      <i slot="prepend" :class="icon"></i>
+      <i v-if="icon" slot="prepend" :class="icon"></i>
       <sp-option
         v-for="item in list8"
         :key="item.value"
@@ -54,9 +54,9 @@ export default{
 <template>
   <div class="select-demo">
     <div class="customer-select">
-      <sp-select v-model="value8"  placeholder="已使用优惠抵扣￥1,000.00">
+      <sp-select v-model="value11"  placeholder="已使用优惠抵扣￥1,000.00">
         <sp-option
-          v-for="item in list8"
+          v-for="item in list11"
           :key="item.value"
           :label="item.label"
           :value="item.value"
@@ -70,16 +70,16 @@ export default{
 export default{
   data(){
     return {
-      list8: [
+      list11: [
         { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
         { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
         { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
       ],
-      value8: 1
+      value11: 1
     }
   },
   watch: {
-    value8(val) {
+    value11(val) {
       console.log(val)
     }
   }
@@ -118,18 +118,18 @@ export default{
 ```
 :::
 
-### 自定义select 显示元素
+### 自定义center 显示元素
 适用广泛的基础单选（支持键盘控制）
 
 :::demo 可自定义select 显示元素
 ```vue
 <template>
   <div class="select-demo">
-    <sp-select v-model="value8">
-      <i slot="prepend" :class="icon"></i>
+    <sp-select v-model="value10">
+      <i v-if="icon10" slot="prepend" :class="icon10"></i>
       <div slot="center">{{ valueText }}</div>
       <sp-option
-        v-for="item in list8"
+        v-for="item in list10"
         :key="item.value"
         :label="item.label"
         :value="item.value"
@@ -142,25 +142,25 @@ export default{
 export default{
   data(){
     return {
-      list8: [
+      list10: [
         { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
         { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
         { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
       ],
-      value8: 1
+      value10: ''
     }
   },
   watch: {
-    value8(val) {
+    value10(val) {
       console.log(val)
     }
   },
   computed: {
     icon() {
-      return (this.list8.find(item => item.value === this.value8) || {}).icon
+      return (this.list10.find(item => item.value === this.value10) || {}).icon
     },
     valueText() {
-      let label = (this.list8.find(item => item.value === this.value8) || {}).label
+      let label = (this.list10.find(item => item.value === this.value10) || {}).label
       if(label && label.length > 15) {
         label = `${ label.substr(0,9) }...@163.com`
       }
@@ -385,6 +385,51 @@ export default{
 ```
 :::
 
+### 自定义select 自定义前置图标 + 可过滤（搜索）
+
+:::demo 自定义和filterable结合版
+```vue
+<template>
+  <div class="select-demo">
+    <sp-select v-model="value9" filterable>
+      <i v-if="icon9" slot="prepend" :class="icon9"></i>
+      <sp-option
+        v-for="item in list9"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      ></sp-option>
+    </sp-select>
+  </div>
+</template>
+
+<script>
+export default{
+  data(){
+    return {
+      list9: [
+        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
+        { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
+        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
+      ],
+      value9: 1
+    }
+  },
+  watch: {
+    value9(val) {
+      console.log(val)
+    }
+  },
+  computed: {
+    icon9() {
+      return (this.list9.find(item => item.value === this.value9) || {}).icon
+    }
+  }
+}
+</script>
+```
+:::
+
 ### 自定义模板
 可以自定义备选项
 
@@ -541,7 +586,8 @@ export default{
 ### Select Attributes
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
-| width | 设置宽度 | string/number | — | 240 |
+| height | 设置高度 | string/number | — | 36 |
+| readonly | 设置是否只读 | boolean | — | false |
 | multiple | 是否多选 | boolean | — | false |
 | disabled | 是否禁用 | boolean | — | false |
 | clearable | 是否可以清空选项 | boolean | — | false |
@@ -560,7 +606,7 @@ export default{
 ### Select Events
 |   事件名称 | 说明     |
 |---------|---------|
-| select | 选中 option 时，调用此函数 |
+| change | 选中 option 时，调用此函数 |
 ### Option Group Attributes
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
@@ -650,7 +696,25 @@ export default{
         { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
         { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
       ],
-      value8: ''
+      value8: '',
+      list9: [
+        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
+        { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
+        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
+      ],
+      value9: 1,
+      list10: [
+        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
+        { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
+        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
+      ],
+      value10: '',
+      list11: [
+        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
+        { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
+        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
+      ],
+      value11: 1
     }
   },
   watch: {
@@ -677,14 +741,29 @@ export default{
     },
     value8(val) {
       console.log(val)
+    },
+    value9(val) {
+      console.log(val)
+    },
+    value10(val) {
+      console.log(val)
+    },
+    value11(val) {
+      console.log(val)
     }
   },
   computed: {
     icon() {
       return (this.list8.find(item => item.value === this.value8) || {}).icon
     },
+    icon10() {
+      return (this.list10.find(item => item.value === this.value10) || {}).icon
+    },
+    icon9() {
+      return (this.list9.find(item => item.value === this.value9) || {}).icon
+    },
     valueText() {
-      let label = (this.list8.find(item => item.value === this.value8) || {}).label
+      let label = (this.list10.find(item => item.value === this.value10) || {}).label
       if(label && label.length > 15) {
         label = `${ label.substr(0,9) }...@163.com`
       }

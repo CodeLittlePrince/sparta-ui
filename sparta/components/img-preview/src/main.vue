@@ -6,7 +6,11 @@
     >
       <div class="sp-img-preview__close"><i class="sp-icon-close"></i></div>
       <div class="sp-img-preview__img-box">
-        <img :src="imgUrl" alt="" @click.stop>
+        <img
+          ref="image" :src="imgUrl" alt=""
+          :style="imageStyle"
+          @click.stop @load="handleImageLoadEvent"
+        >
       </div>
     </div>
   </transition>
@@ -21,12 +25,23 @@ export default {
       imgUrl: '',
       visible: false,
       zIndex: 1,
+      imageStyle: {}
     }
   },
 
   methods: {
     handleClose() {
       this.visible = false
+    },
+    handleImageLoadEvent() {
+      const { width, height } = this.$refs.image || {}
+      const { innerWidth, innerHeight } = window
+
+      if ((innerWidth / innerHeight) > (width / height)) {
+        this.imageStyle = { height: '100%' }
+      } else {
+        this.imageStyle = { width: '100%' }
+      }
     }
   }
 }
@@ -51,14 +66,16 @@ export default {
 
   &__img-box {
     position: absolute;
-    top: 5%;
-    bottom: 5%;
-    left: 75px;
-    right: 75px;
-    text-align: center;
-
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: calc(100% - 105px);
+    height: 90%;
     img {
-      height: 100%;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
     }
   }
 
