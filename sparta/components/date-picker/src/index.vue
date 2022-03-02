@@ -128,6 +128,7 @@
       <div class="sp-date-picker-range-start">
         <sp-input
           v-model="modelStart"
+          readonly
           class="sp-date-picker-range-input"
           :disabled="disabled"
           :placeholder="startPlaceholder"
@@ -138,6 +139,7 @@
       <div class="sp-date-picker-range-end">
         <sp-input
           v-model="modelEnd"
+          readonly
           class="sp-date-picker-range-input"
           :disabled="disabled"
           :clearable="clearable"
@@ -1393,7 +1395,7 @@ export default {
   }
 
   &-range, &.is--range {
-    &.is--focus  {
+    &.is--focus {
       outline: none;
       border-color: $color-primary;
       box-shadow: $input-box-shadow-focus;
@@ -1423,6 +1425,18 @@ export default {
         border: none;
         &:focus {
           box-shadow: none;
+        }
+      }
+      .sp-input.is--readonly {
+        .sp-input__inner {
+          background-color: inherit;
+          color: inherit;
+
+          &:hover,
+          &:focus {
+            border: none;
+            box-shadow: none;
+          }
         }
       }
     }
@@ -1506,7 +1520,7 @@ export default {
     }
   }
 
-  &__dropdown{
+  &__dropdown {
     &.is--range {
       box-shadow: $float-box-shadow-box;
       .sp-date-picker__dropdown__box {
