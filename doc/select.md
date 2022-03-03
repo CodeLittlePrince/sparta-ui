@@ -126,7 +126,7 @@ export default{
 <template>
   <div class="select-demo">
     <sp-select v-model="value10">
-      <i v-if="icon10" slot="prepend" :class="icon10"></i>
+      <i slot="prepend" :class="icon10"></i>
       <div slot="center">{{ valueText }}</div>
       <sp-option
         v-for="item in list10"
@@ -391,8 +391,8 @@ export default{
 ```vue
 <template>
   <div class="select-demo">
-    <sp-select v-model="value9" filterable>
-      <i v-if="icon9" slot="prepend" :class="icon9"></i>
+    <sp-select v-model="value9" filterable clearable>
+      <i slot="prepend" :class="icon9"></i>
       <sp-option
         v-for="item in list9"
         :key="item.value"
@@ -408,9 +408,9 @@ export default{
   data(){
     return {
       list9: [
-        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
-        { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
-        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
+        { label: 'cat', value: 1 , icon: 'sp-icon-file' },
+        { label: 'pig', value: 2 , icon: 'sp-icon-check' },
+        { label: 'dog', value: 3 , icon:'sp-icon-search' },
       ],
       value9: 1
     }
@@ -698,9 +698,9 @@ export default{
       ],
       value8: '',
       list9: [
-        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
-        { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
-        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
+        { label: 'cat', value: 1 , icon: 'sp-icon-file' },
+        { label: 'pig', value: 2 , icon: 'sp-icon-check' },
+        { label: 'dog', value: 3 , icon:'sp-icon-search' },
       ],
       value9: 1,
       list10: [
