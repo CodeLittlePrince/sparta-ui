@@ -75,11 +75,12 @@ describe('Table', () => {
     });
   })
 
-  describe('attributes', () => {
+  describe('props', () => {
     const wrapper = mount({
       data() {
         return {
           testData: [],
+          ellipsis: true,
           loading: false,
           hasMore: false,
           disabled: false,
@@ -111,7 +112,11 @@ describe('Table', () => {
           <sp-table-column prop="name" label="片名" />
           <sp-table-column prop="id" />
           <sp-table-column prop="release" label="发行日期" />
-          <sp-table-column prop="director" label="导演" />
+          <sp-table-column 
+          prop="director" 
+          label="导演" 
+          width="200"
+          :ellipsis="ellipsis"/>
           <sp-table-column prop="runtime" label="时长（分）" />
        </sp-table>
       `,
@@ -164,6 +169,19 @@ describe('Table', () => {
       await wrapper.setData({ disabled: true })
       expect(wrapper.find('.sp-table.is--disabled').exists()).to.be.true
       await wrapper.setData({ disabled: false })
+    });
+
+    it('ellipsis', async () => {
+      await wrapper.setData({ testData: [{ 
+        id: 1, 
+        name: 'Finding Nemo', 
+        release: '2003-5-30', 
+        director: 'Andrew StantonAndrew StantonAndrew StantonAndrew StantonAndrew StantonAndrew StantonAndrew StantonAndrew StantonAndrew StantonAndrew Stanton', 
+        runtime: 100 }]
+      }) 
+      
+      expect(wrapper.find('.sp-table__body').find('.ellipsis').exists()).to.be.true
+      expect(wrapper.find('.sp-table__body').find('.ellipsis').element.style.width).to.be.equal('200px')
     });
 
     after(() => {

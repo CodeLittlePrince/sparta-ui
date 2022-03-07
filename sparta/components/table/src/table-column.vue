@@ -18,7 +18,8 @@ export default {
     ellipsis: {
       type: Boolean,
       default: false
-    }
+    },
+    formatter: Function
   }
 }
 </script>
