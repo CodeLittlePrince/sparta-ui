@@ -109,6 +109,10 @@
 | autofocus  | 是否默认聚焦 | boolean   |  —  |  false  |
 | native-type | 原生 type 属性 | string | button / submit / reset | button |
 
+### Events
+| 事件名称      | 说明    | 回调参数      |
+|---------- |-------- |---------- |
+| click  | 点击事件 | e |
 
 <style>
   .components--main {
