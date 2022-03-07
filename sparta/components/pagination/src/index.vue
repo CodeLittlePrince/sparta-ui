@@ -1,15 +1,15 @@
 <template>
   <div class="sp-pagination" :class="{'is--disabled': disabled}">
-    <ul :class="`align-${ align }`">
+    <ul :class="`align--${ align }`">
       <!-- prev -->
       <li
-        :class="{'is-disabled' : index === 1}"
+        :class="{'is--disabled' : index === 1}"
         @click="prev"
       >
         <i class="sp-icon-arrow-left"></i>
       </li>
       <li
-        :class="{'is-checked' : index === 1}"
+        :class="{'is--checked' : index === 1}"
         @click="first()"
       >
         1
@@ -23,7 +23,7 @@
       <li
         v-for="(pager, i) in pagers"
         :key="i"
-        :class="{'is-checked' : index === pager}"
+        :class="{'is--checked' : index === pager}"
         @click="go(pager)"
       >
         {{ pager }}
@@ -36,14 +36,14 @@
       </li>
       <li
         v-if="pages !== 1"
-        :class="{'is-checked' : index === pages}"
+        :class="{'is--checked' : index === pages}"
         @click="last"
       >
         {{ pages }}
       </li>
       <!-- next -->
       <li
-        :class="{'is-disabled' : index === pages}"
+        :class="{'is--disabled' : index === pages}"
         @click="next"
       >
         <i class="sp-icon-arrow-right"></i>
@@ -218,18 +218,23 @@ export default {
     li:not(.item--more) {
       color: $pagination-item-color--is-disabled;
       background-color: $pagination-item-background--is-disabled;
+      &.is--checked {
+          background-color: #c7cbd1;
+          color: #f0f3f7;
+          border-color: #c7cbd1;
+        }
     }
   }
 
-  .align-left {
+  .align--left {
     float: left;
   }
 
-  .align-right {
+  .align--right {
     float: right;
   }
 
-  .align-middle {
+  .align--middle {
     display: inline-block;
   }
 
@@ -280,14 +285,14 @@ export default {
         color: $pagination-item-color--is-hover;
       }
 
-      &.is-disabled,
-      &.is-disabled:hover {
+      &.is--disabled,
+      &.is--disabled:hover {
         cursor: not-allowed;
         opacity: 0.5;
         background-color: $pagination-background--is-disabled;
       }
 
-      &.is-checked {
+      &.is--checked {
         color: $pagination-item-color--is-checked;
         background-color: $pagination-background--is-checked;
         border-color: $pagination-border-color--is-checked;
