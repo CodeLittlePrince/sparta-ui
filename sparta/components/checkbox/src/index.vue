@@ -237,16 +237,16 @@ export default {
     transition: all 0.3s;
 
     &.is--indeterminate::after {
-      content: "";
-      width: 6px;
-      height: 6px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      opacity: 1;
-      border: none;
-      background-color: $color-primary;
+      // content: "";
+      // width: 6px;
+      // height: 6px;
+      // position: absolute;
+      // top: 50%;
+      // left: 50%;
+      // transform: translate(-50%, -50%);
+      // opacity: 1;
+      // border: none;
+      // background-color: $color-primary;
     }
 
     &:hover {

@@ -101,7 +101,15 @@ export default{
       </template>
     </sp-table-column>
      <div slot="withdrawing">
-        提现中的金额  <i class="sp-icon-warning-circle"></i>
+        提现中的金额 <sp-popup-tip
+      width="200" color="#747d8c"
+      has-border
+    >
+      <i class="sp-icon-ques"></i>
+      <template slot="popup">
+        我是做好事不留名的红领巾
+      </template>
+    </sp-popup-tip>
       </div>
   </sp-table>
 </template>
@@ -435,8 +443,7 @@ export default{
       label="操作">
       <template slot-scope="scope">
         <sp-input v-model="scope.row.amount" 
-        @focus="handleInputFocus(scope.index)" 
-        @blur="handleInputBlur(scope.row, scope.index)"/>
+        @focus="handleInputFocus(scope.index)"/>
       </template>
     </sp-table-column>
     <div slot="footerLeftContent">
@@ -481,9 +488,12 @@ export default{
     handleInputFocus(index) {
       this.$refs.table.toggleRowSelection(index, true)
     },
-    handleInputBlur(row, index) {
-      if(row.amount) return
-      this.$refs.table.toggleRowSelection(index, false)
+    handlePaginationChange(index, pageSize) {
+      this.paginationDisabled = true
+      setTimeout(() => {
+        this.paginationDisabled = false
+      }, 1000)
+      console.log(index, pageSize)
     }
   }
 }
@@ -708,6 +718,12 @@ export default{
       tableList1: [
         {
           name: '番茄炒西红柿',
+          withdrawing: '20.00',
+          tag: 'yo',
+          amount: ''
+        },
+        {
+          name: '番茄炒西红柿番茄炒西红柿番茄炒西红柿番茄炒西红柿番茄炒西红柿番茄炒西红柿番茄炒西红柿番茄炒西红柿番茄炒西红柿番茄炒西红柿番茄炒西红柿番茄炒西红柿番茄炒西红柿',
           withdrawing: '20.00',
           tag: 'yo',
           amount: ''

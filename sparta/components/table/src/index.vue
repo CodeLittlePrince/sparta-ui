@@ -234,7 +234,6 @@ export default {
     return {
       checkAll: false,
       isIndeterminate: false,
-      checkedIndexs: [],
       checkedList: [],
       tableWidth: '100%',
       showVScroll: false,
@@ -272,7 +271,6 @@ export default {
       // 数据变化后清除所有点亮状态
       this.checkAll = false
       this.isIndeterminate = false
-      this.checkedIndexs = []
       this.checkedList = []
       this._initCheckedList()
       this._emitChange()

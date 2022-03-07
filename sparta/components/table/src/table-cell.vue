@@ -25,8 +25,10 @@ export default {
     const row = this.list[this.rIndex]
     let cell = this.column.componentOptions.propsData.prop ? row[this.column.componentOptions.propsData.prop] : row
     let cellCopy = cell === undefined ? undefined : JSON.parse(JSON.stringify(cell))
-    const cellData = this.$parent.children[this.cIndex].data
-    const formatter = cellData.attrs.formatter
+    const itemVNode = this.$parent.children[this.cIndex]
+    const cellData = itemVNode.data
+    const propsData = itemVNode.componentOptions.propsData
+    const formatter = propsData.formatter
     if (this.column.children) {
       cellCopy = this.column.children
     } else if(cellData.scopedSlots) {
@@ -46,11 +48,11 @@ export default {
     }
     // ellipsis
     let cellClass = 'sp-table-cell'
-    if (cellData.attrs.ellipsis) {
+    if (propsData.ellipsis) {
       cellClass += ' ellipsis'
     }
     // 宽度
-    let cellWidth = cellData.attrs.width
+    let cellWidth = propsData.width
     // 如果转换后是一个number，则加'px'后缀
     if (!isNaN(+cellWidth)) {
       cellWidth += 'px'
