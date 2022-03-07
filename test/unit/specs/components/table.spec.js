@@ -143,9 +143,9 @@ describe('Table', () => {
     });
 
     it('paginationOption', async () => {
-      expect(wrapper.vm.$el.querySelectorAll('.sp-pagination .align-middle li').length).to.equal(8)
-      expect(wrapper.find('.sp-pagination .align-middle .is-checked').text()).to.equal('2')
-      expect(wrapper.find('.align-middle').exists()).to.be.true
+      expect(wrapper.vm.$el.querySelectorAll('.sp-pagination .align--middle li').length).to.equal(8)
+      expect(wrapper.find('.sp-pagination .align--middle .is--checked').text()).to.equal('2')
+      expect(wrapper.find('.align--middle').exists()).to.be.true
     });
 
     it('paginationDisabled', async () => {
@@ -206,7 +206,6 @@ describe('Table', () => {
       },
       methods: {
         handleSelectionChange(data) {
-          console.error('handleSelectionChange', data)
           this.selectedList = data
         },
         handlePaginationChange(index, pageSize) {
