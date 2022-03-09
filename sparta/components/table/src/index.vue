@@ -65,8 +65,9 @@
             <td v-if="selection">
               <div class="sp-table-cell">
                 <sp-checkbox
-                  v-model="checkedList[rIndex]"
-                  :disabled="disabled"
+                  v-if="checkedList[rIndex]"
+                  v-model="checkedList[rIndex].isChecked"
+                  :disabled="isSelectDisable(item, rIndex)"
                   @change="handleCheck(rIndex, $event)"
                 />
               </div>
@@ -200,6 +201,7 @@ export default {
       type: Boolean,
       default: false
     },
+    selectable: Function,
     selectionWidth: {
       type: String,
       default: '33'
@@ -342,15 +344,18 @@ export default {
       let len = this.list.length
       while(len) {
         len--
-        this.$set(this.checkedList, len, false)
+        this.$set(this.checkedList, len, {
+          isChecked: false,
+          disabled: this.isSelectDisable(this.list[len], len)
+        })
       }
     },
 
     _emitChange() {
       // 过滤出打勾了的值给上层
       const result = []
-      this.checkedList.forEach((isChecked, index) => {
-        if (isChecked) {
+      this.checkedList.forEach((item, index) => {
+        if (item.isChecked) {
           result.push(this.list[index])
         }
       })
@@ -362,7 +367,7 @@ export default {
      */
     _processCheckBoxRelation() {
       const checkedAccount = this.checkedList.filter(item => {
-        return item
+        return item.isChecked
       }).length
       if (checkedAccount === this.list.length) {
         this.checkAll = true
@@ -377,12 +382,21 @@ export default {
     },
     _setCheckState(checkState) {
       let len = this.list.length
+      let isEmitChange = false
       while(len) {
         len--
-        this.$set(this.checkedList, len, checkState)
+        if(!this.checkedList[len].disabled) {
+          isEmitChange = true
+          this.$set(this.checkedList, len, {
+            disabled: this.checkedList[len].disabled,
+            isChecked: checkState
+          })
+        }
       }
-      this.isIndeterminate = false
-      this._emitChange()
+      if(isEmitChange) {
+        this.isIndeterminate = false
+        this._emitChange()
+      }
     },
     /**
      * 全选单选框点击
@@ -395,9 +409,14 @@ export default {
      */
     handleCheck(index, isChecked) {
       // 更新checkedList
-      this.$set(this.checkedList, index, isChecked)
-      this._processCheckBoxRelation()
-      this._emitChange()
+      if(!this.checkedList[index].disabled) {
+        this.$set(this.checkedList, index, {
+          disabled: this.checkedList[index].disabled,
+          isChecked
+        })
+        this._processCheckBoxRelation()
+        this._emitChange()
+      }
     },
 
     handlePageChange(index, pageSize) {
@@ -406,6 +425,12 @@ export default {
 
     handleViewMore() {
       this.$emit('table-view-more')
+    },
+
+    isSelectDisable(row, index) {
+      if(this.disabled) return true
+      if(typeof this.selectable === 'function') return !this.selectable(row, index)
+      return false
     }
   },
 }
@@ -451,7 +476,8 @@ export default {
       td {
         vertical-align: middle;
         line-height: 1.2;
-        padding: 10px 0;
+        height: 84px;
+        box-sizing: border-box;
 
         &:first-child {
           .sp-table-cell {

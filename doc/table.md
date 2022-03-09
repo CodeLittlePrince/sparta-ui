@@ -501,6 +501,105 @@ export default{
 ```
 :::
 
+
+### 带选择的表格 部分不可选
+
+:::demo 设置`sp-table`属性`selection`为true， `selectable`传入函数。
+```vue
+<template>
+<sp-button @click="handleClearSelection2">清空选择clearSelection2</sp-button>
+<sp-button @click="handleToggleAllSelection2">切换全选toggleAllSelection2</sp-button>
+  <sp-table
+    :list="tableList2"
+    pagination
+    ref="table2"
+    :pagination-option="{ total: 1000 }"
+    :pagination-disabled="paginationDisabled2"
+    selection
+    :selectable="isSelectable2"
+    @selection-change="handleSelectionChange2"
+    @pagination-change="handlePaginationChange2"
+  >
+    <sp-table-column
+      :ellipsis="true"
+      prop="name"
+      label="店铺名称"
+      width="200">
+    </sp-table-column>
+    <sp-table-column
+      prop="withdrawing"
+      label="提现中的金额"
+      :formatter="formatter"
+      width="200">
+    </sp-table-column>
+     <sp-table-column
+      prop="tag"
+      label="操作">
+      <template slot-scope="scope">
+        <sp-input v-model="scope.row.amount" 
+        @focus="handleInputFocus2(scope.index)"/>
+      </template>
+    </sp-table-column>
+    <div slot="footerLeftContent">
+      <sp-button plain size="mini">删除</sp-button>
+    </div>
+  </sp-table>
+</template>
+
+<script>
+export default{
+  data() {
+    return {
+      paginationDisabled2: false
+      tableList2: [
+        {
+          name: '番茄炒西红柿',
+          withdrawing: '20.00',
+          tag: 'yo',
+          amount: ''
+        },
+        {
+          name: '土豆炖马铃薯',
+          withdrawing: '30.00',
+          tag: 'yo',
+          amount: ''
+        }
+      ]
+    }
+  },
+  methods: {
+    formatter(cell) {
+      return cell + '元'
+    },
+    handleSelectionChange2(data) {
+      console.log(data)
+    },
+    handleClearSelection2() {
+      this.$refs.table2.clearSelection()
+    },
+    handleInputFocus2(index) {
+      this.$refs.table2.toggleRowSelection(index, true)
+    },
+    handleToggleAllSelection2() {
+       this.$refs.table2.toggleAllSelection()
+    },
+    handlePaginationChange2(index, pageSize) {
+      this.paginationDisabled2 = true
+      setTimeout(() => {
+        this.paginationDisabled2 = false
+      }, 1000)
+      console.log(index, pageSize)
+    },
+    isSelectable2(row, index) {
+      return !['30.00'].includes(row.withdrawing)
+    }
+  }
+}
+</script>
+```
+:::
+
+
 ### 不可勾选状态
 
 :::demo 设置`sp-table`属性`selection`为true，属性`disabled`为true 。
@@ -735,7 +834,28 @@ export default{
           amount: ''
         }
       ],
+      tableList2: [
+        {
+          name: 'cat',
+          withdrawing: '20.00',
+          tag: 'yo',
+          amount: ''
+        },
+        {
+          name: 'dog',
+          withdrawing: '20.00',
+          tag: 'yo',
+          amount: ''
+        },
+        {
+          name: 'pig',
+          withdrawing: '30.00',
+          tag: 'yo',
+          amount: ''
+        }
+      ],
       paginationDisabled: false,
+      paginationDisabled2: false,
       showTableColumn: true
     }
   },
@@ -768,6 +888,48 @@ export default{
     handleInputBlur(row, index) {
       if(row.amount) return
       this.$refs.table.toggleRowSelection(index, false)
+    },
+    handleSelectionChange2(data) {
+      console.log(data)
+    },
+    handleClearSelection2() {
+      this.$refs.table2.clearSelection()
+    },
+    handleInputFocus2(index) {
+      this.$refs.table2.toggleRowSelection(index, true)
+    },
+    handleToggleAllSelection2() {
+       this.$refs.table2.toggleAllSelection()
+    },
+    handlePaginationChange2(index, pageSize) {
+      this.paginationDisabled2 = true
+      setTimeout(() => {
+        this.tableList2 = [
+          {
+          name: 'cat'+index,
+          withdrawing: '20.00',
+          tag: 'yo',
+          amount: ''
+        },
+        {
+          name: 'dog'+index,
+          withdrawing: '20.00',
+          tag: 'yo',
+          amount: ''
+        },
+        {
+          name: 'pig'+index,
+          withdrawing: '30.00',
+          tag: 'yo',
+          amount: ''
+        }
+        ]
+        this.paginationDisabled2 = false
+      }, 1000)
+      console.log(index, pageSize)
+    },
+    isSelectable2(row, index) {
+      return !['30.00'].includes(row.withdrawing)
     }
   }
 }
