@@ -8,7 +8,7 @@
 <template>
   <div class="select-demo">
     <sp-select v-model="value8">
-      <i v-if="icon" slot="prepend" :class="icon"></i>
+      <i slot="prepend" :class="icon"></i>
       <sp-option
         v-for="item in list8"
         :key="item.value"
@@ -28,7 +28,7 @@ export default{
         { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
         { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
       ],
-      value8: 1
+      value8: ''
     }
   },
   watch: {
@@ -45,6 +45,54 @@ export default{
 </script>
 ```
 :::
+
+### 自定义select 自定义前置图标 全部
+适用广泛的基础单选（支持键盘控制）
+
+:::demo 可自定义前置元素，一般是icon或者img
+```vue
+<template>
+  <div class="select-demo">
+    <sp-select v-model="value12" clearable>
+      <i slot="prepend" :class="icon12"></i>
+      <sp-option
+        v-for="item in list12"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      ></sp-option>
+    </sp-select>
+  </div>
+</template>
+
+<script>
+export default{
+  data(){
+    return {
+      list12: [
+        { label: '全部', value: '' , icon: 'sp-icon-add-bold' },
+        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
+        { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
+        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
+      ],
+      value12: ''
+    }
+  },
+  watch: {
+    value12(val) {
+      console.log(val)
+    }
+  },
+  computed: {
+    icon12() {
+      return (this.list12.find(item => item.value === this.value12) || {}).icon
+    }
+  }
+}
+</script>
+```
+:::
+
 
 ### 自定义 select 样式
 适用广泛的基础单选（支持键盘控制）
@@ -351,6 +399,7 @@ export default{
     <sp-select
       v-model="value4"
       filterable
+      clearable
     >
       <sp-option
         v-for="item in list4"
@@ -408,11 +457,12 @@ export default{
   data(){
     return {
       list9: [
+        { label: '全部', value: '' , icon: 'sp-icon-add-bold' },
         { label: 'cat', value: 1 , icon: 'sp-icon-file' },
         { label: 'pig', value: 2 , icon: 'sp-icon-check' },
         { label: 'dog', value: 3 , icon:'sp-icon-search' },
       ],
-      value9: 1
+      value9: ''
     }
   },
   watch: {
@@ -698,11 +748,12 @@ export default{
       ],
       value8: '',
       list9: [
+        { label: '全部', value: '' , icon: 'sp-icon-add-bold' },
         { label: 'cat', value: 1 , icon: 'sp-icon-file' },
         { label: 'pig', value: 2 , icon: 'sp-icon-check' },
         { label: 'dog', value: 3 , icon:'sp-icon-search' },
       ],
-      value9: 1,
+      value9: '',
       list10: [
         { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
         { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
@@ -714,7 +765,14 @@ export default{
         { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
         { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
       ],
-      value11: 1
+      value11: 1,
+      list12: [
+        { label: '全部', value: '' , icon: 'sp-icon-add-bold' },
+        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
+        { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
+        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
+      ],
+      value12: ''
     }
   },
   watch: {
@@ -750,6 +808,9 @@ export default{
     },
     value11(val) {
       console.log(val)
+    },
+    value12(val) {
+      console.log(val)
     }
   },
   computed: {
@@ -761,6 +822,9 @@ export default{
     },
     icon9() {
       return (this.list9.find(item => item.value === this.value9) || {}).icon
+    },
+    icon12() {
+      return (this.list12.find(item => item.value === this.value12) || {}).icon
     },
     valueText() {
       let label = (this.list10.find(item => item.value === this.value10) || {}).label
