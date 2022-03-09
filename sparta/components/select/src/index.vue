@@ -230,7 +230,7 @@ export default {
       return this.spOptions.every(option => !option.visible)
     },
     showClearIcon() {
-      return this.clearable && this.inputText !== '' && this.isHover && !this.multiple
+      return this.clearable && this.inputText !== '' && this.isHover && !this.multiple && this.value
     },
     hasSpOptions() {
       return this.spOptions && this.spOptions.length
@@ -239,8 +239,8 @@ export default {
       return this.disabled || this.readonly
     },
     showPrepend() {
-      return this.$slots.prepend && (
-        !this.filterable || (this.filterable && !this.oldInputText && this.inputText && !this.visible)
+      return this.$slots.prepend && this.inputText && (
+        !this.filterable || (this.filterable && !this.oldInputText && !this.visible)
       )
     },
     isIE() {
@@ -377,9 +377,10 @@ export default {
           this.spOptions.map(item => {
             return item.selected = false
           })
-          this.updateTagboxHeight()
         }
-      } else if (this.multiple) {
+      }
+
+      if (this.multiple) {
         this.selected = []
         // 多选情况
         for (let i = 0, len = this.spOptions.length; i < len; i++) {
@@ -387,10 +388,10 @@ export default {
             if (this.spOptions[i].value === val[j]) {
               this.selected.push({ label: this.spOptions[i].label, value: this.spOptions[i].value })
               this.spOptions[i].selected = true
-              this.updateTagboxHeight()
             }
           }
         }
+        this.updateTagboxHeight()
       } else {
         // 单选情况
         for (let i = 0, len = this.spOptions.length; i < len; i++) {

@@ -769,6 +769,70 @@ describe('Select', () => {
 })
 
 
+describe('interact', () => {
+  const wrapper = mount({
+    data() {
+      return {
+        val: '',
+        optionsData: getTestData(),
+        filterable: false
+      }
+    },
+    template: `
+    <div>
+    <sp-button class="sp-select-other-button">interact</sp-button>
+      <sp-select 
+        ref="select"
+        :filterable="filterable"
+        v-model="val">
+        <i slot="prepend" :class="icon"></i>
+        <sp-option 
+         v-for="(item, index) in optionsData"
+         :key="index"
+         :label="item.name"
+         :value="item.id" 
+         :disabled="item.disabled"
+        >
+        <i :class="item.label"></i><span>{{item.name}}</span>
+        </sp-option>
+      </sp-select>
+    </div>
+    `,
+    components: {
+      'sp-select': Select,
+    },
+    computed: {
+      icon() {
+        return (this.optionsData.find(item => item.id === this.val) || {}).icon
+      }
+    }
+  })
+  document.body.appendChild(wrapper.vm.$el)
+
+  describe('check prepend', () => {
+    it('不可搜索，值为空的时候，不显示icon的位置', async () => {
+      expect(wrapper.find('.sp-select__prepend').isVisible()).to.be.false
+    })
+  
+    it('不可搜索，有值的时候，不显示icon的位置', async () => {
+      await wrapper.setData({ val: 1 })
+      expect(wrapper.find('.sp-select__prepend').isVisible()).to.be.true
+    })
+  
+    it('可搜索，值为空的时候，不显示icon的位置', async () => {
+      await wrapper.setData({ val: '', filterable: true })
+      expect(wrapper.find('.sp-select__prepend').isVisible()).to.be.false
+    })
+  
+    it('可搜索，有值的时候，不显示icon的位置', async () => {
+      await wrapper.setData({ val: 1 })
+      expect(wrapper.find('.sp-select__prepend').isVisible()).to.be.true
+    })
+  })
+
+})
+
+
 /**
  * 清空组件值
  * @param {*} wrapper 
