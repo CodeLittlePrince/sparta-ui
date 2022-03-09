@@ -376,6 +376,86 @@ describe('Table', () => {
       document.body.removeChild(wrapper.vm.$el)
     })
   })
+
+  describe('interact', () => {
+    const wrapper = mount({
+      data() {
+        return {
+          testData: getTestData(),
+          selectedList: []
+        }
+      },
+      template: `
+       <sp-table 
+       :list="testData"
+       :selection="true"
+       :pagination="true"
+       ref="table"
+       :pagination-option="{ total: 1000 }"
+       @selection-change="handleSelectionChange"
+       :selectable="isSelectable"
+       >
+          <sp-table-column prop="id" />
+          <sp-table-column prop="name" label="片名" />
+          <sp-table-column prop="release" label="发行日期" />
+          <sp-table-column prop="director" label="导演" />
+          <sp-table-column prop="runtime" label="时长（分）" :formatter="formatter"/>
+       </sp-table>
+      `,
+      components: {
+        'sp-table': Table,
+        'sp-table-column': TableColum
+      },
+      methods: {
+        formatter(cell) {
+          return cell + '分钟'
+        },
+        handleSelectionChange(data) {
+          this.selectedList = data
+        },
+        isSelectable(row, index) {
+          return ![4].includes(row.id)
+        }
+      }
+    })
+    document.body.appendChild(wrapper.vm.$el)
+
+    it('checkbox part able', async () => {
+      await wrapper.find('.sp-table__footer-left-content .sp-checkbox__input').trigger('click')
+      expect(wrapper.vm.selectedList.length).to.be.equal(4)
+      expect(wrapper.vm.$children[0].checkAll).to.be.true
+
+      await wrapper.vm.$refs.table.toggleAllSelection()
+      expect(wrapper.vm.selectedList.length).to.be.equal(0)
+      expect(wrapper.vm.$children[0].checkAll).to.be.false
+
+      await wrapper.vm.$refs.table.toggleAllSelection()
+      expect(wrapper.vm.selectedList.length).to.be.equal(4)
+      expect(wrapper.vm.$children[0].checkAll).to.be.true
+
+      await wrapper.vm.$refs.table.clearSelection()
+      expect(wrapper.vm.selectedList.length).to.be.equal(0)
+      expect(wrapper.vm.$children[0].checkAll).to.be.false
+
+      await wrapper.vm.$refs.table.toggleRowSelection(3, true)
+      expect(wrapper.vm.selectedList.length).to.be.equal(0)
+      expect(wrapper.vm.$children[0].checkAll).to.be.false
+
+      await wrapper.vm.$refs.table.toggleAllSelection()
+      expect(wrapper.vm.selectedList.length).to.be.equal(4)
+      expect(wrapper.vm.$children[0].checkAll).to.be.true
+
+      await wrapper.setData({ testData: [
+        { id: 11, name: 'A Bug\'s Life', release: '1995-11-22', director:'John Lasseter', runtime: 80 }
+      ]})
+      expect(wrapper.vm.selectedList.length).to.be.equal(0)
+      expect(wrapper.vm.$children[0].checkAll).to.be.false
+    })
+
+    after(() => {
+      document.body.removeChild(wrapper.vm.$el)
+    })
+  })
   
 
 })

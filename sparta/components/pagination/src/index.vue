@@ -3,6 +3,7 @@
     <ul :class="`align--${ align }`">
       <!-- prev -->
       <li
+        class="sp-pagination__li-prev"
         :class="{'is--disabled' : index === 1}"
         @click="prev"
       >
@@ -43,6 +44,7 @@
       </li>
       <!-- next -->
       <li
+        class="sp-pagination__li-next"
         :class="{'is--disabled' : index === pages}"
         @click="next"
       >
@@ -257,6 +259,7 @@ export default {
       border-left: $border-base;
       margin-right: 10px;
       background-color: $pagination-item-prev-next-background;
+      color: #97a2b5;
     }
 
     &:last-child {
@@ -265,6 +268,7 @@ export default {
       border-left: $border-base;
       margin-left: 10px;
       background-color: $pagination-item-prev-next-background;
+      color: #97a2b5;
     }
 
     &:nth-child(2) {
@@ -281,8 +285,10 @@ export default {
   &:not(.is--disabled) li{
       cursor: pointer;
       &:hover {
-        background-color: $pagination-background;
         color: $pagination-item-color--is-hover;
+      }
+      &:not(.sp-pagination__li-prev):not(.sp-pagination__li-next):not(.is--checked):hover {
+        background-color: $pagination-background;
       }
 
       &.is--disabled,
