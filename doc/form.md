@@ -542,6 +542,7 @@
 | validate | 对整个表单进行校验的方法，参数为一个回调函数。该回调函数会在校验结束后被调用，并传入2个参数：是否校验成功和未通过校验的字段。若不传入回调函数，则会返回一个 promise；validate的第二个参数为支持部分字段校验，不传则为全部字段校验 | Function(callback: Function(boolean, object), partFields)
 | resetFields | 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果 | —
 | clearValidate | 移除表单项的校验结果。传入待移除的表单项的 prop 属性或者 prop 组成的数组，如不传则移除整个表单的校验结果果 | Function(props: array | string)
+| getFirstErrorText | 获取第一个报错元素的错误文案 | —
 
 ### Form Events
 | 事件名称 | 说明    | 回调参数  |

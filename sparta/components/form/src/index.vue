@@ -50,7 +50,8 @@ export default {
 
   data() {
     return {
-      fields: []
+      fields: [],
+      firstErrorText: ''
     }
   },
   
@@ -106,6 +107,8 @@ export default {
     },
 
     validate(callback, partFields) {
+      this.firstErrorText = ''
+
       if (!this.model) {
         console.warn('[Sparta Warn][Form]model is required for validate to work!')
         return
@@ -160,6 +163,7 @@ export default {
                 errorTipElem.innerText &&
                 !hasPartFields
               ) {
+                this.firstErrorText = errorTipElem.innerText
                 this.toastError(errorTipElem.innerText)
               }
               // 滚动到错误位置;部分校验就不用滚动了(因为场景基本都是输入或者选择完后立马触发)
@@ -195,6 +199,10 @@ export default {
       if (promise) {
         return promise
       }
+    },
+
+    getFirstErrorText() {
+      return this.firstErrorText
     },
 
     _getDistanceToBody(element) {
