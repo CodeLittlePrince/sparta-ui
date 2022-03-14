@@ -120,3 +120,10 @@ export const triggerKeyDown = (el, keyCode) => {
 export async function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
+
+// transition mock
+export const transitionStub = {
+  render() {
+    return this.$options._renderChildren;
+  },
+}
