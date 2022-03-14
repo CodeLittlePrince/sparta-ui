@@ -64,12 +64,12 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: [
+    browsers: process.env.CI === 'Y' ? [
       'Chrome',
-      // 'Safari', // karma-safari-launcher
+      'Safari', // karma-safari-launcher
       // 'Firefox', // karma-firefox-launcher
       // 'IE' // karma-ie-launcher
-    ],
+    ] : [ 'Chrome' ],
 
     customLaunchers: {
       IE9: {
@@ -89,7 +89,7 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: process.env.SINGLE_RUN === 'Y',
+    singleRun: process.env.CI === 'Y',
 
     // Concurrency level
     // how many browser should be started simultaneous
