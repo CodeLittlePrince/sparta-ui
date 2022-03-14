@@ -4,7 +4,7 @@ const webpackConfigBase = require('../site/webpack.config.base.js')
 const config = Object.assign(webpackConfigBase.config, {
   // sourcemap 模式
   mode: 'development',
-  devtool: process.env.SINGLE_RUN === 'Y' ? '' : '#inline-source-map',
+  devtool: process.env.CI === 'Y' ? '' : '#inline-source-map',
   resolve: Object.assign(webpackConfigBase.config.resolve, {
     alias: Object.assign(webpackConfigBase.config.resolve.alias, {
       // https://github.com/vuejs-templates/webpack/issues/215#issuecomment-238095102
