@@ -163,7 +163,7 @@ describe('date-picker', () => {
           await wrapper.vm.$nextTick()
           const currentTime = wrapper.find('.sp-input__inner').element.value
           await wrapper.vm.$nextTick()
-          expect(handleDateChange.calledWith(+new Date(currentTime))).to.be.true
+          expect(handleDateChange.calledWith(format.modifyDate(currentTime).getTime())).to.be.true
         })
         it('删除输入框内的值，应派发change事件', async () => {
           await wrapper.find('.sp-input__inner').setValue('')
@@ -176,7 +176,7 @@ describe('date-picker', () => {
           await wrapper.find('.sp-date-picker-pane-day__cell.is--today').trigger('click')
           await wrapper.find('.sp-date-picker__foot .sp-date-picker__select').trigger('click')
           const currentTime = wrapper.find('.sp-input__inner').element.value
-          expect(handleDateChange.calledWith(+new Date(currentTime))).to.be.true
+          expect(handleDateChange.calledWith(format.modifyDate(currentTime).getTime())).to.be.true
         })
         it('更改输入框内的值，应派发change事件', async () => {
           await wrapper.find('.sp-input__inner').setValue('2019-02-27 00:00:00')
