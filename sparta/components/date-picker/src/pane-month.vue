@@ -170,7 +170,7 @@ export default {
 
 .sp-date-picker-pane-month {
   padding: 6px 0 4px;
-  width: $date-picker-pane-width;
+  width: 100%;
   float: left;
   box-sizing: border-box;
 

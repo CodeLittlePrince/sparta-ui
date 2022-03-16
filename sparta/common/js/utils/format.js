@@ -57,8 +57,10 @@ const formatNumberTo2digits = function(number) {
  * 2021-11-02 00:00:00 => 2021/11/02T00:00:00
  */
 const modifyDate = function modifyDate(date) {
-  if (!date) return date
-  return new Date(date.replace(/-/g,'/'))
+  if (typeof date === 'string') {
+    return isNaN(Date.parse(date)) ? new Date(date.replace(/-/g, '/')) : new Date(date)
+  }
+  return date
 }
 
 export default {

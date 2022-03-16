@@ -8,6 +8,7 @@
     <div
       v-if="!isRangeType"
       class="sp-date-picker-content"
+      @click="handleInputClick"
     >
       <sp-input
         v-model="model"
@@ -16,7 +17,7 @@
         :disabled="disabled"
         :placeholder="placeholder"
         prefix-icon="sp-icon-calendar"
-        @click="handleInputClick"
+        @focus="handleInputClick"
         @blur="handleInputBlur"
         @input="handleInput"
         @clear="handleClear"
@@ -46,7 +47,6 @@
                   :now-day="nowDay"
                   @calYearChange="handleCalYearChange"
                   @calMonthChange="handleCalMonthChange"
-                  @calDayChange="handleCalDayChange"
                   @yearChange="handleYearChange"
                   @monthChange="handleMonthChange"
                   @dayChange="handleDayChange"
@@ -92,11 +92,13 @@
             >
               <a
                 href="javascript:void(0);"
+                class="sp-date-picker__current-time"
                 @click="handleClickCurrentTime"
               >此刻</a>
               <sp-button
                 type="primary"
                 size="mini"
+                class="sp-date-picker__select"
                 @click="handleSubmitTime"
               >确认</sp-button>
               <a
@@ -108,7 +110,7 @@
               <a
                 v-show="visibleSelectDayBtn"
                 href="javascript:void(0);"
-                class="sp-date-picker__select-time-btn"
+                class="sp-date-picker__select-time-btn sp-date-picker__select-date-btn"
                 @click="handleClickSelectDay"
               >选择日期</a>
             </div>
@@ -130,9 +132,11 @@
           v-model="modelStart"
           readonly
           class="sp-date-picker-range-input"
+          prefix-icon="sp-icon-calendar"
           :disabled="disabled"
           :placeholder="startPlaceholder"
-          prefix-icon="sp-icon-calendar"
+          @focus="handleRangeClick"
+          @input="handleRangeStartInput"
         />
       </div>
       <!-- 结束input -->
@@ -145,6 +149,8 @@
           :clearable="clearable"
           :placeholder="endPlaceholder"
           @clear="handleRangeClear"
+          @focus="handleRangeClick"
+          @input="handleRangeEndInput"
         />
       </div>
       <!-- 下拉 -->
@@ -231,7 +237,6 @@
                       :now-day="nowDay"
                       @calYearChange="handleCalYearEndChange"
                       @calMonthChange="handleCalMonthEndChange"
-                      @calDayChange="handleCalDayEndChange"
                       @yearChange="handleYearEndChange"
                       @monthChange="handleMonthEndChange"
                       @dayChange="handleDayEndChange"
@@ -275,6 +280,7 @@
                 <sp-button
                   type="primary"
                   size="mini"
+                  class="sp-date-picker__range-select"
                   @click="handleSubmitTimeRange"
                 >确认</sp-button>
                 <a
@@ -286,7 +292,7 @@
                 <a
                   v-show="visibleSelectDayRangeBtn & showTime"
                   href="javascript:;"
-                  class="sp-date-picker__select-time-btn"
+                  class="sp-date-picker__select-time-btn sp-date-picker__select-date-btn"
                   @click="handleClickSelectRangeDay"
                 >选择日期</a>
               </div>
@@ -461,16 +467,11 @@ export default {
       visiblePaneTimeEnd: false,
       isRangeSelecting: false, // 日期范围是否在选择中,即只选中了一个日期
       rangeDateList: [], // daterange 传递给pane-day组件的值
-      lastRangeDateList: []
+      lastRangeDateList: [], //
     }
   },
 
   computed: {
-    showClear() {
-      return (!this.disabled) &&
-        (this.modelStart !== '' || this.modelEnd !== '') &&
-        this.isHover
-    },
     isRangeDateInSamePane() { // 是否选择了同一个月份中的2个日期
       if(!this.modelEnd || !this.modelStart) return false
       const endDate = format.modifyDate(this.modelEnd)
@@ -481,45 +482,48 @@ export default {
       const startMonth = startDate.getMonth()
       return endYear === startYear && startMonth === endMonth
     },
+    isDateType() {
+      return this.type === 'date'
+    },
     isRangeType() {
       return ['daterange'].includes(this.type)
     },
     isMonthType() {
       return ['month'].includes(this.type)
+    },
+    isYearType() {
+      return ['year'].includes(this.type)
     }
   },
 
   watch: {
     value: {
-      immediate: true,
+      immediate: false,
       handler(val) {
-        const format = this.type === 'year' ? 'yyyy' : this.isMonthType ? 'yyyy-MM' : this.showTime ? 'yyyy-MM-dd hh:mm:ss' : 'yyyy-MM-dd'
-        const displayValue = this.formatDisplayValue(val, format)
+        const formatType = this.isYearType ? 'yyyy' : this.isMonthType ? 'yyyy-MM' : this.showTime ? 'yyyy-MM-dd hh:mm:ss' : 'yyyy-MM-dd'
+        let modelStart
+        let modelEnd
+        let model
         // 范围类型
         if (
           this.isRangeType &&
           val &&
           val instanceof Array &&
-          this._valiate(displayValue[0], 'start') &&
-          this._valiate(displayValue[1], 'end')
+          this._valiate(modelStart = format.formatDate(format.modifyDate(val[0]), formatType), 'start') &&
+          this._valiate(modelEnd = format.formatDate(format.modifyDate(val[1]), formatType), 'end')
         ) {
-          const [start, end] = displayValue
-          this.modelStart = start
-          this.modelEnd = end
-          this.rangeDateList = displayValue
-          this.$nextTick(()=>{
-            this._setCalValuesStart()
-            this._setCalValuesEnd()
-          })
+          this.modelStart = modelStart
+          this.modelEnd = modelEnd
+          this.rangeDateList = [modelStart, modelEnd]
           return
         }
         // 普通类型
         if (
           !this.isRangeType &&
           val &&
-          this._valiate(displayValue)
+          this._valiate(model = format.formatDate(format.modifyDate(val), formatType))
         ) {
-          this.model = displayValue
+          this.model = model
           return
         }
         // 其它
@@ -527,8 +531,10 @@ export default {
           this.modelStart = ''
           this.modelEnd = ''
           this.rangeDateList = []
+          this.lastRangeDateList = []
         } else {
           this.model = ''
+          this.lastModel = ''
         }
       }
     },
@@ -564,17 +570,17 @@ export default {
       }
     },
     modelStart(val) {
-      if (!val) {
+      if (!val && !this.modelEnd) {
         this._resetDateStart()
-      } else {
-        this._setValuesStart()
+      } else if(this._valiate(val, 'start')) {
+        this._calDateStart()
       }
     },
     modelEnd(val) {
-      if (!val) {
+      if (!val && !this.modelStart) {
         this._resetDateEnd()
-      } else {
-        this._setValuesEnd()
+      } else if(this._valiate(val, 'end')) {
+        this._calDateEnd()
       }
     },
     time(val) {
@@ -588,41 +594,65 @@ export default {
       this.$emit('input', result)
       this.dispatch('SpFormItem', 'sp.form.change', result)
     },
-    timeStart(val) {
+    timeStart(val, oldValue) {
       if(!val) return
       const year = this.yearStart || this.nowYear
       const month = format.formatNumberTo2digits(+(this.monthStart === '' ? this.nowMonth : this.monthStart) + 1)
       const day = format.formatNumberTo2digits(this.dayStart || this.nowDay)
       const date = [year, month, day].join('-')
       this.modelStart = `${date} ${val}`
+      if(oldValue) {
+        const result = this.formatValue([this.modelStart, this.modelEnd])
+        this.$emit('input', result)
+        this.dispatch('SpFormItem', 'sp.form.change', result)
+      }
     },
-    timeEnd(val) {
+    timeEnd(val, oldValue) {
       if(!val) return
       const year = this.yearEnd || this.nowYear
-      const month = format.formatNumberTo2digits(+(this.monthEnd === '' ? this.nowMonth : this.monthEnd) + 1)
+      let month = +(this.monthEnd === '' ? this.nowMonth : this.monthEnd) + 1
+      if(this.isRangeDateInSamePane) month -= 1
+      month = format.formatNumberTo2digits(month)
       const day = format.formatNumberTo2digits(this.dayEnd || this.nowDay)
       const date = [year, month, day].join('-')
       this.modelEnd = `${date} ${val}`
+      
+      if(oldValue) {
+        const result = this.formatValue([this.modelStart, this.modelEnd])
+        this.$emit('input', result)
+        this.dispatch('SpFormItem', 'sp.form.change', result)
+      }
+
     },
     isDateFocus(val) {
-      if (!val) {
+      if (val) {
+        this.lastModel = this.model
+        this.lastRangeDateList = this.rangeDateList
+      } else {
         if(this.isRangeType) {
           this.handleRangeBlur()
+          this._setDefaultRange()
         }
-        this.emitChangeEvent()
-      } else {
-        this.lastModel = this.model
-        this.lastRangeDateList = [...this.rangeDateList]
       }
-    }
+    },
   },
 
   created() {
     // 设置默认值
     this._setNow()
+    
+    const displayValue = this.formatDisplayValue(this.value)
     if (this.isRangeType) {
+      if(Array.isArray(displayValue)) {
+        this.modelStart = displayValue[0]
+        this.modelEnd = displayValue[1]
+        this.rangeDateList = displayValue
+        this.lastRangeDateList = displayValue
+      }
       this._setDefaultRange()
     } else {
+      this.model = displayValue
+      this.lastModel = displayValue
       this._setDefault()
     }
     document.addEventListener('click', this.handleOtherAreaClick)
@@ -646,7 +676,8 @@ export default {
       } else {
         this._resetDateStart()
       }
-      if (this.modelEnd && !this.isRangeDateInSamePane && this._valiate(this.modelEnd, 'end')) {
+      // if (this.modelEnd && !this.isRangeDateInSamePane && this._valiate(this.modelEnd, 'end')) {
+      if (this.modelEnd && this._valiate(this.modelEnd, 'end')) {
         this._calDateEnd()
       } else {
         this._resetDateEnd()
@@ -707,35 +738,33 @@ export default {
     _calDateStart() {
       if (this._valiate(this.modelStart, 'start')) {
         this._setValuesStart()
-        if(!this.isRangeDateInSamePane && !this.isRangeSelecting) this._setCalValuesStart()
+        // if(!this.isRangeDateInSamePane && !this.isRangeSelecting) this._setCalValuesStart()
+        this._setCalValuesStart()
       }
     },
     _calDateEnd() {
       if (this._valiate(this.modelEnd, 'end')) {
         this._setValuesEnd()
-        if(!this.isRangeDateInSamePane) this._setCalValuesEnd()
+        // if(!this.isRangeDateInSamePane) this._setCalValuesEnd()
+        this._setCalValuesEnd()
       }
     },
 
     _setValues() {
       // 如果是showTime，则说明this.model的格式为yyyy-MM-dd hh:mm:ss;
       // 否则为yyyy-MM-dd
-      if (this.showTime) {
-        const pieces = this.model.split(' ')
-        const datePieces = pieces[0].split('-')
+      const pieces = this.model.split(' ')
+      const datePieces = pieces[0].split('-')
+        
+      this.year = +datePieces[0]
+      this.month = +datePieces[1] - 1
+      this.day = +datePieces[2]
+      if(pieces[1]) {
         const timePieces = pieces[1].split(':')
-        this.year = +datePieces[0]
-        this.month = +datePieces[1] - 1
-        this.day = +datePieces[2]
         this.hour = timePieces[0]
         this.minute = timePieces[1]
         this.second = timePieces[2]
         this.time = pieces[1]
-      } else {
-        const pieces = this.model.split('-')
-        this.year = +pieces[0]
-        this.month = +pieces[1] - 1
-        this.day = +pieces[2]
       }
     },
 
@@ -748,22 +777,19 @@ export default {
     _setValuesStart() {
       // 如果是showTime，则说明this.model的格式为yyyy-MM-dd hh:mm:ss;
       // 否则为yyyy-MM-dd
-      if (this.showTime) {
-        const pieces = this.modelStart.split(' ')
-        const datePieces = pieces[0].split('-')
+      const pieces = this.modelStart.split(' ')
+      const datePieces = pieces[0].split('-')
+        
+      this.yearStart = +datePieces[0]
+      this.monthStart = +datePieces[1] - 1
+      this.dayStart = +datePieces[2]
+
+      if( pieces[1]) {
         const timePieces = pieces[1].split(':')
-        this.yearStart = +datePieces[0]
-        this.monthStart = +datePieces[1] - 1
-        this.dayStart = +datePieces[2]
         this.hourStart = timePieces[0]
         this.minuteStart = timePieces[1]
         this.secondStart = timePieces[2]
         this.timeStart = pieces[1]
-      } else {
-        const pieces = this.modelStart.split('-')
-        this.yearStart = +pieces[0]
-        this.monthStart = +pieces[1] - 1
-        this.dayStart = +pieces[2]
       }
     },
 
@@ -775,28 +801,25 @@ export default {
     _setValuesEnd() {
       // 如果是showTime，则说明this.model的格式为yyyy-MM-dd hh:mm:ss;
       // 否则为yyyy-MM-dd
-      if (this.showTime) {
-        const pieces = this.modelEnd.split(' ')
-        const datePieces = pieces[0].split('-')
+      const pieces = this.modelEnd.split(' ')
+      const datePieces = pieces[0].split('-')
+        
+      this.yearEnd = +datePieces[0]
+      this.monthEnd = +datePieces[1] - 1
+      this.dayEnd = +datePieces[2]
+      if(pieces[1]) {
         const timePieces = pieces[1].split(':')
-        this.yearEnd = +datePieces[0]
-        this.monthEnd = +datePieces[1] - 1
-        this.dayEnd = +datePieces[2]
         this.hourEnd = timePieces[0]
         this.minuteEnd = timePieces[1]
         this.secondEnd = timePieces[2]
         this.timeEnd = pieces[1]
-      } else {
-        const pieces = this.modelEnd.split('-')
-        this.yearEnd = +pieces[0]
-        this.monthEnd = +pieces[1] - 1
-        this.dayEnd = +pieces[2]
       }
+
       if(this.isRangeDateInSamePane) {
         if(this.monthEnd === 11) {
           this.monthEnd = 0
           this.yearEnd += 1
-        }else{
+        } else {
           this.monthEnd += 1
         }
       }
@@ -837,7 +860,7 @@ export default {
       } else if(this.isMonthType && /^\d{4}-\d{2}$/.test(time)) {
         datePieces = time.split('-')
         datePieces.push(1) // 月份选择器，默认1号
-      } else if(this.type === 'year' && /^\d{4}$/.test(time)) {
+      } else if(this.isYearType && /^\d{4}$/.test(time)) {
         datePieces = [time, 1, 1]
       } else if ((!this.showTime) && /^\d{4}-\d{2}-\d{2}$/.test(time)) {
         datePieces = time.split('-')
@@ -877,8 +900,48 @@ export default {
     handleInput() {
       if (this._valiate(this.model)) {
         const result = this.formatValue(this.model)
+        this.emitChangeEvent()
         this.$emit('input', result)
         this.dispatch('SpFormItem', 'sp.form.change', result)
+        this.lastModel = this.model
+      }
+    },
+    handleRangeStartInput() {
+      this.handleRangeClick()
+      if(!this.modelStart) {
+        this.$nextTick(()=>{
+          this.modelStart = this.lastRangeDateList[0]
+        })
+      } else if(this._valiate(this.modelStart, 'start')) {
+        this._calDateStart()
+        if(!this.modelEnd && !this.lastRangeDateList[1]) {
+          this.handleRangeModelChange({date: this.modelStart, type: 'click'})
+        }
+      }
+      this.handleRangeInput()
+    },
+    handleRangeEndInput() {
+      this.handleRangeClick()
+      if(!this.modelEnd) {
+        this.$nextTick(()=>{
+          this.modelEnd = this.lastRangeDateList[1]
+        })
+      } else if(this._valiate(this.modelEnd, 'end')) {
+        this._calDateEnd()
+        if(!this.modelStart && !this.lastRangeDateList[0]) {
+          this.handleRangeModelChange({date: this.modelEnd, type: 'click'})
+        }
+      }
+      this.handleRangeInput()
+    },
+    handleRangeInput() {
+      if (this._valiate(this.modelStart, 'start') && this._valiate(this.modelEnd, 'end')) {
+        const result = this.formatValue([this.modelStart, this.modelEnd])
+        this.rangeDateList = [this.modelStart, this.modelEnd]
+        this.emitChangeEvent()
+        this.$emit('input', result)
+        this.dispatch('SpFormItem', 'sp.form.change', result)
+        this.lastRangeDateList = [this.modelStart, this.modelEnd]
       }
     },
     /**
@@ -902,95 +965,89 @@ export default {
       }
     },
 
-    /**
-     * 不符合格式的值，如果之前有值则用之前的值，否则清除
-     */
-    handleInputBlur() {
-      if (
-        !this._valiate(this.model) &&
-        this.year && this.month !== '' && this.day
-      ) {
-        const year = this.year
-        const month = format.formatNumberTo2digits(+this.month + 1)
-        const day = format.formatNumberTo2digits(this.day)
-        const date = this.isMonthType ? [year, month].join('-') : [year, month, day].join('-')
-        let rst = date
-        if (this.showTime) {
-          const hour = format.formatNumberTo2digits(this.hour)
-          const minute = format.formatNumberTo2digits(this.minute)
-          const second = format.formatNumberTo2digits(this.second)
-          const time = [hour, minute, second].join(':')
-          rst = `${date} ${time}`
-        }
-        this.model = rst
-      } else if (
-        !this._valiate(this.model) &&
-        !(this.year && this.month !== '' && this.day)
-      ) {
-        this.model = ''
-      }
-    },
-
     handleClear() {
       this._resetDate()
+      this.emitChangeEvent(false)
       this.$emit('input', '')
       this.dispatch('SpFormItem', 'sp.form.change', '')
     },
-
+    /**
+     * 范围型清除日期
+     */
+    handleRangeClear() {
+      this._resetDateStart()
+      this._resetDateEnd()
+      this.rangeDateList = []
+      this.lastRangeDateList = []
+      this.emitChangeEvent(false)
+      this.$emit('input', [])
+      this.dispatch('SpFormItem', 'sp.form.change', [])
+    },
+    /**
+     * 点击其他区域触发事件
+     */
+    handleOtherAreaClick(e) {
+      if (
+        !this.isRangeType &&
+        !this.$el.contains(e.target) &&
+        e.target != document.body &&
+        this.visible
+      ) {
+        if(this.showTime) {
+          this.emitChangeEvent()
+        }
+        this._resetAllVisible()
+      }
+      // daterange 类型
+      if (
+        this.isRangeType &&
+        !this.$el.contains(e.target) &&
+        e.target != document.body &&
+        this.visibleDateRange
+      ) {
+        this._resetRangeAllVisible()
+        this.$nextTick(()=>{
+          if(this.showTime) {
+            this.emitChangeEvent()
+          }
+        })
+      }
+    },
+    /**
+     * 不符合格式的值，如果之前有值则用之前的值
+     */
+    handleInputBlur() {
+      if(!this.model) {
+        this.emitChangeEvent()
+        this.$emit('input', '')
+        this.dispatch('SpFormItem', 'sp.form.change', '')
+        this.lastModel = ''
+      } else if(!this._valiate(this.model)) {
+        this.model = this.lastModel
+      }
+    },
     handleRangeBlur() {
-      // start
+      const [lastModelStart, lastModelEnd] = this.lastRangeDateList
       // 如果有yearStart，monthStart，dayStart
       // 且格式验证未通过，则用之前保存的值
-      if (
-        !this._valiate(this.modelStart, 'start') &&
-        this.yearStart && this.monthStart !== '' && this.dayStart
-      ) {
-        const year = this.yearStart
-        const month = format.formatNumberTo2digits(+this.monthStart + 1)
-        const day = format.formatNumberTo2digits(this.dayStart)
-        const date = [year, month, day].join('-')
-        let rst = date
-        if (this.showTime) {
-          const hour = format.formatNumberTo2digits(this.hourStart)
-          const minute = format.formatNumberTo2digits(this.minuteStart)
-          const second = format.formatNumberTo2digits(this.secondStart)
-          const time = [hour, minute, second].join(':')
-          rst = `${date} ${time}`
+      // start
+      if (!this._valiate(this.modelStart, 'start') && lastModelStart) {
+        if(lastModelStart) {
+          this.modelStart = lastModelStart
+        } else {
+          this.modelStart = ''
+          this.modelEnd = ''
         }
-        this.modelStart = rst
-      } else if (
-        !this._valiate(this.modelStart, 'start') &&
-        !(this.yearStart && this.monthStart !== '' && this.dayStart)
-      ) {
-        this.modelStart = ''
-        this.modelEnd = ''
       }
       // end
-      if (
-        !this._valiate(this.modelEnd, 'end') &&
-        this.yearEnd && this.monthEnd !== '' && this.dayEnd
-      ) {
-        const year = this.yearEnd
-        const month = format.formatNumberTo2digits(+this.monthEnd + 1)
-        const day = format.formatNumberTo2digits(this.dayEnd)
-        const date = [year, month, day].join('-')
-        let rst = date
-        if (this.showTime) {
-          const hour = format.formatNumberTo2digits(this.hourEnd)
-          const minute = format.formatNumberTo2digits(this.minuteEnd)
-          const second = format.formatNumberTo2digits(this.secondEnd)
-          const time = [hour, minute, second].join(':')
-          rst = `${date} ${time}`
+      if (!this._valiate(this.modelEnd, 'end')) {
+        if(lastModelEnd) {
+          this.modelEnd = lastModelEnd
+        } else {
+          this.modelEnd = ''
+          this.modelStart = ''
         }
-        this.modelEnd = rst
-      } else if (
-        !this._valiate(this.modelEnd, 'end') &&
-        !(this.yearEnd && this.monthEnd !== '' && this.dayEnd)
-      ) {
-        this.modelEnd = ''
-        this.modelStart = ''
       }
-
       const startDate = this.modelStart ? format.modifyDate(this.modelStart).getTime() : 0
       const endDate = this.modelEnd ? format.modifyDate(this.modelEnd).getTime() : 0
       // 如果modelStart或modelEnd有一个为空，则清除两者
@@ -1004,20 +1061,22 @@ export default {
         this.modelStart = this.modelEnd
         this.modelEnd = temp
       }
-      let rst = []
       if (this.modelStart && this.modelEnd) {
-        this.rangeDateList = rst = [this.modelStart, this.modelEnd]
+        this.rangeDateList = [this.modelStart, this.modelEnd]
       } else {
-        this.rangeDateList = rst = []
+        this.rangeDateList = []
       }
-      const result = this.formatValue(rst)
-      this.$emit('input', result)
-      this.dispatch('SpFormItem', 'sp.form.change', result)
+
+      if(!this.showTime && !this.emitChangeEvent()) {
+        const result = this.formatValue(this.rangeDateList)
+        this.$emit('input', result)
+        this.dispatch('SpFormItem', 'sp.form.change', result)
+      }
     },
 
     handleCalYearChange(val) {
       this.calYear = val
-      if(this.type === 'year') {
+      if(this.isYearType) {
         this.year = val
         this.handleModelChange({date: val.toString() })
         this._resetAllVisible()
@@ -1025,14 +1084,12 @@ export default {
     },
     handleCalMonthChange(val) {
       this.calMonth = val
-      if(this.type === 'month') {
+      if(this.isMonthType) {
         this.handleModelChange({date: [this.calYear || this.nowYear, format.formatNumberTo2digits(val + 1)].join('-')})
         this._resetAllVisible()
       }
     },
-    handleCalDayChange(val) {
-      this.calDay = val
-    },
+
     handleYearChange(val) {
       this.year = val
     },
@@ -1058,17 +1115,26 @@ export default {
     },
     handleDaySelect() {
       if (!this.showTime) {
+        this.emitChangeEvent()
         this._resetAllVisible()
       }
     },
     handleMonthSelect() {
       this.visiblePaneDay = true
-      this.visiblePaneMonth = this.type === 'month'
+      this.visiblePaneMonth = this.isMonthType
+      if(this.isMonthType) {
+        this.emitChangeEvent()
+        this.lastModel = this.model
+      }
     },
     handleYearSelect() {
       this.visiblePaneDay = true
-      this.visiblePaneMonth = this.type === 'month'
-      this.visiblePaneYear = this.type === 'year'
+      this.visiblePaneMonth = this.isMonthType
+      this.visiblePaneYear = this.isYearType
+      if(this.isYearType) {
+        this.emitChangeEvent()
+        this.lastModel = this.model
+      }
     },
     handleSwitchYear() {
       this.visiblePaneDay = false
@@ -1118,11 +1184,14 @@ export default {
         } else {
           compareDate()
           const [start, end] = this.rangeDateList
-        
           this.modelStart = this.showTime ? start + ' ' +[this.hourStart, this.minuteStart, this.secondStart].join(':') : start
           this.modelEnd = this.showTime ? end + ' ' +[this.hourEnd, this.minuteEnd, this.secondEnd].join(':') : end
           if(!this.showTime) {
             this._resetRangeAllVisible()
+          } else {
+            const result = this.formatValue([this.modelStart, this.modelEnd])
+            this.$emit('input', result)
+            this.dispatch('SpFormItem', 'sp.form.change', result)
           }
           this.startDate = undefined
         }
@@ -1157,9 +1226,6 @@ export default {
     handleCalMonthEndChange(val) {
       this.calMonthEnd = val
     },
-    handleCalDayEndChange(val) {
-      this.calDayEnd = val
-    },
     handleYearEndChange(val) {
       this.yearEnd = val
     },
@@ -1169,18 +1235,7 @@ export default {
     handleDayEndChange(val) {
       this.dayEnd = val
     },
-    handleModelEndChange(val) {
-      const date = val
-      let rst = date
-      if (this.showTime) {
-        const hour = format.formatNumberTo2digits(this.hourEnd)
-        const minute = format.formatNumberTo2digits(this.minuteEnd)
-        const second = format.formatNumberTo2digits(this.secondEnd)
-        const time = [hour, minute, second].join(':')
-        rst = `${date} ${time}`
-      }
-      this.modelEnd = rst
-    },
+
     handleMonthEndSelect() {
       this.visiblePaneDayEnd = true
       this.visiblePaneMonthEnd = false
@@ -1200,9 +1255,11 @@ export default {
     },
     handleSubmitTimeRange() {
       this._resetRangeAllVisible()
+      this.emitChangeEvent()
     },
     handleSubmitTime() {
       this._resetAllVisible()
+      this.emitChangeEvent()
     },
     /**
      * 点击此刻
@@ -1210,6 +1267,7 @@ export default {
     handleClickCurrentTime() {
       const now = format.formatDate(+new Date, 'yyyy-MM-dd hh:mm:ss')
       this.model = now
+      this.emitChangeEvent()
       const result = this.formatValue(now)
       this.$emit('input', result)
       this.dispatch('SpFormItem', 'sp.form.change', result)
@@ -1257,38 +1315,6 @@ export default {
       this.visibleSelectTimeRangeBtn = true
       this.visibleSelectDayRangeBtn = false
     },
-    /**
-     * 范围型清除日期
-     */
-    handleRangeClear() {
-      this.modelStart = ''
-      this.modelEnd = ''
-      this.rangeDateList = []
-      this.$emit('input', [])
-      this.dispatch('SpFormItem', 'sp.form.change', [])
-    },
-    /**
-     * 点击其他区域触发事件
-     */
-    handleOtherAreaClick(e) {
-      if (
-        !this.isRangeType &&
-        !this.$el.contains(e.target) &&
-        e.target != document.body &&
-        this.visible
-      ) {
-        this._resetAllVisible()
-      }
-      // daterange 类型
-      if (
-        this.isRangeType &&
-        !this.$el.contains(e.target) &&
-        e.target != document.body &&
-        this.visibleDateRange
-      ) {
-        this._resetRangeAllVisible()
-      }
-    },
     _resetRangeAllVisible() {
       this.isDateFocus = false
       this.visibleDateRange = false
@@ -1311,8 +1337,8 @@ export default {
       this.isFocus = false
       this.visible = false
       this.visiblePaneDay = true
-      this.visiblePaneMonth = this.type === 'month'
-      this.visiblePaneYear = this.type === 'year'
+      this.visiblePaneMonth = this.isMonthType
+      this.visiblePaneYear = this.isYearType
       this.visiblePaneTime = false
       this.visibleSelectTimeBtn = true
       this.visibleSelectDayBtn = false
@@ -1323,19 +1349,26 @@ export default {
       if(Array.isArray(value)) {
         return value.map((item, i) => this.formatValue(item, i))
       }
-      if(!this.showTime) {
+      if(!this.showTime && (this.isRangeType || this.isDateType)) {
         const { hour, minute, second } = this.formatDefaultTime(index)
         value += ` ${hour}:${minute}:${second}`
       }
       const standardDate = format.modifyDate(value).getTime()
       return !this.valueFormat ? standardDate : format.formatDate(standardDate, this.valueFormat)
     },
-    formatDisplayValue(value, type) {
+    formatDisplayValue(value, index) {
       if(!value) return value
+      value = !Array.isArray(value) ? format.modifyDate(value) : value
+      if(!Array.isArray(value) && !this.isValidDate(value)) return ''
+      const formatType = this.isYearType ? 'yyyy' : this.isMonthType ? 'yyyy-MM' : this.showTime ? 'yyyy-MM-dd hh:mm:ss' : 'yyyy-MM-dd'
       if(Array.isArray(value)) {
-        return value.map(item => this.formatDisplayValue(item, type))
+        return value.map((item, index) => this.formatDisplayValue(item, index))
       }
-      return this.isValidDate(value) ? format.formatDate(new Date(value).getTime(), type) : value
+      // index 0 开始时间, index 1 结束时间, index undefined type=date
+      let hour = index === 0 ? this.hourStart : index === 1 ? this.hourEnd : this.hour
+      let minute = index === 0 ? this.minuteStart : index === 1 ? this.minuteEnd : this.minute
+      let second = index === 0 ? this.secondStart : index === 1 ? this.secondEnd : this.second
+      return this.isValidDate(value) ? format.formatDate(new Date(value).setHours(hour, minute, second, 0), formatType) : value
     },
     formatDefaultTime(index) {
       let time = ''
@@ -1358,17 +1391,28 @@ export default {
     isValidDate(d) {
       return d instanceof Date || !isNaN(d)
     },
-    emitChangeEvent() {
-      let isSame = true // 值是否变化，没有变化不派发change事件
-      let result
+    emitChangeEvent(isSame = true) {// 值是否变化，没有变化不派发change事件
+      let result = this.isRangeType ? [] : ''
+      if(!isSame) {
+        this.$emit('change', result)
+        return isSame
+      }
       if(this.isRangeType) {
-        isSame = this.lastRangeDateList[0] === this.rangeDateList[0] && this.lastRangeDateList[1] === this.rangeDateList[1]
-        result = !isSame ? this.formatValue(this.rangeDateList) : ''
-      }else {
+        if(!this._valiate(this.modelStart, 'start') || !this._valiate(this.modelEnd, 'end')) {
+          isSame = true
+        } else {
+          let lastModelStart = ''
+          let lastModelEnd = ''
+          if(this.lastRangeDateList.length) [lastModelStart, lastModelEnd] = this.lastRangeDateList
+          isSame = lastModelStart === this.modelStart && lastModelEnd === this.modelEnd
+          result = !isSame ? this.formatValue(this.rangeDateList) : ''
+        }
+      } else {
         isSame = this.lastModel === this.model
         result = !isSame ? this.formatValue(this.model) : ''
       }
       if(!isSame) this.$emit('change', result)
+      return isSame
     }
   }
 }
@@ -1380,11 +1424,11 @@ export default {
 
 .sp-date-picker {
   color: $date-picker-color;
-  height: 38px;
-  width: $date-picker-pane-width;
+  height: 36px;
+  width: 200px;
   box-sizing: border-box;
   .sp-date-picker-sigle-input.sp-input {
-    width: 194px;
+    width: 200px;
   }
 
   &__dropdown__box {
@@ -1405,6 +1449,7 @@ export default {
     border: $data-picker-range-border;
     border-radius: $input-border-radius;
     transition: $transition-all;
+    overflow: hidden;
 
     &:hover {
       border-color: $color-primary-light-2;
@@ -1526,11 +1571,15 @@ export default {
       .sp-date-picker__dropdown__box {
         width: 400px;
       }
+      .sp-date-picker-range__pane {
+        box-sizing: border-box;
+        width: 196px;
+      }
     }
     &.is--show-time {
       .sp-date-picker-range__pane {
         box-sizing: border-box;
-        width: 199px;
+        width: 196px;
         &:first-child {
           padding-right: 0;
         }

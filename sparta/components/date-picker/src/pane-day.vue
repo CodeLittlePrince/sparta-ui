@@ -258,45 +258,29 @@ export default {
     },
 
     handleLastMonth() {
-      if (this.panelType === 'year') {
+      if (this.calMonth === 0) {
+        this.$emit('calMonthChange', 11)
         this.$emit('calYearChange', this.calYear - 1)
       } else {
-        if (this.calMonth === 0) {
-          this.$emit('calMonthChange', 11)
-          this.$emit('calYearChange', this.calYear - 1)
-        } else {
-          this.$emit('calMonthChange', this.calMonth - 1)
-        }
+        this.$emit('calMonthChange', this.calMonth - 1)
       }
     },
 
     handleLastYear() {
-      if (this.panelType === 'year') {
-        this.$emit('calYearChange', this.calYear - 12)
-      } else {
-        this.$emit('calYearChange', this.calYear - 1)
-      }
+      this.$emit('calYearChange', this.calYear - 1)
     },
     
     handleNextMonth() {
-      if (this.panelType === 'year') {
+      if (this.calMonth === 11) {
+        this.$emit('calMonthChange', 0)
         this.$emit('calYearChange', this.calYear + 1)
       } else {
-        if (this.calMonth === 11) {
-          this.$emit('calMonthChange', 0)
-          this.$emit('calYearChange', this.calYear + 1)
-        } else {
-          this.$emit('calMonthChange', this.calMonth + 1)
-        }
+        this.$emit('calMonthChange', this.calMonth + 1)
       }
     },
     
     handleNextYear() {
-      if (this.panelType === 'year') {
-        this.$emit('calYearChange', this.calYear + 12)
-      } else {
-        this.$emit('calYearChange', this.calYear + 1)
-      }
+      this.$emit('calYearChange', this.calYear + 1)
     },
 
     handleSwitchYear() {
@@ -342,7 +326,7 @@ export default {
 
 .sp-date-picker-pane-day {
   padding: 5px 0;
-  width: $date-picker-pane-width;
+  width: 100%;
   float: left;
   box-sizing: border-box;
 

@@ -9,12 +9,16 @@
 <template>
   <div class="sp-date-pikcer-demo">
    <p class="sp-date-pikcer-demo-p">默认: {{ time1 }}</p>
-    <sp-date-picker v-model="time1" clearable  />
+    <sp-date-picker v-model="time1" clearable @change="handleDateChange"  />
   </div>
-
   <div class="sp-date-pikcer-demo">
     <p class="sp-date-pikcer-demo-p">设置默认时间: {{ time1_1 }}</p>
-    <sp-date-picker v-model="time1_1" clearable default-time="12:00:00" />
+    <sp-date-picker 
+      v-model="time1_1" 
+      clearable 
+      default-time="12:00:00" 
+      @change="handleDateChange"
+     />
   </div>
 </template>
 
@@ -24,6 +28,11 @@ export default {
     return {
       time1: new Date('2019/02/11').getTime(),
       time1_1: new Date('2019/02/11').getTime(),
+    }
+  }，
+  methods:{
+    handleDateChange(value){
+      console.log('change', value, value ? new Date(value) : '')
     }
   }
 }
@@ -40,21 +49,57 @@ export default {
     <sp-date-picker
       v-model="time2"
       :disabled-date="disabledDate"
+      @change="handleDateChange"
     />
+  </div>
+  <div class="sp-date-pikcer-demo">
+    <sp-date-picker
+      v-model="time2_2"
+      type="daterange"
+      clearable
+      :disabled-date="disabledDateRange"
+      @change="handleDaterangeChange"
+    />
+  </div>
+  <div class="sp-date-pikcer-demo">
+     <sp-date-picker
+      v-model="month"
+      type="month"
+      :disabled-date="disabledDate"
+      clearable
+      @change="handleDateChange" />
+  </div>
+  <div class="sp-date-pikcer-demo">
+    <sp-date-picker
+    v-model="year"
+    type="year"
+    :disabled-date="disabledDate"
+    clearable
+    @change="handleDateChange" />
   </div>
 </template>
 
 <script>
-export default{
+export default {
   data() {
     return {
-      time2: ''
+      time2: '',
+      time2_2: [new Date('2019/02/11').getTime(), new Date('2021/11/12').getTime()]
     }
   },
   methods: {
     disabledDate(date) {
       return date.getTime() > Date.now()
-    }
+    },
+    disabledDateRange(date){
+      return date.getTime() < new Date('2019/01/11').getTime() || date.getTime() > new Date('2021/12/12').getTime()
+    },
+    handleDateChange(value){
+      console.log('change', value, value ? new Date(value) : '')
+    },
+    handleDaterangeChange(value){
+      console.log('change', value, [new Date(value[0]), new Date(value[1])])
+    },
   }
 }
 </script>
@@ -67,9 +112,28 @@ export default{
 <template>
   <div class="sp-date-pikcer-demo">
     <sp-date-picker
-      v-model="time3"
+      v-model="time1"
       disabled
     />
+  </div>
+  <div class="sp-date-pikcer-demo">
+    <sp-date-picker
+      type="daterange"
+      v-model="time4"
+      disabled
+    />
+  </div>
+  <div class="sp-date-pikcer-demo">
+     <sp-date-picker
+      v-model="month"
+      type="month"
+      disabled />
+  </div>
+  <div class="sp-date-pikcer-demo">
+    <sp-date-picker
+    v-model="year"
+    type="year"
+    disabled />
   </div>
 </template>
 
@@ -77,7 +141,10 @@ export default{
 export default{
   data() {
     return {
-      time3: '2019-07-07'
+      time1: '2019-02-11',
+      time4: [new Date('2019/02/11').getTime(), new Date('2021/11/12').getTime()],
+      month: new Date('2019/02/11').getTime(),
+      year: new Date('2019/02/11').getTime(),
     }
   }
 }
@@ -102,11 +169,16 @@ export default{
 </template>
 
 <script>
-export default{
+export default {
   data() {
     return {
-      time4: []
+      time4: [new Date('2019/02/11').getTime(), new Date('2021/11/12').getTime()]
     }
+  },
+  methods: {
+    handleDaterangeChange(value){
+      console.log('change', value, [new Date(value[0]), new Date(value[1])])
+    },
   }
 }
 </script>
@@ -122,33 +194,39 @@ export default{
       <sp-date-picker
         v-model="time5"
         :show-time="true"
+        clearable
         @change="handleDateChange"
       ></sp-date-picker>
     </div>
     <div style="margin-top: 20px">
       <sp-date-picker
-        v-model="time6"
+        v-model="time2_2"
         type="daterange"
         start-placeholder="开始日期"
         end-placeholder="结束日期"
         :default-time="['00:00:00', '23:59:59']"
         :show-time="true"
+        clearable
+        @change="handleDaterangeChange"
       ></sp-date-picker>
     </div>
 </template>
 
 <script>
-export default{
+export default {
   data() {
     return {
       time5: '',
-      time6: ''
+      time2_2: [new Date('2019/02/11').getTime(), new Date('2021/11/12').getTime()],
     }
   },
   methods: {
     handleDateChange(value){
       console.log('change', value)
-    }
+    },
+    handleDaterangeChange(value){
+      console.log('change', value, [new Date(value[0]), new Date(value[1])])
+    },
   }
 }
 </script>
@@ -165,6 +243,8 @@ export default{
         v-model="time7"
         :show-time="true"
         :disabled-time="disabledDateTime"
+        @change="handleDateChange"
+        clearable
       ></sp-date-picker>
     </div>
     <div style="margin-top: 20px">
@@ -176,12 +256,14 @@ export default{
         :default-time="['00:00:00', '23:59:59']"
         :disabled-time="disabledRangeTime"
         :show-time="true"
+        clearable
+        @change="handleDaterangeChange"
       ></sp-date-picker>
     </div>
 </template>
 
 <script>
-export default{
+export default {
   data() {
     return {
       time7: '',
@@ -209,7 +291,13 @@ export default{
         disabledMinute: () => [30, 50],
         disabledSecond: () => [55, 56]
       }
-    }
+    },
+    handleDateChange(value){
+      console.log('change', value)
+    },
+    handleDaterangeChange(value){
+      console.log('change', value, [new Date(value[0]), new Date(value[1])])
+    },
   }
 }
 </script>
@@ -226,6 +314,8 @@ export default{
       <sp-date-picker
         type="month"
         v-model="month"
+        @change="handleDateChange"
+        clearable
       ></sp-date-picker>
     </div>
     <div style="margin-top: 20px">
@@ -233,23 +323,98 @@ export default{
       <sp-date-picker
         v-model="year"
         type="year"
+        @change="handleDateChange"
+        clearable
       ></sp-date-picker>
     </div>
 </template>
 
 <script>
-export default{
+export default {
   data() {
     return {
-      month: '',
-      year: '',
+      month: new Date('2019/02/11').getTime(),
+      year: new Date('2019/02/11').getTime(),
     }
+  },
+  methods: {
+    handleDateChange(value){
+      console.log('change', value)
+    },
   }
 }
 </script>
 ```
 :::
 
+### 设置value-format
+
+:::demo 通过`value-format`,可以设置绑定值的格式
+```vue
+<template>
+    <div>
+      <p class="sp-date-pikcer-demo-p">日期: {{ time1_1_1 }}</p>
+      <sp-date-picker
+        v-model="time1_1_1"
+        value-format="yyyy-MM-dd"
+        @change="handleDateChange"
+        clearable
+      ></sp-date-picker>
+    </div>
+    <div class="sp-date-pikcer-demo">
+      <p class="sp-date-pikcer-demo-p">日期: {{ time2_2_2 }}</p>
+      <sp-date-picker
+        v-model="time2_2_2"
+        type="daterange"
+        clearable
+        value-format="yyyy-MM-dd hh:mm:ss"
+        @change="handleDaterangeChange"
+      />
+    </div>
+    <div class="sp-date-pikcer-demo">
+      <p class="sp-date-pikcer-demo-p">日期: {{ month_1 }}</p>
+      <sp-date-picker
+        v-model="month_1"
+        type="month"
+        clearable
+        value-format="yyyy-MM"
+        @change="handleDateChange"
+      />
+    </div>
+    <div class="sp-date-pikcer-demo">
+      <p class="sp-date-pikcer-demo-p">日期: {{ year_1 }}</p>
+      <sp-date-picker
+        v-model="year_1"
+        type="year"
+        clearable
+        value-format="yyyy"
+        @change="handleDateChange"
+      />
+    </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      time1_1_1: '2019-02-11',
+      time2_2_2: ['2019-02-11 00:00:00', '2021-11-12 23:59:59'],
+      month_1: '2019-02',
+      year_1: '2019',
+    }
+  },
+  methods: {
+    handleDateChange(value){
+      console.log('change', value)
+    },
+    handleDaterangeChange(value){
+      console.log('change', value, [new Date(value[0]), new Date(value[1])])
+    },
+  }
+}
+</script>
+```
+:::
 
 ### Attributes
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
@@ -277,35 +442,76 @@ export default{
   data() {
     return {
       time1: new Date('2019/02/11').getTime(),
-      time1_1: new Date('2019/02/11 12:00:00').getTime(),
+      time1_1: new Date('2019/02/11').getTime(),
+      time1_1_1: '2019-02-11',
       time2: '',
+      time2_2: [new Date('2019/02/11').getTime(), new Date('2021/11/12').getTime()],
+      time2_2_2: ['2019-02-11 00:00:00', '2021-11-12 23:59:59'],
       time3: '2019-07-07',
       time4: [new Date('2019/02/11').getTime(), new Date('2021/11/12').getTime()],
       time5: '',
       time6: '',
       time7: '',
       time8: '',
-      month: '',
-      year: '',
+      month: new Date('2019/02/11').getTime(),
+      year: new Date('2019/02/11').getTime(),
+      month_1: '2019-02',
+      year_1: '2019',
     }
   },
   watch: {
-    time1(val) {
-      console.log(val)
+    time1(value) {
+      console.log(value, value ? new Date(value) : '')
     },
-    time4(val) {
-      console.log(val)
+    time1_1(value) {
+      console.log(value, value ? new Date(value) : '')
     },
-    time5(val) {
-      console.log(val)
+    time1_1_1(value) {
+      console.log(value)
     },
-    time6(val) {
-      console.log(val)
-    }
+    time2_2_2(value){
+      console.log(value)
+    },
+    time2(value) {
+      console.log(value, value ? new Date(value) : '')
+    },
+    time3(value) {
+      console.log(value, value ? new Date(value) : '')
+    },
+    time4(value) {
+      console.log(value, [new Date(value[0]), new Date(value[1])])
+    },
+    time5(value) {
+      console.log(value, value ? new Date(value) : '')
+    },
+    time6(value) {
+      console.log(value, [new Date(value[0]), new Date(value[1])])
+    },
+    time7(value) {
+      console.log(value, value ? new Date(value) : '')
+    },
+    time8(value) {
+      console.log(value, [new Date(value[0]), new Date(value[1])])
+    },
+    month(value) {
+      console.log(value, value ? new Date(value) : '')
+    },
+    month_1(value){
+      console.log(value)
+    },
+    year(value){
+      console.log(value, value ? new Date(value) : '')
+    },
+    year_1(value){
+      console.log(value)
+    },
   },
   methods: {
     disabledDate(date) {
       return date.getTime() > Date.now()
+    },
+    disabledDateRange(date){
+      return date.getTime() < new Date('2019/01/11').getTime() || date.getTime() > new Date('2021/12/12').getTime()
     },
     disabaleRange(date){
       return date.getTime() < this.time4[0] || date.getTime() > this.time4[1]
@@ -332,10 +538,10 @@ export default{
       }
     },
     handleDaterangeChange(value){
-      console.log('change', value)
+      console.log('change', value, [new Date(value[0]), new Date(value[1])])
     },
     handleDateChange(value){
-      console.log('change', value)
+      console.log('change', value, value ? new Date(value) : '')
     }
   }
 }
