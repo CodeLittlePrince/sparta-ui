@@ -130,7 +130,6 @@
       <div class="sp-date-picker-range-start">
         <sp-input
           v-model="modelStart"
-          readonly
           class="sp-date-picker-range-input"
           prefix-icon="sp-icon-calendar"
           :disabled="disabled"
@@ -143,7 +142,6 @@
       <div class="sp-date-picker-range-end">
         <sp-input
           v-model="modelEnd"
-          readonly
           class="sp-date-picker-range-input"
           :disabled="disabled"
           :clearable="clearable"
