@@ -9,7 +9,7 @@ const smp = new SpeedMeasurePlugin()
 const extractCSS =
   new MiniCssExtractPlugin(
     {
-      filename: 'index.css'
+      filename: 'theme-globalpay/index.css'
     }
   )
 

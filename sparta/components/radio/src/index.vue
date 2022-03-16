@@ -85,8 +85,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~sparta/common/scss/variable";
-
 .sp-radio {
   position: relative;
   display: inline-block;

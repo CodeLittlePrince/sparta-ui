@@ -1,0 +1,395 @@
+/* Transition
+-------------------------- */
+$transition-all: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+$transition-all-quick: all 0.1 cubic-bezier(0.645, 0.045, 0.355, 1);
+$transition-fade: opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+$transition-fade-linear: opacity 0.2s linear;
+$transition-md-fade: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+$transition-border-base: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+$transition-color-base: color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+/* Colors
+-------------------------- */
+$color-white: #fff;
+$color-black: #000;
+
+$color-primary: #1977ea;
+$color-success: #67c23a;
+$color-warning: #e6a23c;
+$color-danger: #f94040;
+$color-info: #909399;
+
+$color-success-light: mix($color-white, $color-success, 80%);
+$color-warning-light: mix($color-white, $color-warning, 80%);
+$color-danger-light: mix($color-white, $color-danger, 80%);
+$color-info-light: mix($color-white, $color-info, 80%);
+
+$color-success-lighter: mix($color-white, $color-success, 90%);
+$color-warning-lighter: mix($color-white, $color-warning, 90%);
+$color-danger-lighter: mix($color-white, $color-danger, 90%);
+$color-info-lighter: mix($color-white, $color-info, 90%);
+
+$color-text-primary: #303133;
+$color-text-regular: #012257;
+$color-text-secondary: #747d8c;
+$color-text-placeholder: #c7cbd1;
+$color-text-tip: #97a2b5;
+
+$color-primary-light-1: mix($color-white, $color-primary, 10%);
+$color-primary-light-2: mix($color-white, $color-primary, 20%);
+$color-primary-light-3: mix($color-white, $color-primary, 30%);
+$color-primary-light-4: mix($color-white, $color-primary, 40%);
+$color-primary-light-5: mix($color-white, $color-primary, 50%);
+$color-primary-light-6: mix($color-white, $color-primary, 60%);
+$color-primary-light-7: mix($color-white, $color-primary, 70%);
+$color-primary-light-8: mix($color-white, $color-primary, 80%);
+$color-primary-light-9: mix($color-white, $color-primary, 90%);
+
+$color-danger-light-1: mix($color-white, $color-danger, 10%);
+$color-danger-light-2: mix($color-white, $color-danger, 20%);
+$color-danger-light-3: mix($color-white, $color-danger, 30%);
+$color-danger-light-4: mix($color-white, $color-danger, 40%);
+$color-danger-light-5: mix($color-white, $color-danger, 50%);
+$color-danger-light-6: mix($color-white, $color-danger, 60%);
+$color-danger-light-7: mix($color-white, $color-danger, 70%);
+$color-danger-light-8: mix($color-white, $color-danger, 80%);
+$color-danger-light-9: mix($color-white, $color-danger, 90%);
+
+/* Shadow
+-------------------------- */
+$float-box-shadow-box: 0 2px 10px 0 rgba(0, 53, 111, 0.1);
+
+/* Scrollbar
+-------------------------- */
+$scrollbar-background: #f5f5f5;
+$scrollbar-track-color: #f5f5f5;
+$scrollbar-thumb-color: #d7d9df;
+
+/* Border
+-------------------------- */
+$border-width-base: 1px;
+$border-style-base: solid;
+$border-color-base: #d5d9e0;
+$border-color-light: #e4e7ed;
+$border-color-lighter: #ebeef5;
+$border-color-extra-light: #f2f6fc;
+$border-color-hover: $color-text-placeholder;
+$border-base: $border-width-base $border-style-base $border-color-base;
+$border-radius-base: 4px;
+$border-radius-small: 2px;
+$border-radius-circle: 100%;
+
+/* Button
+-------------------------- */
+$button-font-size: 14px;
+$button-font-weight: normal;
+$button-min-width: 120px;
+$button-height: 40px;
+$button-border-radius: 4px;
+
+$button-medium-font-size: 14px;
+$button-medium-min-width: 108px;
+$button-medium-height: 36px;
+
+$button-small-font-size: 14px;
+$button-small-min-width: 96px;
+$button-small-height: 32px;
+
+$button-mini-font-size: 13px;
+$button-mini-min-width: 84px;
+$button-mini-height: 28px;
+
+$button-default-color: $color-primary;
+$button-default-fill: #e6f1ff;
+$button-default-border: #e6f1ff;
+$button-default-fill--hover: #d8e8fe;
+$button-default-fill--focus: $button-default-fill;
+$button-default-fill--active: #cde0fa;
+
+$button-color--disabled: #c7cbd1;
+$button-fill--disabled: #f0f3f7;
+$button-border--disabled: $border-color-lighter;
+
+$button-plain-fill: #fff;
+$button-plain-fill--hover: #e6f1ff;
+$button-plain-fill--focus: $button-plain-fill;
+$button-plain-fill--active: #d8e8fe;
+
+$button-plain-border--disabled: #e4e8ef;
+$button-plain-color--disabled: #c7cbd1;
+
+$button-primary-border: $color-primary;
+$button-primary-color: #fff;
+$button-primary-fill: $color-primary;
+$button-primary-fill--hover: #0c6bdf;
+$button-primary-border--hover: #0c6bdf;
+$button-primary-fill--focus: $button-primary-fill;
+$button-primary-border--focus: $button-primary-border;
+$button-primary-fill--active: #215cbd;
+$button-primary-border--active: #215cbd;
+
+$button-text-color: $color-primary;
+$button-text-color--hover: #0c6bdf;
+$button-text-color--focus: $button-text-color;
+$button-text-color--active: #215cbd;
+$button-text-color--disabled: #c7cbd1;
+/* Checkbox
+-------------------------- */
+$checkbox-background: #fff;
+$checkbox-background-disabled: #f0f3f7;
+$checkbox-color-hover: $color-primary-light-5;
+$checkbox-color-click: $color-primary;
+$checkbox-border-color: #d5d9e0;
+$checkbox-checkmark-color: #fff;
+$checkbox-checkmark-color-disabled: #d5d9e0;
+$checkbox-font-color-disabled: #c7cbd1;
+
+/* PasswordInput
+-------------------------- */
+$item-height: 36px;
+$password-input-width: 224px;
+
+/* Input
+-------------------------- */
+$input-height: 36px;
+$input-color: $color-text-regular;
+$input-background: #fff;
+$input-background-disabled: #f0f3f7;
+$input-background-readonly: #f5f8fc;
+$input-border: $border-base;
+$input-box-shadow-focus: 0 0 0 1px $color-primary-light-8;
+$input-box-shadow-focus-error: 0 0 0 1px $color-danger-light-8;
+$input-border-radius: 4px;
+
+$input-medium-font-size: 14px;
+$input-medium-height: 36px;
+
+$input-small-font-size: 13px;
+$input-small-height: 32px;
+
+$input-mini-font-size: 12px;
+$input-mini-height: 28px;
+
+/* Option
+-------------------------- */
+$opiton-color: $color-text-regular;
+$opiton-color-disabled: #c0c4cc;
+
+/* Radio
+-------------------------- */
+$radio-color: $color-text-primary;
+$radio-color-active: $color-primary;
+$radio-font-size: 14px;
+$radio-border-color: $border-color-base;
+$radio-background-color: #fff;
+$radio-color-disabled: #c7cbd1;
+$radio-border-color-disabled: $border-color-base;
+$radio-background-color-disabled: #f0f3f7;
+$radio-button-background-color-active: #e6f1ff;
+$radio-button-border-color-disabled: #e4e8ef;
+$radio-button-text-hover: #97a2b5;
+
+/* Select
+-------------------------- */
+$select-height: 36px;
+$select-background: #fff;
+$select-background-disabled: #f0f3f7;
+$select-background-readonly: #f5f8fc;
+$select-suffix-background-color: #f0f3f7; 
+$select-suffix-background-color-focus: $color-primary; 
+$select-input-border-color: $border-color-base;
+$select-input-border-color-disabled: #c0c4cc;
+$select-input-border-color-hover: $color-primary;
+$select-input-box-shadow-focus: 0 0 0 2px $color-primary-light-8;
+$select-input-border-color-focus: $color-primary;
+$select-input-box-shadow-focus-error: 0 0 0 2px $color-danger-light;
+$select-input-border-color-focus-error: $color-danger;
+$select-input-font-color: $color-text-regular;
+$select-dropdown-item-background: #fff;
+$select-dropdown-item-background-hover: #e6f1ff;
+$select-dropdown-border-color: $border-color-base;
+
+/* Form
+-------------------------- */
+$form-item-require-star: $color-danger;
+$form-item-error-color: $color-danger;
+$form-item-error-font-size: 12px;
+
+/* Dropdown
+-------------------------- */
+$dropdown-background: #fff;
+$dropdown-background-disabled: #f5f7fa;
+$dropdown-item-color-hover: $color-primary;
+$dropdown-item-background: #fff;
+$dropdown-item-background-hover: #f5f7fa;
+$dropdown-border-radius: 4px;
+$dropdown-border-color: #e4e7ed;
+$dropdown-color: $color-text-regular;
+$dropdown-color-disabled: #c0c4cc;
+
+/* Tag
+-------------------------- */
+$tag-background: $color-primary;
+$tag-border-color: $color-primary;
+$tag-background--success: $color-success;
+$tag-border-color--success: $color-success;
+$tag-background--warning: $color-warning;
+$tag-border-color--warning: $color-warning;
+$tag-background--info: $color-info;
+$tag-border-color--info: $color-info;
+$tag-background--danger: $color-danger;
+$tag-border-color--danger: $color-danger;
+
+/* Table
+-------------------------- */
+$table-font-size: 14px;
+$table-background: #fff;
+$table-border: 1px solid #e4e8ef;
+$table-thead-color: $color-text-secondary;
+$table-tbody-color: $color-text-regular;
+$table-min-height: 60px;
+$table-loading-background: rgba(255, 255, 255, 0.5);
+
+/* TimePicker
+-------------------------- */
+$time-picker-color: $color-text-primary;
+$time-picker-border: $border-base;
+$time-picker-border-radius: 4px;
+$time-picker-pane-border: $border-base;
+$time-picker-pane-background: #fff;
+$time-picker-pane-width: 52px; 
+$time-picker-pane-max-height: 187px;
+$time-picker-option-font-size: 14px;
+$time-picker-option-height: 34px;
+$time-picker-option-color: $color-text-regular;
+$time-picker-option-color--is-selected: $color-primary;
+$time-picker-option-color--is-disabled: #c0c4cc;
+
+/* DatePicker
+-------------------------- */
+$date-picker-color: $color-text-regular;
+$date-picker-border: $border-base;
+$date-picker-border-radius: 4px;
+$date-picker-pane-border: $border-base;
+$date-picker-pane-background: #fff;
+$date-picker-pane-width: 200px;
+$date-picker-pane-font-size: 12px;
+$date-picker-pane__header-height: 17px;
+$date-picker-pane__header-icon-color: #c7cbd1;
+$date-picker-pane__header-color: $color-text-regular;
+$date-picker-pane__header-a-hover-color: $color-primary;
+$date-picker-pane__header-border: 1px solid #e8e8e8;
+$date-picker-pane__cell--is-disabled-color: #c7cbd1;
+$date-picker-pane__cell--is-disabled-background: #f0f3f7;
+$date-picker-pane__cell--is-checked-background: $color-primary;
+$date-picker-pane__cell--is-checked-color: #fff;
+$date-picker-pane__cell--is-checked-border-radius: 2px;
+$date-picker-pane__cell--is-today-background: $color-primary-light-7;
+$date-picker-pane__cell--is-today-border-radius: 2px;
+$date-picker-pane__cell--is-ranging-background: #e6f1ff;
+$date-picker-pane__cell--is-ln-month-color: #c7cbd1;
+$date-picker-pane__cell-background-hover: #f5f7fa;
+$date-picker-pane__cell-color-hover: $color-primary;
+$date-picker-range-icon-color: #c0c4cc;
+$data-picker-range-border: $border-base;
+$date-picker__footer-a: $color-primary; 
+$date-picker__footer-a-hover: $color-primary-light-3;
+
+/* Upload
+-------------------------- */
+$upload-bg-grey: #f0f3f7;
+$upload-picture__item-width: 174px;
+$upload-picture__item-height: 110px;
+$upload-file__item-background-hover: #f5f7fa;
+$upload-file__item-color: $color-text-primary;
+$upload-file__item--is--error-color: $color-danger;
+$upload-picture__item-border: 1px solid #d9d9d9;
+$upload-picture__btn-background: #f0f3f7;
+$upload-picture__btn-background-hover: mix($color-white, #f0f3f7, 30%);
+$upload-picture__btn-border: 1px dashed #d9d9d9;
+$upload-picture__btn-border-radius: 4px;
+$upload-picture__btn-font-size: 14px;
+$upload-picture__btn-icon-color: #999;
+$upload-picture__btn--is--disabled-background: #fff;
+$upload-picture__btn--is--disabled-border-color: #d9d9d9;
+$upload-picture__btn--is--disabled-color: #c0c4cc;
+
+/* Tabs
+-------------------------- */
+$tabs-font-size: 16px;
+$tabs-line-color: #dbdfe6;
+$tabs-item-color-active: $color-primary;
+$tabs-item-color-disabled: #b6babf;
+
+/* Pagination
+-------------------------- */
+$pagination-item-background: #fff;
+$pagination-item-background--is-disabled: #f0f3f7;
+$pagination-item-color: #747d8c;
+$pagination-item-color--is-disabled: #c7cbd1;
+$pagination-item-prev-next-background: #f0f3f7;
+$pagination-item-font-size: 14px;
+$pagination-item-height: 26px;
+$pagination-border-radius: 2px;
+$pagination-background: #fff;
+$pagination-item-color--is-hover: $color-primary;
+$pagination-background--is-disabled: #e0e7f1;
+$pagination-item-color--is-checked: #fff;
+$pagination-background--is-checked: $color-primary;
+$pagination-border-color--is-checked: $color-primary;
+
+/* Modal
+-------------------------- */
+$modal-background: #fff;
+$modal-border-radius: 4px;
+$modal-mask-background: rgba(41, 41, 51, 0.6);
+$modal-head-font-size: 14px;
+$modal-icon-font-size: 18px;
+$modal-icon-color: #666;
+
+/* Toast
+-------------------------- */
+$toast-font-size: 14px;
+$toast-color-info: $color-info;
+$toast-color-success: $color-success;
+$toast-color-error: $color-danger;
+$toast-color-warning: $color-warning;
+$toast-background-info: #ecf3ff;
+$toast-background-success: #eeffef;
+$toast-background-error: #ffefef;
+$toast-background-warning: #fff6eb;
+$toast-border-raduis: $border-radius-base;
+
+/* Confirm
+-------------------------- */
+$confirm-font-size: 14px;
+$confirm-body-color: $color-text-primary;
+
+/* Break-point
+-------------------------- */
+$sm: 768px;
+$md: 992px;
+$lg: 1200px;
+$xl: 1920px;
+
+$breakpoints: (
+  'xs' : (max-width: $sm),
+  'sm' : (min-width: $sm),
+  'md' : (min-width: $md),
+  'lg' : (min-width: $lg),
+  'xl' : (min-width: $xl)
+);
+
+$breakpoints-spec: (
+  'xs-only' : (max-width: $sm - 1),
+  'sm-and-up' : (min-width: $sm),
+  'sm-only': "(min-width: #{$sm}) and (max-width: #{$md} - 1)",
+  'sm-and-down': (max-width: $md - 1),
+  'md-and-up' : (min-width: $md),
+  'md-only': "(min-width: #{$md}) and (max-width: #{$lg } - 1)",
+  'md-and-down': (max-width: $lg - 1),
+  'lg-and-up' : (min-width: $lg),
+  'lg-only': "(min-width: #{$lg}) and (max-width: #{$xl } - 1)",
+  'lg-and-down': (max-width: $xl - 1),
+  'xl-only' : (min-width: $xl),
+);

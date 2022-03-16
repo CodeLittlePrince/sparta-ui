@@ -4,6 +4,13 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const VueLoaderPluginInstance = new VueLoaderPlugin()
 const hljs = require('highlight.js')
 const { alias, resolve } = require('../config')
+const fs = require('fs')
+const variableSCSSEpay = fs.readFileSync(resolve('sparta/common/scss/theme/variable-epay.scss'), { encoding:'utf8' })
+const variableSCSSGlobalpay = fs.readFileSync(resolve('sparta/common/scss/theme/variable-globalpay.scss'), { encoding:'utf8' })
+const variableScssMap = {
+  epay: variableSCSSEpay,
+  globalpay: variableSCSSGlobalpay
+}
 
 const extractCSS =
   new MiniCssExtractPlugin(
@@ -86,7 +93,8 @@ const config = {
           {
             loader: 'sass-loader',
             options: {
-              sourceMap: true
+              sourceMap: true,
+              additionalData: variableScssMap[process.env.THEME],
             }
           }
         ]

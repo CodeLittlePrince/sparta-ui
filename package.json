@@ -11,7 +11,9 @@
   "scripts": {
     "mock": "nodemon -q ./server/index.js --kill-others",
     "watch": "node webpack/site/dev.js",
-    "dev": "concurrently \"npm run mock\" \"npm run watch\" --kill-others",
+    "dev": "npm run dev:globalpay",
+    "dev:globalpay": "cross-env THEME=globalpay concurrently \"npm run mock\" \"npm run watch\" --kill-others",
+    "dev:epay": "cross-env THEME=epay concurrently \"npm run mock\" \"npm run watch\" --kill-others",
     "test:unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js",
     "CI:test:unit": "cross-env BABEL_ENV=test SINGLE_RUN=Y karma start test/unit/karma.conf.js",
     "analyze": "cross-env NODE_ENV=production ANALYZE=active webpack -p --progress --colors --config webpack/site/webpack.config.prod.js",

@@ -8,7 +8,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const extractCSS =
   new MiniCssExtractPlugin(
     {
-      filename: '[name]/index.css'
+      filename: 'theme-globalpay/[name]/index.css'
     }
   )
 

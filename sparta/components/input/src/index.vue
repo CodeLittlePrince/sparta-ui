@@ -550,8 +550,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~sparta/common/scss/variable";
-
 .sp-textarea {
   position: relative;
   display: inline-block;

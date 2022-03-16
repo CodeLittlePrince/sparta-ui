@@ -342,8 +342,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~sparta/common/scss/variable";
-
 .sp-time-picker {
   color: $time-picker-color;
 }
