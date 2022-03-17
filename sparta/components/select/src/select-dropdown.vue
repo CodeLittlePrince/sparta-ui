@@ -2,7 +2,7 @@
   <div
     v-show="value"
     class="sp-select-dropdown"
-    :style="{ minWidth }"
+    :style="{ minWidth, maxWidth }"
   >
     <slot></slot>
   </div>
@@ -39,7 +39,8 @@ export default {
   
   data() {
     return {
-      minWidth: ''
+      minWidth: 'none',
+      maxWidth: 'none'
     }
   },
 
@@ -51,7 +52,11 @@ export default {
     this.$on('updatePopper', () => {
       if (this.$parent.visible) {
         // Popper有可能并不是一开始就出现在dom里的，所以放在更新时候
-        this.minWidth = this.$parent.$el.getBoundingClientRect().width + 'px'
+        const width = this.$parent.$el.getBoundingClientRect().width
+        this.minWidth = width + 'px'
+        if(this.$parent.limitDropdownWidth) {
+          this.maxWidth = (width * 1.5) + 'px'
+        }
         // 更新Popper
         this.$nextTick(() => {
           this.updatePopper()
