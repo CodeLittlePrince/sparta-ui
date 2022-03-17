@@ -28,7 +28,8 @@ npm install sparta-ui --save
 
 ```js
 import SpartaUI from 'sparta-ui'
-import 'sparta-ui/lib/index.css'
+import 'sparta-ui/lib/theme/globalpay/index.css' // 跨境主题
+// import 'sparta-ui/lib/theme/epay/index.css' // epay主题
 Vue.use(SpartaUI)
 ```
 
