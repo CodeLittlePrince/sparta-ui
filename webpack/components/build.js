@@ -11,7 +11,8 @@ buildPack(webpackConfigModules, 'building for modules')
 
 // 运行wbepack
 function buildPack(webpackConfig, spinnerText) {
-  var spinner = ora(spinnerText || 'building for uncompressed files...')
+  var spinner = ora(spinnerText + ' --- theme: ' + process.env.THEME + '...')
+  console.log('')
   spinner.start()
   webpack(webpackConfig, (err, stats) => {
     spinner.stop()

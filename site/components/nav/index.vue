@@ -6,6 +6,9 @@
         <span class="tag">
           <span class="label">local</span><span class="version">v{{ version }}</span>
         </span>
+        <span class="tag">
+          <span class="label">主题</span><span class="version">{{ theme }}</span>
+        </span>
       </h1>
       <ul class="menu">
         <li>
@@ -26,6 +29,9 @@ export default {
   computed: {
     version() {
       return process.env.VERSION
+    },
+    theme() {
+      return process.env.THEME
     }
   }
 }

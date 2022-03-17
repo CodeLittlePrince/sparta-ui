@@ -1,5 +1,3 @@
-@import "./variable";
-
 // 多倍屏背景图
 @mixin bg-image($url, $format: 'png') {
   background-image: url($url + "." + $format);

@@ -23,9 +23,9 @@ Vue.use(SpartaUI)
 为了组件库在项目中不会过于庞大，所以支持了按需引入。
 
 ```js
-import 'sparta-ui/lib/style/index.css'
+import 'sparta-ui/lib/theme/globalpay/style/index.css'
 import Button from 'sparta-ui/lib/button/index.js'
-import 'sparta-ui/lib/button/index.css'
+import 'sparta-ui/lib/theme/globalpay/button/index.css'
 // TODO，编写插件简化引入写法
 
 Vue.use(Button)

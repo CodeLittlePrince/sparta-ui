@@ -437,8 +437,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~sparta/common/scss/variable";
-
 .sp-table {
   width: 100%;
   overflow-x: auto;
