@@ -618,8 +618,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~sparta/common/scss/variable";
-
 .sp-select {
   position: relative;
   display: block;

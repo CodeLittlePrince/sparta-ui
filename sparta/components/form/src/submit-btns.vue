@@ -11,8 +11,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "sparta/common/scss/variable";
-
 .sp-form-submit-btns {
   font-size: 0;
   margin-top: 22px;

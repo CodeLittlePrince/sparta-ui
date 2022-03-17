@@ -41,8 +41,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~sparta/common/scss/variable";
-
 .sp-tag {
   display: inline-block;
   padding: 0 10px;

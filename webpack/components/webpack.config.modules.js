@@ -8,7 +8,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const extractCSS =
   new MiniCssExtractPlugin(
     {
-      filename: '[name]/index.css'
+      filename: `theme/${process.env.THEME}/[name]/index.css`
     }
   )
 
@@ -87,7 +87,14 @@ const config = Object.assign(webpackConfigBase.config, {
           MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
-          'sass-loader'
+          'sass-loader',
+          {
+            loader: 'sass-resources-loader',
+            options: {
+              sourceMap: false,
+              resources: webpackConfigBase.resolve(`sparta/common/scss/theme/${process.env.THEME}/variable.scss`)
+            }
+          }
         ]
       },
       {

@@ -48,6 +48,7 @@ const config = Object.assign(webpackConfigBase.config, {
     new webpack.DefinePlugin({
       'process.env': {
         VERSION: `'${pkg.version}'`,
+        THEME: `'${process.env.THEME}'`,
       }
     }),
     // 热替换插件

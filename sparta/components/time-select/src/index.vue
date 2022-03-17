@@ -719,7 +719,7 @@ export default {
 
 <style lang="scss">
 @import "~sparta/common/scss/mixin";
-@import "~sparta/common/scss/variable";
+
 .sp-time-select {
   &.is--focus  {
     .sp-time-select__range {
