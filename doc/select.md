@@ -645,6 +645,7 @@ export default{
 | filterable | 是否可搜索 | boolean | — | false |
 | filter-method | 自定义搜索方法 | function | — | — |
 | emptyText | 过滤时候没有匹配值的文案 | string | — | 请选择 |
+| limitDropdownWidth | 是否限制下拉框宽度成1.5倍 | boolean | — | true |
 
 
 ### Select Slots

@@ -197,6 +197,10 @@ export default {
     validateEvent: {
       type: Boolean,
       default: true
+    },
+    limitDropdownWidth: {
+      type: Boolean,
+      default: true
     }
   },
 
