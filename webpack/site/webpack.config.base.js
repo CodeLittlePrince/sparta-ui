@@ -93,7 +93,7 @@ const config = {
             loader: 'sass-resources-loader',
             options: {
               sourceMap: true,
-              resources: resolve('sparta/common/scss/theme/variable-'+ process.env.THEME +'.scss')
+              resources: resolve(`sparta/common/scss/theme/${process.env.THEME}/variable.scss`)
             }
           }
         ]

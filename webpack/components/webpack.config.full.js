@@ -1,5 +1,4 @@
 const webpack = require('webpack')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
 const webpackConfigBase = require('./webpack.config.base.js')
 const TerserPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -9,7 +8,7 @@ const smp = new SpeedMeasurePlugin()
 const extractCSS =
   new MiniCssExtractPlugin(
     {
-      filename: 'index.css'
+      filename: `theme/${process.env.THEME}/index.css`
     }
   )
 
@@ -75,7 +74,7 @@ const config = smp.wrap(Object.assign(webpackConfigBase.config, {
             loader: 'sass-resources-loader',
             options: {
               sourceMap: false,
-              resources: webpackConfigBase.resolve('sparta/common/scss/theme/variable-'+ process.env.THEME +'.scss')
+              resources: webpackConfigBase.resolve(`sparta/common/scss/theme/${process.env.THEME}/variable.scss`)
             }
           }
         ]
@@ -104,13 +103,6 @@ const config = smp.wrap(Object.assign(webpackConfigBase.config, {
     webpackConfigBase.VueLoaderPluginInstance,
     // Scope hosting
     new webpack.optimize.ModuleConcatenationPlugin(),
-    // 删除build文件夹
-    new CleanWebpackPlugin(
-      'lib',
-      {
-        root: webpackConfigBase.resolve('/')
-      }
-    ),
     // 抽离出css
     extractCSS,
     // 定义全局常量
