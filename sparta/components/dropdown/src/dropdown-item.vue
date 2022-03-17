@@ -34,8 +34,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~sparta/common/scss/variable";
-
 .sp-dropdown-item {
   position: relative;
   padding: 10px 15px;

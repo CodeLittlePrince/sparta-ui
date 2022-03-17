@@ -1,17 +1,23 @@
 const ora = require('ora')
 const webpack = require('webpack')
 
+/* 生成“globalpay”主题的sparata-ui */
+process.env.THEME = 'globalpay'
 // 生成full代码
-const webpackConfigFull = require('./webpack.config.full')
-buildPack(webpackConfigFull, 'building for full')
-
+buildPack(require('./webpack.config.full'), 'building for full')
 // 生成modules代码
-const webpackConfigModules = require('./webpack.config.modules')
-buildPack(webpackConfigModules, 'building for modules')
+buildPack(require('./webpack.config.modules'), 'building for modules')
+
+/* 生成“epay”主题的sparata-ui */
+process.env.THEME = 'epay'
+// 生成full代码
+buildPack(require('./webpack.config.full'), 'building for full')
+// 生成modules代码
+buildPack(require('./webpack.config.modules'), 'building for modules')
 
 // 运行wbepack
 function buildPack(webpackConfig, spinnerText) {
-  var spinner = ora(spinnerText || 'building for uncompressed files...')
+  var spinner = ora(spinnerText + ' --- ' + process.env.THEME + ' theme ...\n')
   spinner.start()
   webpack(webpackConfig, (err, stats) => {
     spinner.stop()

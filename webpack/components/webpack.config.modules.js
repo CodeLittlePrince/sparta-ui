@@ -87,7 +87,14 @@ const config = Object.assign(webpackConfigBase.config, {
           MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
-          'sass-loader'
+          'sass-loader',
+          {
+            loader: 'sass-resources-loader',
+            options: {
+              sourceMap: false,
+              resources: webpackConfigBase.resolve('sparta/common/scss/theme/variable-'+ process.env.THEME +'.scss')
+            }
+          }
         ]
       },
       {

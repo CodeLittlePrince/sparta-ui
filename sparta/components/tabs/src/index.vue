@@ -52,7 +52,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "sparta/common/scss/variable";
 @import "sparta/common/scss/mixin";
 
 .sp-tabs {

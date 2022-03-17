@@ -48,8 +48,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~sparta/common/scss/variable";
-
 .sp-img-preview {
   position: fixed;
   top: 0;

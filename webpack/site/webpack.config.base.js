@@ -88,6 +88,13 @@ const config = {
             options: {
               sourceMap: true
             }
+          },
+          {
+            loader: 'sass-resources-loader',
+            options: {
+              sourceMap: true,
+              resources: resolve('sparta/common/scss/theme/variable-'+ process.env.THEME +'.scss')
+            }
           }
         ]
       },

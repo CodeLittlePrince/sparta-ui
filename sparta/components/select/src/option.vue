@@ -98,7 +98,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~sparta/common/scss/variable";
 $option-height: 34px;
 
 .sp-option {

@@ -83,8 +83,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~sparta/common/scss/variable";
-
 .sp-radio-button {
   position: absolute;
   z-index: -1;
