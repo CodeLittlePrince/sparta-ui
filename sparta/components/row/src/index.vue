@@ -40,6 +40,6 @@ export default {
 .sp-row {
   position: relative;
   box-sizing: border-box;
-  @include clearfix();
+  @include clearfix;
 }
 </style>

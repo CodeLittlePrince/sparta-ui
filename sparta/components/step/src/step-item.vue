@@ -47,7 +47,7 @@ export default {
 .sp-step-item {
   float: left;
   font-size: 0;
-  @include clearfix();
+  @include clearfix;
   &:last-child {
     .sp-step-item__line {
       display: none;

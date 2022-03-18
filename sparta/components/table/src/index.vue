@@ -579,7 +579,7 @@ export default {
       right: 0;
       bottom: 0;
       left: 0;
-      background-color: rgba(255, 255, 255, 0.5);
+      background-color: rgb(255 255 255 / 50%);
     }
   }
 
@@ -600,7 +600,7 @@ export default {
       background-color: #f5f7fa;
     }
     .sp-table__body {
-      color: $color-text-tip
+      color: $color-text-tip;
     }
   }
 }

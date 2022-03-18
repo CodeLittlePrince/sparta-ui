@@ -5,4 +5,3 @@ lib
 test/unit/coverage
 .DS_Store
 .idea
-.vscode

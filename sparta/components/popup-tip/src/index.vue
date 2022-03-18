@@ -113,7 +113,7 @@ export default {
     &::after {
       position: absolute;
       top: -6px;
-      content: '';
+      content: "";
       left: 50%;
       transform: translateX(-50%);
       width: 0;
@@ -154,7 +154,7 @@ export default {
 
   &.has--border &__modal {
     border: 1px solid $border-color-base;
-    box-shadow: 0 4px 12px 0 rgba(1, 34, 87, 0.09);
+    box-shadow: 0 4px 12px 0 rgb(1 34 87 / 9%);
 
     &::before {
       border-bottom-color: $border-color-base;

@@ -345,8 +345,8 @@ export default {
 .sp-time-picker {
   color: $time-picker-color;
 }
-.sp-time-picker__dropdown__box.is--disable-second{
-  .sp-time-picker-pane{
+.sp-time-picker__dropdown__box.is--disable-second {
+  .sp-time-picker-pane {
     width: 50%;
   }
 }

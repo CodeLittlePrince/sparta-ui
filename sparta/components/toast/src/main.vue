@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       visible: false,
-      toastAnimateClass: 'toastFadeInDown animated',
+      toastAnimateClass: 'toast-fade-in-down animated',
       duration: 3000,
       message: '',
       type: '',
@@ -55,7 +55,7 @@ export default {
     startTimer() {
       if (this.duration > 0) {
         this.timer = setTimeout(() => {
-          this.toastAnimateClass = 'toastFadeOutUp animated'
+          this.toastAnimateClass = 'toast-fade-out-up animated'
           // 为了动画更自然，加个延时
           setTimeout(() => {
             this.visible = false
@@ -74,7 +74,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .sp-toast {
   .toast {
     position: fixed;

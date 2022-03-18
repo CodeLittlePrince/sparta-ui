@@ -23,7 +23,7 @@ export default {
 @import "sparta/common/scss/mixin";
 
 .sp-layout {
-  @include clearfix();
+  @include clearfix;
   margin: 0 auto;
 }
 </style>

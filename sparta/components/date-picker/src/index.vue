@@ -1487,7 +1487,7 @@ export default {
         width: 177px;
       }
       &::before {
-        content: '';
+        content: "";
         display: inline-block;
         width: 10px;
         height: 1px;
@@ -1527,13 +1527,13 @@ export default {
     background-color: $date-picker-pane__cell--is-disabled-background;
     border-radius: $date-picker-pane__cell--is-checked-border-radius;
     cursor: not-allowed;
-    &:hover{
+    &:hover {
       border-color: $border-color-base;
     }
   }
 
   &__foot {
-    @include clearfix();
+    @include clearfix;
     background-color: #fff;
     border-top: $data-picker-range-border;
     border-radius: $date-picker-border-radius;

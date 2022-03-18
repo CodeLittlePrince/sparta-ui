@@ -260,7 +260,7 @@ export default {
 @import "sparta/common/scss/mixin";
 
 .sp-time-picker {
-  @include clearfix();
+  @include clearfix;
   color: $time-picker-color;
 }
 </style>

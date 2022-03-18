@@ -324,7 +324,7 @@ export default {
 @import "sparta/common/scss/mixin";
 
 .sp-form-item {
-  @include clearfix();
+  @include clearfix;
 
   & .sp-form-item {
     margin-bottom: 0;
@@ -379,7 +379,7 @@ export default {
     line-height: 36px;
     position: relative;
     font-size: 14px;
-    @include clearfix();
+    @include clearfix;
 
     .sp-input-group {
       vertical-align: middle;
@@ -449,7 +449,7 @@ export default {
     & .sp-date-picker.is--range .sp-input__inner {
       &, &:focus {
         border-color: transparent;
-        box-shadow: none
+        box-shadow: none;
       }
     }
 

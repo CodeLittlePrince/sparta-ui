@@ -654,7 +654,7 @@ export default {
 
   &__inner {
     position: relative;
-    -webkit-appearance: none;
+    appearance: none;
     background-color: #fff;
     background-image: none;
     border-radius: $input-border-radius;
@@ -697,8 +697,8 @@ export default {
       width: 0;
       height: 0;
     }
-    /*去掉搜狗浏览器密码软盘*/
-    &::-webkit-input-safebox-button{
+    /* 去掉搜狗浏览器密码软盘 */
+    &::-webkit-input-safebox-button {
       display: none;
     }
   }
@@ -738,7 +738,7 @@ export default {
     line-height: $input-height;
 
     &::after {
-      content: '';
+      content: "";
       height: 100%;
       width: 0;
       display: inline-block;

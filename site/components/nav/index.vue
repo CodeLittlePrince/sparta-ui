@@ -38,7 +38,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '~site/common/scss/variable';
+  @import "~site/common/scss/variable";
 
   .c-nav {
     position: relative;
@@ -55,11 +55,11 @@ export default {
       font-size: 30px;
       font-weight: 300;
       &::before {
-        content: '';
+        content: "";
         display: inline-block;
         width: 40px;
         height: 40px;
-        background-image: url('~site/common/img/logo.svg');
+        background-image: url("~site/common/img/logo.svg");
         background-size: contain;
         vertical-align: middle;
         margin-right: 10px;

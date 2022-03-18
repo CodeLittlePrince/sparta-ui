@@ -54,7 +54,7 @@ export default {
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: rgba(41, 46, 51, 0.6);
+  background-color: rgb(41 46 51 / 60%);
 
   img {
     /* 因为坑爹的IE */
@@ -66,14 +66,14 @@ export default {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     width: calc(100% - 105px);
     height: 90%;
     img {
       position: absolute;
       left: 50%;
       top: 50%;
-      transform: translate(-50%,-50%);
+      transform: translate(-50%, -50%);
     }
   }
 

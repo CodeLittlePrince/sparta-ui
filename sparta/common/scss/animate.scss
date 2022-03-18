@@ -1,11 +1,11 @@
 .animated {
-  animation-duration: .2s;
+  animation-duration: 0.2s;
   animation-fill-mode: forwards;
 }
 
 /* Toast
 -------------------------- */
-@keyframes toastFadeInDown {
+@keyframes toast-fade-in-down {
   from {
     opacity: 0;
     transform: translate3d(-50%, -100%, 0);
@@ -17,11 +17,11 @@
   }
 }
 
-.toastFadeInDown {
-  animation-name: toastFadeInDown;
+.toast-fade-in-down {
+  animation-name: toast-fade-in-down;
 }
 
-@keyframes toastFadeOutUp {
+@keyframes toast-fade-out-up {
   from {
     opacity: 1;
   }
@@ -32,6 +32,6 @@
   }
 }
 
-.toastFadeOutUp {
-  animation-name: toastFadeOutUp;
+.toast-fade-out-up {
+  animation-name: toast-fade-out-up;
 }

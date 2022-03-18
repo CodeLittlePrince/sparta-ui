@@ -700,12 +700,12 @@ export default {
       white-space: nowrap;
       text-overflow: ellipsis;
       display: table-cell;
-      -webkit-appearance: none;
+      appearance: none;
       outline: none;
       border: none;
       height: $select-height - 2;
       line-height: $select-height - 2;
-      padding: 0 10px 0 10px;
+      padding: 0 10px;
       box-sizing: border-box;
       border-radius: 4px;
       color: inherit;

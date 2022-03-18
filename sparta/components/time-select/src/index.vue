@@ -721,7 +721,7 @@ export default {
 @import "~sparta/common/scss/mixin";
 
 .sp-time-select {
-  &.is--focus  {
+  &.is--focus {
     .sp-time-select__range {
       outline: none;
       border-color: $color-primary;
@@ -729,7 +729,7 @@ export default {
     }
   }
   &__range {
-    @include clearfix();
+    @include clearfix;
     border: $data-picker-range-border;
     border-radius: $input-border-radius;
     transition: $transition-all;
@@ -757,9 +757,9 @@ export default {
   }
   &__range-end {
     .sp-input {
-     display: inline-table;
+      display: inline-table;
       &::before {
-        content: '一';
+        content: "一";
         width: 10px;
         color: #d5d9e0;
         display: table-cell;

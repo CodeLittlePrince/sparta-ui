@@ -1,6 +1,7 @@
 // 多倍屏背景图
-@mixin bg-image($url, $format: 'png') {
+@mixin bg-image($url, $format: "png") {
   background-image: url($url + "." + $format);
+
   // https://github.com/postcss/autoprefixer/issues/521
   @media (min-resolution: 2dppx) and (max-resolution: 3dppx) {
     background-image: url($url + "@2x." + $format);
@@ -20,7 +21,7 @@
 
 @mixin clearfix() {
   zoom: 1;
-  &:after {
+  &::after {
     content: " ";
     display: block;
     clear: both;
@@ -32,7 +33,7 @@
 
 /* Break-points 做响应式用
  -------------------------- */
- @mixin res($key, $map: $breakpoints) {
+@mixin res($key, $map: $breakpoints) {
   // 循环断点Map，如果存在则返回
   @if map-has-key($map, $key) {
     @media only screen and #{inspect(map-get($map, $key))} {

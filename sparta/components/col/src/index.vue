@@ -73,6 +73,7 @@ export default {
 </script>
 
 <style lang="scss">
+@use "sass:math";
 @import "sparta/common/scss/mixin";
 
 [class*="sp-col-"] {
@@ -86,21 +87,21 @@ export default {
 
 @for $i from 0 through 24 {
   .sp-col-#{$i} {
-    width: (1 / 24 * $i * 100) * 1%;
+    width: (math.div(1, 24) * $i * 100) * 1%;
   }
 
   .sp-col-offset-#{$i} {
-    margin-left: (1 / 24 * $i * 100) * 1%;
+    margin-left: (math.div(1, 24) * $i * 100) * 1%;
   }
 
   .sp-col-pull-#{$i} {
     position: relative;
-    right: (1 / 24 * $i * 100) * 1%;
+    right: (math.div(1, 24) * $i * 100) * 1%;
   }
 
   .sp-col-push-#{$i} {
     position: relative;
-    left: (1 / 24 * $i * 100) * 1%;
+    left: (math.div(1, 24) * $i * 100) * 1%;
   }
 }
 
@@ -113,21 +114,21 @@ export default {
 
   @for $i from 0 through 24 {
     .sp-col-xs-#{$i} {
-      width: (1 / 24 * $i * 100) * 1%;
+      width: (math.div(1, 24) * $i * 100) * 1%;
     }
 
     .sp-col-xs-offset-#{$i} {
-      margin-left: (1 / 24 * $i * 100) * 1%;
+      margin-left: (math.div(1, 24) * $i * 100) * 1%;
     }
 
     .sp-col-xs-pull-#{$i} {
       position: relative;
-      right: (1 / 24 * $i * 100) * 1%;
+      right: (math.div(1, 24) * $i * 100) * 1%;
     }
 
     .sp-col-xs-push-#{$i} {
       position: relative;
-      left: (1 / 24 * $i * 100) * 1%;
+      left: (math.div(1, 24) * $i * 100) * 1%;
     }
   }
 }
@@ -140,21 +141,21 @@ export default {
   }
   @for $i from 0 through 24 {
     .sp-col-sm-#{$i} {
-      width: (1 / 24 * $i * 100) * 1%;
+      width: (math.div(1, 24) * $i * 100) * 1%;
     }
 
     .sp-col-sm-offset-#{$i} {
-      margin-left: (1 / 24 * $i * 100) * 1%;
+      margin-left: (math.div(1, 24) * $i * 100) * 1%;
     }
 
     .sp-col-sm-pull-#{$i} {
       position: relative;
-      right: (1 / 24 * $i * 100) * 1%;
+      right: (math.div(1, 24) * $i * 100) * 1%;
     }
 
     .sp-col-sm-push-#{$i} {
       position: relative;
-      left: (1 / 24 * $i * 100) * 1%;
+      left: (math.div(1, 24) * $i * 100) * 1%;
     }
   }
 }
@@ -167,21 +168,21 @@ export default {
   }
   @for $i from 0 through 24 {
     .sp-col-md-#{$i} {
-      width: (1 / 24 * $i * 100) * 1%;
+      width: (math.div(1, 24) * $i * 100) * 1%;
     }
 
     .sp-col-md-offset-#{$i} {
-      margin-left: (1 / 24 * $i * 100) * 1%;
+      margin-left: (math.div(1, 24) * $i * 100) * 1%;
     }
 
     .sp-col-md-pull-#{$i} {
       position: relative;
-      right: (1 / 24 * $i * 100) * 1%;
+      right: (math.div(1, 24) * $i * 100) * 1%;
     }
 
     .sp-col-md-push-#{$i} {
       position: relative;
-      left: (1 / 24 * $i * 100) * 1%;
+      left: (math.div(1, 24) * $i * 100) * 1%;
     }
   }
 }
@@ -194,21 +195,21 @@ export default {
   }
   @for $i from 0 through 24 {
     .sp-col-lg-#{$i} {
-      width: (1 / 24 * $i * 100) * 1%;
+      width: (math.div(1, 24) * $i * 100) * 1%;
     }
 
     .sp-col-lg-offset-#{$i} {
-      margin-left: (1 / 24 * $i * 100) * 1%;
+      margin-left: (math.div(1, 24) * $i * 100) * 1%;
     }
 
     .sp-col-lg-pull-#{$i} {
       position: relative;
-      right: (1 / 24 * $i * 100) * 1%;
+      right: (math.div(1, 24) * $i * 100) * 1%;
     }
 
     .sp-col-lg-push-#{$i} {
       position: relative;
-      left: (1 / 24 * $i * 100) * 1%;
+      left: (math.div(1, 24) * $i * 100) * 1%;
     }
   }
 }
@@ -221,21 +222,21 @@ export default {
   }
   @for $i from 0 through 24 {
     .sp-col-xl-#{$i} {
-      width: (1 / 24 * $i * 100) * 1%;
+      width: (math.div(1, 24) * $i * 100) * 1%;
     }
 
     .sp-col-xl-offset-#{$i} {
-      margin-left: (1 / 24 * $i * 100) * 1%;
+      margin-left: (math.div(1, 24) * $i * 100) * 1%;
     }
 
     .sp-col-xl-pull-#{$i} {
       position: relative;
-      right: (1 / 24 * $i * 100) * 1%;
+      right: (math.div(1, 24) * $i * 100) * 1%;
     }
 
     .sp-col-xl-push-#{$i} {
       position: relative;
-      left: (1 / 24 * $i * 100) * 1%;
+      left: (math.div(1, 24) * $i * 100) * 1%;
     }
   }
 }

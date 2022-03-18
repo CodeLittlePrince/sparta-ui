@@ -230,7 +230,7 @@ export default {
     cursor: default;
   }
   &__text {
-    @include ellipsis();
+    @include ellipsis;
     position: relative;
     padding: 12px 20px;
     transition: all 0.2s;
