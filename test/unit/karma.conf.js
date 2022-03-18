@@ -61,30 +61,31 @@ module.exports = function(config) {
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
 
-
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: [
-      'Chrome',
+      process.env.BROWSER
+      // 'Chrome',
+      // 'SafariNative' // karma-safarinative-launcher
       // 'Safari', // karma-safari-launcher
       // 'Firefox', // karma-firefox-launcher
       // 'IE' // karma-ie-launcher
     ],
 
-    customLaunchers: {
-      IE9: {
-        base: 'IE',
-        'x-ua-compatible': 'IE=EmulateIE9'
-      },
-      IE10: {
-        base: 'IE',
-        'x-ua-compatible': 'IE=EmulateIE10'
-      },
-      IE11: {
-        base: 'IE',
-        'x-ua-compatible': 'IE=EmulateIE11'
-      }
-    },
+    // customLaunchers: {
+    //   IE9: {
+    //     base: 'IE',
+    //     'x-ua-compatible': 'IE=EmulateIE9'
+    //   },
+    //   IE10: {
+    //     base: 'IE',
+    //     'x-ua-compatible': 'IE=EmulateIE10'
+    //   },
+    //   IE11: {
+    //     base: 'IE',
+    //     'x-ua-compatible': 'IE=EmulateIE11'
+    //   }
+    // },
 
 
     // Continuous Integration mode
