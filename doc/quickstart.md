@@ -7,7 +7,8 @@
 
 ```js
 import SpartaUI from 'sparta-ui'
-import 'sparta-ui/lib/index.css'
+import 'sparta-ui/lib/theme/globalpay/index.css' // 跨境主题
+// import 'sparta-ui/lib/theme/epay/index.css' // epay主题
 
 Vue.use(SpartaUI)
 ```
@@ -23,9 +24,11 @@ Vue.use(SpartaUI)
 为了组件库在项目中不会过于庞大，所以支持了按需引入。
 
 ```js
-import 'sparta-ui/lib/theme/globalpay/style/index.css'
+import 'sparta-ui/lib/theme/globalpay/style/index.css' // 跨境主题
+import 'sparta-ui/lib/theme/epay/style/index.css' // epay主题
 import Button from 'sparta-ui/lib/button/index.js'
-import 'sparta-ui/lib/theme/globalpay/button/index.css'
+import 'sparta-ui/lib/theme/globalpay/button/index.css' // 跨境主题
+import 'sparta-ui/lib/theme/epay/button/index.css' // epay主题
 // TODO，编写插件简化引入写法
 
 Vue.use(Button)
