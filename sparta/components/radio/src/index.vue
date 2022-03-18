@@ -140,7 +140,7 @@ export default {
     font-size: $radio-font-size;
 
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       top: 4px;
       left: 4px;

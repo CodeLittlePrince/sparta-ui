@@ -437,7 +437,7 @@ export default {
   }
   &__cell.is--ranging {
     position: relative;
-    &:before {
+    &::before {
       position: absolute;
       top: 2px;
       right: 0;
@@ -445,18 +445,18 @@ export default {
       left: -6px;
       background: #e6f7ff;
       border-radius: 0 26px 26px 0;
-      content: '';
+      content: "";
     }
     + .is--checked {
       position: relative;
-      &:before {
+      &::before {
         position: absolute;
         top: 2px;
         right: 7px;
         bottom: 2px;
         left: -6px;
         background: #e6f7ff;
-        content: '';
+        content: "";
       }
     }
     > div {
@@ -467,17 +467,15 @@ export default {
 
   &__cell.is--checked {
     + .is--ranging {
-      &:before {
+      &::before {
         left: -7px;
       }
     }
-    
+
     .sp-date-picker-pane-day__date {
       position: relative;
-      color: #fff;
       z-index: 1;
-      background-color:
-      $date-picker-pane__cell--is-checked-background;
+      background-color: $date-picker-pane__cell--is-checked-background;
       color: $date-picker-pane__cell--is-checked-color;
       border-radius: 50%;
     }
@@ -486,14 +484,14 @@ export default {
   &__cell.is--disabled {
     position: relative;
     cursor: not-allowed;
-    &:before {
+    &::before {
       position: absolute;
       top: 2px;
       right: 0;
       bottom: 2px;
       left: -6px;
       background: $date-picker-pane__cell--is-disabled-background;
-      content: '';
+      content: "";
       border-radius: 0 26px 26px 0;
     }
     > div {
@@ -513,7 +511,7 @@ export default {
       overflow: hidden;
     }
   }
-  
+
   &__cell.is--last-month-cell {
     + .is--ranging {
       border-top-left-radius: 50%;

@@ -136,7 +136,7 @@ export default {
   height: $item-height;
 
   &__security {
-    @include clearfix();
+    @include clearfix;
     width: 100%;
     cursor: pointer;
   }
@@ -162,7 +162,7 @@ export default {
 
   &__item.is--focus {
     border-color: $color-primary;
-    box-shadow: 0 0 0 1px rgba(25, 119, 234, 0.2);
+    box-shadow: 0 0 0 1px rgb(25 119 234 / 20%);
   }
 
   &__input {
@@ -188,7 +188,6 @@ export default {
     height: 6px;
     background-color: $color-text-regular;
     border-radius: $border-radius-circle;
-    -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
   }
 

@@ -81,7 +81,7 @@ export default {
   margin: 5px 0;
 
   &__box {
-    @include clearfix();
+    @include clearfix;
     border: $time-picker-border;
     border-radius: $time-picker-border-radius;
     box-shadow: $float-box-shadow-box;

@@ -75,7 +75,7 @@ export default {
     border: 1px solid #dbdbdb;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 0 2px 0 rgba(232, 237, 250, 0.6), 0 1px 2px 0 rgba(232, 237, 250, 0.5);
+    box-shadow: 0 0 2px 0 rgb(232 237 250 / 60%), 0 1px 2px 0 rgb(232 237 250 / 50%);
   }
   .demo {
     .demo-content {
@@ -87,7 +87,7 @@ export default {
   .button {
     position: relative;
     background: #fafbfc;
-    color: rgb(24, 144, 255);
+    color: rgb(24 144 255);
     font-weight: 400;
     line-height: 40px;
     text-align: center;
@@ -96,7 +96,7 @@ export default {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     transition: all 0.2s;
-    box-shadow: 0 0 8px 0 rgba(232, 237, 250, 0.6), 0 2px 4px 0 rgba(232, 237, 250, 0.5);
+    box-shadow: 0 0 8px 0 rgb(232 237 250 / 60%), 0 2px 4px 0 rgb(232 237 250 / 50%);
     &:hover {
       font-size: 16px;
     }

@@ -96,7 +96,7 @@ export default {
   }
 
   .sp-step-ul {
-    @include clearfix();
+    @include clearfix;
   }
 
   &-line {

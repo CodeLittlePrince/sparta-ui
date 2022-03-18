@@ -100,7 +100,7 @@ export default {
   border: $border-base;
   border-color: $button-default-border;
   color: $button-default-color;
-  -webkit-appearance: none;
+  appearance: none;
   text-align: center;
   box-sizing: border-box;
   outline: none;
@@ -188,7 +188,7 @@ export default {
 
     &::before {
       pointer-events: none;
-      content: '';
+      content: "";
       position: absolute;
       left: -1px;
       top: -1px;
@@ -203,7 +203,7 @@ export default {
     pointer-events: none;
     color: rgba($color-primary, 0.5);
   }
-  
+
   &--primary {
     background-color: $button-primary-fill;
     border-color: $button-primary-border;

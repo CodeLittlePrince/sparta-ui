@@ -1,0 +1,27 @@
+{
+  "editor.wrappingIndent": "indent",
+  "editor.tabSize": 2,
+  "emmet.syntaxProfiles": {
+    "vue-html": "html",
+    "vue": "html"
+  },
+  "editor.renderLineHighlight": "none",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true
+  },
+  "stylelint.validate": [
+    "css",
+    "vue",
+    "scss",
+    "html"
+  ],
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "stylelint.snippet": [
+    "css",
+    "scss",
+    "postcss"
+  ],
+}

@@ -212,7 +212,7 @@ export default {
 
 .sp-pagination {
   text-align: center;
-  @include clearfix();
+  @include clearfix;
 
   &.is--disabled {
     cursor: not-allowed;
@@ -220,10 +220,10 @@ export default {
       color: $pagination-item-color--is-disabled;
       background-color: $pagination-item-background--is-disabled;
       &.is--checked {
-          background-color: #c7cbd1;
-          color: #f0f3f7;
-          border-color: #c7cbd1;
-        }
+        background-color: #c7cbd1;
+        color: #f0f3f7;
+        border-color: #c7cbd1;
+      }
     }
   }
 
@@ -281,27 +281,27 @@ export default {
     }
   }
 
-  &:not(.is--disabled) li{
-      cursor: pointer;
-      &:hover {
-        color: $pagination-item-color--is-hover;
-      }
-      &:not(.sp-pagination__li-prev):not(.sp-pagination__li-next):not(.is--checked):hover {
-        background-color: $pagination-background;
-      }
+  &:not(.is--disabled) li {
+    cursor: pointer;
+    &:hover {
+      color: $pagination-item-color--is-hover;
+    }
+    &:not(.sp-pagination__li-prev):not(.sp-pagination__li-next):not(.is--checked):hover {
+      background-color: $pagination-background;
+    }
 
-      &.is--disabled,
-      &.is--disabled:hover {
-        cursor: not-allowed;
-        opacity: 0.5;
-        background-color: $pagination-background--is-disabled;
-      }
+    &.is--disabled,
+    &.is--disabled:hover {
+      cursor: not-allowed;
+      opacity: 0.5;
+      background-color: $pagination-background--is-disabled;
+    }
 
-      &.is--checked {
-        color: $pagination-item-color--is-checked;
-        background-color: $pagination-background--is-checked;
-        border-color: $pagination-border-color--is-checked;
-      }
+    &.is--checked {
+      color: $pagination-item-color--is-checked;
+      background-color: $pagination-background--is-checked;
+      border-color: $pagination-border-color--is-checked;
+    }
   }
 }
 </style>

@@ -300,7 +300,7 @@ export default {
         overflow-y: auto;
       }
 
-      .sp-form  {
+      .sp-form {
         padding-top: 20px;
         padding-bottom: 14px;
 
@@ -333,7 +333,7 @@ export default {
       transform: translate(0, 0);
       margin-left: -600px; // 为了IE，没法用translate方式
 
-      .sp-form  {
+      .sp-form {
         padding-top: 26px;
 
         .sp-form-item__label {

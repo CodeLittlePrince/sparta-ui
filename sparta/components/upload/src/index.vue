@@ -699,7 +699,7 @@ export default {
 @import "sparta/common/scss/mixin";
 
 .sp-upload {
-  @include clearfix();
+  @include clearfix;
   color: $color-text-tip;
 
   &__desc {
@@ -724,7 +724,7 @@ export default {
     line-height: 1;
 
     &__upload-area {
-      @include clearfix();
+      @include clearfix;
     }
 
     &__btn {
@@ -871,10 +871,10 @@ export default {
   }
 
   &-picture {
-    @include clearfix();
+    @include clearfix;
 
     &__show {
-      @include clearfix();
+      @include clearfix;
       float: left;
     }
 
@@ -905,7 +905,7 @@ export default {
           width: 100%;
           height: 100%;
           z-index: 10;
-          content: '';
+          content: "";
           display: inline-block;
         }
 
@@ -926,7 +926,7 @@ export default {
         }
 
         &-name {
-          @include ellipsis();
+          @include ellipsis;
           font-size: 12px;
           line-height: 18px;
           margin-top: 10px;
@@ -985,7 +985,7 @@ export default {
       }
 
       &:hover &-info::before {
-        background: rgba(0, 0, 0, 0.5);
+        background: rgb(0 0 0 / 50%);
       }
 
       &.is--uploading:hover &-info::before {
@@ -1096,7 +1096,7 @@ export default {
       color: #fff;
       line-height: 20px;
       text-align: center;
-      background-color: rgba(1, 34, 87, 0.4);
+      background-color: rgb(1 34 87 / 40%);
     }
 
     &.has--big-img {

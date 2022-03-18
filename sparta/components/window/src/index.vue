@@ -261,7 +261,7 @@ export default {
     overflow: hidden;
 
     &::after {
-      content: '';
+      content: "";
       display: inline-block;
       position: absolute;
       left: 0;
@@ -272,7 +272,7 @@ export default {
     }
 
     ul {
-      @include clearfix();
+      @include clearfix;
       position: absolute;
       bottom: 0;
       left: 1px;
@@ -303,7 +303,7 @@ export default {
           border-color: $color-primary-light-1;
 
           &::after {
-            content: '';
+            content: "";
             display: inline-block;
             position: absolute;
             left: 0;

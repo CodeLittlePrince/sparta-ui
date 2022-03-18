@@ -62,7 +62,7 @@ export default {
   &__items {
     position: relative;
     z-index: 2;
-    @include clearfix();
+    @include clearfix;
     font-size: 0;
     border-bottom: 1px solid $tabs-line-color;
     padding-left: 40px;

@@ -83,10 +83,10 @@ export default {
     border-radius: $date-picker-border-radius;
     box-shadow: $float-box-shadow-box;
     background-color: $date-picker-pane-background;
-    @include clearfix();
+    @include clearfix;
 
     > div {
-      @include clearfix();
+      @include clearfix;
     }
 
     .sp-time-picker {

@@ -87,7 +87,12 @@ const config = Object.assign(webpackConfigBase.config, {
           MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
-          'sass-loader',
+          {
+            loader: 'sass-loader', options: {
+              sourceMap: false,
+              sassOptions: { outputStyle: 'expanded' }
+            }
+          },
           {
             loader: 'sass-resources-loader',
             options: {
