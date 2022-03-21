@@ -53,14 +53,16 @@ const config = smp.wrap(Object.assign(webpackConfigBase.config, {
         test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
         loader: 'file-loader',
         options: {
-          name: 'img/[name].[ext]'
+          name: 'img/[name].[ext]',
+          publicPath: 'sparta-ui/lib',
         }
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i,
         loader: 'file-loader',
         options: {
-          name: 'font/[name].[ext]'
+          name: 'font/[name].[ext]',
+          publicPath: '~sparta-ui/lib',
         }
       },
       {

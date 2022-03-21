@@ -40,8 +40,7 @@ const config = Object.assign(webpackConfigBase.config, {
     library: '[name]',
     libraryTarget: 'umd',
     umdNamedDefine: true,
-    globalObject: 'this',
-    publicPath: '../',
+    globalObject: 'this'
   },
   externals: {
     'vue': {
@@ -71,14 +70,16 @@ const config = Object.assign(webpackConfigBase.config, {
         test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
         loader: 'file-loader',
         options: {
-          name: `theme/${process.env.THEME}/img/[name].[ext]`
+          name: 'img/[name].[ext]',
+          publicPath: 'sparta-ui/lib',
         }
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i,
         loader: 'file-loader',
         options: {
-          name: `theme/${process.env.THEME}/font/[name].[ext]`
+          name: 'font/[name].[ext]',
+          publicPath: '~sparta-ui/lib',
         }
       },
       {
