@@ -1,4 +1,8 @@
 const path = require('path')
 const fs = require('fs')
+const lib = path.resolve('lib')
+const exists = fs.existsSync(lib)
 
-fs.rmdirSync(path.resolve('lib'), { recursive: true })
+if (exists) {
+  fs.rmdirSync(lib, { recursive: true })
+}
