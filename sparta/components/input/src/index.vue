@@ -578,7 +578,7 @@ export default {
     }
 
     &:hover {
-      border-color: $color-primary-light-2;
+      border-color: $color-primary;
     }
 
     &:focus {
