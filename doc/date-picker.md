@@ -416,6 +416,26 @@ export default {
 ```
 :::
 
+### 只读模式，不可输入日期
+
+:::demo 通过`editable`,可以设置只读模式
+```vue
+<template>
+    <div class="sp-date-pikcer-demo">
+      <sp-date-picker
+        :editable="false"
+      ></sp-date-picker>
+    </div>
+    <div class="sp-date-pikcer-demo">
+      <sp-date-picker
+        type="daterange"
+        :editable="false"
+      ></sp-date-picker>
+    </div>
+</template>
+```
+:::
+
 ### Attributes
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
@@ -431,6 +451,7 @@ export default {
 | start-placeholder | 类型为daterange情况下的开始placeholder文案 | string | — | 开始日期 |
 | end-placeholder | 类型为daterange情况下的结束placeholder文案 | string | — | 结束日期 |
 | clearable | 是否展示清空按钮 | boolean | — | false |
+| editable | 文本框可输入 | boolean | — | true |
 
 ### Events
 | 事件名称      | 说明    | 回调参数      | 
