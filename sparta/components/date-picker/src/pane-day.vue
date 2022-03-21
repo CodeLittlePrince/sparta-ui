@@ -172,6 +172,7 @@ export default {
       )
       // 获取当月1号的星期是为了确定在1号前需要插多少天
       let startDay = new Date(this.calYear, this.calMonth, 1).getDay()
+      startDay = startDay === 0 ? 6 : startDay - 1
       // 确认上个月一共多少天
       let lastMonthLength = new Date(
         this.calYear,
