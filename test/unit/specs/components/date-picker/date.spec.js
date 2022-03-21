@@ -92,8 +92,8 @@ describe('date-picker', () => {
           await wrapper.setData({ defaultTime: '00:00:00' })
           await wrapper.find('.sp-date-picker-content').trigger('click')
           await wrapper.find('.sp-date-picker-pane-day__date').trigger('click')
-          expect(wrapper.find('.sp-input__inner').element.value).to.equal('2019-01-27')
-          expect(handleDateChange.calledWith(format.modifyDate('2019-01-27 00:00:00').getTime())).to.be.true
+          expect(wrapper.find('.sp-input__inner').element.value).to.equal('2019-01-28')
+          expect(handleDateChange.calledWith(format.modifyDate('2019-01-28 00:00:00').getTime())).to.be.true
         })
         it('更改输入框内的值，应派发change事件', async () => {
           await wrapper.find('.sp-input__inner').setValue('2019-02-27')

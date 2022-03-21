@@ -100,19 +100,19 @@ describe('date-picker', () => {
           await wrapper.find('.sp-date-picker-content').trigger('click')
           await start.find('.sp-date-picker-pane-day__date').trigger('click')
           await end.find('.sp-date-picker-pane-day__date').trigger('click')
-          expect(wrapper.find('.sp-date-picker-range-start .sp-input__inner').element.value).to.equal('2019-01-27')
-          expect(wrapper.find('.sp-date-picker-range-end .sp-input__inner').element.value).to.equal('2021-10-31')
-          expect(handleDaterangeChange.calledWith(sinon.match.array.contains([format.modifyDate('2019-01-27 00:00:00').getTime(), format.modifyDate('2021-10-31 23:59:59').getTime()]))).to.be.true
+          expect(wrapper.find('.sp-date-picker-range-start .sp-input__inner').element.value).to.equal('2019-01-28')
+          expect(wrapper.find('.sp-date-picker-range-end .sp-input__inner').element.value).to.equal('2021-11-01')
+          expect(handleDaterangeChange.calledWith(sinon.match.array.contains([format.modifyDate('2019-01-28 00:00:00').getTime(), format.modifyDate('2021-11-01 23:59:59').getTime()]))).to.be.true
         })
         it('更改输入框内的值，应派发change事件', async () => {
           await wrapper.find('.sp-date-picker-range-start .sp-input__inner').setValue('2019-02-27')
-          expect(handleDaterangeChange.calledWith(sinon.match.array.contains([format.modifyDate('2019-02-27 00:00:00').getTime(), format.modifyDate('2021-10-31 23:59:59').getTime()]))).to.be.true
+          expect(handleDaterangeChange.calledWith(sinon.match.array.contains([format.modifyDate('2019-02-27 00:00:00').getTime(), format.modifyDate('2021-11-01 23:59:59').getTime()]))).to.be.true
         })
         it('只删除结束日期输入框内的值，不应派发change事件', async () => {
           const { callCount } = handleDaterangeChange
           await wrapper.find('.sp-date-picker-range-end .sp-input__inner').setValue('')
           await wrapper.find('.test-datepikcer-daterange-button').trigger('click')
-          expect(wrapper.find('.sp-date-picker-range-end .sp-input__inner').element.value).to.equal('2021-10-31')
+          expect(wrapper.find('.sp-date-picker-range-end .sp-input__inner').element.value).to.equal('2021-11-01')
           expect(handleDaterangeChange.callCount).to.equal(callCount)
         })
         it('输入非法日期，不应派发change事件', async () => {
@@ -130,17 +130,17 @@ describe('date-picker', () => {
           await start.find('.sp-icon-arrow-double-right').trigger('click') // 下一年
           await start.find('.sp-date-picker-pane-day__header-month-select').trigger('click') // 月份
           await start.find('.sp-date-picker-pane-month__cell').trigger('click') // 1月
-          await start.find('.sp-date-picker-pane-day__date').trigger('click') // 29号
+          await start.find('.sp-date-picker-pane-day__date').trigger('click') // 30号
 
           await end.find('.sp-icon-arrow-double-left').trigger('click') // 上一年
           await end.find('.sp-date-picker-pane-day__header-year-select').trigger('click') // 年份
           await end.find('.sp-date-picker-pane-year__date').trigger('click') // 2019
-          await end.find('.sp-date-picker-pane-day__date').trigger('click') // 29号
+          await end.find('.sp-date-picker-pane-day__date').trigger('click') // 28号
           await wrapper.vm.$nextTick()
           
-          expect(wrapper.find('.sp-date-picker-range-start .sp-input__inner').element.value).to.equal('2019-09-29')
-          expect(wrapper.find('.sp-date-picker-range-end .sp-input__inner').element.value).to.equal('2019-12-29')
-          expect(handleDaterangeChange.calledWith(sinon.match.array.contains([format.modifyDate('2019-09-29 00:00:00').getTime(), format.modifyDate('2019-12-29 23:59:59').getTime()]))).to.be.true
+          expect(wrapper.find('.sp-date-picker-range-start .sp-input__inner').element.value).to.equal('2019-10-28')
+          expect(wrapper.find('.sp-date-picker-range-end .sp-input__inner').element.value).to.equal('2019-12-30')
+          expect(handleDaterangeChange.calledWith(sinon.match.array.contains([format.modifyDate('2019-10-28 00:00:00').getTime(), format.modifyDate('2019-12-30 23:59:59').getTime()]))).to.be.true
         })
       })
     })
@@ -153,7 +153,7 @@ describe('date-picker', () => {
             await wrapper.find('.sp-date-picker-range-end .sp-input__inner').setValue('2021-10-31') // 重置
             await wrapper.find('.sp-date-picker-content').trigger('click')
             await wrapper.find('.sp-icon-arrow-left').trigger('click')
-            expect(wrapper.find('.sp-date-picker-pane-day__cell.is--disabled .sp-date-picker-pane-day__date').text()).to.equal('30') // 校验第一个
+            expect(wrapper.find('.sp-date-picker-pane-day__cell.is--disabled .sp-date-picker-pane-day__date').text()).to.equal('31') // 校验第一个
           })
         })
       })
@@ -190,21 +190,21 @@ describe('date-picker', () => {
           await start.find('.sp-date-picker-pane-day__date').trigger('click')
           await end.find('.sp-date-picker-pane-day__date').trigger('click')
           await wrapper.find('.sp-date-picker__range-select').trigger('click')
-          expect(wrapper.find('.sp-date-picker-range-start .sp-input__inner').element.value).to.equal('2019-01-27 00:00:00')
-          expect(wrapper.find('.sp-date-picker-range-end .sp-input__inner').element.value).to.equal('2021-09-26 23:59:59')
-          expect(handleDaterangeChange.calledWith(sinon.match.array.contains([format.modifyDate('2019-01-27 00:00:00').getTime(), format.modifyDate('2021-09-26 23:59:59').getTime()]))).to.be.true
+          expect(wrapper.find('.sp-date-picker-range-start .sp-input__inner').element.value).to.equal('2019-01-28 00:00:00')
+          expect(wrapper.find('.sp-date-picker-range-end .sp-input__inner').element.value).to.equal('2021-09-27 23:59:59')
+          expect(handleDaterangeChange.calledWith(sinon.match.array.contains([format.modifyDate('2019-01-28 00:00:00').getTime(), format.modifyDate('2021-09-27 23:59:59').getTime()]))).to.be.true
         })
         it('删除输入框内的值，不应派发change事件', async () => {
           const { callCount } = handleDaterangeChange
           await wrapper.find('.sp-date-picker-range-start .sp-input__inner').setValue('')
           await wrapper.find('.test-datepikcer-daterange-button').trigger('click')
-          expect(wrapper.find('.sp-date-picker-range-start .sp-input__inner').element.value).to.equal('2019-01-27 00:00:00')
+          expect(wrapper.find('.sp-date-picker-range-start .sp-input__inner').element.value).to.equal('2019-01-28 00:00:00')
           expect(handleDaterangeChange.callCount).to.equal(callCount)
         })
         
         it('更改输入框内的值，应派发change事件', async () => {
-          await wrapper.find('.sp-date-picker-range-end .sp-input__inner').setValue('2021-09-27 23:59:59')
-          expect(handleDaterangeChange.calledWith(sinon.match.array.contains([format.modifyDate('2019-01-27 00:00:00').getTime(), format.modifyDate('2021-09-27 23:59:59').getTime()]))).to.be.true
+          await wrapper.find('.sp-date-picker-range-end .sp-input__inner').setValue('2021-09-26 23:59:59')
+          expect(handleDaterangeChange.calledWith(sinon.match.array.contains([format.modifyDate('2019-01-28 00:00:00').getTime(), format.modifyDate('2021-09-26 23:59:59').getTime()]))).to.be.true
         })
         it('输入非法日期，不应派发change事件', async () => {
           const { callCount } = handleDaterangeChange
@@ -212,7 +212,7 @@ describe('date-picker', () => {
           await wrapper.find('.test-datepikcer-daterange-button').trigger('click')
           expect(handleDaterangeChange.callCount).to.equal(callCount)
           await wrapper.vm.$nextTick()
-          expect(wrapper.find('.sp-date-picker-range-end .sp-input__inner').element.value).to.equal('2021-09-27 23:59:59')
+          expect(wrapper.find('.sp-date-picker-range-end .sp-input__inner').element.value).to.equal('2021-09-26 23:59:59')
         })
       })
 
@@ -225,7 +225,7 @@ describe('date-picker', () => {
         it('选择时间后，input输入框内的值应该一起更新', async () => {
           await wrapper.findAll('.sp-time-picker-option').at(1).trigger('click')
           await wrapper.find('.test-datepikcer-daterange-button').trigger('click')
-          expect(wrapper.find('.sp-date-picker-range-start .sp-input__inner').element.value).to.equal('2019-01-27 01:00:00')
+          expect(wrapper.find('.sp-date-picker-range-start .sp-input__inner').element.value).to.equal('2019-01-28 01:00:00')
         })
         it('点击选择日期按钮，应该隐藏时间选择面板', async () => {
           await wrapper.find('.sp-date-picker__select-date-btn').trigger('click')
@@ -246,9 +246,9 @@ describe('date-picker', () => {
       describe('event: change', () => {
         it('输入禁用的时间，不应派发change时间', async () => {
           await wrapper.find('.sp-date-picker-content').trigger('click')
-          await wrapper.find('.sp-date-picker-range-start .sp-input__inner').setValue('2019-01-27 13:00:00')
+          await wrapper.find('.sp-date-picker-range-start .sp-input__inner').setValue('2019-01-28 13:00:00')
           await wrapper.find('.test-datepikcer-daterange-button').trigger('click')
-          expect(wrapper.find('.sp-date-picker-range-start .sp-input__inner').element.value).to.equal('2019-01-27 01:00:00')
+          expect(wrapper.find('.sp-date-picker-range-start .sp-input__inner').element.value).to.equal('2019-01-28 01:00:00')
         })
       })
 
@@ -256,7 +256,7 @@ describe('date-picker', () => {
         it('点击被禁用的时间时，input输入框内的值不应该一起更新', async () => {
           await wrapper.find('.sp-date-picker-content').trigger('click')
           await wrapper.find('.sp-time-picker-option.is-disabled').trigger('click')
-          expect(wrapper.find('.sp-date-picker-range-start .sp-input__inner').element.value).to.equal('2019-01-27 01:00:00')
+          expect(wrapper.find('.sp-date-picker-range-start .sp-input__inner').element.value).to.equal('2019-01-28 01:00:00')
         })
       })
     })
@@ -265,9 +265,9 @@ describe('date-picker', () => {
       it('设置valueFormat后，绑定的值应为valueFormat的格式', async () => {
         await wrapper.setData({ valueFormat: 'yyyy-MM-dd hh:mm:ss' })
         await wrapper.find('.sp-date-picker-content').trigger('click')
-        await wrapper.find('.sp-date-picker-range-start .sp-input__inner').setValue('2019-01-27 02:00:00')
-        expect(wrapper.find('.sp-date-picker-range-start .sp-input__inner').element.value).to.equal('2019-01-27 02:00:00')
-        expect(handleDaterangeChange.calledWith(sinon.match.array.contains(['2019-01-27 02:00:00', '2021-09-27 23:59:59']))).to.be.true
+        await wrapper.find('.sp-date-picker-range-start .sp-input__inner').setValue('2019-01-28 02:00:00')
+        expect(wrapper.find('.sp-date-picker-range-start .sp-input__inner').element.value).to.equal('2019-01-28 02:00:00')
+        expect(handleDaterangeChange.calledWith(sinon.match.array.contains(['2019-01-28 02:00:00', '2021-09-26 23:59:59']))).to.be.true
       })
     })
 
