@@ -1433,13 +1433,17 @@ export default {
   box-sizing: border-box;
   .sp-date-picker-sigle-input.sp-input {
     width: 200px;
-  }
 
-  &__dropdown__box {
-    width: $date-picker-pane-width;
-    user-select: none;
-    box-sizing: border-box;
-    color: $date-picker-color;
+    &.is--readonly {
+      .sp-input__inner {
+        background-color: inherit;
+        color: inherit;
+
+        &:hover {
+          border-color: $color-primary;
+        }
+      }
+    }
   }
 
   &-range, &.is--range {
@@ -1456,7 +1460,7 @@ export default {
     overflow: hidden;
 
     &:hover {
-      border-color: $color-primary-light-2;
+      border-color: $color-primary;
     }
 
     &-split {
@@ -1567,6 +1571,13 @@ export default {
       float: right;
       margin-right: 10px;
     }
+  }
+
+  &__dropdown__box {
+    width: $date-picker-pane-width;
+    user-select: none;
+    box-sizing: border-box;
+    color: $date-picker-color;
   }
 
   &__dropdown {

@@ -416,9 +416,9 @@ export default {
 ```
 :::
 
-### 只读模式，不可输入日期
+### 可编辑模式
 
-:::demo 通过`editable`,可以设置只读模式
+:::demo 通过`editable`，可以设置是否可以编辑，默认是true
 ```vue
 <template>
     <div class="sp-date-pikcer-demo">
