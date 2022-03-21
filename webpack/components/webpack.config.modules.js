@@ -71,14 +71,14 @@ const config = Object.assign(webpackConfigBase.config, {
         test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
         loader: 'file-loader',
         options: {
-          name: 'img/[name].[ext]'
+          name: `theme/${process.env.THEME}/img/[name].[ext]`
         }
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i,
         loader: 'file-loader',
         options: {
-          name: 'font/[name].[ext]'
+          name: `theme/${process.env.THEME}/font/[name].[ext]`
         }
       },
       {
