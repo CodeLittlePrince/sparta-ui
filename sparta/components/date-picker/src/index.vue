@@ -17,6 +17,7 @@
         :disabled="disabled"
         :placeholder="placeholder"
         prefix-icon="sp-icon-calendar"
+        :readonly="!editable"
         @focus="handleInputClick"
         @blur="handleInputBlur"
         @input="handleInput"
@@ -134,6 +135,7 @@
           prefix-icon="sp-icon-calendar"
           :disabled="disabled"
           :placeholder="startPlaceholder"
+          :readonly="!editable"
           @focus="handleRangeClick"
           @input="handleRangeStartInput"
         />
@@ -146,6 +148,7 @@
           :disabled="disabled"
           :clearable="clearable"
           :placeholder="endPlaceholder"
+          :readonly="!editable"
           @clear="handleRangeClear"
           @focus="handleRangeClick"
           @input="handleRangeEndInput"
@@ -387,6 +390,10 @@ export default {
     clearable: {
       type: Boolean,
       default: false
+    },
+    editable: {// 文本框可输入
+      type: Boolean,
+      default: true
     },
     valueFormat: { //绑定值的格式。不指定则绑定值为 new Date().getTime() long类型
       type: String,
