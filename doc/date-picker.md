@@ -456,7 +456,7 @@ export default {
 ### Events
 | 事件名称      | 说明    | 回调参数      | 
 |---------- |-------- |---------- |
-| change | 用户确认选定的值时触发 | 组件绑定值 |
+| change | 用户确认选定的值时触发，change内不要使用v-model绑定的值，因为会存在change更新v-model还未更新的情况，change内直接使用回调参数即可 | 组件绑定值 |
 
 <script>
 export default{
