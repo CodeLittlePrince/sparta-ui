@@ -251,6 +251,7 @@ export default {
     text-align: center;
     border: $border-base;
     border-left: none;
+    box-sizing: content-box;
 
     &:first-child {
       border-top-left-radius: $pagination-border-radius;

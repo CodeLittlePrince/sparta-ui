@@ -101,15 +101,17 @@ export default{
       </template>
     </sp-table-column>
      <div slot="withdrawing">
-        提现中的金额 <sp-popup-tip
-      width="200" color="#747d8c"
-      has-border
-    >
-      <i class="sp-icon-ques"></i>
-      <template slot="popup">
-        我是做好事不留名的红领巾
-      </template>
-    </sp-popup-tip>
+        提现中的金额
+        <sp-popup-tip
+          width="200" 
+          theme="blue"
+          has-border
+        >
+          <i class="sp-icon-ques"></i>
+          <template slot="popup">
+            我是做好事不留名的红领巾
+          </template>
+        </sp-popup-tip>
       </div>
   </sp-table>
 </template>
@@ -421,7 +423,7 @@ export default{
     pagination
     ref="table"
     :pagination-option="{ total: 1000 }"
-    :pagination-disabled="paginationDisabled"
+    :loading="loading"
     selection
     @selection-change="handleSelectionChange"
     @pagination-change="handlePaginationChange"
@@ -456,6 +458,7 @@ export default{
 export default{
   data() {
     return {
+      loading: false
       tableList1: [
         {
           name: '番茄炒西红柿',
@@ -489,9 +492,9 @@ export default{
       this.$refs.table.toggleRowSelection(index, true)
     },
     handlePaginationChange(index, pageSize) {
-      this.paginationDisabled = true
+      this.loading = true
       setTimeout(() => {
-        this.paginationDisabled = false
+        this.loading = false
       }, 1000)
       console.log(index, pageSize)
     }
@@ -514,7 +517,7 @@ export default{
     pagination
     ref="table2"
     :pagination-option="{ total: 1000 }"
-    :pagination-disabled="paginationDisabled2"
+    :loading="loading2"
     selection
     :selectable="isSelectable2"
     @selection-change="handleSelectionChange2"
@@ -550,7 +553,7 @@ export default{
 export default{
   data() {
     return {
-      paginationDisabled2: false
+      loading2: false
       tableList2: [
         {
           name: '番茄炒西红柿',
@@ -584,9 +587,9 @@ export default{
        this.$refs.table2.toggleAllSelection()
     },
     handlePaginationChange2(index, pageSize) {
-      this.paginationDisabled2 = true
+      this.loading2 = true
       setTimeout(() => {
-        this.paginationDisabled2 = false
+        this.loading2 = false
       }, 1000)
       console.log(index, pageSize)
     },
@@ -772,7 +775,6 @@ export default{
 | selection | 带选择的表格 | boolean | — | false |
 | pagination | 设置表格分页 | boolean | — | false |
 | paginationOption | 设置表格分页参数参考Pagination组件 | object | — | {} |
-| paginationDisabled | 设置表格分页不可点击状态 | boolean | — | false |
 | hasMore | 设置显示更多按钮 | boolean | — | false |
 | disabled | 设置表格不可勾选 | boolean | — | false |
 
@@ -854,8 +856,8 @@ export default{
           amount: ''
         }
       ],
-      paginationDisabled: false,
-      paginationDisabled2: false,
+      loading: false,
+      loading2: false,
       showTableColumn: true
     }
   },
@@ -867,9 +869,9 @@ export default{
       console.log(data)
     },
     handlePaginationChange(index, pageSize) {
-      this.paginationDisabled = true
+      this.loading = true
       setTimeout(() => {
-        this.paginationDisabled = false
+        this.loading = false
       }, 1000)
       console.log(index, pageSize)
     },
@@ -902,7 +904,7 @@ export default{
        this.$refs.table2.toggleAllSelection()
     },
     handlePaginationChange2(index, pageSize) {
-      this.paginationDisabled2 = true
+      this.loading2 = true
       setTimeout(() => {
         this.tableList2 = [
           {
@@ -924,7 +926,7 @@ export default{
           amount: ''
         }
         ]
-        this.paginationDisabled2 = false
+        this.loading2 = false
       }, 1000)
       console.log(index, pageSize)
     },

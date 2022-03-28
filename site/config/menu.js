@@ -155,7 +155,7 @@ export default {
               index: '4-5-1'
             },
             {
-              title: 'Table 表格',
+              title: 'Table 表格（新）',
               link: '/table',
               index: '4-5-2'
             },
