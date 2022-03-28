@@ -93,7 +93,6 @@ describe('Table', () => {
              total: 1000,
              align: 'middle'
           },
-          paginationDisabled: false,
           cellEmptyText: '测试'
         }
       },
@@ -106,7 +105,6 @@ describe('Table', () => {
           :disabled="disabled"
           :pagination="pagination"
           :paginationOption="paginationOption"
-          :pagination-disabled="paginationDisabled"
           :cell-empty-text="cellEmptyText"
           >
           <sp-table-column prop="name" label="片名" />
@@ -151,12 +149,6 @@ describe('Table', () => {
       expect(wrapper.vm.$el.querySelectorAll('.sp-pagination .align--middle li').length).to.equal(8)
       expect(wrapper.find('.sp-pagination .align--middle .is--checked').text()).to.equal('2')
       expect(wrapper.find('.align--middle').exists()).to.be.true
-    });
-
-    it('paginationDisabled', async () => {
-      await wrapper.setData({ paginationDisabled: true })
-      expect(wrapper.find('.sp-pagination.is--disabled').exists()).to.be.true
-      await wrapper.setData({ paginationDisabled: false })
     });
 
     it('hasMore', async () => {
@@ -277,6 +269,7 @@ describe('Table', () => {
           currentPageIndex: -1,
           currentPageSize: -1,
           selectedList: [],
+          changeCount: 0,
           isClickTableViewMore: false
         }
       },
@@ -302,6 +295,7 @@ describe('Table', () => {
       },
       methods: {
         handleSelectionChange(data) {
+          this.changeCount++
           this.selectedList = data
         }
       }
@@ -319,6 +313,9 @@ describe('Table', () => {
       await wrapper.vm.$refs.table.clearSelection()
       expect(wrapper.vm.selectedList.length).to.be.equal(0)
       expect(wrapper.vm.$children[0].checkAll).to.be.false
+
+      await wrapper.vm.$refs.table.clearSelection()
+      expect(wrapper.vm.changeCount).to.be.equal(2)
     })
 
     it('toggleRowSelection', async () => {

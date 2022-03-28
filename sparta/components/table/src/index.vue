@@ -1,7 +1,10 @@
 <template>
   <div
     class="sp-table"
-    :class="{'is--no-footer': !hasFooter && !hasMore, 'is--disabled': disabled }"
+    :class="{
+      'is--no-footer': !hasFooter && !hasMore,
+      'is--disabled': disabled,
+      'is--selection': selection }"
   >
     <!-- 表格头部 -->
     <div
@@ -150,7 +153,7 @@
           :align="align"
           :per-pages="perPages"
           :page-index="pageIndex"
-          :disabled="paginationDisabled"
+          :disabled="loading"
           :total="total"
           :page-size="pageSize"
           @change="handlePageChange"
@@ -168,6 +171,16 @@
 
 <script>
 import SpCheckbox from '../../checkbox'
+
+/**
+ * 判断两个一维数据是否相等
+ * @param {*} array1
+ * @param {*} array2
+ * @returns
+ */
+function scalarArrayEquals(array1, array2) {
+  return array1.length === array2.length && array1.every(function(v,i) { return v === array2[i]})
+}
 
 export default {
   name: 'SpTable',
@@ -213,10 +226,6 @@ export default {
     paginationOption: {
       type: Object,
       default: () => ({})
-    },
-    paginationDisabled: {
-      type: Boolean,
-      default: false
     },
     hasMore: {
       type: Boolean,
@@ -354,12 +363,18 @@ export default {
     _emitChange() {
       // 过滤出打勾了的值给上层
       const result = []
+      const isCheckedIndexList = []
       this.checkedList.forEach((item, index) => {
         if (item.isChecked) {
+          isCheckedIndexList.push(index)
           result.push(this.list[index])
         }
       })
-      this.$emit('selection-change', result)
+      if(!scalarArrayEquals(isCheckedIndexList, this.oldIsCheckedIndexList || [])) {
+        // 只有值改变了才透出
+        this.oldIsCheckedIndexList = isCheckedIndexList
+        this.$emit('selection-change', result)
+      }
     },
 
     /**
@@ -458,6 +473,13 @@ export default {
       &:first-child {
         padding-left: 10px;
       }
+      [class^="sp-icon"] {
+        font-size: 14px;
+        color: #97a2b5;
+      }
+      .sp-popup-tip__modal__helper {
+        top: -10px;
+      }
     }
   }
   &__body {
@@ -475,11 +497,26 @@ export default {
         vertical-align: middle;
         line-height: 1.2;
         height: 84px;
+        padding: 10px 0;
         box-sizing: border-box;
 
         &:first-child {
           .sp-table-cell {
             padding-left: 10px;
+          }
+        }
+        &:last-child {
+          .sp-table-cell {
+            padding-right: 10px;
+          }
+        }
+
+        .sp-checkbox__wrap {
+          display: block;
+          height: 14px;
+          line-height: 15px;
+          .sp-checkbox {
+            font-size: 0;
           }
         }
       }
@@ -585,7 +622,7 @@ export default {
 
   &-cell {
     position: relative;
-    padding-right: 7px;
+    padding-right: 20px;
     box-sizing: border-box;
     word-break: break-all;
     line-height: 1.2;
@@ -601,6 +638,20 @@ export default {
     }
     .sp-table__body {
       color: $color-text-tip;
+    }
+  }
+
+  &.is--selection {
+    .sp-table__body {
+      tr {
+        td {
+          &:first-child {
+            .sp-table-cell {
+              padding-right: 7px;
+            }
+          }
+        }
+      }
     }
   }
 }
