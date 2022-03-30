@@ -86,6 +86,7 @@ describe('Table', () => {
           disabled: false,
           selection: false,
           pagination: false,
+          showAllSelect: true,
           paginationOption: {
              perPages: 5,
              pageIndex: 2,
@@ -101,6 +102,7 @@ describe('Table', () => {
           :list="testData" 
           :loading="loading"
           :selection="selection"
+          :showAllSelect="showAllSelect"
           :has-more="hasMore"
           :disabled="disabled"
           :pagination="pagination"
@@ -111,10 +113,10 @@ describe('Table', () => {
           <sp-table-column prop="id" />
           <sp-table-column prop="release" label="发行日期" />
           <sp-table-column 
-          prop="director" 
-          label="导演" 
-          width="200"
-          :ellipsis="ellipsis"/>
+            prop="director" 
+            label="导演" 
+            width="200"
+            :ellipsis="ellipsis"/>
           <sp-table-column prop="runtime" label="时长（分）" />
        </sp-table>
       `,
@@ -138,6 +140,12 @@ describe('Table', () => {
     it('selection', async () => {
       await wrapper.setData({ selection: true })
       expect(wrapper.find('.sp-checkbox').exists()).to.be.true
+    });
+
+    it('showAllSelect', async () => {
+      await wrapper.setData({ selection: true, pagination: false, showAllSelect:false })
+      expect(wrapper.find('.sp-table__footer').exists()).to.be.false
+      await wrapper.setData({ showAllSelect:true })
     });
 
     it('pagination', async () => {

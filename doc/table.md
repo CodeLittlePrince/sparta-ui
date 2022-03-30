@@ -675,6 +675,118 @@ export default{
 ```
 :::
 
+### 内嵌不可勾选状态Table
+
+:::demo 设置`sp-table`属性`selection`为true，属性`disabled`为true, 属性`show-all-select`为false 。
+```vue
+<template>
+  <sp-table
+    :list="tableList1"
+    selection
+    @selection-change="handleSelectionChange"
+  >
+    <sp-table-column
+      :ellipsis="true"
+      prop="name"
+      label="店铺名称"
+      width="200">
+    </sp-table-column>
+    <sp-table-column
+      prop="withdrawing"
+      label="提现中的金额"
+      :formatter="formatter"
+      width="200">
+    </sp-table-column>
+    <sp-table-column
+      prop="tag"
+      label="操作">
+      <template slot-scope="scope">
+        <sp-button
+          type="primary"
+          size="small"
+        >
+          click
+        </sp-button>
+      </template>
+    </sp-table-column>
+    <div slot="footerLeftContent">
+      <sp-button plain size="mini">删除</sp-button>
+    </div>
+    <sp-table
+      slot="append"
+      :list="tableList1"
+      selection
+      disabled
+      :show-all-select="false"
+      @selection-change="handleSelectionChange"
+    >
+      <sp-table-column
+        :ellipsis="true"
+        prop="name"
+        label="店铺名称"
+        width="200">
+      </sp-table-column>
+      <sp-table-column
+        prop="withdrawing"
+        label="提现中的金额"
+        :formatter="formatter"
+        width="200">
+      </sp-table-column>
+      <sp-table-column
+        prop="tag"
+        label="操作">
+        <template slot-scope="scope">
+          <sp-button
+            type="primary"
+            size="small"
+          >
+            click
+          </sp-button>
+        </template>
+      </sp-table-column>
+      <div slot="append" class="sp-table__append-show-more">
+        <sp-button
+          type="text"
+          @click="handleViewMore"
+        >
+          查看全部待确认金额的店铺
+        </sp-button>
+      </div>
+     </sp-table>
+  </sp-table>
+</template>
+
+<script>
+export default{
+  data() {
+    return {
+      tableList1: [
+        {
+          name: '番茄炒西红柿',
+          withdrawing: '20.00',
+          tag: 'yo'
+        },
+        {
+          name: '土豆炖马铃薯',
+          withdrawing: '30.00',
+          tag: 'yo'
+        }
+      ]
+    }
+  },
+  methods: {
+    formatter(cell) {
+      return cell + '元'
+    },
+    handleSelectionChange(data) {
+      console.log(data)
+    }
+  }
+}
+</script>
+```
+:::
+
 ### 横向滚动的表格
 
 :::demo 需要把所有的column设置width。
@@ -773,6 +885,7 @@ export default{
 | loading | 设置 table 是否处于加载，如果是则会出现loading bar | boolean | — | false |
 | cellEmptyText | 设置单元格没有数据的默认文案 | string | — | '--' |
 | selection | 带选择的表格 | boolean | — | false |
+| showAllSelect | 设置全选选项是否显示，需要在selection为true的情况下生效 | boolean | — | true |
 | pagination | 设置表格分页 | boolean | — | false |
 | paginationOption | 设置表格分页参数参考Pagination组件 | object | — | {} |
 | hasMore | 设置显示更多按钮 | boolean | — | false |
@@ -810,6 +923,7 @@ export default{
 | — | 自定义列的内容，参数为 { cell, row }，cell为该单元格对应的数据prop的值，row为该行的所有数据 |
 | footerLeftContent | 自定义左侧操作内容 |
 | footerRightContent | 自定义footer右边的内容 |
+| append | 插入至表格最后一行之后的内容。 |
 
 
 <script>

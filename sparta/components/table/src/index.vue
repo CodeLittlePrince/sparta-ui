@@ -2,7 +2,7 @@
   <div
     class="sp-table"
     :class="{
-      'is--no-footer': !hasFooter && !hasMore,
+      'is--no-footer': !hasFooter && !hasMore && !$slots.append,
       'is--disabled': disabled,
       'is--selection': selection }"
   >
@@ -136,9 +136,9 @@
       <div class="sp-table__footer-left">
         <div class="sp-table__footer-left-content">
           <sp-checkbox
-            v-if="selection"
+            v-if="selection && showAllSelect"
             v-model="checkAll"
-            :disabled="disabled"
+            :disabled="disabled || loading"
             :indeterminate="isIndeterminate"
             :label="selectionAllLabel"
             @change="handleCheckAllChange"
@@ -238,6 +238,10 @@ export default {
     enableUpdate: {
       type: Boolean,
       default: false
+    },
+    showAllSelect: {
+      type: Boolean,
+      default: true
     }
   },
 
@@ -273,7 +277,7 @@ export default {
       return this.paginationOption && this.paginationOption.align || 'middle'
     },
     hasFooter() {
-      return this.selection || this.pagination || this.$slots.footerRightContent
+      return (this.selection && this.showAllSelect) || this.pagination || this.$slots.footerRightContent || this.$slots.footerLeftContent
     }
   },
 
@@ -583,12 +587,44 @@ export default {
   }
 
   &__append {
+    position: relative;
     &-show-more {
       padding: 15px 0 17px;
       line-height: 18px;
       height: 18px;
       text-align: center;
-      border-bottom: 1px solid #e4e8ef;
+    }
+
+    .sp-table {
+      margin-left: -30px;
+      margin-right: -30px;
+      width: auto;
+      &::before {
+        position: absolute;
+        content: "";
+        display: block;
+        height: 1px;
+        background-color: #dbdfe6;
+        left: -30px;
+        right: -30px;
+        top: -1px;
+        z-index: 2;
+      }
+      &__head {
+        tr {
+          border: 0;
+        }
+      }
+      &:not(.is--no-footer) {
+        .sp-table__body {
+          tr:last-child {
+            border-bottom: 1px solid #e4e8ef;
+          }
+        }
+      }
+      &__footer {
+        border-bottom: 0;
+      }
     }
   }
 
@@ -632,12 +668,14 @@ export default {
     box-shadow: 0 1px 0 0 #dbdfe6;
     background-color: #f5f7fa;
     color: #97a2b5;
-    border-top: 1px solid #dbdfe6;
     .sp-table__head {
       background-color: #f5f7fa;
     }
     .sp-table__body {
       color: $color-text-tip;
+    }
+    .sp-table__footer {
+      border-bottom: none;
     }
   }
 
