@@ -33,6 +33,7 @@ export default {
       type: Boolean,
       default: true
     },
+    scrollBingElement: {},
     popperOptions: {
       type: Object,
       default() {
@@ -100,6 +101,9 @@ export default {
       options.placement = this.currentPlacement
       options.offset = this.offset
       options.arrowOffset = this.arrowOffset
+      if(this.scrollBingElement && this.scrollBingElement instanceof Element) {
+        options.scrollBingElement = this.scrollBingElement
+      }
       this.popperJS = new PopperJS(reference, popper, options)
       this.popperJS.onCreate(() => {
         this.$emit('created', this)
