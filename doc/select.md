@@ -646,6 +646,7 @@ export default{
 | filter-method | 自定义搜索方法 | function | — | — |
 | emptyText | 过滤时候没有匹配值的文案 | string | — | 请选择 |
 | limitDropdownWidth | 是否限制下拉框宽度成1.5倍 | boolean | — | true |
+| scrollBindElement | 设置scroll事件监听的元素 | string/Element | — | - |
 
 
 ### Select Slots
