@@ -448,7 +448,8 @@ Popper.prototype._setupEventListeners = function () {
   root.addEventListener('resize', this.state.updateBound);
   // if the boundariesElement is window we don't need to listen for the scroll event
   if (this._options.boundariesElement !== 'window') {
-    var target = getScrollParent(this._reference);
+    const scrollBindElement = this._options.scrollBindElement
+    var target = scrollBindElement instanceof Element ? scrollBindElement : getScrollParent(this._reference);
     // here it could be both `body` or `documentElement` thanks to Firefox, we then check both
     if (target === root.document.body || target === root.document.documentElement) {
       target = root;

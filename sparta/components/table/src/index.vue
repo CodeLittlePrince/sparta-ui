@@ -481,9 +481,6 @@ export default {
         font-size: 14px;
         color: #97a2b5;
       }
-      .sp-popup-tip__modal__helper {
-        top: -10px;
-      }
     }
   }
   &__body {

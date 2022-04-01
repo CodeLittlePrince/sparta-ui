@@ -1,35 +1,55 @@
 <template>
   <div
+    ref="popupTip"
     class="sp-popup-tip"
     :class="[
       {'has--border': hasBorder},
       `is--theme-${theme}`
     ]"
+    @mouseenter="handleMouseenter"
+    @mouseleave="handleMouseleave"
   >
-    <div class="sp-popup-tip__wrap">
+    <div class="sp-popup-tip__content">
       <slot></slot>
-      <!-- 弹层 -->
-      <div
-        class="sp-popup-tip__modal"
-        :style="{
-          'width': widthComputed,
-          'color': color,
-          'z-index': modalZIndex
-        }"
-      >
-        <slot name="popup"></slot>
-        <!-- 优化hover效果 -->
-        <div class="sp-popup-tip__modal__helper"></div>
-      </div>
     </div>
+    <!-- 弹层 -->
+    <sp-popup-tip-wrap
+      v-model="visible"
+      :class="[
+        {'has--border': hasBorder},
+        `is--theme-${theme}`
+      ]"
+      :scroll-bind-element="scrollBindElement"
+      @mouseenter="handleMouseenter"
+      @mouseleave="handleMouseleave"
+    >
+      <transition name="sp-zoom-in-top">
+        <div>
+          <slot name="popup"></slot>
+        </div>
+      </transition>
+    </sp-popup-tip-wrap>
   </div>
 </template>
 
 <script>
-import PopManage from 'sparta/model/PopManage'
+import SpPopupTipWrap from './popup-tip__wrap'
+import Emitter from 'sparta/common/js/mixins/emitter'
 
 export default {
   name: 'SpPopupTip',
+
+  components: {
+    'sp-popup-tip-wrap' : SpPopupTipWrap
+  },
+
+  mixins: [Emitter],
+
+  provide() {
+    return {
+      'SpPopupTip': this
+    }
+  },
 
   props: {
     width: {
@@ -54,28 +74,38 @@ export default {
       type: Boolean,
       default: false
     },
+
+    scrollBindElement: {}
   },
 
   data() {
     return {
-      modalZIndex: 100
+      visible: false
     }
   },
 
-  computed: {
-    widthComputed() {
-      let rst = this.width
-
-      if (!isNaN(+rst)) {
-        rst += 'px'
+  watch: {
+    // 监控下拉是否显示
+    visible(val) {
+      if (val) {
+        // 为了每次弹出PopupTipWrap，都会根据处的环境做适应
+        this.broadcast('SpPopupTipWrap', 'updatePopper')
+      } else {
+        this.broadcast('SpPopupTipWrap', 'destroyPopper')
       }
-      return rst
     }
   },
 
-  created() {
-    const popManage = PopManage.getInstance()
-    this.modalZIndex = popManage.getZIndex()
+  methods: {
+    handleMouseenter() {
+      this.visible = true
+      this.timeId && clearTimeout(this.timeId)
+    },
+    handleMouseleave() {
+      this.timeId = setTimeout(() => {
+        this.visible = false
+      }, 200)
+    },
   }
 }
 </script>
@@ -85,29 +115,30 @@ export default {
   display: inline-block;
 
   &__wrap {
-    position: relative;
-
-    &:hover {
-      .sp-popup-tip__modal {
-        display: block;
-      }
-    }
-  }
-
-  &__modal {
-    display: none;
-    position: absolute;
     font-size: 12px;
     line-height: 1.5;
     color: $color-text-secondary;
     text-align: left;
+    margin-top: 7px;
     padding: 6px 10px;
-    top: 24px;
-    left: 50%;
-    transform: translateX(-50%);
     border-radius: 2px;
     box-sizing: border-box;
     background-color: #fff;
+
+    &.has--border {
+      border: 1px solid $border-color-base;
+      box-shadow: 0 4px 12px 0 rgb(1 34 87 / 9%);
+
+      &::before {
+        border-bottom-color: $border-color-base;
+      }
+    }
+    &.is--theme-blue {
+      background-color: #f0f3f7;
+      &::after {
+        border-bottom-color: #f0f3f7;
+      }
+    }
 
     &::before,
     &::after {
@@ -133,6 +164,31 @@ export default {
       border-bottom: 6px solid #fff;
     }
 
+    &.arrow--bottom {
+      margin-bottom: 6px;
+      &::before, &::after {
+        top: auto;
+        bottom: -6px;
+        border: none;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 6px solid #fff;
+      }
+      &::after {
+        bottom: -4px;
+      }
+      &.has--border {
+        &::before {
+          border-top-color: $border-color-base;
+        }
+      }
+      &.is--theme-blue {
+        &::after {
+          border-top-color: #f0f3f7;
+        }
+      }
+    }
+
     a,
     i {
       font-size: 12px;
@@ -140,31 +196,6 @@ export default {
 
     a {
       cursor: pointer;
-    }
-
-    &__helper {
-      position: absolute;
-      background-color: transparent;
-      top: -7px;
-      left: 0;
-      right: 0;
-      height: 10px;
-    }
-  }
-
-  &.has--border &__modal {
-    border: 1px solid $border-color-base;
-    box-shadow: 0 4px 12px 0 rgb(1 34 87 / 9%);
-
-    &::before {
-      border-bottom-color: $border-color-base;
-    }
-  }
-
-  &.is--theme-blue &__modal {
-    background-color: #f0f3f7;
-    &::after {
-      border-bottom-color: #f0f3f7;
     }
   }
 }
