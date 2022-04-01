@@ -157,14 +157,12 @@ export default {
             if (errorItems.length) {
               // 错误提示
               const errorTipElem = errorItems[0].querySelector('.sp-form-item__error')
-              if (
-                this.validateFailTip &&
-                errorTipElem &&
-                errorTipElem.innerText &&
-                !hasPartFields
-              ) {
+              if (errorTipElem && errorTipElem.innerText) {
                 this.firstErrorText = errorTipElem.innerText
-                this.toastError(errorTipElem.innerText)
+                
+                if (this.validateFailTip && !hasPartFields) {
+                  this.toastError(errorTipElem.innerText)
+                }
               }
               // 滚动到错误位置;部分校验就不用滚动了(因为场景基本都是输入或者选择完后立马触发)
               if (this.scrollWhenError && !hasPartFields) {
