@@ -48,7 +48,11 @@ export default {
     this.popperElm = this.$el
     // 监听dropdown的事件（那边会广播下发）
     this.$on('updatePopper', () => {
-      if (this.$parent.visible) this.updatePopper()
+      if (this.$parent.visible) {
+        this.$nextTick(() => {
+          this.updatePopper()
+        })
+      }
     })
     this.$on('destroyPopper', this.destroyPopper)
   },
