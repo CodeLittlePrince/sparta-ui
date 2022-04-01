@@ -41,7 +41,7 @@ export default {
         }
       }
     },
-    scrollBindElement: {},
+    popperScrollBindElem: {},
   },
 
   data() {
@@ -102,14 +102,14 @@ export default {
       options.offset = this.offset
       options.arrowOffset = this.arrowOffset
 
-      let scrollBindElement = this.scrollBindElement
-      if(scrollBindElement) {
-        if(typeof scrollBindElement === 'string')
+      let popperScrollBindElem = this.popperScrollBindElem
+      if(popperScrollBindElem) {
+        if(typeof popperScrollBindElem === 'string')
         {
-          scrollBindElement = document.querySelector(scrollBindElement)
+          popperScrollBindElem = document.querySelector(popperScrollBindElem)
         }
-        if(scrollBindElement instanceof Element) {
-          options.scrollBindElement = scrollBindElement
+        if(popperScrollBindElem instanceof Element) {
+          options.popperScrollBindElem = popperScrollBindElem
         }
       }
       

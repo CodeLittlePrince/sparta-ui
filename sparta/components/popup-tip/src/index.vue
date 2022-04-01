@@ -19,7 +19,7 @@
         {'has--border': hasBorder},
         `is--theme-${theme}`
       ]"
-      :scroll-bind-element="scrollBindElement"
+      :popper-scroll-bind-elem="popperScrollBindElem"
       @mouseenter="handleMouseenter"
       @mouseleave="handleMouseleave"
     >
@@ -74,8 +74,7 @@ export default {
       type: Boolean,
       default: false
     },
-
-    scrollBindElement: {}
+    popperScrollBindElem: {}
   },
 
   data() {
