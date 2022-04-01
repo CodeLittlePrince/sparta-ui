@@ -352,8 +352,8 @@ export default {
 
     &__tip {
       position: absolute;
-      top: 0;
-      line-height: inherit;
+      line-height: 1;
+      top: 11px;
 
       .sp-icon-ques {
         margin-left: 2px;
