@@ -68,6 +68,78 @@ export default{
 ```
 :::
 
+### 无数据
+
+:::demo `sp-table`元素中注入`list`空对象数组。
+```vue
+<template>
+<div>
+  <sp-table :list="[]">
+    <sp-table-column
+      prop="name"
+      label="店铺名称"
+      width="200">
+    </sp-table-column>
+    <sp-table-column
+      prop="withdrawing"
+      label="提现中的金额"
+      width="200">
+    </sp-table-column>
+    <sp-table-column
+      prop="tag"
+      label="操作">
+      <template slot-scope="scope">
+        <sp-button
+          type="primary"
+          size="small"
+        >
+          {{ scope.cell }}
+          {{ scope.row.tag }}
+        </sp-button>
+      </template>
+    </sp-table-column>
+  </sp-table>
+  </div>
+</template>
+```
+:::
+
+### 数据加载中
+
+:::demo `sp-table`要设置为 `loading` 状态，只要设置`loading`属性为`true`即可。
+```vue
+<template>
+<div>
+  <sp-table :list="[]" :loading="true">
+    <sp-table-column
+      prop="name"
+      label="店铺名称"
+      width="200">
+    </sp-table-column>
+    <sp-table-column
+      prop="withdrawing"
+      label="提现中的金额"
+      width="200">
+    </sp-table-column>
+    <sp-table-column
+      prop="tag"
+      label="操作">
+      <template slot-scope="scope">
+        <sp-button
+          type="primary"
+          size="small"
+        >
+          {{ scope.cell }}
+          {{ scope.row.tag }}
+        </sp-button>
+      </template>
+    </sp-table-column>
+  </sp-table>
+  </div>
+</template>
+```
+:::
+
 ### 自定义列表头部显示
 
 :::demo 自定义头部。
@@ -938,6 +1010,7 @@ export default{
 | footerLeftContent | 自定义左侧操作内容 |
 | footerRightContent | 自定义footer右边的内容 |
 | append | 插入至表格最后一行之后的内容。 |
+| empty | 自定义无数据内容。 |
 
 
 <script>
