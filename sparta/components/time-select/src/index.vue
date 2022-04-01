@@ -24,6 +24,7 @@
       <sp-time-picker-dropdown
         ref="sp-time-select__dropdown"
         v-model="visible"
+        :scroll-bind-element="scrollBindElement"
         class="sp-time-select__dropdown is--single-dropdown"
       >
         <transition name="sp-zoom-in-top">
@@ -85,6 +86,7 @@
       <sp-time-picker-dropdown
         ref="sp-time-select__dropdown"
         v-model="visibleTimeRange"
+        :scroll-bind-element="scrollBindElement"
         class="sp-time-select__dropdown is--range-dropdown"
       >
         <transition name="sp-zoom-in-top">
@@ -230,6 +232,7 @@ export default {
         return false
       }
     },
+    scrollBindElement: {},
   },
   
   data() {

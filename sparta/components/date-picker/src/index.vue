@@ -28,6 +28,7 @@
         ref="sp-date-picker__dropdown"
         v-model="visible"
         class="sp-date-picker__dropdown"
+        :scroll-bind-element="scrollBindElement"
       >
         <transition name="sp-zoom-in-top">
           <div
@@ -402,7 +403,8 @@ export default {
     defaultTime: { // 选中日期后的默认具体时刻
       type:  [String, Array],
       default: ''
-    }
+    },
+    scrollBindElement: {},
   },
 
   data() {

@@ -12,6 +12,7 @@
     <sp-dropdown-item-wrap
       v-model="visible"
       :placement="placement"
+      :scroll-bind-element="scrollBindElement"
       @mouseenter="handleMouseenter"
       @mouseleave="handleMouseleave"
     >
@@ -54,7 +55,8 @@ export default {
     placement: {
       type: String,
       default: 'bottom-start'
-    }
+    },
+    scrollBindElement: {},
   },
 
   data() {

@@ -114,6 +114,7 @@
     <sp-select-dropdown
       ref="sp-select-dropdown"
       v-model="visible"
+      :scroll-bind-element="scrollBindElement"
     >
       <transition name="sp-zoom-in-top">
         <ul
@@ -201,7 +202,8 @@ export default {
     limitDropdownWidth: {
       type: Boolean,
       default: true
-    }
+    },
+    scrollBindElement: {},
   },
 
   data() {

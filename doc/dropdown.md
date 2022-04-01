@@ -100,6 +100,7 @@
 |-------------  |---------------- |---------------- |---------------------- |-------- |
 | placement    | 菜单弹出位置     | string | top/top-start/top-end/bottom/bottom-start/bottom-end  | bottom-end |
 | trigger      | 触发下拉的行为   | string | hover, click  | hover |
+| scrollBindElement | 设置scroll事件监听的元素 | string/Element | — | - |
 
 ### Dropdown Slots
 
