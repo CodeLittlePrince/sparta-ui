@@ -16,7 +16,7 @@
     <sp-time-picker-dropdown
       ref="sp-time-picker__dropdown"
       v-model="visible"
-      :scroll-bind-element="scrollBindElement"
+      :popper-scroll-bind-elem="popperScrollBindElem"
       class="sp-time-picker__dropdown"
     >
       <transition name="sp-zoom-in-top">
@@ -119,7 +119,7 @@ export default {
       type: Function,
       default: () => []
     },
-    scrollBindElement: {},
+    popperScrollBindElem: {},
   },
 
   data() {

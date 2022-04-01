@@ -217,7 +217,7 @@ export default{
 | disabledTime | 非范围选择时，设置禁用状态，参数为当前时间，要求返回 Boolean | Function | — | (val) => false |
 | disabledTimeStart | 范围选择时，设置开始时间禁用状态，参数为当前时间，要求返回 Boolean | Function | — | (val) => false |
 | disabledTimeEnd | 范围选择时，设置结束时间禁用状态，参数为当前时间，要求返回 Boolean | Function | — | (val) => false |
-| scrollBindElement | 设置scroll事件监听的元素 | string/Element | — | - |
+| popperScrollBindElem | popper浮动定位的锚点元素 | string/Element | — | - |
 
 ### Time Select Options
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |

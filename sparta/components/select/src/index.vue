@@ -114,7 +114,7 @@
     <sp-select-dropdown
       ref="sp-select-dropdown"
       v-model="visible"
-      :scroll-bind-element="scrollBindElement"
+      :popper-scroll-bind-elem="popperScrollBindElem"
     >
       <transition name="sp-zoom-in-top">
         <ul
@@ -203,7 +203,7 @@ export default {
       type: Boolean,
       default: true
     },
-    scrollBindElement: {},
+    popperScrollBindElem: {},
   },
 
   data() {

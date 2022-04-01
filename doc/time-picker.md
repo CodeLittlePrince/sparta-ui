@@ -130,7 +130,7 @@ export default{
 | disableMinute | 禁用分指定的条目 | Function | — | () => [] |
 | disableSecond | 禁用秒指定的条目 | Function | — | () => [] |
 | disableTime | 禁用时间指定的条目，优先级高于disableHour/disableMinute/disableSecond | Function | — | () => {} |
-| scrollBindElement | 设置scroll事件监听的元素 | string/Element | — | - |
+| popperScrollBindElem | popper浮动定位的锚点元素 | string/Element | — | - |
 
 <script>
 export default{

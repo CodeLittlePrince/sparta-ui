@@ -28,7 +28,7 @@
         ref="sp-date-picker__dropdown"
         v-model="visible"
         class="sp-date-picker__dropdown"
-        :scroll-bind-element="scrollBindElement"
+        :popper-scroll-bind-elem="popperScrollBindElem"
       >
         <transition name="sp-zoom-in-top">
           <div
@@ -404,7 +404,7 @@ export default {
       type:  [String, Array],
       default: ''
     },
-    scrollBindElement: {},
+    popperScrollBindElem: {},
   },
 
   data() {

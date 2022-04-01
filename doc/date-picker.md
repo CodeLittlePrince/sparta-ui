@@ -452,7 +452,7 @@ export default {
 | end-placeholder | 类型为daterange情况下的结束placeholder文案 | string | — | 结束日期 |
 | clearable | 是否展示清空按钮 | boolean | — | false |
 | editable | 文本框可输入 | boolean | — | true |
-| scrollBindElement | 设置scroll事件监听的元素 | string/Element | — | - |
+| popperScrollBindElem | popper浮动定位的锚点元素 | string/Element | — | - |
 
 ### Events
 | 事件名称      | 说明    | 回调参数      | 

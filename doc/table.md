@@ -106,7 +106,7 @@ export default{
           width="200" 
           theme="blue"
           has-border
-          scroll-bind-element=".components--main.markdown-body"
+          popper-scroll-bind-elem=".components--main.markdown-body"
         >
           <i class="sp-icon-ques"></i>
           <template slot="popup">
@@ -737,7 +737,7 @@ export default{
               width="200" color="#747d8c"
               has-border
               theme="blue"
-              :scroll-bind-element="scrollBindElement"
+              :popper-scroll-bind-elem="popperScrollBindElem"
             >
               <i class="sp-icon-ques"></i>
               <template slot="popup">
@@ -944,7 +944,7 @@ export default{
 export default{
   data() {
     return {
-      scrollBindElement: '',
+      popperScrollBindElem: '',
       tableList1: [
         {
           name: '番茄炒西红柿',
@@ -991,7 +991,7 @@ export default{
     }
   },
   mounted() {
-    this.scrollBindElement = document.querySelector('.components--main.markdown-body')
+    this.popperScrollBindElem = document.querySelector('.components--main.markdown-body')
   },
   methods: {
     formatter(cell) {
