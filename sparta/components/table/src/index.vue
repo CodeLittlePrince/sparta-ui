@@ -109,9 +109,11 @@
         v-show="(!list || !list.length) && !loading"
         class="sp-table__empty"
       >
-        <span>
-          <slot name="empty">{{ emptyText }}</slot>
-        </span>
+        <slot name="empty">
+          <div class="sp-table__empty-text">
+            {{ emptyText }}
+          </div>
+        </slot>
       </div>
       <!-- loading情况 -->
       <div
@@ -122,8 +124,7 @@
           <i
             v-if="!isIE9"
             class="sp-icon-loading"
-          ></i>
-          加载中...
+          ></i>加载中
         </div>
       </div>
     </div>
@@ -196,7 +197,7 @@ export default {
     },
     emptyText: {
       type: String,
-      default: '无相关数据'
+      default: '暂无搜索结果'
     },
     loading: {
       type: Boolean,
@@ -629,9 +630,13 @@ export default {
   }
 
   &__empty {
-    height: $table-min-height;
-    line-height: $table-min-height;
-    text-align: center;
+    &-text {
+      height: $table-min-height;
+      line-height: $table-min-height;
+      text-align: center;
+      color: #c7cbd1;
+      font-size: 16px;
+    }
   }
   &__loading {
     position: absolute;
@@ -639,11 +644,13 @@ export default {
     top: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    color: $color-text-secondary;
+    color: #97a2b5;
 
     .sp-icon-loading {
-      font-size: 30px;
+      font-size: 24px;
       vertical-align: sub;
+      color: #97a2b5;
+      margin-right: 10px;
     }
 
     &-wrap {
