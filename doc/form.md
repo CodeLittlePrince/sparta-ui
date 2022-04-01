@@ -280,7 +280,7 @@
           alert('submit!')
           console.log(this.validateForm1)
         }).catch(() => {
-          console.log('error submit')
+          console.log('error submit', this.$refs[formName].getFirstErrorText())
         })
         // 或者写成
         // this.$refs[formName].validate((valid) => {
@@ -297,7 +297,7 @@
           alert('submit!')
           console.log(this.validateForm1)
         }).catch(() => {
-          console.log('error submit')
+          console.log('error submit', this.$refs[formName].getFirstErrorText())
         })
       },
       resetForm(formName) {
@@ -639,7 +639,7 @@
           alert('submit!')
           console.log(this.validateForm1)
         }).catch(() => {
-          console.log('error submit')
+          console.log('error submit', this.$refs[formName].getFirstErrorText())
         })
       },
       validateFormPart(formName) {
@@ -647,7 +647,7 @@
           alert('submit!')
           console.log(this.validateForm1)
         }).catch(() => {
-          console.log('error submit')
+          console.log('error submit', this.$refs[formName].getFirstErrorText())
         })
       },
       resetForm(formName) {
