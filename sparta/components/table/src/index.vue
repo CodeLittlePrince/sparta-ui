@@ -542,7 +542,6 @@ export default {
   &__footer {
     position: relative;
     height: 84px;
-    border-bottom: $table-border;
     &-left {
       position: absolute;
       height: inherit;
