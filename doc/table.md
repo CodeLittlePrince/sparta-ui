@@ -523,6 +523,7 @@ export default{
     </sp-table-column>
     <div slot="footerLeftContent">
       <sp-button plain size="mini">删除</sp-button>
+      <sp-button plain size="mini">标记已读</sp-button>
     </div>
   </sp-table>
 </template>

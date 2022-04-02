@@ -545,14 +545,22 @@ export default {
     border-bottom: $table-border;
     &-left {
       position: absolute;
-      height: 100%;
+      height: inherit;
       top: 0;
       left: 40px;
       bottom: 0;
       &-content {
-        height: 84px;
+        height: inherit;
         display: table-cell;
         vertical-align: middle;
+
+        .sp-checkbox__wrap {
+          margin-right: 16px;
+        }
+
+        .sp-button + .sp-button {
+          margin-left: 2px;
+        }
       }
 
       .sp-checkbox + span {
