@@ -149,14 +149,17 @@
           </div>
         </div>
       </div>
-      <div v-if="pagination" class="sp-table__footer-center">
+      <div
+        v-if="pagination && (paginationTotal > paginationPageSize)"
+        class="sp-table__footer-center"
+      >
         <sp-pagination
-          :align="align"
-          :per-pages="perPages"
-          :page-index="pageIndex"
+          :align="paginationAlign"
+          :per-pages="paginationPerPages"
+          :page-index="paginationPageIndex"
           :disabled="loading"
-          :total="total"
-          :page-size="pageSize"
+          :total="paginationTotal"
+          :page-size="paginationPageSize"
           @change="handlePageChange"
         >
         </sp-pagination>
@@ -262,23 +265,26 @@ export default {
     isIE9() {
       return navigator.appVersion.indexOf('MSIE 9.0') > -1
     },
-    perPages() {
+    paginationPerPages() {
       return this.paginationOption && this.paginationOption.perPages || 7
     },
-    pageIndex() {
-      return this.paginationOption && this.paginationOption.pageIndex || 1
+    paginationPageIndex() {
+      return this.paginationOption && this.paginationOption.queryPageNo || 1
     },
-    pageSize() {
+    paginationPageSize() {
       return this.paginationOption && this.paginationOption.pageSize || 10
     },
-    total() {
-      return this.paginationOption && this.paginationOption.total || 1
+    paginationTotal() {
+      return this.paginationOption && this.paginationOption.totalSize || 1
     },
-    align() {
+    paginationAlign() {
       return this.paginationOption && this.paginationOption.align || 'middle'
     },
     hasFooter() {
-      return (this.selection && this.showAllSelect) || this.pagination || this.$slots.footerRightContent || this.$slots.footerLeftContent
+      return (this.selection && this.showAllSelect)
+        || (this.pagination && (this.paginationTotal > this.paginationPageSize))
+        || this.$slots.footerRightContent
+        || this.$slots.footerLeftContent
     }
   },
 

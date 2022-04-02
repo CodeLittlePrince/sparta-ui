@@ -495,7 +495,12 @@ export default{
     :list="tableList1"
     pagination
     ref="table"
-    :pagination-option="{ total: 1000 }"
+    :pagination-option="{
+      totalSize: 1000, // 默认 1
+      pageSize: 10,    // 默认 10
+      queryPageNo: 1,  // 默认 1
+      perPages: 7      // 默认 7
+    }"
     :loading="loading"
     selection
     @selection-change="handleSelectionChange"
@@ -590,7 +595,12 @@ export default{
     :list="tableList2"
     pagination
     ref="table2"
-    :pagination-option="{ total: 1000 }"
+    :pagination-option="{
+      totalSize: 1000, // 默认 1
+      pageSize: 10,    // 默认 10
+      queryPageNo: 1,  // 默认 1
+      perPages: 7      // 默认 7
+    }"
     :loading="loading2"
     selection
     :selectable="isSelectable2"

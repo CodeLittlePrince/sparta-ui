@@ -89,9 +89,9 @@ describe('Table', () => {
           showAllSelect: true,
           paginationOption: {
              perPages: 5,
-             pageIndex: 2,
+             queryPageNo: 2,
              pageSize: 10,
-             total: 1000,
+             totalSize: 1000,
              align: 'middle'
           },
           cellEmptyText: '测试'
@@ -148,13 +148,18 @@ describe('Table', () => {
       await wrapper.setData({ showAllSelect:true })
     });
 
-    it('pagination', async () => {
-      await wrapper.setData({ pagination: true })
+    it('pagination: 1 page', async () => {
+      await wrapper.setData({ pagination: true, paginationOption: { totalSize: 9 } })
+      expect(wrapper.find('.sp-table__footer-center').exists()).to.be.false
+    });
+
+    it('pagination: 2 page', async () => {
+      await wrapper.setData({ pagination: true, paginationOption: { totalSize: 11 } })
       expect(wrapper.find('.sp-table__footer-center').exists()).to.be.true
     });
 
     it('paginationOption', async () => {
-      expect(wrapper.vm.$el.querySelectorAll('.sp-pagination .align--middle li').length).to.equal(8)
+      expect(wrapper.vm.$el.querySelectorAll('.sp-pagination .align--middle li').length).to.equal(4)
       expect(wrapper.find('.sp-pagination .align--middle .is--checked').text()).to.equal('2')
       expect(wrapper.find('.align--middle').exists()).to.be.true
     });
@@ -208,7 +213,7 @@ describe('Table', () => {
           @table-view-more="handleTableViewMore"
           :selection="true"
           pagination
-          :paginationOption="{ total: 1000 }"
+          :paginationOption="{ totalSize: 1000 }"
           :hasMore="true"
           >
           <sp-table-column prop="id" />
@@ -287,7 +292,7 @@ describe('Table', () => {
           @selection-change="handleSelectionChange"
           ref="table"
           :selection="true"
-          :paginationOption="{ total: 1000 }"
+          :paginationOption="{ totalSize: 1000 }"
           :hasMore="true"
           >
           <sp-table-column prop="id" />
@@ -396,7 +401,7 @@ describe('Table', () => {
        :selection="true"
        :pagination="true"
        ref="table"
-       :pagination-option="{ total: 1000 }"
+       :pagination-option="{ totalSize: 1000 }"
        @selection-change="handleSelectionChange"
        :selectable="isSelectable"
        >
