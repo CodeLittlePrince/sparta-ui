@@ -137,9 +137,9 @@ describe('Table', () => {
       await wrapper.setData({ loading: false })
     });
 
-    it('selection', async () => {
+    it('selection: true -- no data', async () => {
       await wrapper.setData({ selection: true })
-      expect(wrapper.find('.sp-checkbox').exists()).to.be.true
+      expect(wrapper.find('.sp-checkbox').exists()).to.be.false
     });
 
     it('showAllSelect', async () => {
@@ -187,6 +187,11 @@ describe('Table', () => {
       
       expect(wrapper.find('.sp-table__body').find('.ellipsis').exists()).to.be.true
       expect(wrapper.find('.sp-table__body').find('.ellipsis').element.style.width).to.be.equal('200px')
+    });
+
+    it('selection: true -- has data', async () => {
+      await wrapper.setData({ selection: true })
+      expect(wrapper.find('.sp-checkbox').exists()).to.be.true
     });
 
     after(() => {
