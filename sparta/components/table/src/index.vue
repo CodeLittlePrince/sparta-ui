@@ -46,7 +46,7 @@
     >
       <!-- 有数据情况 -->
       <table
-        v-show="list && list.length"
+        v-show="hasData"
         :style="`width: ${tableWidth}`"
       >
         <colgroup>
@@ -106,7 +106,7 @@
       </div>
       <!-- 没有数据情况 -->
       <div
-        v-show="(!list || !list.length) && !loading"
+        v-show="!hasData && !loading"
         class="sp-table__empty"
       >
         <slot name="empty">
@@ -134,7 +134,7 @@
       class="sp-table__footer"
       :style="`width: ${tableWidth}`"
     >
-      <div class="sp-table__footer-left">
+      <div v-if="hasData" class="sp-table__footer-left">
         <div class="sp-table__footer-left-content">
           <sp-checkbox
             v-if="selection && showAllSelect"
@@ -285,6 +285,9 @@ export default {
         || (this.pagination && (this.paginationTotal > this.paginationPageSize))
         || this.$slots.footerRightContent
         || this.$slots.footerLeftContent
+    },
+    hasData() {
+      return this.list && this.list.length
     }
   },
 
