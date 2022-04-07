@@ -15,8 +15,8 @@
 ```vue
 <template>
   <div class="sp-radio-demo">
-    <sp-radio label="apple" v-model="value1">苹果</sp-radio>
-    <sp-radio label="banana" v-model="value1">香蕉</sp-radio>
+    <sp-radio label="apple" v-model="value1" @click="hanldeClick">苹果</sp-radio>
+    <sp-radio label="banana" v-model="value1" @click="hanldeClick">香蕉</sp-radio>
   </div>
 </template>
 
@@ -26,6 +26,11 @@ export default {
     return {
       value1: ""
     };
+  },
+  methods: {
+    hanldeClick(){
+      console.log('------radio click------')
+    }
   }
 };
 </script>
@@ -164,6 +169,11 @@ export default{
     value4(val) {
       console.log(val)
     },
+  },
+  methods: {
+    hanldeClick(){
+      console.log('------radio click------')
+    }
   }
 }
 </script>

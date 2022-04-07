@@ -15,6 +15,7 @@
         :disabled="disabled"
         :value="label"
         @change="handleChange"
+        @click.stop
       >
       <span class="sp-radio__inner" />
     </span>
