@@ -24,6 +24,7 @@ import TimePicker from './components/time-picker'
 import DatePicker from './components/date-picker'
 import Progress from './components/progress'
 import Upload from './components/upload'
+import UploadPro from './components/upload-pro'
 import Step from './components/step'
 import SpStepItem from './components/step-item'
 import ImgPreview from './components/img-preview'
@@ -70,6 +71,7 @@ const components = [
   DatePicker,
   Progress,
   Upload,
+  UploadPro,
   Step,
   SpStepItem,
   Form,
@@ -135,6 +137,7 @@ export {
   DatePicker,
   Progress,
   Upload,
+  UploadPro,
   Step,
   SpStepItem,
   Form,

@@ -134,14 +134,19 @@ export default {
               index: '4-4-8'
             },
             {
+              title: 'UploadPro 上传（新）',
+              link: '/upload-pro',
+              index: '4-4-9'
+            },
+            {
               title: 'Form 表单（新）',
               link: '/form',
-              index: '4-4-9'
+              index: '4-4-10'
             },
             {
               title: 'PasswordInput 密码输入（新）',
               link: '/password-input',
-              index: '4-4-10'
+              index: '4-4-11'
             },
           ]
         },
