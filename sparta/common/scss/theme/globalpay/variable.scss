@@ -296,6 +296,25 @@ $upload-picture__btn--is--disabled-background: #fff;
 $upload-picture__btn--is--disabled-border-color: #d9d9d9;
 $upload-picture__btn--is--disabled-color: #c0c4cc;
 
+/* UploadPro
+-------------------------- */
+$upload-pro-bg-grey: #f0f3f7;
+$upload-pro-card__item-width: 174px;
+$upload-pro-card__item-height: 110px;
+$upload-pro-file__item-background-hover: #f5f7fa;
+$upload-pro-file__item-color: $color-text-primary;
+$upload-pro-file__item--is--error-color: $color-danger;
+$upload-pro-card__item-border: 1px solid #d9d9d9;
+$upload-pro-card__btn-background: #f0f3f7;
+$upload-pro-card__btn-background-hover: color-mix($color-white, #f0f3f7, 30%);
+$upload-pro-card__btn-border: 1px dashed #d9d9d9;
+$upload-pro-card__btn-border-radius: 4px;
+$upload-pro-card__btn-font-size: 14px;
+$upload-pro-card__btn-icon-color: #999;
+$upload-pro-card__btn--is--disabled-background: #fff;
+$upload-pro-card__btn--is--disabled-border-color: #d9d9d9;
+$upload-pro-card__btn--is--disabled-color: #c0c4cc;
+
 /* Tabs
 -------------------------- */
 $tabs-font-size: 16px;
