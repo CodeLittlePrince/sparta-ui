@@ -316,7 +316,7 @@ export default{
     <sp-upload-pro
       v-model="file9"
       type="card"
-      action="/api/upload"
+      action="/apix/upload"
       :process-result="processResult"
       :limit="1"
       example-image="https://i.epay.126.net/a/ge/static/img/ex_supplier.5f209565.png"
@@ -437,11 +437,10 @@ export default{
 ### Attribute
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
-| value | 绑定值（初始值必须和valueType类型对应） | string/array | — | '' |
-| valueType | 绑定值的具体类型 | string | 'string'/'stringArray'/'objectArray' | 'string' |
+| value | 绑定值（初始值必须和value-type类型对应） | string/array | — | '' |
+| value-type | 绑定值的具体类型 | string | 'string'/'stringArray'/'objectArray' | 'string' |
 | example-image | 示例图 | string | — | — |
 | example-big-image | 示例图点击后放大的大图 | string | — | — |
-| files | 上传的文件列表, 例如: [{name: 'food.jpg', url: 'https://xxx.cdn.com/xxx.jpg'}]，注意：files的变量不要用事件change出来的值，因为格式不一样 | array | — | [] |
 | action | 必选参数，上传的地址 | string | — | — |
 | headers | 设置上传的请求头部 | object | — | — |
 | multiple | 是否支持多选文件 | boolean | — | — |

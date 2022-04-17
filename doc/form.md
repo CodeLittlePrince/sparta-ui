@@ -183,7 +183,9 @@
         example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
         @change="handlePictureChange"
         :limit="1"
-      ></sp-upload>
+      >
+        <div slot="desc">上传文件说明，可多行（sp-upload不再推荐，推荐使用sp-upload-pro）</div>
+      </sp-upload>
     </sp-form-item>
     <!-- 多文件上传 -->
     <sp-form-item
@@ -205,10 +207,30 @@
         multiple
       >
         多文件上传
-        <div slot="desc">上传文件说明，可多行</div>
+        <div slot="desc">上传文件说明，可多行（sp-upload不再推荐，推荐使用sp-upload-pro）</div>
         <div slot="tip">注意：最终提交，upload组件需要自行调用getSuccessUploadFiles方法拿到只上传成功的文件</div>
       </sp-upload>
       <div slot="error" slot-scope="scope">{{ scope.error }}<a style="color: #1977ea">（by hello kitty）</a></div>
+    </sp-form-item>
+    <!-- 作品 -->
+    <sp-form-item
+      label="作品"
+      prop="card"
+      :rules="[
+        { required: true, message: '作品不能为空'}
+      ]"
+    >
+      <sp-upload-pro
+        v-model="validateForm1.card"
+        action="/api/upload"
+        value-type="stringArray"
+        type="card"
+        example-image="https://i.epay.126.net/a/ge/static/img/ex_supplier.5f209565.png"
+        example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
+        :limit="1"
+      >
+        <div slot="desc">上传推荐使用</div>
+      </sp-upload-pro>
     </sp-form-item>
     <sp-form-item label="备注" prop="note">
       <sp-input
@@ -262,6 +284,7 @@
           favoriteFruit: '',
           picture: [],
           files: [],
+          card: [],
           note: '',
           agree: false
         },
@@ -590,6 +613,7 @@
           favoriteFruit: '',
           picture: [],
           files: [],
+          card: [],
           note: '',
           agree: false
         },
