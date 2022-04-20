@@ -1,5 +1,5 @@
 <template>
-  <div class="sp-upload">
+  <div ref="sp-upload" class="sp-upload">
     <input
       ref="reference"
       class="sp-upload__input"
@@ -90,7 +90,13 @@
 
     <!-- 上传图片 -->
     <template v-else>
-      <div class="sp-upload-card" :class="{ 'is--show-upload-btn': showUploadBtn }">
+      <div
+        class="sp-upload-card"
+        :class="{
+          'is--show-upload-btn': showUploadBtn,
+          'has--mb': needNewlineCount && needNewlineCount < uploadFiles.length
+        }"
+      >
         <ul class="sp-upload-card__show">
           <li
             v-for="(item, index) in uploadFiles"
@@ -162,7 +168,7 @@
             </div>
           </li>
         </ul>
-        <div class="sp-upload__right-content">
+        <div v-if="exampleImage || limitNum == 1" class="sp-upload__right-content">
           <div
             v-if="exampleImage"
             class="sp-upload__example-image"
@@ -307,6 +313,7 @@ export default {
       request: {},
       uidIndex: 1,
       uploadFiles: [],
+      needNewlineCount: 0,
     }
   },
 
@@ -365,6 +372,16 @@ export default {
   mounted() {
     this.toastError = Toast('error')
     this._initUploadFilesData()
+
+    // 卡片类型的上传，在出现换行的时候，需要补margin-bottom
+    if (this.type === 'card' && (!this.limit || (this.limit && 1 < this.limit))) {
+      const style = window.getComputedStyle(this.$refs['sp-upload'])
+      console.log(style.width)
+      const uploadWidth = parseFloat(style.width)
+      const CARD_WIDTH = 174
+      const CARD_RIGHT_MARGIN = 10
+      this.needNewlineCount = Math.floor((uploadWidth - CARD_WIDTH) / (CARD_WIDTH + CARD_RIGHT_MARGIN))
+    }
   },
 
   methods: {
@@ -1175,6 +1192,10 @@ export default {
 
     &.is--show-upload-btn .sp-upload__right-content {
       margin-left: 10px;
+    }
+
+    &.has--mb .sp-upload-card__item {
+      margin-bottom: 10px;
     }
   }
 

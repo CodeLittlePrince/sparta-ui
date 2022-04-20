@@ -100,7 +100,7 @@ export default{
       v-model="file3"
       multiple
       value-type="objectArray"
-      action="/apix/upload"
+      action="/api/upload"
       :process-result="processResult"
       @change="handleChange"
     ></sp-upload-pro>
@@ -274,7 +274,6 @@ export default{
       action="/api/upload"
       multiple
       :process-result="processResult"
-      :limit="3"
       example-image="https://i.epay.126.net/a/ge/static/img/ex_supplier.5f209565.png"
       example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
       :onExceed="onExceed"
@@ -316,7 +315,7 @@ export default{
     <sp-upload-pro
       v-model="file9"
       type="card"
-      action="/apix/upload"
+      action="/api/upload"
       :process-result="processResult"
       :limit="1"
       example-image="https://i.epay.126.net/a/ge/static/img/ex_supplier.5f209565.png"
