@@ -406,6 +406,29 @@ export default{
 ```
 :::
 
+### card类型文件过多换行
+需要显示声明`one-line-count`控制图片上下间距
+
+:::demo 使用`one-line-count`指定一行最多能放下的图片个数。
+```vue
+<template>
+  <div class="sp-upload-demo">
+    <sp-upload-pro
+      v-model="file14"
+      type="card"
+      value-type="objectArray"
+      multiple
+      :limit="6"
+      one-line-count="3"
+      action="/api/upload"
+    >
+      添加图片
+    </sp-upload-pro>
+  </div>
+</template>
+```
+:::
+
 ### 禁用
 
 :::demo 使用`disabled`即可。
@@ -444,6 +467,7 @@ export default{
 | headers | 设置上传的请求头部 | object | — | — |
 | multiple | 是否支持多选文件 | boolean | — | — |
 | limit | 最大允许上传个数 |  number | — | — |
+| one-line-count | 当`card`类型的文件上传很多导致换行，会发现图片上下没有间距，因此需要通过此属性指定一行最多显示几个文件 |  string/number | — | — |
 | data | 上传时附带的额外参数 | object | — | — |
 | name | 上传的文件字段名 | string | — | file |
 | with-credentials | 支持发送 cookie 凭证信息 | boolean | — | false |
@@ -482,6 +506,7 @@ export default{
       file11: '',
       file12: '',
       file13: '',
+      file14: [],
       data3: {
         name: 'kitty',
         age: 7

@@ -94,7 +94,7 @@
         class="sp-upload-card"
         :class="{
           'is--show-upload-btn': showUploadBtn,
-          'has--mb': needNewlineCount && needNewlineCount < uploadFiles.length
+          'has--mb': hasNewLine
         }"
       >
         <ul class="sp-upload-card__show">
@@ -105,7 +105,8 @@
             :class="{
               'is--error': item.status === 'fail',
               'is--uploading': item.status === 'uploading',
-              'is--ready': item.status === 'ready'
+              'is--ready': item.status === 'ready',
+              'is--last-line': isLastLine(index)
             }"
           >
             <div class="sp-upload-card__item-info">
@@ -305,7 +306,8 @@ export default {
     onExceed: {
       type: Function,
       default: function() {}
-    }
+    },
+    oneLineCount: [String, Number],
   },
 
   data() {
@@ -313,7 +315,6 @@ export default {
       request: {},
       uidIndex: 1,
       uploadFiles: [],
-      needNewlineCount: 0,
     }
   },
 
@@ -340,6 +341,13 @@ export default {
     showUploadBtn() {
       return !this.limitNum || this.uploadFiles.length < this.limitNum
     },
+    hasNewLine() {
+      let itemsLen = this.uploadFiles.length
+
+      if (this.showUploadBtn) itemsLen += 1
+
+      return this.oneLineCount && this.oneLineCount < itemsLen
+    }
   },
 
   watch: {
@@ -372,16 +380,6 @@ export default {
   mounted() {
     this.toastError = Toast('error')
     this._initUploadFilesData()
-
-    // 卡片类型的上传，在出现换行的时候，需要补margin-bottom
-    if (this.type === 'card' && (!this.limit || (this.limit && 1 < this.limit))) {
-      const style = window.getComputedStyle(this.$refs['sp-upload'])
-      console.log(style.width)
-      const uploadWidth = parseFloat(style.width)
-      const CARD_WIDTH = 174
-      const CARD_RIGHT_MARGIN = 10
-      this.needNewlineCount = Math.floor((uploadWidth - CARD_WIDTH) / (CARD_WIDTH + CARD_RIGHT_MARGIN))
-    }
   },
 
   methods: {
@@ -817,6 +815,18 @@ export default {
     getFileNameByUrl(url) {
       const pieces = url.split('/')
       return pieces[pieces.length - 1]
+    },
+
+    isLastLine(index) {
+      if (!this.hasNewLine) return false
+
+      let itemsLen = this.uploadFiles.length
+
+      if (!this.showUploadBtn) itemsLen -= 1
+
+      const left = itemsLen % this.oneLineCount
+      
+      return (itemsLen - index) <= left
     }
   }
 }
@@ -1196,6 +1206,10 @@ export default {
 
     &.has--mb .sp-upload-card__item {
       margin-bottom: 10px;
+
+      &.is--last-line {
+        margin-bottom: 0;
+      }
     }
   }
 
