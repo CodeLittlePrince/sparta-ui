@@ -617,7 +617,9 @@ export default {
         parentNode.insertBefore(ele, nextSibling)
         form = null
       }
-      this.$refs.reference.value = null
+      if (this.$refs?.reference) {
+        this.$refs.reference.value = null
+      }
     },
 
     /**
