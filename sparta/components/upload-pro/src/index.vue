@@ -471,6 +471,8 @@ export default {
       if (this.isString) {
         if (this.value) {
           this.uploadFiles = [this._productFileObjectByUrl(this.value)]
+        } else {
+          this.uploadFiles = []
         }
       } else if (this.isStringArray) {
         const files = JSON.parse(JSON.stringify(this.value))
