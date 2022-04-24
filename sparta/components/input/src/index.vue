@@ -967,9 +967,9 @@ export default {
     right: 5px;
 
     .sp-button {
-      width: 60px;
+      min-width: 60px;
       height: 26px;
-      padding: 4px 0;
+      padding: 4px 15px;
     }
   }
 
