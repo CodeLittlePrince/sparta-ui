@@ -72,7 +72,7 @@ export default {
     position: relative;
     display: inline-block;
     box-sizing: border-box;
-    padding: 18px 0;
+    padding: 20px 0;
     margin: 0 20px;
     line-height: 22px;
     font-size: $tabs-font-size;
