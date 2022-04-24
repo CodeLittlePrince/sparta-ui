@@ -91,7 +91,12 @@ export default{
 |---------- |-------- |---------- |-------------  |-------- |
 | tab     | 选项卡标题   | string   | — |    —     |
 | value | 选项卡的值 | string/number/boolean | — | '' |
-| disabled   | 禁用 | Boolan | — | - | false
+| disabled   | 禁用 | Boolan | — | - | false |
+
+### Tabs Events
+| 参数       | 说明     | 回调参数    | 
+|---------- |-------- |---------- |
+| click     | tab 被选中时触发   | 被选中的标签的 value   |
 
 <script>
 export default{

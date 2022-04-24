@@ -45,6 +45,7 @@ export default {
     handleTabSelect(val, isDisabled) {
       if (!isDisabled) {
         this.$emit('input', val)
+        this.$emit('click', val)
       }
     }
   }
