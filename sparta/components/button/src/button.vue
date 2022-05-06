@@ -145,7 +145,7 @@ export default {
     background-color: $button-plain-fill;
 
     &:hover {
-      background: $button-default-fill--hover;
+      background: $button-plain-fill--hover;
       color: $color-primary;
     }
 

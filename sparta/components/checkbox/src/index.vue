@@ -231,7 +231,7 @@ export default {
     background-color: $checkbox-background;
     border: 1px solid $checkbox-border-color;
     border-radius: 2px;
-    color: $color-primary;
+    color: $checkbox-checked-color;
     transition: all 0.3s;
 
     &.is--indeterminate::after {
@@ -248,7 +248,7 @@ export default {
     }
 
     &:hover {
-      border-color: $color-primary;
+      border-color: $checkbox-checked-color;
     }
   }
   &__text {
@@ -257,7 +257,7 @@ export default {
   }
 
   &__input:focus + span {
-    border-color: $color-primary;
+    border-color: $checkbox-checked-color;
   }
 
   .sp-icon-check {
@@ -268,8 +268,8 @@ export default {
     .sp-checkbox__icon {
       color: $checkbox-checkmark-color;
       font-size: 12px;
-      background-color: $color-primary;
-      border-color: $color-primary;
+      background-color: $checkbox-checked-color;
+      border-color: $checkbox-checked-color;
     }
   }
 

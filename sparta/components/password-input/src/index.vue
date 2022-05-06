@@ -161,8 +161,8 @@ export default {
   }
 
   &__item.is--focus {
-    border-color: $color-primary;
-    box-shadow: 0 0 0 1px rgb(25 119 234 / 20%);
+    border-color: $password-box-border-focus;
+    box-shadow: $password-box-shadow-focus;
   }
 
   &__input {

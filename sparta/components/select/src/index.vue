@@ -654,6 +654,7 @@ export default {
     vertical-align: middle;
     user-select: none;
     padding-left: 10px;
+    color: $select-prepend-color;
     i {
       font-size: 14px;
       display: inline-block;
@@ -762,7 +763,7 @@ export default {
     user-select: none;
     display: table-cell;
     width: 1px;
-    border-left: 1px solid $border-color-base;
+    border-left: $select-suffix-border-left;
     background-color: $select-suffix-background-color;
     color: $color-text-tip;
     vertical-align: middle;
@@ -778,12 +779,16 @@ export default {
 
   &.isFocus &__suffix {
     background-color: $select-suffix-background-color-focus;
-    color: #fff;
+    color: $select-suffix-color-focus;
     border-color: $select-suffix-background-color-focus;
   }
 
   .is--disabled &__suffix {
     color: #c7cbd1;
+    background-color: $select-background-disabled;
+  }
+  .is--readonly &__suffix {
+    background-color: $select-background-readonly;
   }
 
   &-list {

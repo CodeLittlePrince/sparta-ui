@@ -444,7 +444,7 @@ export default {
       right: 0;
       bottom: 2px;
       left: -6px;
-      background: #e6f7ff;
+      background: $date-picker-pane__cell--is-ranging-background;
       border-radius: 0 26px 26px 0;
       content: "";
     }
@@ -456,7 +456,7 @@ export default {
         right: 7px;
         bottom: 2px;
         left: -6px;
-        background: #e6f7ff;
+        background: $date-picker-pane__cell--is-ranging-background;
         content: "";
       }
     }
