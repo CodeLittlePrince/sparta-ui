@@ -727,7 +727,7 @@ export default {
   &.is--focus {
     .sp-time-select__range {
       outline: none;
-      border-color: $color-primary;
+      border-color: $input-box-border-focus;
       box-shadow: $input-box-shadow-focus;
     }
   }
