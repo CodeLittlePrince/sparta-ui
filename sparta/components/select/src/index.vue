@@ -752,6 +752,7 @@ export default {
 
   &.isFocus &__input-box {
     border-color: $select-input-border-color-focus;
+    box-shadow: $select-input-box-shadow-focus;
   }
 
   &__focus-helper {
