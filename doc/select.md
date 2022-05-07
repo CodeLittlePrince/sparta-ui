@@ -396,6 +396,7 @@ export default{
 ```vue
 <template>
   <div class="select-demo">
+    <p>filterable属性</p>
     <sp-select
       v-model="value4"
       filterable
@@ -403,6 +404,21 @@ export default{
     >
       <sp-option
         v-for="item in list4"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      ></sp-option>
+    </sp-select>
+    <div class="select-demo">
+    <p>filter-method方法</p>
+    <sp-select
+      v-model="value4_1"
+      filterable
+      :loading="loading"
+      :filter-method="filterMethod"
+    >
+      <sp-option
+        v-for="item in list4_1"
         :key="item.value"
         :label="item.label"
         :value="item.value"
@@ -421,12 +437,29 @@ export default{
         { label: 'pig', value: 3 },
         { label: 'citty', value: 4 }
       ],
-      value4: 0
+      value4: 0,
+      list4_1: [],
+      value4_1: '',
+      loading: false
     }
   },
   watch: {
     value4(val) {
       console.log(val)
+    }
+  },
+  methods: {
+    filterMethod(value) {
+      console.log(value)
+      if(!value) return 
+      this.loading = true
+      this.$ajax.get('/api/search', { keyword: value })
+      .then((res) => {
+        setTimeout(() => {
+          this.list4_1 = res
+          this.loading = false
+        }, 200);
+      })
     }
   }
 }
@@ -644,6 +677,9 @@ export default{
 | placeholder | 占位符 | string | — | 请选择 |
 | filterable | 是否可搜索 | boolean | — | false |
 | filter-method | 自定义搜索方法 | function | — | — |
+| loading | 是否正在从远程获取数据 | boolean | — | false |
+| loading-text | 远程加载时显示的文字 | string | — | 加载中 |
+| wait | 自定义搜索防抖等待时间（毫秒） | string/number | — | 300 |
 | emptyText | 过滤时候没有匹配值的文案 | string | — | 请选择 |
 | limitDropdownWidth | 是否限制下拉框宽度成1.5倍 | boolean | — | true |
 | popperScrollBindElem | popper浮动定位的锚点元素 | string/Element | — | - |
@@ -709,7 +745,7 @@ export default{
         { label: 'pig', value: 3 },
         { label: 'citty', value: 4 }
       ],
-      value4: 0,
+      value4: 1,
       list5: [
         { label: '北京', value: 'beijing' },
         { label: '上海', value: 'shanghai' },
@@ -774,7 +810,10 @@ export default{
         { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
         { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
       ],
-      value12: ''
+      value12: '',
+      list4_1: [],
+      value4_1: '',
+      loading: false
     }
   },
   watch: {
@@ -835,12 +874,30 @@ export default{
       }
       return label
     }
+  },
+  methods: {
+    filterMethod(value) {
+      console.log(value)
+      if(!value) return 
+      this.loading = true
+      this.$ajax.get('/api/search', { keyword: value })
+      .then((res) => {
+        setTimeout(() => {
+          this.list4_1 = res
+          this.loading = false
+        }, 200);
+      })
+    }
   }
 }
 </script>
 
 <style>
   .components--main .select-demo {
+    p {
+      line-height: 1.5;
+      margin: 10px 0;
+    }
     .sp-select {
       width: 300px;
     }

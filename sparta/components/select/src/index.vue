@@ -125,10 +125,10 @@
           <slot></slot>
           <!-- 无数据情况 -->
           <li
-            v-show="!hasSpOptions || (hasSpOptions && spOptionsAllInVisible)"
+            v-show="loading || !hasSpOptions || (hasSpOptions && spOptionsAllInVisible)"
             class="sp-option is--disabled sp-select-list-emptyText"
             @click.stop
-          >{{ emptyText }}</li>
+          >{{ loading ? loadingText : emptyText }}</li>
         </ul>
       </transition>
     </sp-select-dropdown>
@@ -138,7 +138,7 @@
 <script>
 import Emitter from 'sparta/common/js/mixins/emitter'
 import SpSelectDropdown from './select-dropdown'
-
+import { debounce } from 'sparta/common/js/utils/tool'
 export default {
   name: 'SpSelect',
 
@@ -204,6 +204,18 @@ export default {
       default: true
     },
     popperScrollBindElem: {},
+    loading: { // 是否正在从远程获取数据
+      type: Boolean,
+      default: false
+    },
+    loadingText: { // 远程加载时显示的文字
+      type: String,
+      default: '加载中'
+    },
+    wait: { // 自定义搜索防抖等待时间
+      type: [String, Number],
+      default: 300 // ms
+    }
   },
 
   data() {
@@ -221,7 +233,8 @@ export default {
       currentValue: this.value,
       oldInputText: null,
       isOnComposition: false,
-      singleSelected: ''
+      singleSelected: '',
+      needFilterMethod: true, // 是否应该调用filterMethod方法，用户主动选择的时候，虽然输入框的值变化了，但是不应再去过滤了
     }
   },
 
@@ -259,6 +272,9 @@ export default {
       // IE10和IE11上，如果有placeholder，input显示以后IE辣鸡浏览器会自动触发input事件
       return this.isIE ? '' : this.helperText
     },
+    isCustomFilter() { // 是否是自定义搜索
+      return this.filterable && this.filterMethod && typeof this.filterMethod === 'function'
+    }
   },
 
   watch: {
@@ -313,7 +329,8 @@ export default {
       }
     },
     spOptions() {
-      this.setCurrentValue(this.value, true)
+      const currentValue = this.isCustomFilter && this.inputText ? this.inputText : this.value
+      this.setCurrentValue(currentValue, true)
     },
     isFocus(val) {
       if (this.filterable) {
@@ -322,12 +339,26 @@ export default {
         }
       }
     },
+    loading(val) {
+      if(val) {
+        this.oldInputText = null
+        this.visible = true
+      }
+    },
+    isCustomFilter(val) {
+      if(val) {
+        this.getDebounceFilterMethod()
+      }
+    }
   },
   
   mounted() {
     if (this.disableOperation) {
       return
     }
+    if(this.isCustomFilter) {
+      this.getDebounceFilterMethod()
+    } // 自定义搜索防抖
     this.setCurrentValue(this.value)
     document.addEventListener('click', this.handleOtherAreaClick)
   },
@@ -336,11 +367,16 @@ export default {
     if (this.disableOperation) {
       return
     }
+    this.debounceFilterMethod?.cancel()
     document.removeEventListener('click', this.handleOtherAreaClick)
   },
 
   methods: {
     filterOptionsVisible() {
+      if(this.isCustomFilter) {
+        if(this.needFilterMethod) this.debounceFilterMethod?.()
+        return
+      }
       for (let i = 0, len = this.spOptions.length; i < len; i++) {
         if (this.spOptions[i].label.indexOf(this.inputText) !== -1) {
           this.spOptions[i].visible = true
@@ -349,7 +385,6 @@ export default {
         }
       }
     },
-
     updateTagboxHeight() {
       this.$nextTick(() => {
         // 更新容器的高度
@@ -410,6 +445,12 @@ export default {
       }
     },
     /**
+     * 进行防抖处理
+     */
+    getDebounceFilterMethod() {
+      this.debounceFilterMethod = debounce(() => { this.filterMethod?.(this.inputText) }, this.wait, { leading: true })
+    },
+    /**
      * 点击自身处理
      */
     handleSelfClick() {
@@ -418,7 +459,7 @@ export default {
         // 但是IE9上聚焦就会触发input事件
         // input又会影响下拉显示状态，input事件又在click前触发
         // 导致显示Bug，因此，暂时降低体验处理
-        this.visible = true
+        this.visible = this.isCustomFilter && !(this.inputText || this.oldInputText) && !this.spOptions.length ? false : true // 自定义搜索时，没有输入任何文字时，不展示拉下框
         this.isFocus = true
         this.focusSelectInput()
         this.storeInputTextWhenFilterable()
@@ -461,6 +502,7 @@ export default {
 
         this.$emit('input', hoverItem.value)
         this.$emit('change', hoverItem.value)
+        this.needFilterMethod = false
         this.inputText = hoverItem.label
         this.visible = false
       }
@@ -471,6 +513,7 @@ export default {
       if (!this.readonly) { // 解决IE9上鬼畜bug
         this.visible = true
       }
+      this.needFilterMethod = true
     },
 
     handleHelperFocus() {
