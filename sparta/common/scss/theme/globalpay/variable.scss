@@ -128,11 +128,14 @@ $checkbox-border-color: #d5d9e0;
 $checkbox-checkmark-color: #fff;
 $checkbox-checkmark-color-disabled: #d5d9e0;
 $checkbox-font-color-disabled: #c7cbd1;
+$checkbox-checked-color: $color-primary;
 
 /* PasswordInput
 -------------------------- */
 $item-height: 36px;
 $password-input-width: 224px;
+$password-box-border-focus: $color-primary;
+$password-box-shadow-focus: 0 0 0 1px rgb(25 119 234 / 20%);
 
 /* Input
 -------------------------- */
@@ -141,9 +144,14 @@ $input-color: $color-text-regular;
 $input-background: #fff;
 $input-background-disabled: #f0f3f7;
 $input-background-readonly: #f5f8fc;
+$input-background-append: $input-background-disabled;
+$input-background-format: #e6f1ff;
+$input-color-append: $color-text-regular;
 $input-border: $border-base;
 $input-box-shadow-focus: 0 0 0 1px $color-primary-light-8;
 $input-box-shadow-focus-error: 0 0 0 1px $color-danger-light-8;
+$input-box-border-focus: $color-primary;
+$input-box-border-hover: $input-box-border-focus;
 $input-border-radius: 4px;
 $input-medium-font-size: 14px;
 $input-medium-height: 36px;
@@ -169,7 +177,9 @@ $radio-border-color-disabled: $border-color-base;
 $radio-background-color-disabled: #f0f3f7;
 $radio-button-background-color-active: #e6f1ff;
 $radio-button-border-color-disabled: #e4e8ef;
-$radio-button-text-hover: #97a2b5;
+$radio-button-background-color-hover: $radio-background-color;
+$radio-button-text-hover: $color-primary;
+$radio-button-color: #97a2b5;
 
 /* Select
 -------------------------- */
@@ -179,6 +189,8 @@ $select-background-disabled: #f0f3f7;
 $select-background-readonly: #f5f8fc;
 $select-suffix-background-color: #f0f3f7;
 $select-suffix-background-color-focus: $color-primary;
+$select-suffix-border-left: 1px solid $border-color-base;
+$select-suffix-color-focus: #fff;
 $select-input-border-color: $border-color-base;
 $select-input-border-color-disabled: #c0c4cc;
 $select-input-border-color-hover: $color-primary;
@@ -190,6 +202,7 @@ $select-input-font-color: $color-text-regular;
 $select-dropdown-item-background: #fff;
 $select-dropdown-item-background-hover: #e6f1ff;
 $select-dropdown-border-color: $border-color-base;
+$select-prepend-color: inherit;
 
 /* Form
 -------------------------- */
@@ -225,12 +238,25 @@ $tag-border-color--danger: $color-danger;
 /* Table
 -------------------------- */
 $table-font-size: 14px;
+$table-line-height: 1;
 $table-background: #fff;
+$table-background--is-disabled: #f5f7fa;
+$table-divider-color: #dbdfe6;
 $table-border: 1px solid #e4e8ef;
+$table-outer-border: none;
 $table-thead-color: $color-text-secondary;
 $table-tbody-color: $color-text-regular;
 $table-min-height: 84px;
 $table-loading-background: rgb(255 255 255 / 50%);
+$table-loading-color: #97a2b5;
+$table-empty-color: #c7cbd1;
+$table-indent: 30px;
+$table-head-padding: 15px $table-indent;
+$table-body-padding: 0 $table-indent;
+$table-row-height: 84px;
+$table-td-padding-vertical: 10px;
+$table-cell-padding-horizontal: 10px;
+$table-selection-margin-left: 0;
 
 /* TimePicker
 -------------------------- */
@@ -295,6 +321,7 @@ $upload-picture__btn-icon-color: #999;
 $upload-picture__btn--is--disabled-background: #fff;
 $upload-picture__btn--is--disabled-border-color: #d9d9d9;
 $upload-picture__btn--is--disabled-color: #c0c4cc;
+$upload-picture__mask-background: rgb(0 0 0 / 50%);
 
 /* UploadPro
 -------------------------- */
@@ -314,11 +341,13 @@ $upload-pro-card__btn-icon-color: #999;
 $upload-pro-card__btn--is--disabled-background: #fff;
 $upload-pro-card__btn--is--disabled-border-color: #d9d9d9;
 $upload-pro-card__btn--is--disabled-color: #c0c4cc;
+$upload-pro-card__mask-background: rgb(0 0 0 / 50%);
 
 /* Tabs
 -------------------------- */
 $tabs-font-size: 16px;
 $tabs-line-color: #dbdfe6;
+$tabs-item-color: #747d8c;
 $tabs-item-color-active: $color-primary;
 $tabs-item-color-disabled: #b6babf;
 

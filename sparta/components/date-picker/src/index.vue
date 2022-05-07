@@ -1442,7 +1442,7 @@ export default {
         color: inherit;
 
         &:hover {
-          border-color: $color-primary;
+          border-color: $input-box-border-hover;
         }
       }
     }
@@ -1451,7 +1451,7 @@ export default {
   &-range, &.is--range {
     &.is--focus {
       outline: none;
-      border-color: $color-primary;
+      border-color: $input-box-border-focus;
       box-shadow: $input-box-shadow-focus;
     }
     width: 400px;
@@ -1462,7 +1462,7 @@ export default {
     overflow: hidden;
 
     &:hover {
-      border-color: $color-primary;
+      border-color: $input-box-border-hover;
     }
 
     &-split {

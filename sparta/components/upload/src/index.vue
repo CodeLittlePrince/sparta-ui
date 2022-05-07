@@ -985,7 +985,7 @@ export default {
       }
 
       &:hover &-info::before {
-        background: rgb(0 0 0 / 50%);
+        background: $upload-picture__mask-background;
       }
 
       &.is--uploading:hover &-info::before {
