@@ -370,6 +370,10 @@ export default {
   &.is--two-line &__label {
     line-height: 20px;
 
+    &__tip {
+      top: 3px;
+    }
+
     .sp-popup-tip__modal {
       top: 24px;
     }
