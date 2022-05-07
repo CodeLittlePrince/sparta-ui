@@ -1,6 +1,6 @@
 <template>
   <li
-    v-show="visible"
+    v-show="visible && !spSelect.loading"
     class="sp-option"
     :class="{
       'is--selected': isSelect,
@@ -53,11 +53,15 @@ export default {
   created() {
     this.spSelect.spOptions.push(this)
   },
+  beforeDestroy() {
+    this.spSelect.spOptions.splice(this.spSelect.spOptions.findIndex(item => item === this), 1)
+  },
   methods: {
     handleClick(value, label) {
       if (this.disabled) {
         return
       }
+      this.spSelect.needFilterMethod = false
       // 单选情况，select做处理
       if (!this.spSelect.multiple) {
         if(this.spSelect.filterable) {

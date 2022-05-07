@@ -1,4 +1,5 @@
 import clonedeep from 'lodash.clonedeep'
+import debounce from 'lodash.debounce'
 
 function noop() {}
 
@@ -54,9 +55,10 @@ function getPropByPath(obj, path, strict) {
   }
 }
 
-export default {
+export {
   noop,
   clonedeep,
   getValueByPath,
-  getPropByPath
+  getPropByPath,
+  debounce
 }

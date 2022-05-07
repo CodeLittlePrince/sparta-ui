@@ -1,6 +1,6 @@
 <script>
 import SpModal from 'sparta/components/modal'
-import tool from 'sparta/common/js/utils/tool'
+import { noop } from 'sparta/common/js/utils/tool'
 
 export default {
   name: 'SpMessage',
@@ -17,8 +17,8 @@ export default {
       hideAfterCancel: true,
       hideAfterConfirm: true,
       width: 418,
-      cancelFunc: tool.noop,
-      confirmFunc: tool.noop,
+      cancelFunc: noop,
+      confirmFunc: noop,
       cancelText: '取消',
       confirmText: '确定',
       align: 'center',

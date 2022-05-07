@@ -60,7 +60,7 @@
 <script>
 import AsyncValidator from 'async-validator'
 import Emitter from 'sparta/common/js/mixins/emitter'
-import tool from 'sparta/common/js/utils/tool'
+import {getPropByPath,clonedeep,noop} from 'sparta/common/js/utils/tool'
 
 export default {
   name: 'SpFormItem',
@@ -157,7 +157,7 @@ export default {
         path = path.replace(/:/, '.')
       }
 
-      return tool.getPropByPath(model, path, true).v
+      return getPropByPath(model, path, true).v
     },
 
     isRequired() {
@@ -215,7 +215,7 @@ export default {
   },
 
   methods: {
-    validate(trigger, callback = tool.noop) {
+    validate(trigger, callback = noop) {
       this.validateDisabled = false
       const rules = this.getFilteredRule(trigger)
       if ((!rules || rules.length === 0) && this.required === undefined) {
@@ -235,7 +235,7 @@ export default {
       const validator = new AsyncValidator(descriptor)
       const model = {}
 
-      let fieldValueCopy = tool.clonedeep(this.fieldValue)
+      let fieldValueCopy = clonedeep(this.fieldValue)
 
       // 上传文件只应该看已经上传成功的
       if (this.forUpload) {
@@ -268,7 +268,7 @@ export default {
         path = path.replace(/:/, '.')
       }
 
-      let prop = tool.getPropByPath(model, path, true)
+      let prop = getPropByPath(model, path, true)
 
       this.validateDisabled = true
       if (Array.isArray(value)) {
@@ -285,7 +285,7 @@ export default {
       const selfRules = this.rules
       const requiredRule = this.required !== undefined ? { required: !!this.required } : []
 
-      const prop = tool.getPropByPath(formRules, this.prop || '')
+      const prop = getPropByPath(formRules, this.prop || '')
       formRules = formRules ? (prop.o[this.prop || ''] || prop.v) : []
 
       return [].concat(selfRules || formRules || []).concat(requiredRule)
