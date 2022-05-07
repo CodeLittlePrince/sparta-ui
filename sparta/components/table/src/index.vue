@@ -26,7 +26,9 @@
         </colgroup>
         <thead>
           <tr>
-            <th v-if="selection"></th>
+            <th v-if="selection">
+              <div></div>
+            </th>
             <th
               v-for="(item, index) in children"
               :key="index"
@@ -64,6 +66,7 @@
           <tr
             v-for="(item, rIndex) in list"
             :key="rIndex"
+            :class="{ 'is--striped': rIndex%2 !== 0 }"
           >
             <td v-if="selection">
               <div class="sp-table-cell">
@@ -470,9 +473,11 @@ export default {
   width: 100%;
   overflow-x: auto;
   font-size: $table-font-size;
+  line-height: $table-line-height;
+  border: $table-outer-border;
 
   &__head {
-    padding: 15px 30px;
+    padding: $table-head-padding;
     text-align: left;
     color: $table-thead-color;
     border-bottom: $table-border;
@@ -485,7 +490,7 @@ export default {
     th {
       text-align: left; /* 为了IE */
       &:first-child {
-        padding-left: 10px;
+        padding-left: $table-cell-padding-horizontal;
       }
       [class^="sp-icon"] {
         font-size: 14px;
@@ -495,7 +500,7 @@ export default {
   }
   &__body {
     position: relative;
-    padding: 0 30px;
+    padding: $table-body-padding;
     text-align: left;
     color: $table-tbody-color;
     min-height: $table-min-height;
@@ -504,21 +509,25 @@ export default {
     tr {
       border-bottom: $table-border;
 
+      &.is--striped {
+        background: $table-background;
+      }
+
       td {
         vertical-align: middle;
         line-height: 1.2;
-        height: 84px;
-        padding: 10px 0;
+        height: $table-row-height;
+        padding: $table-td-padding-vertical 0;
         box-sizing: border-box;
 
         &:first-child {
           .sp-table-cell {
-            padding-left: 10px;
+            padding-left: $table-cell-padding-horizontal;
           }
         }
         &:last-child {
           .sp-table-cell {
-            padding-right: 10px;
+            padding-right: $table-cell-padding-horizontal;
           }
         }
 
@@ -555,7 +564,7 @@ export default {
       position: absolute;
       height: inherit;
       top: 0;
-      left: 40px;
+      left: $table-cell-padding-horizontal + $table-indent;
       bottom: 0;
       &-content {
         height: inherit;
@@ -610,17 +619,18 @@ export default {
     }
 
     .sp-table {
-      margin-left: -30px;
-      margin-right: -30px;
+      margin-left: -1 * $table-indent;
+      margin-right: -1 * $table-indent;
       width: auto;
+      border: none;
       &::before {
         position: absolute;
         content: "";
         display: block;
         height: 1px;
-        background-color: #dbdfe6;
-        left: -30px;
-        right: -30px;
+        background-color: $table-divider-color;
+        left: -1 * $table-indent;
+        right: -1 * $table-indent;
         top: -1px;
         z-index: 2;
       }
@@ -647,7 +657,7 @@ export default {
       height: $table-min-height;
       line-height: $table-min-height;
       text-align: center;
-      color: #c7cbd1;
+      color: $table-empty-color;
       font-size: 16px;
     }
   }
@@ -657,12 +667,12 @@ export default {
     top: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    color: #97a2b5;
+    color: $table-loading-color;
 
     .sp-icon-loading {
       font-size: 24px;
       vertical-align: sub;
-      color: #97a2b5;
+      color: $table-loading-color;
       margin-right: 10px;
     }
 
@@ -686,13 +696,18 @@ export default {
 
   &.is--disabled {
     box-shadow: 0 1px 0 0 #dbdfe6;
-    background-color: #f5f7fa;
-    color: #97a2b5;
+    background-color: $table-background--is-disabled;
+    color: $color-text-tip;
     .sp-table__head {
-      background-color: #f5f7fa;
+      background-color: $table-background--is-disabled;
     }
     .sp-table__body {
       color: $color-text-tip;
+      tr {
+        &.is--striped {
+          background: $table-background--is-disabled;
+        }
+      }
     }
     .sp-table__footer {
       border-bottom: none;
@@ -700,14 +715,33 @@ export default {
   }
 
   &.is--selection {
-    .sp-table__body {
-      tr {
-        td {
-          &:first-child {
-            .sp-table-cell {
-              padding-right: 7px;
+    .sp-table {
+      &__body {
+        tr {
+          td {
+            &:first-child {
+              .sp-table-cell {
+                padding-right: 7px;
+                padding-left: 10px;
+                margin-left: $table-selection-margin-left;
+              }
             }
           }
+        }
+      }
+      &__head {
+        tr {
+          th {
+            div {
+              margin-left: $table-selection-margin-left;
+              width: 11px;
+            }
+          }
+        }
+      }
+      &__footer {
+        &-left {
+          left: $table-indent + 10px + $table-selection-margin-left;
         }
       }
     }

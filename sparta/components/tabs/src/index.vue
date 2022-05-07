@@ -78,7 +78,7 @@ export default {
     line-height: 22px;
     font-size: $tabs-font-size;
     text-decoration: none;
-    color: #747d8c;
+    color: $tabs-item-color;
     cursor: pointer;
 
     &::after {

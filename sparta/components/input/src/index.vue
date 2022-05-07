@@ -578,12 +578,12 @@ export default {
     }
 
     &:hover {
-      border-color: $color-primary;
+      border-color: $input-box-border-hover;
     }
 
     &:focus {
       outline: none;
-      border-color: $color-primary;
+      border-color: $input-box-border-focus;
       box-shadow: $input-box-shadow-focus;
     }
   }
@@ -675,12 +675,12 @@ export default {
     }
 
     &:hover {
-      border-color: $color-primary;
+      border-color: $input-box-border-hover;
     }
 
     &:focus {
       outline: none;
-      border-color: $color-primary;
+      border-color: $input-box-border-focus;
       box-shadow: $input-box-shadow-focus;
     }
     /* safari 浏览器密码输入框默认钥匙去除 */
@@ -753,7 +753,7 @@ export default {
   &.is--active {
     .sp-input__inner {
       outline: none;
-      border-color: $color-primary;
+      border-color: $input-box-border-focus;
       box-shadow: $input-box-shadow-focus;
     }
   }
@@ -871,8 +871,8 @@ export default {
   }
 
   &__append, &__prepend {
-    background-color: $input-background-disabled;
-    color: $color-text-regular;
+    background-color: $input-background-append;
+    color: $input-color-append;
     vertical-align: middle;
     display: table-cell;
     position: relative;
@@ -978,7 +978,7 @@ export default {
     bottom: $input-height + 4px;
     left: 0;
     right: 0;
-    background-color: #e6f1ff;
+    background-color: $input-background-format;
     border-radius: $input-border-radius;
     font-size: 16px;
     line-height: 22px;

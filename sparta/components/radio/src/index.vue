@@ -158,8 +158,8 @@ export default {
   }
 
   &__wrap.is--checked &__inner {
-    border-color: $color-primary;
-    background-color: $color-primary;
+    border-color: $radio-color-active;
+    background-color: $radio-color-active;
 
     &::after {
       transform: scale(1);

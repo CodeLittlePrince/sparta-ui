@@ -151,8 +151,9 @@ export default {
     background-color: transparent;
     min-width: 98px;
     &:hover {
+      background-color: $radio-button-background-color-hover;
       .sp-radio-button__text {
-        color: $color-primary;
+        color: $radio-button-text-hover;
       }
     }
     &.is--checked, &.is--checked:hover {
@@ -172,7 +173,7 @@ export default {
       }
     }
     .sp-radio-button__text {
-      color: #97a2b5;
+      color: $radio-button-color;
     }
   }
 }
