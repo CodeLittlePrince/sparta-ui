@@ -28,6 +28,7 @@
     "selector-class-pattern": null,
     "function-url-quotes": null,
     "font-family-no-missing-generic-family-keyword": null,
-    "scss/dollar-variable-pattern": null
+    "scss/dollar-variable-pattern": null,
+    "scss/no-global-function-names": null
   }
 }
