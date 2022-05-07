@@ -22,6 +22,7 @@ const config = Object.assign(webpackConfigBase.config, {
         options: {
           name: 'img/[name].[ext]',
           publicPath: 'sparta-ui/lib',
+          sourceMap: true
         }
       },
       {
@@ -30,24 +31,35 @@ const config = Object.assign(webpackConfigBase.config, {
         options: {
           name: 'font/[name].[ext]',
           publicPath: '~sparta-ui/lib',
+          sourceMap: true
         }
       },
       {
         test: /\.(css|scss)$/,
         use: [
           'vue-style-loader',
-          'css-loader',
-          'postcss-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true
+            }
+          },
           {
             loader: 'sass-loader', options: {
-              sourceMap: false,
+              sourceMap: true,
               sassOptions: { outputStyle: 'expanded' }
             }
           },
           {
             loader: 'sass-resources-loader',
             options: {
-              sourceMap: false,
+              sourceMap: true,
               resources: webpackConfigBase.resolve('sparta/common/scss/theme/globalpay/variable.scss')
             }
           }
@@ -61,8 +73,7 @@ const config = Object.assign(webpackConfigBase.config, {
             loader: 'babel-loader',
             // Use cache carefully 😤It will cache although you have changed .browserslistrc sometimes.
             options: { cacheDirectory: true }
-          },
-          { loader: 'eslint-loader', options: { cache: true } }
+          }
         ]
       },
       {
