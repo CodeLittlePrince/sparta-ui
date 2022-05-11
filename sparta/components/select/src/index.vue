@@ -234,7 +234,7 @@ export default {
       oldInputText: null,
       isOnComposition: false,
       singleSelected: '',
-      needFilterMethod: true, // 是否应该调用filterMethod方法，用户主动选择的时候，虽然输入框的值变化了，但是不应再去过滤了
+      needFilterMethod: false, // 是否应该调用filterMethod方法，用户主动选择的时候，虽然输入框的值变化了，但是不应再去过滤了
     }
   },
 
@@ -306,7 +306,9 @@ export default {
           if (this.singleSelected) {
             this.inputText = this.singleSelected
           }
-          this.filterOptionsVisible()
+          if(this.inputText == '') {
+            this.clearValue()
+          }
         }
         this.broadcast('SpSelectDropdown', 'destroyPopper')
       }
@@ -329,7 +331,7 @@ export default {
       }
     },
     spOptions() {
-      const currentValue = this.isCustomFilter && this.inputText ? this.inputText : this.value
+      const currentValue = this.isCustomFilter && this.inputText && this.inputText != ' ' ? this.inputText : this.value
       this.setCurrentValue(currentValue, true)
     },
     isFocus(val) {
@@ -342,7 +344,6 @@ export default {
     loading(val) {
       if(val) {
         this.oldInputText = null
-        this.visible = true
       }
     },
     isCustomFilter(val) {
@@ -552,17 +553,22 @@ export default {
 
     handleSuffixClick(e) {
       if (this.showClearIcon) {
-        this.$emit('input', '')
-        this.$emit('change', '')
-        this.inputText = ''
-        if (this.filterable) {
-          this.oldInputText = null
-        }
+        this.needFilterMethod = true
+        this.clearValue()
         this.$refs.selectInput.blur()
         this.visible = false
         e.stopPropagation()
       } else {
         this.focusSelectInput()
+      }
+    },
+
+    clearValue() {
+      this.$emit('input', '')
+      this.$emit('change', '')
+      this.inputText = ''
+      if (this.filterable) {
+        this.oldInputText = null
       }
     },
 
