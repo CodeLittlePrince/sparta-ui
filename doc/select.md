@@ -414,6 +414,7 @@ export default{
     <sp-select
       v-model="value4_1"
       filterable
+      clearable
       :loading="loading"
       :filter-method="filterMethod"
     >
@@ -446,11 +447,14 @@ export default{
   watch: {
     value4(val) {
       console.log(val)
+    },
+    value4_1(val) {
+      console.log(val)
     }
   },
   methods: {
     filterMethod(value) {
-      console.log(value)
+      console.log('filterMethod', value)
       if(!value) return 
       this.loading = true
       this.$ajax.get('/api/search', { keyword: value })
@@ -829,6 +833,9 @@ export default{
     value4(val) {
       console.log(val)
     },
+    value4_1(val) {
+      console.log(val)
+    },
     value5(val) {
       console.log(val)
     },
@@ -877,7 +884,7 @@ export default{
   },
   methods: {
     filterMethod(value) {
-      console.log(value)
+      console.log('filterMethod', value)
       if(!value) return 
       this.loading = true
       this.$ajax.get('/api/search', { keyword: value })
