@@ -891,6 +891,7 @@ export default{
 <template>
   <sp-table
     :list="tableList1"
+    need-scroll
     @selection-change="handleSelectionChange"
   >
     <sp-table-column
@@ -987,6 +988,7 @@ export default{
 | paginationOption | 设置表格分页参数参考Pagination组件 | object | — | {} |
 | hasMore | 设置显示更多按钮 | boolean | — | false |
 | disabled | 设置表格不可勾选 | boolean | — | false |
+| needScroll | 设置表格是否超出滚动 | boolean | — | false |
 
 ### Table Events
 | 事件名称      | 说明    | 回调参数      |
