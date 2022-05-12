@@ -4,7 +4,8 @@
     :class="{
       'is--no-footer': !hasFooter && !hasMore && !$slots.append,
       'is--disabled': disabled,
-      'is--selection': selection }"
+      'is--selection': selection,
+      'need--scroll': needScroll }"
   >
     <!-- 表格头部 -->
     <div
@@ -249,7 +250,11 @@ export default {
     showAllSelect: {
       type: Boolean,
       default: true
-    }
+    },
+    needScroll: {
+      type: Boolean,
+      default: false
+    },
   },
 
   data() {
@@ -471,10 +476,13 @@ export default {
 <style lang="scss">
 .sp-table {
   width: 100%;
-  overflow-x: auto;
   font-size: $table-font-size;
   line-height: $table-line-height;
   border: $table-outer-border;
+
+  &.need--scroll {
+    overflow-x: auto;
+  }
 
   &__head {
     padding: $table-head-padding;
