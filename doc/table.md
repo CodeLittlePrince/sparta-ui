@@ -510,8 +510,23 @@ export default{
       :ellipsis="true"
       prop="name"
       label="店铺名称"
+      slot-name="tip"
       width="200">
     </sp-table-column>
+    <div slot="tip">
+      提现中的金额
+      <sp-popup-tip
+        width="200" 
+        theme="blue"
+        has-border
+        popper-scroll-bind-elem=".components--main.markdown-body"
+      >
+        <i class="sp-icon-ques"></i>
+        <template slot="popup">
+          我是做好事不留名的红领巾
+        </template>
+      </sp-popup-tip>
+    </div>
     <sp-table-column
       prop="withdrawing"
       label="提现中的金额"

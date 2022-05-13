@@ -739,7 +739,7 @@ export default {
       }
       &__head {
         tr {
-          th {
+          th:first-child {
             div {
               margin-left: $table-selection-margin-left;
               width: 11px;
