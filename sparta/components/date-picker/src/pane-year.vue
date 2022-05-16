@@ -64,15 +64,22 @@ export default {
   mixins: [Emitter],
   
   props: {
-    visible: {
-      type: Boolean,
-      default: true
+    type: {
+      type: String,
+      default: 'date',
+      validator(val) {
+        return ['year', 'month', 'date', 'daterange'].indexOf(val) > -1
+      }
     },
     year: [Number, String],
     calYear: [Number, String],
     disabledDate: {
       type: Function,
       default: () => false
+    },
+    enableCurrentYear: {
+      type: String,
+      default: ''
     },
   },
 
@@ -93,8 +100,10 @@ export default {
       if (this.calYearValue) {
         for (let i = 0; i <= this.nextDecadeStartYear - this.lastDecadeEndYear; i++) {
           const year = this.lastDecadeEndYear + i
+          const [ enableYear ] = this.enableCurrentYear?.toString().split('/') || []
+          const endable = ['date', 'daterange', 'month'].includes(this.type) && year == enableYear
           rst.push({
-            disabled: this.disabledDate(new Date(year, 0, 1)) && this.disabledDate(new Date(year, 11, 31)),
+            disabled: endable ? false : this.disabledDate(new Date(year, 0, 1)) && this.disabledDate(new Date(year, 11, 31)),
             lastDecadeEndYear: i === 0,
             nextDecadeStartYear: i === this.nextDecadeStartYear - this.lastDecadeEndYear,
             value: year

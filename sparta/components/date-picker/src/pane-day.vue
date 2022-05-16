@@ -115,9 +115,8 @@ import Emitter from 'sparta/common/js/mixins/emitter'
 
 export default {
   name: 'SpDatePickerPaneDay',
-
   mixins: [Emitter],
-  
+
   props: {
     value: [String, Array], // daterange是Array类型,date是string
     type: {
@@ -126,10 +125,6 @@ export default {
       validator(val) {
         return ['date', 'daterange'].indexOf(val) > -1
       }
-    },
-    visible: {
-      type: Boolean,
-      default: true
     },
     calYear: [Number, String],
     calMonth: [Number, String],
@@ -144,7 +139,6 @@ export default {
       default: () => false
     }
   },
-
   computed: {
     /**
      * 获取当前月的天数和插入天数。
@@ -170,6 +164,9 @@ export default {
           }
         }
       )
+      const result = dateList.some(item => item.currentMonth && !item.disabled) ? `${this.calYear}/${this.calMonth}` : ''
+      if(result) this.dispatch('SpDatePicker', 'sp.datepikcer.enable', result) // 当前面板所在的月份和年份是否可选
+
       // 获取当月1号的星期是为了确定在1号前需要插多少天
       let startDay = new Date(this.calYear, this.calMonth, 1).getDay()
       startDay = startDay === 0 ? 6 : startDay - 1
@@ -198,11 +195,11 @@ export default {
         }
       }
       return dateList
-    }
+    },
   },
 
   methods: {
-    handleSelectDay(e) {
+    getCurrentDateValue(e) {
       let target = e.target
       if (target.tagName === 'DIV') {
         target = target.parentNode
@@ -221,7 +218,12 @@ export default {
         // 获取选中日期的 date
         let selectDay = new Date(this.calYear, month, item.value)
         // 赋值
-        const dateValue = format.formatDate(selectDay.getTime())
+        return format.formatDate(selectDay.getTime())
+      }
+    },
+    handleSelectDay(e) {
+      const dateValue = this.getCurrentDateValue(e)
+      if(dateValue) {
         const pieces = dateValue.split('-')
         this.$emit('yearChange', +pieces[0])
         this.$emit('monthChange', +pieces[1] - 1)
@@ -234,26 +236,8 @@ export default {
     
     handleMouseMove(e) {
       if(this.type !== 'daterange') return
-      let target = e.target
-      if (target.tagName === 'DIV') {
-        target = target.parentNode
-      }
-      if (target.tagName !== 'TD') return
-      const row = target.parentNode.rowIndex - 2
-      const column = target.cellIndex
-      const item = this.dateList[row * 7 + column]
-      
-      if (!item.disabled) {
-        // 选择了上个月
-        let month = this.calMonth
-        if (item.lastMonth) month--
-        // 选择了下个月
-        if (item.nextMonth) month++
-        // 获取选中日期的 date
-        let selectDay = new Date(this.calYear, month, item.value)
-        // 赋值
-        const dateValue = format.formatDate(selectDay.getTime())
-
+      const dateValue = this.getCurrentDateValue(e)
+      if(dateValue) {
         this.$emit('modelChange', { date: dateValue, type: 'hover' })
       }
     },
@@ -261,7 +245,7 @@ export default {
     handleLastMonth() {
       if (this.calMonth === 0) {
         this.$emit('calMonthChange', 11)
-        this.$emit('calYearChange', this.calYear - 1)
+        this.handleLastYear()
       } else {
         this.$emit('calMonthChange', this.calMonth - 1)
       }
@@ -274,7 +258,7 @@ export default {
     handleNextMonth() {
       if (this.calMonth === 11) {
         this.$emit('calMonthChange', 0)
-        this.$emit('calYearChange', this.calYear + 1)
+        this.handleNextYear()
       } else {
         this.$emit('calMonthChange', this.calMonth + 1)
       }
