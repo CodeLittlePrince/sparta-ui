@@ -61,11 +61,13 @@
             </template>
             <div v-show="visiblePaneMonth">
               <sp-date-picker-pane-month
+                :type="type"
                 :year="year"
                 :month="month"
                 :cal-year="calYear"
                 :cal-month="calMonth"
                 :disabled-date="disabledDate"
+                :enable-current-month="enableCurrentMonthAndYear"
                 @calYearChange="handleCalYearChange"
                 @calMonthChange="handleCalMonthChange"
                 @switchYear="handleSwitchYear"
@@ -74,9 +76,11 @@
             </div>
             <div v-show="visiblePaneYear">
               <sp-date-picker-pane-year
+                :type="type"
                 :year="year"
                 :cal-year="calYear"
                 :disabled-date="disabledDate"
+                :enable-current-year="enableCurrentMonthAndYear"
                 @calYearChange="handleCalYearChange"
                 @yearSelect="handleYearSelect"
               />
@@ -194,11 +198,13 @@
                 </template>
                 <div v-show="visiblePaneMonthStart">
                   <sp-date-picker-pane-month
+                    :type="type"
                     :year="yearStart"
                     :month="monthStart"
                     :cal-year="calYearStart"
                     :cal-month="calMonthStart"
                     :disabled-date="disabledDate"
+                    :enable-current-month="enableCurrentMonthAndYear"
                     @calYearChange="handleCalYearStartChange"
                     @calMonthChange="handleCalMonthStartChange"
                     @monthSelect="handleMonthStartSelect"
@@ -207,9 +213,11 @@
                 </div>
                 <div v-show="visiblePaneYearStart">
                   <sp-date-picker-pane-year
+                    :type="type"
                     :year="yearStart"
                     :cal-year="calYearStart"
                     :disabled-date="disabledDate"
+                    :enable-current-year="enableCurrentMonthAndYear"
                     @calYearChange="handleCalYearStartChange"
                     @yearSelect="handleYearStartSelect"
                   />
@@ -250,11 +258,13 @@
                 </template>
                 <div v-show="visiblePaneMonthEnd">
                   <sp-date-picker-pane-month
+                    :type="type"
                     :year="yearEnd"
                     :month="monthEnd"
                     :cal-year="calYearEnd"
                     :cal-month="calMonthEnd"
                     :disabled-date="disabledDate"
+                    :enable-current-month="enableCurrentMonthAndYear"
                     @calYearChange="handleCalYearEndChange"
                     @calMonthChange="handleCalMonthEndChange"
                     @monthSelect="handleMonthEndSelect"
@@ -263,9 +273,11 @@
                 </div>
                 <div v-show="visiblePaneYearEnd">
                   <sp-date-picker-pane-year
+                    :type="type"
                     :year="yearEnd"
                     :cal-year="calYearEnd"
                     :disabled-date="disabledDate"
+                    :enable-current-year="enableCurrentMonthAndYear"
                     @calYearChange="handleCalYearEndChange"
                     @yearSelect="handleYearEndSelect"
                   />
@@ -474,7 +486,8 @@ export default {
       visiblePaneTimeEnd: false,
       isRangeSelecting: false, // 日期范围是否在选择中,即只选中了一个日期
       rangeDateList: [], // daterange 传递给pane-day组件的值
-      lastRangeDateList: [], //
+      lastRangeDateList: [],
+      enableCurrentMonthAndYear: ''
     }
   },
 
@@ -662,6 +675,9 @@ export default {
       this.lastModel = displayValue
       this._setDefault()
     }
+    this.$on('sp.datepikcer.enable', (enableCurrentMonthAndYear) => {
+      this.enableCurrentMonthAndYear = enableCurrentMonthAndYear
+    })
     document.addEventListener('click', this.handleOtherAreaClick)
   },
 
@@ -683,7 +699,6 @@ export default {
       } else {
         this._resetDateStart()
       }
-      // if (this.modelEnd && !this.isRangeDateInSamePane && this._valiate(this.modelEnd, 'end')) {
       if (this.modelEnd && this._valiate(this.modelEnd, 'end')) {
         this._calDateEnd()
       } else {
@@ -698,7 +713,7 @@ export default {
       this.calDay = new Date().getDate()
       this.calMonth = new Date().getMonth()
       this.calYear = new Date().getFullYear()
-      const {hour, minute, second} = this.formatDefaultTime()
+      const { hour, minute, second } = this.formatDefaultTime()
       if (this.showTime) {
         this.hour = hour
         this.minute = minute
@@ -712,7 +727,7 @@ export default {
       this.yearStart = ''
       this.calMonthStart = new Date().getMonth()
       this.calYearStart = new Date().getFullYear()
-      const {hour, minute, second} = this.formatDefaultTime(0)
+      const { hour, minute, second } = this.formatDefaultTime(0)
       if (this.showTime) {
         this.hourStart = hour
         this.minuteStart = minute
@@ -727,7 +742,7 @@ export default {
       this.calDayEnd = new Date().getDate()
       this.calMonthEnd = new Date().getMonth() + 1 // 结束默认比开始多一个月
       this.calYearEnd = new Date().getFullYear()
-      const {hour, minute, second} = this.formatDefaultTime(1)
+      const { hour, minute, second } = this.formatDefaultTime(1)
       if (this.showTime) {
         this.hourEnd = hour
         this.minuteEnd = minute
@@ -745,14 +760,12 @@ export default {
     _calDateStart() {
       if (this._valiate(this.modelStart, 'start')) {
         this._setValuesStart()
-        // if(!this.isRangeDateInSamePane && !this.isRangeSelecting) this._setCalValuesStart()
         this._setCalValuesStart()
       }
     },
     _calDateEnd() {
       if (this._valiate(this.modelEnd, 'end')) {
         this._setValuesEnd()
-        // if(!this.isRangeDateInSamePane) this._setCalValuesEnd()
         this._setCalValuesEnd()
       }
     },

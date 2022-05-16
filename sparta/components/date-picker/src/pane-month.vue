@@ -5,7 +5,7 @@
       <a
         class="sp-icon-arrow-double-left"
         title="上一年"
-        @click="handleSwitchLastDecade"
+        @click="handleSwitchLastYear"
       ></a>
 
       <a
@@ -18,7 +18,7 @@
       <a
         class="sp-icon-arrow-double-right"
         title="下一年"
-        @click="handleSwitchNextDecade"
+        @click="handleSwitchNextYear"
       ></a>
     </div>
     <!-- 内容 -->
@@ -68,9 +68,12 @@ export default {
   mixins: [Emitter],
   
   props: {
-    visible: {
-      type: Boolean,
-      default: true
+    type: {
+      type: String,
+      default: 'date',
+      validator(val) {
+        return ['year', 'month', 'date', 'daterange'].indexOf(val) > -1
+      }
     },
     calYear: [Number, String],
     calMonth: [Number, String],
@@ -79,7 +82,11 @@ export default {
     disabledDate: {
       type: Function,
       default: () => false
-    }
+    },
+    enableCurrentMonth: {
+      type: String,
+      default: ''
+    },
   },
 
   data() {
@@ -114,15 +121,24 @@ export default {
         ]
         rst.forEach((item, index) => {
           item.value = index
-          item.disabled =
+          const [ year, month ] = this.enableCurrentMonth?.toString().split('/') || []
+          if(this.isDateType && index == month && this.calYear == year) {
+            item.disabled = false
+          } else {
+            item.disabled =
             this.disabledDate(new Date(this.calYear, index, 1)) &&
             this.disabledDate(new Date(this.calYear, index, this._getDayCountOfMonth(this.calYear, index)))
+          }
         })
       }
+      const result = !this.isDateType && rst.some(item => !item.disabled) ? this.calYear.toString() : ''
+      if(result) this.dispatch('SpDatePicker', 'sp.datepikcer.enable', result)
       return rst
-    }
+    },
+    isDateType() {
+      return ['date', 'daterange'].includes(this.type)
+    },
   },
-
   methods: {
     handleMonthSelect(e) {
       let target = e.target
@@ -138,10 +154,10 @@ export default {
         this.$emit('monthSelect')
       }
     },
-    handleSwitchLastDecade() {
+    handleSwitchLastYear() {
       this.$emit('calYearChange', this.calYear - 1)
     },
-    handleSwitchNextDecade() {
+    handleSwitchNextYear() {
       this.$emit('calYearChange', this.calYear + 1)
     },
     handleSwitchYear() {
