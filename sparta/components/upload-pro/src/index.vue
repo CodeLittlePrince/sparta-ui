@@ -358,7 +358,9 @@ export default {
       if (this.uploadFiles?.length) {
         const successFiles = this.uploadFiles.filter(item => item.status === 'success')
 
-        if (this.isString) {
+        if (successFiles?.length !== val.length) {
+          isSame = false
+        }else if (this.isString) {
           isSame = val === successFiles[0].fileUrl
         } else if (this.isStringArray) {
           isSame = val.every((url, index) => {
@@ -476,7 +478,6 @@ export default {
         }
       } else if (this.isStringArray) {
         const files = JSON.parse(JSON.stringify(this.value))
-
         this.uploadFiles = files.map(item => {
           return this._productFileObjectByUrl(item)
         })

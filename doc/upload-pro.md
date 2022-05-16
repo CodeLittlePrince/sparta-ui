@@ -55,6 +55,12 @@ export default{
 ```vue
 <template>
   <div class="sp-upload-demo">
+    <sp-button
+      @click="file2 = ['https://xxx.com/a.png', 'https://xxx.com/b.png', 'https://xxx.com/c.png']"
+    >add data</sp-button>
+    <sp-button
+      @click="file2 = []"
+    >clear data</sp-button>
     <sp-upload-pro
       v-model="file2"
       value-type="stringArray"
