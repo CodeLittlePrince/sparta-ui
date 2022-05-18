@@ -10,7 +10,7 @@ describe('date-picker', () => {
     data() {
       return {
         time1: new Date('2019/02/11').getTime(),
-        defaultTime: undefined,
+        defaultTime: '12:00:00',
         disabled: false,
         showTime: false,
         currentDate: Date.now(),

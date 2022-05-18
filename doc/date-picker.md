@@ -204,7 +204,7 @@ export default {
         type="daterange"
         start-placeholder="开始日期"
         end-placeholder="结束日期"
-        :default-time="['00:00:00', '23:59:59']"
+        :default-time="['08:00:00', '12:00:00']"
         :show-time="true"
         clearable
         @change="handleDaterangeChange"
@@ -253,7 +253,6 @@ export default {
         type="daterange"
         start-placeholder="开始日期"
         end-placeholder="结束日期"
-        :default-time="['00:00:00', '23:59:59']"
         :disabled-time="disabledRangeTime"
         :show-time="true"
         clearable
@@ -416,7 +415,7 @@ export default {
 ```
 :::
 
-### 可编辑模式
+### 不可编辑模式
 
 :::demo 通过`editable`，可以设置是否可以编辑，默认是true
 ```vue
