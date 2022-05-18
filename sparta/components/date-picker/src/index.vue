@@ -804,11 +804,11 @@ export default {
       this.monthStart = +datePieces[1] - 1
       this.dayStart = +datePieces[2]
 
-      if( pieces[1]) {
-        const timePieces = pieces[1].split(':')
-        this.hourStart = timePieces[0]
-        this.minuteStart = timePieces[1]
-        this.secondStart = timePieces[2]
+      if(pieces[1]) {
+        const { hour, minute, second } = this.formatDefaultTime(0)
+        this.hourStart = hour
+        this.minuteStart = minute
+        this.secondStart = second
         this.timeStart = pieces[1]
       }
     },
@@ -827,11 +827,12 @@ export default {
       this.yearEnd = +datePieces[0]
       this.monthEnd = +datePieces[1] - 1
       this.dayEnd = +datePieces[2]
+
       if(pieces[1]) {
-        const timePieces = pieces[1].split(':')
-        this.hourEnd = timePieces[0]
-        this.minuteEnd = timePieces[1]
-        this.secondEnd = timePieces[2]
+        const { hour, minute, second } = this.formatDefaultTime(1)
+        this.hourEnd = hour
+        this.minuteEnd = minute
+        this.secondEnd = second
         this.timeEnd = pieces[1]
       }
 
@@ -1377,19 +1378,15 @@ export default {
       const standardDate = format.modifyDate(value).getTime()
       return !this.valueFormat ? standardDate : format.formatDate(standardDate, this.valueFormat)
     },
-    formatDisplayValue(value, index) {
+    formatDisplayValue(value) {
       if(!value) return value
       value = !Array.isArray(value) ? format.modifyDate(value) : value
       if(!Array.isArray(value) && !this.isValidDate(value)) return ''
       const formatType = this.isYearType ? 'yyyy' : this.isMonthType ? 'yyyy-MM' : this.showTime ? 'yyyy-MM-dd hh:mm:ss' : 'yyyy-MM-dd'
       if(Array.isArray(value)) {
-        return value.map((item, index) => this.formatDisplayValue(item, index))
+        return value.map((item) => this.formatDisplayValue(item))
       }
-      // index 0 开始时间, index 1 结束时间, index undefined type=date
-      let hour = index === 0 ? this.hourStart : index === 1 ? this.hourEnd : this.hour
-      let minute = index === 0 ? this.minuteStart : index === 1 ? this.minuteEnd : this.minute
-      let second = index === 0 ? this.secondStart : index === 1 ? this.secondEnd : this.second
-      return this.isValidDate(value) ? format.formatDate(new Date(value).setHours(hour, minute, second, 0), formatType) : value
+      return this.isValidDate(value) ? format.formatDate(new Date(value), formatType) : value
     },
     formatDefaultTime(index) {
       let time = ''
