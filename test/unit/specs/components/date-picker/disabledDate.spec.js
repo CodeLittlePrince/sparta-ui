@@ -57,6 +57,14 @@ describe('date-picker', () => {
           })
         })
       })
+
+      describe('event: change', () => {
+        it('点击此刻按钮，不应派发change事件', async () => {
+          await wrapper.find('.sp-date-picker-content').trigger('click')
+          await wrapper.find('.sp-date-picker__current-time').trigger('click')
+          expect(wrapper.vm.time1).to.equal('')
+        })
+      })
     })
   })
 })
