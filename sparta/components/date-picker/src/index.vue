@@ -529,8 +529,8 @@ export default {
           this.isRangeType &&
           val &&
           val instanceof Array &&
-          this._valiate(modelStart = format.formatDate(format.modifyDate(val[0]), formatType), 'start') &&
-          this._valiate(modelEnd = format.formatDate(format.modifyDate(val[1]), formatType), 'end')
+          this._validate(modelStart = format.formatDate(format.modifyDate(val[0]), formatType), 'start') &&
+          this._validate(modelEnd = format.formatDate(format.modifyDate(val[1]), formatType), 'end')
         ) {
           this.modelStart = modelStart
           this.modelEnd = modelEnd
@@ -541,7 +541,7 @@ export default {
         if (
           !this.isRangeType &&
           val &&
-          this._valiate(model = format.formatDate(format.modifyDate(val), formatType))
+          this._validate(model = format.formatDate(format.modifyDate(val), formatType))
         ) {
           this.model = model
           return
@@ -592,14 +592,14 @@ export default {
     modelStart(val) {
       if (!val && !this.modelEnd) {
         this._resetDateStart()
-      } else if(this._valiate(val, 'start')) {
+      } else if(this._validate(val, 'start')) {
         this._calDateStart()
       }
     },
     modelEnd(val) {
       if (!val && !this.modelStart) {
         this._resetDateEnd()
-      } else if(this._valiate(val, 'end')) {
+      } else if(this._validate(val, 'end')) {
         this._calDateEnd()
       }
     },
@@ -687,19 +687,19 @@ export default {
 
   methods: {
     _setDefault() {
-      if (this.model && this._valiate(this.model)) {
+      if (this.model && this._validate(this.model)) {
         this._calDate()
       } else {
         this._resetDate()
       }
     },
     _setDefaultRange() {
-      if (this.modelStart && this._valiate(this.modelStart, 'start')) {
+      if (this.modelStart && this._validate(this.modelStart, 'start')) {
         this._calDateStart()
       } else {
         this._resetDateStart()
       }
-      if (this.modelEnd && this._valiate(this.modelEnd, 'end')) {
+      if (this.modelEnd && this._validate(this.modelEnd, 'end')) {
         this._calDateEnd()
       } else {
         this._resetDateEnd()
@@ -752,19 +752,19 @@ export default {
     },
 
     _calDate() {
-      if (this._valiate(this.model)) {
+      if (this._validate(this.model)) {
         this._setValues()
         this._setCalValues()
       }
     },
     _calDateStart() {
-      if (this._valiate(this.modelStart, 'start')) {
+      if (this._validate(this.modelStart, 'start')) {
         this._setValuesStart()
         this._setCalValuesStart()
       }
     },
     _calDateEnd() {
-      if (this._valiate(this.modelEnd, 'end')) {
+      if (this._validate(this.modelEnd, 'end')) {
         this._setValuesEnd()
         this._setCalValuesEnd()
       }
@@ -865,7 +865,7 @@ export default {
      * 校验时间格式
      * @param index start end (范围起始)
      */
-    _valiate(time, index) {
+    _validate(time, index) {
       if (!time) {
         return false
       }
@@ -918,7 +918,7 @@ export default {
       return !this.disabledDate(new Date(year, month - 1, day, hour || 0, minute || 0, second || 0))
     },
     handleInput() {
-      if (this._valiate(this.model)) {
+      if (this._validate(this.model)) {
         const result = this.formatValue(this.model)
         this.emitChangeEvent()
         this.$emit('input', result)
@@ -932,7 +932,7 @@ export default {
         this.$nextTick(()=>{
           this.modelStart = this.lastRangeDateList[0]
         })
-      } else if(this._valiate(this.modelStart, 'start')) {
+      } else if(this._validate(this.modelStart, 'start')) {
         this._calDateStart()
         if(!this.modelEnd && !this.lastRangeDateList[1]) {
           this.handleRangeModelChange({date: this.modelStart, type: 'click'})
@@ -946,7 +946,7 @@ export default {
         this.$nextTick(()=>{
           this.modelEnd = this.lastRangeDateList[1]
         })
-      } else if(this._valiate(this.modelEnd, 'end')) {
+      } else if(this._validate(this.modelEnd, 'end')) {
         this._calDateEnd()
         if(!this.modelStart && !this.lastRangeDateList[0]) {
           this.handleRangeModelChange({date: this.modelEnd, type: 'click'})
@@ -955,7 +955,7 @@ export default {
       this.handleRangeInput()
     },
     handleRangeInput() {
-      if (this._valiate(this.modelStart, 'start') && this._valiate(this.modelEnd, 'end')) {
+      if (this._validate(this.modelStart, 'start') && this._validate(this.modelEnd, 'end')) {
         const result = this.formatValue([this.modelStart, this.modelEnd])
         this.rangeDateList = [this.modelStart, this.modelEnd]
         this.emitChangeEvent()
@@ -1042,7 +1042,7 @@ export default {
         this.$emit('input', '')
         this.dispatch('SpFormItem', 'sp.form.change', '')
         this.lastModel = ''
-      } else if(!this._valiate(this.model)) {
+      } else if(!this._validate(this.model)) {
         this.model = this.lastModel
       }
     },
@@ -1051,7 +1051,7 @@ export default {
       // 如果有yearStart，monthStart，dayStart
       // 且格式验证未通过，则用之前保存的值
       // start
-      if (!this._valiate(this.modelStart, 'start') && lastModelStart) {
+      if (!this._validate(this.modelStart, 'start') && lastModelStart) {
         if(lastModelStart) {
           this.modelStart = lastModelStart
         } else {
@@ -1060,7 +1060,7 @@ export default {
         }
       }
       // end
-      if (!this._valiate(this.modelEnd, 'end')) {
+      if (!this._validate(this.modelEnd, 'end')) {
         if(lastModelEnd) {
           this.modelEnd = lastModelEnd
         } else {
@@ -1286,11 +1286,13 @@ export default {
      */
     handleClickCurrentTime() {
       const now = format.formatDate(+new Date, 'yyyy-MM-dd hh:mm:ss')
-      this.model = now
-      this.emitChangeEvent()
-      const result = this.formatValue(now)
-      this.$emit('input', result)
-      this.dispatch('SpFormItem', 'sp.form.change', result)
+      if(this._validate(now)) {
+        this.model = now
+        this.emitChangeEvent()
+        const result = this.formatValue(now)
+        this.$emit('input', result)
+        this.dispatch('SpFormItem', 'sp.form.change', result)
+      }
       this._resetAllVisible()
     },
     /**
@@ -1354,7 +1356,6 @@ export default {
       this.isRangeSelecting = false
     },
     _resetAllVisible() {
-      this.isFocus = false
       this.visible = false
       this.visiblePaneDay = true
       this.visiblePaneMonth = this.isMonthType
@@ -1418,7 +1419,7 @@ export default {
         return isSame
       }
       if(this.isRangeType) {
-        if(!this._valiate(this.modelStart, 'start') || !this._valiate(this.modelEnd, 'end')) {
+        if(!this._validate(this.modelStart, 'start') || !this._validate(this.modelEnd, 'end')) {
           isSame = true
         } else {
           let lastModelStart = ''
