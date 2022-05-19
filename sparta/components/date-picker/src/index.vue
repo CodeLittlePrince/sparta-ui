@@ -97,6 +97,7 @@
               class="sp-date-picker__foot"
             >
               <a
+                v-if="showCurrentTime"
                 href="javascript:void(0);"
                 class="sp-date-picker__current-time"
                 @click="handleClickCurrentTime"
@@ -408,6 +409,10 @@ export default {
       type: Boolean,
       default: true
     },
+    showCurrentTime: { // type为date，showTime为true时是否展示“此刻”按钮
+      type: Boolean,
+      default: true
+    },
     valueFormat: { //绑定值的格式。不指定则绑定值为 new Date().getTime() long类型
       type: String,
       default: ''
@@ -518,23 +523,20 @@ export default {
 
   watch: {
     value: {
-      immediate: false,
+      immediate: false, // 此处不能与created合并，是因为created处记录lastModel和lastRangeDateList，此处记录不准确
       handler(val) {
-        const formatType = this.isYearType ? 'yyyy' : this.isMonthType ? 'yyyy-MM' : this.showTime ? 'yyyy-MM-dd hh:mm:ss' : 'yyyy-MM-dd'
-        let modelStart
-        let modelEnd
-        let model
+        let displayValue = this.formatDisplayValue(val) // 这里不需要校验disabledDate和disabledTime，因为这里不是用户输入的
         // 范围类型
         if (
           this.isRangeType &&
           val &&
           val instanceof Array &&
-          this._validate(modelStart = format.formatDate(format.modifyDate(val[0]), formatType), 'start') &&
-          this._validate(modelEnd = format.formatDate(format.modifyDate(val[1]), formatType), 'end')
+          displayValue[0] &&
+          displayValue[1]
         ) {
-          this.modelStart = modelStart
-          this.modelEnd = modelEnd
-          this.rangeDateList = [modelStart, modelEnd]
+          this.modelStart = displayValue[0]
+          this.modelEnd = displayValue[1]
+          this.rangeDateList = [...displayValue]
           this._calDateStart()
           this._calDateEnd()
           return
@@ -543,9 +545,9 @@ export default {
         if (
           !this.isRangeType &&
           val &&
-          this._validate(model = format.formatDate(format.modifyDate(val), formatType))
+          displayValue
         ) {
-          this.model = model
+          this.model = displayValue
           return
         }
         // 其它
@@ -554,9 +556,19 @@ export default {
           this.modelEnd = ''
           this.rangeDateList = []
           this.lastRangeDateList = []
+          if(val?.length) { // 如果传入的是非法日期，则重置数据
+            this.emitChangeEvent(false)
+            this.$emit('input', [])
+            this.dispatch('SpFormItem', 'sp.form.change', [])
+          }
         } else {
           this.model = ''
           this.lastModel = ''
+          if(val) { // 如果传入的是非法日期，则重置数据
+            this.emitChangeEvent(false)
+            this.$emit('input', '')
+            this.dispatch('SpFormItem', 'sp.form.change', '')
+          }
         }
       }
     },
@@ -663,18 +675,27 @@ export default {
     // 设置默认值
     this._setNow()
     
-    const displayValue = this.formatDisplayValue(this.value)
+    let displayValue = this.formatDisplayValue(this.value) // 这里不需要校验disabledDate和disabledTime，因为这里不是用户输入的
     if (this.isRangeType) {
-      if(Array.isArray(displayValue)) {
-        this.modelStart = displayValue[0]
-        this.modelEnd = displayValue[1]
-        this.rangeDateList = displayValue
-        this.lastRangeDateList = displayValue
+      displayValue = displayValue?.filter?.(Boolean) || []
+      this.modelStart = displayValue[0] || ''
+      this.modelEnd = displayValue[1]
+      this.rangeDateList = displayValue
+      this.lastRangeDateList = displayValue
+      if(this.value?.length && !displayValue.length) { // 如果传入的是非法日期，则重置数据
+        this.emitChangeEvent(false)
+        this.$emit('input', [])
+        this.dispatch('SpFormItem', 'sp.form.change', [])
       }
       this._setDefaultRange()
     } else {
       this.model = displayValue
       this.lastModel = displayValue
+      if(this.value && !displayValue) { // 如果传入的是非法日期，则重置数据
+        this.emitChangeEvent(false)
+        this.$emit('input', '')
+        this.dispatch('SpFormItem', 'sp.form.change', '')
+      }
       this._setDefault()
     }
     this.$on('sp.datepikcer.enable', (enableCurrentMonthAndYear) => {
@@ -1381,11 +1402,12 @@ export default {
       return !this.valueFormat ? standardDate : format.formatDate(standardDate, this.valueFormat)
     },
     formatDisplayValue(value) {
-      if(!value) return value
-      value = !Array.isArray(value) ? format.modifyDate(value) : value
-      if(!Array.isArray(value) && !this.isValidDate(value)) return ''
+      if(!value) return ''
+      const isArray = Array.isArray(value)
+      value = isArray ? value : format.modifyDate(value)
+      if(!isArray && !this.isValidDate(value)) return ''
       const formatType = this.isYearType ? 'yyyy' : this.isMonthType ? 'yyyy-MM' : this.showTime ? 'yyyy-MM-dd hh:mm:ss' : 'yyyy-MM-dd'
-      if(Array.isArray(value)) {
+      if(isArray) {
         return value.map((item) => this.formatDisplayValue(item))
       }
       return this.isValidDate(value) ? format.formatDate(new Date(value), formatType) : value
@@ -1409,7 +1431,7 @@ export default {
       return { hour: hour || defaultHour, minute: minute || defaultMinute, second: second || defaultSecond }
     },
     isValidDate(d) {
-      return d instanceof Date || !isNaN(d)
+      return (d instanceof Date && d.toString() !== 'Invalid Date') || isFinite(d)
     },
     emitChangeEvent(isSame = true) {// 值是否变化，没有变化不派发change事件
       let result = this.isRangeType ? [] : ''
@@ -1581,9 +1603,13 @@ export default {
         color: $date-picker__footer-a-hover;
       }
     }
+    .sp-date-picker__current-time {
+      float: left;
+      margin-right: 20px;
+    }
 
     .sp-date-picker__select-time-btn {
-      float: right;
+      float: left;
       margin-right: 10px;
     }
   }
