@@ -242,6 +242,7 @@ export default {
       <sp-date-picker
         v-model="time7"
         :show-time="true"
+        :show-current-time="false"
         :disabled-time="disabledDateTime"
         @change="handleDateChange"
         clearable
@@ -527,6 +528,7 @@ export default {
 | value-format | 可选，绑定值的格式。不指定则绑定值为 long 类型 | number/string | yyyy-MM-dd / yyyy-MM-dd hh:mm:ss | — |
 | default-time | 选中日期后的默认具体时刻 | 非范围选择时：string / 范围选择时：string[] | 非范围选择时：形如12:00:00的字符串；范围选择时：数组，长度为 2，每项值为字符串，形如12:00:00，第一项指定开始日期的时刻，第二项指定结束日期的时刻。不指定会使用时刻 00:00:00 | 00:00:00 / ['00:00:00', '23:59:59'] |
 | showTime | 是否显示时分秒。仅在type为date/daterange时生效 | boolean | — | false |
+| showCurrentTime | 是否显示此刻按钮。仅在type为date且showTime为true时生效 | boolean | — | true |
 | disabled | 是否禁用 | boolean | — | true |
 | disabledDate | 设置禁用状态，参数为当前日期，要求返回 Boolean | Function | — | function (new Date()) => false |
 | disabledTime | 不可选择的时间 | Function | — | function () => {} |
