@@ -535,6 +535,8 @@ export default {
           this.modelStart = modelStart
           this.modelEnd = modelEnd
           this.rangeDateList = [modelStart, modelEnd]
+          this._calDateStart()
+          this._calDateEnd()
           return
         }
         // 普通类型

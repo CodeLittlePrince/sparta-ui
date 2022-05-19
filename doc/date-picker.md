@@ -435,6 +435,90 @@ export default {
 ```
 :::
 
+### 其他
+:::demo 其他
+```vue
+<template>
+  <div class="c-filtrate-date l-clearfix">
+    <label class="c-filtrate-date__label">筛选时间</label>
+    <sp-radio-group v-model="selectedDays">
+      <sp-radio-button
+        v-for="item in dateSelection"
+        :key="item.id"
+        :label="item.id"
+        text
+      >{{ item.desc }}</sp-radio-button>
+    </sp-radio-group>
+    <sp-date-picker
+      v-model="dateRange"
+      type="daterange"
+      start-placeholder="请选择起始时间"
+      end-placeholder="请选择结束时间"
+      :editable="false"
+      @change="handelDatePickerChange"
+    />
+  </div>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      selectedDays: 0,
+      dateRange: []
+    }
+  },
+  computed: {
+    dateSelection() {
+      const time = new Date()
+      const todayStart = time.setHours(0, 0, 0, 0)
+      const todayEnd = time.setHours(23, 59, 59, 999)
+      const ONE_DAY = 86400000 // 24 * 3600 * 1000
+      const VALID_RECENT_DAYS_MAP = [
+        {
+          'days': 14,
+          'desc': '近两周',
+        }, {
+          'days': 30,
+          'desc': '近一个月',
+        }, {
+          'days': 90,
+          'desc': '近三个月',
+        }, {
+          'days': 180,
+          'desc': '近半年',
+        }
+      ]
+      return VALID_RECENT_DAYS_MAP.map(item => {
+        return {
+          'id': item.days,
+          'desc': item.desc,
+          'startTime': todayStart - item.days * ONE_DAY,
+          'endTime': todayEnd,
+        }
+      })
+    }
+  },
+  watch:{
+    selectedDays() {
+      const dateInfo = this.dateSelection.find(item => item.id === +this.selectedDays)
+      this.dateRange = [
+        dateInfo.startTime,
+        dateInfo.endTime
+      ]
+    },
+  },
+  mounted(){
+    this.selectedDays = 30
+  },
+  methods: {
+    handelDatePickerChange(val) {
+      console.log(val)
+    },
+  }
+}
+</script>
+```
+:::
 ### Attributes
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
@@ -478,6 +562,39 @@ export default{
       year: new Date('2019/02/11').getTime(),
       month_1: '2019-02',
       year_1: '2019',
+      selectedDays: 0,
+      dateRange: []
+    }
+  },
+  computed: {
+    dateSelection() {
+      const time = new Date()
+      const todayStart = time.setHours(0, 0, 0, 0)
+      const todayEnd = time.setHours(23, 59, 59, 999)
+      const ONE_DAY = 86400000 // 24 * 3600 * 1000
+      const VALID_RECENT_DAYS_MAP = [
+        {
+          'days': 14,
+          'desc': '近两周',
+        }, {
+          'days': 30,
+          'desc': '近一个月',
+        }, {
+          'days': 90,
+          'desc': '近三个月',
+        }, {
+          'days': 180,
+          'desc': '近半年',
+        }
+      ]
+      return VALID_RECENT_DAYS_MAP.map(item => {
+        return {
+          'id': item.days,
+          'desc': item.desc,
+          'startTime': todayStart - item.days * ONE_DAY,
+          'endTime': todayEnd,
+        }
+      })
     }
   },
   watch: {
@@ -526,6 +643,16 @@ export default{
     year_1(value){
       console.log(value)
     },
+    selectedDays() {
+      const dateInfo = this.dateSelection.find(item => item.id === +this.selectedDays)
+      this.dateRange = [
+        dateInfo.startTime,
+        dateInfo.endTime
+      ]
+    },
+  },
+  mounted(){
+    this.selectedDays = 30
   },
   methods: {
     disabledDate(date) {
@@ -563,7 +690,10 @@ export default{
     },
     handleDateChange(value){
       console.log('change', value, value ? new Date(value) : '')
-    }
+    },
+    handelDatePickerChange(val) {
+      console.log(val)
+    },
   }
 }
 </script>
@@ -574,5 +704,24 @@ export default{
 }
 .sp-date-pikcer-demo-p{
   margin: 0 0 5px 0;
+}
+.c-filtrate-date {
+  overflow: hidden;
+}
+.c-filtrate-date  .c-filtrate-date__label {
+  width: 96px;
+  text-align: right;
+  float: left;
+  font-size: 14px;
+  color: #747d8c;
+  margin-right: 24px;
+  line-height: 36px;
+}
+.c-filtrate-date  .sp-radio-group {
+  float: left;
+}
+.c-filtrate-date  .sp-date-picker {
+  float: left;
+  margin-left: 10px;
 }
 </style>
