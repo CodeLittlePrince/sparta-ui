@@ -345,6 +345,7 @@ export default {
       if(val) {
         this.oldInputText = null
       }
+      this.broadcast('SpSelectDropdown', 'updatePopper')
     },
     isCustomFilter(val) {
       if(val) {
