@@ -295,7 +295,7 @@ export default {
                   !item.nextMonth,
         'is--disabled': item.disabled,
         'is--enabled': !item.disabled,
-        'is--checked': checkedDayList.includes(currentDate) && !item.lastMonth && !item.nextMonth,
+        'is--checked': !item.disabled && checkedDayList.includes(currentDate) && !item.lastMonth && !item.nextMonth,
         'is--ranging': this.type !== 'daterange' || checkedDayList.length < 2
           ? false
           : currentTime < format.modifyDate(checkedDayList[1]).getTime() && currentTime > format.modifyDate(checkedDayList[0]).getTime() && !item.lastMonth && !item.nextMonth,

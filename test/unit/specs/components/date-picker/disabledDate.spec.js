@@ -11,7 +11,7 @@ describe('date-picker', () => {
   const wrapper = mount({
     data() {
       return {
-        time: '',
+        time: TODAY + ONE_DAY,
         defaultTime: '10:00:00',
         showTime: true,
       }
@@ -21,7 +21,7 @@ describe('date-picker', () => {
 
       disabledDate(date) {
         const dateTime = date.getTime()
-        return dateTime > TODAY + ONE_DAY * 61 || dateTime < TODAY + ONE_DAY * 1
+        return dateTime > TODAY + ONE_DAY * 61 || dateTime < TODAY + ONE_DAY
       },
     },
     template: `
@@ -68,12 +68,22 @@ describe('date-picker', () => {
       })
 
       describe('prop: value', () => {
+        describe('设置默认值为合法值：D + 1', () => {
+          it('应选中，展示高亮样式', async () => {
+            await wrapper.find('.sp-date-picker-content').trigger('click')
+            expect(wrapper.find('.sp-date-picker-pane-day__cell.is--checked').exists()).to.be.true
+          })
+        })
         describe('设置为disabled-date范围内的值', () => {
           it('应支持展示', async () => {
-            await wrapper.setData({ time: TODAY })
-            expect(wrapper.find('.sp-input__inner').element.value).to.equal(format.formatDate(TODAY, 'yyyy-MM-dd hh:mm:ss'))
-            await wrapper.setData({ time: TODAY + 60 * 60 * 100})
-            expect(wrapper.find('.sp-input__inner').element.value).to.equal(format.formatDate(TODAY + 60 * 60 * 100, 'yyyy-MM-dd hh:mm:ss'))
+            await wrapper.setData({ time: TODAY - ONE_DAY })
+            expect(wrapper.find('.sp-input__inner').element.value).to.equal(format.formatDate(TODAY - ONE_DAY, 'yyyy-MM-dd hh:mm:ss'))
+            await wrapper.setData({ time: TODAY - ONE_DAY * 2})
+            expect(wrapper.find('.sp-input__inner').element.value).to.equal(format.formatDate(TODAY - ONE_DAY * 2, 'yyyy-MM-dd hh:mm:ss'))
+          })
+          it('应重置面板样式', async () => {
+            await wrapper.find('.sp-date-picker-content').trigger('click')
+            expect(wrapper.find('.sp-date-picker-pane-day__cell.is--checked').exists()).to.be.false
           })
         })
         describe('设置为非法日期', () => {
@@ -89,13 +99,13 @@ describe('date-picker', () => {
   const wrapperRange = mount({
     data() {
       return {
-        time1: [],
+        time1: [TODAY + ONE_DAY, TODAY + ONE_DAY * 2],
       }
     },
     methods: {
       disabledDate(date) {
         const dateTime = date.getTime()
-        return dateTime > TODAY + ONE_DAY * 61 || dateTime < TODAY + ONE_DAY * 1
+        return dateTime > TODAY + ONE_DAY * 61 || dateTime < TODAY + ONE_DAY
       },
     },
     template: `
@@ -123,11 +133,20 @@ describe('date-picker', () => {
   describe('prop: type = daterange', () => {
     describe('不可选择的日期', () => {
       describe('prop: value', () => {
+        describe('设置默认值为合法值：[D + 1, D + 2]', () => {
+          it('应选中，展示高亮样式', async () => {
+            expect(wrapperRange.findAll('.sp-date-picker-pane-day__cell.is--checked').length).to.be.equal(2)
+          })
+        })
         describe('设置为disabled-date范围内的值', () => {
           it('应支持展示', async () => {
-            await wrapperRange.setData({ time1: [TODAY, TODAY + 60 * 60 * 100] })
-            expect(wrapperRange.find('.sp-date-picker-range-start .sp-input__inner').element.value).to.equal(format.formatDate(TODAY, 'yyyy-MM-dd hh:mm:ss'))
-            expect(wrapperRange.find('.sp-date-picker-range-end .sp-input__inner').element.value).to.equal(format.formatDate(TODAY + 60 * 60 * 100, 'yyyy-MM-dd hh:mm:ss'))
+            await wrapperRange.setData({ time1: [TODAY - 60 * 60 * 100, TODAY] })
+            expect(wrapperRange.find('.sp-date-picker-range-start .sp-input__inner').element.value).to.equal(format.formatDate(TODAY - 60 * 60 * 100, 'yyyy-MM-dd hh:mm:ss'))
+            expect(wrapperRange.find('.sp-date-picker-range-end .sp-input__inner').element.value).to.equal(format.formatDate(TODAY, 'yyyy-MM-dd hh:mm:ss'))
+          })
+          it('应重置面板样式', async () => {
+            await wrapperRange.find('.sp-date-picker-content').trigger('click')
+            expect(wrapperRange.find('.sp-date-picker-pane-day__cell.is--checked').exists()).to.be.false
           })
         })
         describe('设置为非法日期', () => {

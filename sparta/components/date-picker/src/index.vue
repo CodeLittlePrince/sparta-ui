@@ -482,7 +482,6 @@ export default {
       hourEnd: '23',
       minuteEnd: '59',
       secondEnd: '59',
-      calDayEnd: '',
       calMonthEnd: '',
       calYearEnd: '',
       visiblePaneDayEnd: true,
@@ -537,8 +536,7 @@ export default {
           this.modelStart = displayValue[0]
           this.modelEnd = displayValue[1]
           this.rangeDateList = [...displayValue]
-          this._calDateStart()
-          this._calDateEnd()
+          this._setDefaultRange()
           return
         }
         // 普通类型
@@ -548,6 +546,7 @@ export default {
           displayValue
         ) {
           this.model = displayValue
+          this._setDefault()
           return
         }
         // 其它
@@ -762,7 +761,6 @@ export default {
       this.dayEnd = ''
       this.monthEnd = ''
       this.yearEnd = ''
-      this.calDayEnd = new Date().getDate()
       this.calMonthEnd = new Date().getMonth() + 1 // 结束默认比开始多一个月
       this.calYearEnd = new Date().getFullYear()
       const { hour, minute, second } = this.formatDefaultTime(1)
@@ -872,7 +870,6 @@ export default {
     _setCalValuesEnd() {
       this.calYearEnd = this.yearEnd
       this.calMonthEnd = this.monthEnd
-      this.calDayEnd = this.dayEnd
     },
 
     /**
