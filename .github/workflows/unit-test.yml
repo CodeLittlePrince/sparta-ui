@@ -31,7 +31,7 @@ jobs:
       
       - name: npm install
         run: |
-          npm install
+          npm install --legacy-peer-deps
       - name: Lint js
         run: |
           npm run lint
@@ -58,7 +58,7 @@ jobs:
       
       - name: npm install
         run: |
-          npm install
+          npm install --legacy-peer-deps
       - name: Lint js
         run: |
           npm run lint
