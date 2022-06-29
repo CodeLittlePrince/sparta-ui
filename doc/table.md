@@ -68,6 +68,47 @@ export default{
 ```
 :::
 
+### 直接渲染，不用prop或者slot-scope的
+
+:::demo 当`sp-table`元素中注入`list`对象数组后，在`sp-table-column`中用`prop`属性来对应对象中的键名即可填入数据，用`label`属性来定义表格的列名。<br>可以使用`width`属性来定义列宽。通过`template`自定义单元格内容，用`scope`单元格对应的值。
+```vue
+<template>
+<div>
+  <sp-table :list="tableList1">
+    <sp-table-column
+      label="店铺名称"
+      width="200">11
+    </sp-table-column>
+    <sp-table-column
+      label="提现中的金额"
+      width="200">22
+    </sp-table-column>
+  </div>
+</template>
+
+<script>
+export default{
+  data() {
+    return {
+      tableList1: [
+        {
+          name: 'Steven Jobs',
+          withdrawing: '20.00',
+          tag: 'yo'
+        },
+        {
+          name: 'Steven Jobs',
+          withdrawing: '20.00',
+          tag: 'yo'
+        }
+      ]
+    }
+  }
+}
+</script>
+```
+:::
+
 ### 无数据
 
 :::demo `sp-table`元素中注入`list`空对象数组。
