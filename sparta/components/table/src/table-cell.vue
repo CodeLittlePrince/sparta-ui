@@ -29,8 +29,9 @@ export default {
     const cellData = itemVNode.data
     const propsData = itemVNode.componentOptions.propsData
     const formatter = propsData.formatter
-    if (this.column.children) {
-      cellCopy = this.column.children
+    if (this.column.componentOptions.children) {
+      // 如果有children，说明不是用prop或者slot-scope的，直接渲染即可
+      cellCopy = this.column.componentOptions.children
     } else if(cellData.scopedSlots) {
       // 如果单元格中是template，则直接显示
       cellCopy = cellData.scopedSlots.default({
