@@ -59,7 +59,7 @@ export default {
     _scrollToView() {
       this.$nextTick(() => {
         const dropdown = this.$refs.dropdown
-        const children = dropdown.children
+        const children = dropdown?.children
         const dropdownTop = dropdown.parentNode.scrollTop
         const dropdownStyle = window.getComputedStyle(dropdown.parentNode)
         const dropdownHeight = parseFloat(dropdownStyle.height)
