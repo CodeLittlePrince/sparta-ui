@@ -472,6 +472,38 @@ describe('Table', () => {
     })
   })
   
+  describe('interact - 自定义渲染', () => {
+    const wrapper = mount({
+      data() {
+        return {
+          testData: getTestData()
+        }
+      },
+      template: `
+       <sp-table :list="testData">
+          <sp-table-column label="片名">1</sp-table-column>
+          <sp-table-column label="发行日期">2</sp-table-column>
+          <sp-table-column label="导演">3</sp-table-column>
+       </sp-table>
+      `,
+      components: {
+        'sp-table': Table,
+        'sp-table-column': TableColum
+      }
+    })
+
+    document.body.appendChild(wrapper.vm.$el)
+
+    it('row data - 自定义渲染', () => {
+      const cells = toArray(wrapper.vm.$el.querySelectorAll('td .sp-table-cell'))
+      .map(node => node.textContent);
+      expect(cells).to.deep.equal(['1', '2', '3', '1', '2', '3', '1', '2', '3', '1', '2', '3', '1', '2', '3']);
+    });
+
+    after(() => {
+      document.body.removeChild(wrapper.vm.$el)
+    })
+  })
 
 })
 
