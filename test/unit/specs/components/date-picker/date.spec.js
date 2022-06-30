@@ -119,7 +119,7 @@ describe('date-picker', () => {
         describe('设置disabled-date为不能大于当前日期', () => {
           it('大于当前日期的元素，应展示禁止选择的样式', async () => {
             await wrapper.find('.sp-date-picker-content').trigger('click')
-            expect(wrapper.find('.sp-date-picker-pane-day__cell.is--disabled .sp-date-picker-pane-day__date').text()).to.equal((new Date().getDate() + 1).toString())
+            expect(wrapper.find('.sp-date-picker-pane-day__cell.is--disabled .sp-date-picker-pane-day__date').text()).to.equal((new Date(new Date().getTime() + 3600 * 24 * 1000).getDate()).toString())
           })
         })
       })
