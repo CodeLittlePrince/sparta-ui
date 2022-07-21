@@ -157,6 +157,11 @@ export default {
     &:focus {
       background-color: $button-plain-fill--focus;
     }
+    &.is--loading {
+      background-color: transparent;
+      color: $button-text-color--disabled;
+      border-color: $button-plain-border--disabled;
+    }
   }
 
   &.is--disabled {
@@ -184,7 +189,6 @@ export default {
   &.is--loading {
     position: relative;
     pointer-events: none;
-    color: rgba(#fff, 0.5);
 
     &::before {
       pointer-events: none;
@@ -198,10 +202,12 @@ export default {
     }
   }
 
-  &.is--plain.is--loading {
-    position: relative;
-    pointer-events: none;
-    color: rgba($color-primary, 0.5);
+  &--default {
+    &.is--loading {
+      color: $button-color--disabled;
+      background-color: $button-fill--disabled;
+      border-color: $button-fill--disabled;
+    }
   }
 
   &--primary {
@@ -229,6 +235,11 @@ export default {
     &:focus {
       background-color: $button-primary-fill--focus;
       border-color: $button-primary-border--focus;
+    }
+    &.is--loading {
+      background-color: $button-primary-fill;
+      border-color: $button-primary-border;
+      color: rgba(#fff, 0.5);
     }
   }
   &--medium {
@@ -271,6 +282,7 @@ export default {
     }
 
     &.is--disabled,
+    &.is--loading,
     &.is--disabled:hover,
     &.is--disabled:focus {
       border-color: transparent;

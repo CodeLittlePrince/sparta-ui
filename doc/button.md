@@ -73,7 +73,10 @@
 ```vue
 <template>
   <div class="md-demo-button">
-    <sp-button type="primary" :loading="true">加载中</sp-button>
+    <sp-button :loading="true">加载中</sp-button>
+    <sp-button :loading="true" type="primary">加载中</sp-button>
+    <sp-button :loading="true" plain>加载中</sp-button>
+    <sp-button :loading="true" type="text">加载中</sp-button>
   </div>
 </template>
 ```
