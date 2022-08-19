@@ -141,6 +141,10 @@ export default {
   beforeDestroy() {
     this.modalManage.remove(this)
 
+    if(this.visible) {
+      this.closeHandle()
+    }
+
     try {
       document.body.removeChild(this.$el)
     } catch {
