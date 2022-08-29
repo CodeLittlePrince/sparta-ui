@@ -49,7 +49,12 @@ import 'sparta-ui/lib/theme/epay/style/index.css' // epay主题
 import Button from 'sparta-ui/lib/button/index.js'
 import 'sparta-ui/lib/theme/globalpay/button/index.css' // 跨境主题
 import 'sparta-ui/lib/theme/epay/button/index.css' // epay主题
+// 初始化配置
+Vue.prototype.$SPARTA = {
+  THEME: 'globalpay', // 主题的初始类型，目前有：globalpay、epay
+  zIndex: 3000, // 弹窗的初始zIndex，默认为2000
+  ... // 其它
+}
 // TODO，编写插件简化引入写法
-
 Vue.use(Button)
 ```
