@@ -115,7 +115,8 @@ const config = smp.wrap(Object.assign(webpackConfigBase.config, {
     // 定义全局常量
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '"production"'
+        NODE_ENV: '"production"',
+        THEME: `'${process.env.THEME}'`,
       }
     })
   ]
