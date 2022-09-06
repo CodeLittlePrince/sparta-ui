@@ -131,6 +131,7 @@ describe('date-picker', () => {
         const todayStart = time.setHours(0, 0, 0, 0)
         const todayEnd = time.setHours(23, 59, 59, 999)
         const ONE_DAY = 86400000 // 24 * 3600 * 1000
+        const day = time.getDate()
         it('起始2个面板应分别展示起始点', async () => {
           await wrapperRange.setData({ time1: [todayStart - 30 * ONE_DAY, todayEnd] })
           await wrapperRange.find('.sp-date-picker-content').trigger('click')
@@ -139,7 +140,13 @@ describe('date-picker', () => {
         })
         describe('再切换为：近两周', () => {
           it('起始点应只在开始面板中展示', async () => {
-            await wrapperRange.setData({ time1: [todayStart - 14 * ONE_DAY, todayEnd] })
+            let rangeParams = []
+            if (day < 14) {
+              rangeParams = [todayStart, todayEnd + 14 * ONE_DAY]
+            } else {
+              rangeParams = [todayStart - 14 * ONE_DAY, todayEnd]
+            }
+            await wrapperRange.setData({ time1:  rangeParams})
             await wrapperRange.find('.sp-date-picker-content').trigger('click')
             expect(wrapperRange.findAll('.sp-date-picker-pane-day').at(0).findAll('.sp-date-picker-pane-day__cell.is--checked').length).to.equal(2)
             expect(wrapperRange.findAll('.sp-date-picker-pane-day').at(1).find('.sp-date-picker-pane-day__cell.is--checked').exists()).to.be.false
