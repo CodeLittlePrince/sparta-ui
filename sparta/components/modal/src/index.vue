@@ -163,8 +163,8 @@ export default {
         }
       })
       // 因为是这时还没完全关闭当前弹窗
-      // 所以其实当modalCount为1的时候说明所有modal都要消失了
-      const isAllModalHide = modalCount === 1
+      // 所以其实当modalCount为1的时候说明所有modal都要消失了，有一种特殊情况：如果调用者主动将dom移除了modalCount就为0
+      const isAllModalHide = modalCount <= 1
       if (isAllModalHide) {
         document.body.style.overflow = 'inherit'
       }
