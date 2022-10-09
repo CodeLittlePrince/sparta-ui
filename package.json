@@ -4,7 +4,7 @@
   "description": "网易支付PC组件库",
   "homepage": "https://github.com/CodeLittlePrince/sparta-ui",
   "repository": "https://github.com/CodeLittlePrince/sparta-ui.git",
-  "main": "lib/index.js",
+  "main": "lib/globalpay/index.js",
   "files": [
     "lib"
   ],

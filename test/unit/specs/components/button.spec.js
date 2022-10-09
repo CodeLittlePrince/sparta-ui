@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import Button from 'sparta/components/button'
+import Button from 'base/button'
 
 describe('Button', () => {
   const clickSpy = sinon.spy()

@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
-import RadioGroup from 'sparta/components/radio-group'
-import RadioButton from 'sparta/components/radio-button'
+import RadioGroup from 'base/radio-group'
+import RadioButton from 'base/radio-button'
 
 describe('RadioButton', () => {
   const wrapper = mount({

@@ -1,5 +1,5 @@
 import { mount, shallowMount } from '@vue/test-utils'
-import Pagination from 'sparta/components/pagination'
+import Pagination from 'base/pagination'
 import { createTest, createVue, destroyVM } from '../../util';
 
 describe('Pagination', () => {

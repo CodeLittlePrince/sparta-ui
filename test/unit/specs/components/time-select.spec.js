@@ -1,5 +1,5 @@
 import { mount, shallowMount } from '@vue/test-utils'
-import TimeSelect from 'sparta/components/time-select'
+import TimeSelect from 'base/time-select'
 import { createTest, createVue, destroyVM } from '../../util';
 import sinon from 'sinon'
 const spy = sinon.spy()

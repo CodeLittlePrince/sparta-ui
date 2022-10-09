@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import Datepikcer from 'sparta/components/date-picker'
+import Datepikcer from 'base/date-picker'
 import { transitionStub } from '../../../util';
 import sinon from 'sinon'
 const handleDateChange = sinon.spy()

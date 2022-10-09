@@ -5,16 +5,17 @@ const TerserPlugin = require('terser-webpack-plugin')
 const webpackConfigBase = require('./webpack.config.base.js')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const THEME = process.env.THEME
 const extractCSS =
   new MiniCssExtractPlugin(
     {
-      filename: `theme/${process.env.THEME}/[name]/index.css`
+      filename: `${THEME}/[name]/index.css`
     }
   )
 
 // 读取所有的组件名和对应的index.js路径
 let componentEntryMap = {}
-const cPath = webpackConfigBase.resolve('sparta/components')
+const cPath = webpackConfigBase.resolve(`sparta/components/${THEME}`)
 const files = fs.readdirSync(cPath)
 if (files) {
   files.forEach(name => {
@@ -35,8 +36,14 @@ const config = Object.assign(webpackConfigBase.config, {
   },
   output: {
     path: webpackConfigBase.resolve('lib'),
-    filename: '[name]/index.js',
-    chunkFilename: '[name]/[id].js',
+    filename: (pathData) => {
+      return [
+        'ModalManage',
+        'PopManage',
+      ].includes(pathData.chunk.name) ?
+        'model/[name].js':
+        `${THEME}/[name]/index.js`
+    },
     library: '[name]',
     libraryTarget: 'umd',
     umdNamedDefine: true,
@@ -49,8 +56,8 @@ const config = Object.assign(webpackConfigBase.config, {
       commonjs2: 'vue',
       amd: 'vue'
     },
-    'sparta/model/ModalManage': 'sparta-ui/lib/ModalManage',
-    'sparta/model/PopManage': 'sparta-ui/lib/PopManage',
+    'sparta/model/ModalManage': 'sparta-ui/lib/model/ModalManage',
+    'sparta/model/PopManage': 'sparta-ui/lib/model/PopManage',
   },
   optimization: {
     // 压缩js
@@ -70,16 +77,16 @@ const config = Object.assign(webpackConfigBase.config, {
         test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
         loader: 'file-loader',
         options: {
-          name: 'img/[name].[ext]',
-          publicPath: 'sparta-ui/lib',
+          name: `${THEME}/img/[name].[ext]`,
+          publicPath: 'sparta-ui/lib'
         }
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i,
         loader: 'file-loader',
         options: {
-          name: 'font/[name].[ext]',
-          publicPath: '~sparta-ui/lib',
+          name: `${THEME}/font/[name].[ext]`,
+          publicPath: '~sparta-ui/lib'
         }
       },
       {
@@ -98,7 +105,7 @@ const config = Object.assign(webpackConfigBase.config, {
             loader: 'sass-resources-loader',
             options: {
               sourceMap: false,
-              resources: webpackConfigBase.resolve(`sparta/common/scss/theme/${process.env.THEME}/variable.scss`)
+              resources: webpackConfigBase.resolve(`sparta/common/scss/theme/${THEME}/variable.scss`)
             }
           }
         ]
@@ -133,7 +140,7 @@ const config = Object.assign(webpackConfigBase.config, {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"',
-        THEME: `'${process.env.THEME}'`,
+        THEME: `'${THEME}'`,
       }
     })
   ]

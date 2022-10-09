@@ -9,6 +9,8 @@ exports.alias = {
   root: resolve('/'),
   site: resolve('/site'),
   sparta: resolve('/sparta'),
+  spartaComponents: resolve(`/sparta/components/${process.env.THEME}`),
+  base: resolve('/sparta/components/base')
 }
 
 exports.resolve = resolve

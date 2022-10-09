@@ -1,5 +1,5 @@
 import { mount, createWrapper } from '@vue/test-utils'
-import Datepikcer from 'sparta/components/date-picker'
+import Datepikcer from 'base/date-picker'
 import format from 'sparta/common/js/utils/format'
 import { sleep, transitionStub, triggerEvent } from '../../../util';
 import sinon from 'sinon'

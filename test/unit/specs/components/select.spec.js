@@ -1,5 +1,5 @@
 import { mount, shallowMount } from '@vue/test-utils'
-import Select from 'sparta/components/select'
+import Select from 'base/select'
 import { createTest, createVue, destroyVM , sleep } from '../../util';
 
 const getTestData = function() {
