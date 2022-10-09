@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import menuConfig from 'site/config/menu'
+import menuConfig from 'site/config/menu/index'
 
 Vue.use(VueRouter)
 
@@ -44,7 +44,7 @@ function traverseMenu(config) {
   })
 }
 
-traverseMenu(menuConfig.menuData)
+traverseMenu(menuConfig[process.env.THEME].menuData)
 
 export default new VueRouter({
   mode: 'hash',

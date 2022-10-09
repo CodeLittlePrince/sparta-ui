@@ -21,12 +21,12 @@
 </template>
 
 <script>
-import menuConfig from 'site/config/menu'
+import menuConfig from 'site/config/menu/index'
 
 export default {
   data() {
     return {
-      menuData: menuConfig.menuData,
+      menuData: menuConfig[process.env.THEME].menuData,
       defaultOpen: ''
     }
   },
@@ -45,9 +45,9 @@ export default {
       const path = this.$route.path
       // path长度大于12的话证明是组件元件页面
       if (path.length > 12) {
-        this.defaultOpen = this.findIndexByName(path.slice(11), menuConfig.menuData)
+        this.defaultOpen = this.findIndexByName(path.slice(11), menuConfig[process.env.THEME].menuData)
       } else {
-        this.defaultOpen = menuConfig.defaultOpen
+        this.defaultOpen = menuConfig[process.env.THEME].defaultOpen
       }
     },
     findIndexByName(name, menuData) {
