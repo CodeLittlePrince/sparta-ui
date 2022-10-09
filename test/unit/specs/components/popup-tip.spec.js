@@ -1,5 +1,5 @@
 import { mount, shallowMount } from '@vue/test-utils'
-import PopupTip from 'sparta/components/popup-tip'
+import PopupTip from 'base/popup-tip'
 import { createTest, createVue, destroyVM } from '../../util';
 
 describe('PopupTip', () => {

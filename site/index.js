@@ -4,7 +4,7 @@ import './plugins'
 import './components'
 import router from './router'
 import App from './app'
-import Sparta from 'sparta'
+import Sparta from 'spartaComponents'
 
 Vue.prototype.$SPARTA = {
   zIndex: 3000,

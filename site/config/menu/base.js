@@ -14,11 +14,6 @@ export default {
           title: '安装',
           link: '/install',
           index: '2-1'
-        },
-        {
-          title: '快速上手',
-          link: '/quickstart',
-          index: '2-2'
         }
       ]
     },

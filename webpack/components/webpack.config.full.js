@@ -5,10 +5,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 const smp = new SpeedMeasurePlugin()
+const THEME = process.env.THEME
 const extractCSS =
   new MiniCssExtractPlugin(
     {
-      filename: `theme/${process.env.THEME}/index.css`
+      filename: 'index.css'
     }
   )
 
@@ -16,10 +17,10 @@ const extractCSS =
 const config = smp.wrap(Object.assign(webpackConfigBase.config, {
   mode: 'production',
   entry: {
-    index: webpackConfigBase.resolve('sparta/index.js')
+    index: webpackConfigBase.resolve(`sparta/components/${THEME}/index.js`)
   },
   output: {
-    path: webpackConfigBase.resolve('lib'),
+    path: webpackConfigBase.resolve(`lib/${THEME}`),
     filename: 'index.js',
     library: 'sparta',
     libraryTarget: 'umd',
@@ -54,7 +55,7 @@ const config = smp.wrap(Object.assign(webpackConfigBase.config, {
         loader: 'file-loader',
         options: {
           name: 'img/[name].[ext]',
-          publicPath: 'sparta-ui/lib',
+          publicPath: 'sparta-ui/lib'
         }
       },
       {
@@ -62,7 +63,7 @@ const config = smp.wrap(Object.assign(webpackConfigBase.config, {
         loader: 'file-loader',
         options: {
           name: 'font/[name].[ext]',
-          publicPath: '~sparta-ui/lib',
+          publicPath: '~sparta-ui/lib'
         }
       },
       {
@@ -81,7 +82,7 @@ const config = smp.wrap(Object.assign(webpackConfigBase.config, {
             loader: 'sass-resources-loader',
             options: {
               sourceMap: false,
-              resources: webpackConfigBase.resolve(`sparta/common/scss/theme/${process.env.THEME}/variable.scss`)
+              resources: webpackConfigBase.resolve(`sparta/common/scss/theme/${THEME}/variable.scss`)
             }
           }
         ]
@@ -116,7 +117,7 @@ const config = smp.wrap(Object.assign(webpackConfigBase.config, {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"',
-        THEME: `'${process.env.THEME}'`,
+        THEME: `'${THEME}'`,
       }
     })
   ]

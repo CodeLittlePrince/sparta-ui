@@ -1,6 +1,6 @@
 import { mount, shallowMount } from '@vue/test-utils'
-import Table from 'sparta/components/table'
-import TableColum from 'sparta/components/table-column'
+import Table from 'base/table'
+import TableColum from 'base/table-column'
 import { createTest, createVue, destroyVM } from '../../util';
 
 const testDataArr = [];
