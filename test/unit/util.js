@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Sparta from '../../sparta'
+import Sparta from '../../sparta/components/globalpay'
 
 Vue.use(Sparta)
 
