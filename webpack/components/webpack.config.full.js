@@ -82,7 +82,7 @@ const config = smp.wrap(Object.assign(webpackConfigBase.config, {
             loader: 'sass-resources-loader',
             options: {
               sourceMap: false,
-              resources: webpackConfigBase.resolve(`sparta/common/scss/theme/${THEME}/variable.scss`)
+              resources: webpackConfigBase.resolve(`sparta/common/scss/${THEME}/variable.scss`)
             }
           }
         ]

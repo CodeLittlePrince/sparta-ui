@@ -60,7 +60,7 @@ const config = Object.assign(webpackConfigBase.config, {
             loader: 'sass-resources-loader',
             options: {
               sourceMap: true,
-              resources: webpackConfigBase.resolve('sparta/common/scss/theme/globalpay/variable.scss')
+              resources: webpackConfigBase.resolve('sparta/common/scss/globalpay/variable.scss')
             }
           }
         ]
@@ -91,7 +91,7 @@ const config = Object.assign(webpackConfigBase.config, {
     // 抽离出css
     new MiniCssExtractPlugin(
       {
-        filename: 'theme/globalpay/[name].css'
+        filename: 'globalpay/[name].css'
       }
     ),
     // 定义全局常量
