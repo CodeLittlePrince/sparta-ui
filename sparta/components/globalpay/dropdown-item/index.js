@@ -1,3 +1,3 @@
-import DropdownItem from 'base/dropdown/src/dropdown-item'
+import DropdownItem from 'base/dropdown-item'
 
 export default DropdownItem
