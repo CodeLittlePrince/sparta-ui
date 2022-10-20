@@ -415,6 +415,10 @@ export default {
       }
     }
 
+    .sp-input-group__append-submit {
+      line-height: 1;
+    }
+
     .sp-input,
     .sp-select,
     .sp-textarea {

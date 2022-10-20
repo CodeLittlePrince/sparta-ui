@@ -970,6 +970,8 @@ export default {
       min-width: 60px;
       height: 26px;
       padding: 4px 15px;
+      border-radius: 2px;
+      font-size: 13px;
     }
   }
 
