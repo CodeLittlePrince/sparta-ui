@@ -420,6 +420,29 @@ export default {
     .sp-textarea {
       width: 400px;
     }
+
+    // 这种是在form-item里又套form-item的情况，一般都是为了在一行里面能放多个组件
+    .sp-form-item {
+      float: left;
+
+      + .sp-form-item {
+        margin-left: 10px;
+      }
+
+      ~ .sp-form-item__error {
+        display: none;
+      }
+
+      .sp-input,
+      .sp-select {
+        width: 195px;
+      }
+
+      .sp-input ~ .sp-select,
+      .sp-select ~ .sp-input {
+        margin-left: 10px;
+      }
+    }
   }
 
   &.is--two-line &__content {

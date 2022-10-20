@@ -45,7 +45,7 @@
         placeholder="请输入3位数字Bank Code"
       />
     </sp-form-item>
-     <!-- 姓名 -->
+    <!-- 支付密码 -->
     <sp-form-item
       prop="password"
       label="支付密码"
@@ -57,6 +57,34 @@
         v-model="validateForm1.password"
       ></sp-password-input>
       <div slot="tip">输入你的支付密码!</div>
+    </sp-form-item>
+    <!-- 怪兽 -->
+    <sp-form-item
+      label="拥有的怪兽"
+      :rules="[
+        { required: true, message: '支付密码不能为空'}
+      ]"
+    >
+      <sp-form-item
+        prop="monsterFeed"
+        :rules="[
+          { required: true, message: '请选择怪兽种类'}
+        ]"
+      >
+        <sp-select v-model="validateForm1.monsterFeed">
+          <sp-option label="水系" value="water"></sp-option>
+          <sp-option label="火系" value="fire"/></sp-option>
+          <sp-option label="冰系" value="ice"/></sp-option>
+        </sp-select>
+      </sp-form-item>
+      <sp-form-item
+        prop="monsterName"
+        :rules="[
+          { required: true, message: '请输入怪兽名字'}
+        ]"
+      >
+        <sp-input v-model="validateForm1.monsterName" placeholder="请输入怪兽名字" />
+      </sp-form-item>
     </sp-form-item>
     <!-- 年龄 -->
     <sp-form-item
@@ -286,7 +314,9 @@
           files: [],
           card: [],
           note: '',
-          agree: false
+          agree: false,
+          monsterFeed: '',
+          monsterName: '',
         },
         favouriteList: [
           { label: '唱歌', value: 'sing' },
@@ -615,7 +645,9 @@
           files: [],
           card: [],
           note: '',
-          agree: false
+          agree: false,
+          monsterFeed: '',
+          monsterName: '',
         },
         favouriteList: [
           { label: '唱歌', value: 'sing' },
