@@ -1,6 +1,5 @@
-import { mount, shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import PopupTip from 'base/popup-tip'
-import { createTest, createVue, destroyVM } from '../../util';
 
 describe('PopupTip', () => {
   const wrapper  = mount({
@@ -9,7 +8,8 @@ describe('PopupTip', () => {
         width: '200',
         color: '#747d8c',
         hasBorder: false,
-        theme: 'white'
+        theme: 'white',
+        placement: 'top'
       }
     },
     template: `
@@ -18,6 +18,7 @@ describe('PopupTip', () => {
       :color="color"
       :has-border="hasBorder"
       :theme="theme"
+      :placement="placement"
     >
       <i class="sp-icon-ques"></i>
       <template slot="popup">
@@ -32,7 +33,6 @@ describe('PopupTip', () => {
   document.body.appendChild(wrapper.vm.$el)
 
   describe('props', () => {
-
     it('render', async() => {
       await wrapper.find('.sp-popup-tip').trigger('mouseover')
       expect(wrapper.find('.sp-popup-tip__wrap').exists()).to.be.true
@@ -57,6 +57,13 @@ describe('PopupTip', () => {
     it('theme', async() => {
       await wrapper.setData({ theme: 'blue' })
       expect(wrapper.find('.sp-popup-tip.is--theme-blue').exists()).to.be.true
+
+      await wrapper.setData({ theme: 'red' })
+      expect(wrapper.find('.sp-popup-tip.is--theme-red').exists()).to.be.true
+    })
+    it('placement', async() => {
+      await wrapper.find('.sp-popup-tip').trigger('mouseover')
+      expect(wrapper.find('.sp-popup-tip__wrap.arrow--bottom').exists()).to.be.true
     })
   })
   after(() => {

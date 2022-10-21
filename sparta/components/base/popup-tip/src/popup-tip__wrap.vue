@@ -40,7 +40,9 @@ export default {
       return rst
     }
   },
-
+  created() {
+    this.placementIsTop = this.placement === 'top'
+  },
   mounted() {
     this.referenceElm = this.$parent.$refs.popupTip
     this.popperElm = this.$el

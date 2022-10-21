@@ -274,8 +274,8 @@ export default {
 
       .sp-modal__head {
         .sp-modal__title {
-          font-size: 16px;
-          line-height: 22px;
+          font-size: $modal-head-font-size;
+          line-height: $modal-head-line-height;
           font-weight: 600;
           color: $color-text-regular;
         }
@@ -305,11 +305,11 @@ export default {
       }
 
       .sp-form {
-        padding-top: 20px;
-        padding-bottom: 14px;
+        padding-top: $modal-form-padding-top;
+        padding-bottom: $modal-form-padding-bottom;
 
         .sp-form-item__label {
-          padding-right: 36px;
+          padding-right: $modal-form-item-label-padding-right;
         }
 
         .sp-form-submit-btns {

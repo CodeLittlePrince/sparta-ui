@@ -56,6 +56,10 @@ export default {
     let cellWidth = propsData.width
     // 如果转换后是一个number，则加'px'后缀
     if (!isNaN(+cellWidth)) {
+      // 有纵向边框，宽度-1
+      if(this.$parent.$attrs.border) {
+        cellWidth = +cellWidth - 1
+      }
       cellWidth += 'px'
     }
     
@@ -64,7 +68,8 @@ export default {
       {
         class: cellClass,
         attrs: {
-          style: `width: ${cellWidth}`
+          style: `width: ${cellWidth}`,
+          title: propsData.ellipsis ? cellCopy : undefined
         }
       },
       cellCopy

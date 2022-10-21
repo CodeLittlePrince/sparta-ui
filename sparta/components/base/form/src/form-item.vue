@@ -347,8 +347,8 @@ export default {
     float: left;
     font-size: 14px;
     color: $color-text-secondary;
-    line-height: 36px;
-    padding-right: 56px;
+    line-height: $input-height;
+    padding-right: $form-item-label-padding-right;
     box-sizing: border-box;
 
     &__second-line {
@@ -386,9 +386,9 @@ export default {
   }
 
   &__content {
-    line-height: 36px;
+    line-height: $input-height;
     position: relative;
-    font-size: 14px;
+    font-size: $input-font-size;
     @include clearfix;
 
     .sp-input-group {
@@ -464,11 +464,15 @@ export default {
   &__error {
     color: $form-item-error-color;
     font-size: $form-item-error-font-size;
-    line-height: 17px;
-    padding: 3px 0 6px;
-    min-height: 26px;
+    line-height: $form-item-error-line-height;
+    padding: $form-item-error-padding;
+    min-height: $form-item-error-min-height;
     box-sizing: border-box;
     will-change: transform;
+  }
+
+  &.is--error &__label {
+    color: $form-item-label-error-color;
   }
 
   &.is--error {
