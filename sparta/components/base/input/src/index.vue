@@ -555,7 +555,7 @@ export default {
   display: inline-block;
   width: 100%;
   vertical-align: bottom;
-  font-size: 14px;
+  font-size: $input-font-size;
 
   .sp-textarea__inner {
     position: relative;
@@ -633,7 +633,7 @@ export default {
 
 .sp-input {
   position: relative;
-  font-size: 14px;
+  font-size: $input-font-size;
   display: inline-block;
   width: 100%;
 

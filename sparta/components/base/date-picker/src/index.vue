@@ -1462,7 +1462,7 @@ export default {
 
 .sp-date-picker {
   color: $date-picker-color;
-  height: 36px;
+  height: $date-picker-height;
   width: 200px;
   box-sizing: border-box;
   .sp-date-picker-sigle-input.sp-input {

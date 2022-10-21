@@ -147,7 +147,7 @@ export default {
       left: 4px;
       width: 6px;
       height: 6px;
-      background-color: #fff;
+      background-color: $radio-inner-background-color;
       border-top: 0;
       border-left: 0;
       border-radius: 50%;
@@ -158,8 +158,8 @@ export default {
   }
 
   &__wrap.is--checked &__inner {
-    border-color: $radio-color-active;
-    background-color: $radio-color-active;
+    border-color: $radio-border-color-active;
+    background-color: $radio-background-color-active;
 
     &::after {
       transform: scale(1);

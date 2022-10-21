@@ -1,0 +1,199 @@
+/* == reset start == */
+html,
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+form,
+fieldset,
+input,
+textarea,
+p,
+blockquote,
+th,
+tr,
+td,
+section,
+a,
+span {
+  margin: 0;
+  padding: 0;
+}
+body {
+  word-break: break-all;
+  -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
+  text-size-adjust: none;
+  -webkit-overflow-scrolling: auto;
+  min-height: 100%;
+  position: relative;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+iframe {
+  vertical-align: bottom;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+fieldset,
+img {
+  border: 0;
+}
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+strong,
+th,
+var {
+  font-style: normal;
+  font-weight: normal;
+}
+ol,
+ul {
+  list-style: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+q::before,
+q::after {
+  content: "";
+}
+input[type="button"],
+button {
+  appearance: none;
+  user-select: none;
+  margin: 0;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  width: 0.6rem;
+  height: 0.6rem;
+}
+a,
+img {
+  text-decoration: none;
+  -webkit-touch-callout: none;
+}
+a,
+span,
+input,
+button,
+img,
+select,
+textarea {
+  outline: none;
+}
+input[type="text"],
+input[type="password"],
+input[type="tel"],
+input[type="number"],
+input[type="search"],
+textarea {
+  appearance: none;
+}
+textarea {
+  resize: none;
+}
+input::-webkit-clear-button,
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  appearance: none;
+}
+input::-webkit-search-cancel-button {
+  display: none;
+}
+input:invalid {
+  box-shadow: none;
+}
+/* 可减少浏览器在用户点击屏幕时的延迟 */
+a,
+button {
+  touch-action: manipulation;
+}
+/* == reset-end == */
+
+body, html, input, textarea {
+  font-family:
+    "Meiryo UI",
+    "PingFang SC",
+    "Microsoft YaHei",
+    "Heiti SC",
+    tahoma,
+    arial,
+    "Hiragino Sans GB",
+    "\5B8B\4F53",
+    sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote::before, blockquote::after,
+q::before, q::after {
+  content: none;
+}
+
+*::-ms-clear,
+*::-ms-reveal {
+  display: none;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: $scrollbar-background;
+  &-track {
+    border-radius: 8px;
+    background-color: $scrollbar-track-color;
+  }
+  &-thumb {
+    border-radius: 8px;
+    background-color: $scrollbar-thumb-color;
+  }
+}
+
+a {
+  color: #1b90fb;
+  backface-visibility: hidden;
+  text-decoration: none;
+}
+
+input::placeholder {
+  color: $color-text-placeholder;
+}

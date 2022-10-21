@@ -1,0 +1,441 @@
+/* Transition
+-------------------------- */
+$transition-all: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+$transition-all-quick: all 0.1 cubic-bezier(0.645, 0.045, 0.355, 1);
+$transition-fade: opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+$transition-fade-linear: opacity 0.2s linear;
+$transition-md-fade: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+$transition-border-base: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+$transition-color-base: color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+/* Colors
+-------------------------- */
+$color-white: #fff;
+$color-black: #000;
+$color-primary: #fb791b;
+$color-success: #09bb07;
+$color-warning: #e6a23c;
+$color-danger: #f8281b;
+$color-info: #999;
+$color-success-light: mix($color-white, $color-success, 80%);
+$color-warning-light: mix($color-white, $color-warning, 80%);
+$color-danger-light: mix($color-white, $color-danger, 80%);
+$color-info-light: mix($color-white, $color-info, 80%);
+$color-success-lighter: mix($color-white, $color-success, 90%);
+$color-warning-lighter: mix($color-white, $color-warning, 90%);
+$color-danger-lighter: mix($color-white, $color-danger, 90%);
+$color-info-lighter: mix($color-white, $color-info, 90%);
+$color-text-primary: #202124;
+$color-text-regular: #202124;
+$color-text-secondary: #555;
+$color-text-placeholder: #afafaf;
+$color-text-tip: #888;
+$color-text-disabled: #afafaf;
+$color-divider-line: #efefef;
+$color-primary-light-1: mix($color-white, $color-primary, 10%);
+$color-primary-light-2: mix($color-white, $color-primary, 20%);
+$color-primary-light-3: mix($color-white, $color-primary, 30%);
+$color-primary-light-4: mix($color-white, $color-primary, 40%);
+$color-primary-light-5: mix($color-white, $color-primary, 50%);
+$color-primary-light-6: mix($color-white, $color-primary, 60%);
+$color-primary-light-7: mix($color-white, $color-primary, 70%);
+$color-primary-light-8: mix($color-white, $color-primary, 80%);
+$color-primary-light-9: mix($color-white, $color-primary, 90%);
+$color-danger-light-1: mix($color-white, $color-danger, 10%);
+$color-danger-light-2: mix($color-white, $color-danger, 20%);
+$color-danger-light-3: mix($color-white, $color-danger, 30%);
+$color-danger-light-4: mix($color-white, $color-danger, 40%);
+$color-danger-light-5: mix($color-white, $color-danger, 50%);
+$color-danger-light-6: mix($color-white, $color-danger, 60%);
+$color-danger-light-7: mix($color-white, $color-danger, 70%);
+$color-danger-light-8: mix($color-white, $color-danger, 80%);
+$color-danger-light-9: mix($color-white, $color-danger, 90%);
+
+/* Shadow
+-------------------------- */
+$float-box-shadow-box: 0 2px 10px 0 rgb(0 53 111 / 10%);
+
+/* Scrollbar
+-------------------------- */
+$scrollbar-background: #f7f7f7;
+$scrollbar-track-color: #f7f7f7;
+$scrollbar-thumb-color: rgb(0 0 0 / 30%);
+
+/* Border
+-------------------------- */
+$border-width-base: 1px;
+$border-style-base: solid;
+$border-color-base: #efefef;
+$border-color-light: #e4e7ed;
+$border-color-lighter: #ebeef5;
+$border-color-extra-light: #f2f6fc;
+$border-color-hover: $color-text-placeholder;
+$border-base: $border-width-base $border-style-base $border-color-base;
+$border-radius-base: 4px;
+$border-radius-small: 2px;
+$border-radius-circle: 100%;
+
+/* Button
+-------------------------- */
+$button-font-size: 16px;
+$button-font-weight: 600;
+$button-min-width: 132px;
+$button-height: 44px;
+$button-border-radius: 4px;
+$button-medium-font-size: 16px;
+$button-medium-min-width: 124px;
+$button-medium-height: 36px;
+$button-small-font-size: 14px;
+$button-small-min-width: 96px;
+$button-small-height: 32px;
+$button-mini-font-size: 13px;
+$button-mini-min-width: 84px;
+$button-mini-height: 28px;
+$button-default-color: $color-primary;
+$button-default-fill: #ffe9e6;
+$button-default-border: #ffe9e6;
+$button-default-fill--hover: #fbe1de;
+$button-default-fill--focus: $button-default-fill;
+$button-default-fill--active: #fbe1de;
+$button-color--disabled: #fff;
+$button-fill--disabled: #afafaf;
+$button-border--disabled: $border-color-lighter;
+$button-plain-fill: #fff;
+$button-plain-fill--hover: #fff;
+$button-plain-fill--focus: #fff;
+$button-plain-fill--active: #fff;
+$button-plain-border--disabled: $color-text-disabled;
+$button-plain-color--disabled: $color-text-disabled;
+$button-plain-opacity--hover: 0.8;
+$button-primary-border: $color-primary;
+$button-primary-color: #fff;
+$button-primary-fill: $color-primary;
+$button-primary-fill--hover: $color-primary-light-2;
+$button-primary-border--hover: $color-primary-light-2;
+$button-primary-fill--focus: $button-primary-fill;
+$button-primary-border--focus: $button-primary-border;
+$button-primary-fill--active: $color-primary-light-2;
+$button-primary-border--active: $color-primary-light-2;
+$button-text-color: #1b90fb;
+$button-text-color--hover: mix($color-white, $button-text-color, 20%);
+$button-text-color--focus: $button-text-color;
+$button-text-color--active: mix($color-white, $button-text-color, 20%);
+$button-text-color--disabled: $color-text-disabled;
+/* Checkbox
+-------------------------- */
+$checkbox-background: #fff;
+$checkbox-background-disabled: #f0f3f7;
+$checkbox-color-hover: $color-primary-light-5;
+$checkbox-color-click: $color-primary;
+$checkbox-border-color: $border-color-base;
+$checkbox-checkmark-color: #fff;
+$checkbox-checkmark-color-disabled: #ccc;
+$checkbox-font-color-disabled: $color-text-disabled;
+$checkbox-checked-color: $color-primary;
+
+/* PasswordInput
+-------------------------- */
+$item-height: 36px;
+$password-input-width: 224px;
+$password-box-border-focus: $color-primary;
+$password-box-shadow-focus: none;
+
+/* Input
+-------------------------- */
+$input-height: 48px;
+$input-font-size: 16px;
+$input-color: $color-text-regular;
+$input-background: #fff;
+$input-background-disabled: #ededed;
+$input-background-readonly: #ededed;
+$input-background-append: #fff;
+$input-background-format: #ffeceb;
+$input-color-append: $color-text-secondary;
+$input-border: $border-base;
+$input-box-shadow-focus: none;
+$input-box-shadow-focus-error: none;
+$input-box-border-focus: #fdbc8d;
+$input-box-border-hover: #fdbc8d;
+$input-border-radius: 4px;
+$input-medium-font-size: 14px;
+$input-medium-height: 36px;
+$input-small-font-size: 14px;
+$input-small-height: 32px;
+$input-mini-font-size: 12px;
+$input-mini-height: 28px;
+
+/* Option
+-------------------------- */
+$opiton-color: $color-text-regular;
+$opiton-color-disabled: $color-text-disabled;
+
+/* Radio
+-------------------------- */
+$radio-color: $color-text-primary;
+$radio-background-color-active: transparent;
+$radio-border-color-active: $color-primary;
+$radio-font-size: 14px;
+$radio-border-color: #979797;
+$radio-background-color: #fff;
+$radio-color-disabled: $color-text-disabled;
+$radio-border-color-disabled: $border-color-base;
+$radio-background-color-disabled: transparent;
+$radio-button-background-color-active: #ffe9e6;
+$radio-button-border-color-disabled: #e4e8ef;
+$radio-button-text-hover: $color-text-secondary;
+$radio-button-background-color-hover: #ffe9e6;
+$radio-button-color: $color-text-secondary;
+$radio-inner-background-color: $color-primary;
+
+/* Select
+-------------------------- */
+$select-height: 48px;
+$select-background: #fff;
+$select-background-disabled: #ededed;
+$select-background-readonly: #ededed;
+$select-suffix-background-color: #fff;
+$select-suffix-background-color-focus: #fff;
+$select-suffix-border-left: none;
+$select-suffix-color-focus: $color-text-tip;
+$select-input-border-color: $border-color-base;
+$select-input-border-color-disabled: #ccc;
+$select-input-border-color-hover: $input-box-border-hover;
+$select-input-box-shadow-focus: $input-box-shadow-focus;
+$select-input-border-color-focus: $input-box-border-focus;
+$select-input-box-shadow-focus-error: $input-box-shadow-focus;
+$select-input-border-color-focus-error: $color-danger;
+$select-input-font-color: $color-text-regular;
+$select-dropdown-item-background: #fff;
+$select-dropdown-item-background-hover: #fff8f4;
+$select-dropdown-border-color: $border-color-base;
+$select-dropdown-padding: 0;
+$select-dropdown-margin: 8px 0;
+$select-prepend-color: $color-text-tip;
+$select-input-font-size: 16px;
+
+/* Form
+-------------------------- */
+$form-item-error-color: $color-danger;
+$form-item-error-font-size: 12px;
+$form-item-label-padding-right: 16px;
+$form-item-label-error-color: $color-danger;
+$form-item-error-min-height: 12px;
+$form-item-error-padding: 4px 0 8px;
+$form-item-error-line-height: 20px;
+
+/* Dropdown
+-------------------------- */
+$dropdown-background: #fff;
+$dropdown-background-disabled: #f5f6f7;
+$dropdown-item-color-hover: $color-primary;
+$dropdown-item-background: #fff;
+$dropdown-item-background-hover: #f5f6f7;
+$dropdown-border-radius: 4px;
+$dropdown-border-color: $border-color-base;
+$dropdown-color: $color-text-regular;
+$dropdown-color-disabled: $color-text-disabled;
+
+/* Tag
+-------------------------- */
+$tag-background: $color-primary;
+$tag-border-color: $color-primary;
+$tag-background--success: $color-success;
+$tag-border-color--success: $color-success;
+$tag-background--warning: $color-warning;
+$tag-border-color--warning: $color-warning;
+$tag-background--info: $color-info;
+$tag-border-color--info: $color-info;
+$tag-background--danger: $color-danger;
+$tag-border-color--danger: $color-danger;
+
+/* Table
+-------------------------- */
+$table-font-size: 14px;
+$table-line-height: 14px;
+$table-background: #f7f7f7;
+$table-background--is-disabled: #f5f6f7;
+$table-divider-color: $color-divider-line;
+$table-border: 1px solid $table-divider-color;
+$table-outer-border: 1px solid $table-divider-color;
+$table-thead-color: $color-text-secondary;
+$table-tbody-color: $color-text-tip;
+$table-min-height: 120px;
+$table-loading-background: rgb(255 255 255 / 50%);
+$table-loading-color: $color-text-tip;
+$table-empty-color: $color-text-disabled;
+$table-indent: 0;
+$table-head-padding: 13px $table-indent;
+$table-body-padding: 0 $table-indent;
+$table-row-height: auto;
+$table-td-padding-vertical: 13px;
+$table-cell-padding-horizontal: 16px;
+$table-selection-margin-left: 10px;
+
+/* TimePicker
+-------------------------- */
+$time-picker-color: $color-text-primary;
+$time-picker-border: $border-base;
+$time-picker-border-radius: 4px;
+$time-picker-pane-border: $border-base;
+$time-picker-pane-background: #fff;
+$time-picker-pane-width: 52px;
+$time-picker-pane-max-height: 187px;
+$time-picker-option-font-size: 14px;
+$time-picker-option-height: 34px;
+$time-picker-option-color: $color-text-regular;
+$time-picker-option-color--is-selected: $color-primary;
+$time-picker-option-color--is-disabled: $color-text-disabled;
+
+/* DatePicker
+-------------------------- */
+$date-picker-height: 48px;
+$date-picker-color: $color-text-regular;
+$date-picker-border: $border-base;
+$date-picker-border-radius: 4px;
+$date-picker-pane-border: $border-base;
+$date-picker-pane-background: #fff;
+$date-picker-pane-width: 200px;
+$date-picker-pane-font-size: 12px;
+$date-picker-pane__header-height: 17px;
+$date-picker-pane__header-icon-color: $color-text-tip;
+$date-picker-pane__header-color: $color-text-regular;
+$date-picker-pane__header-a-hover-color: $color-primary;
+$date-picker-pane__header-border: 1px solid $border-color-base;
+$date-picker-pane__cell--is-disabled-color: $color-text-disabled;
+$date-picker-pane__cell--is-disabled-background: #ededed;
+$date-picker-pane__cell--is-checked-background: $color-primary;
+$date-picker-pane__cell--is-checked-color: #fff;
+$date-picker-pane__cell--is-checked-border-radius: 2px;
+$date-picker-pane__cell--is-today-background: $color-primary-light-7;
+$date-picker-pane__cell--is-today-border-radius: 2px;
+$date-picker-pane__cell--is-ranging-background: #ffe9e6;
+$date-picker-pane__cell--is-ln-month-color: $color-text-disabled;
+$date-picker-pane__cell-background-hover: #f5f6f7;
+$date-picker-pane__cell-color-hover: $color-primary;
+$date-picker-range-icon-color: #c0c4cc;
+$data-picker-range-border: $border-base;
+$date-picker__footer-a: $color-primary;
+$date-picker__footer-a-hover: $color-primary-light-3;
+
+/* Upload
+-------------------------- */
+$upload-bg-grey: #f5f6f7;
+$upload-picture__item-width: 174px;
+$upload-picture__item-height: 110px;
+$upload-file__item-background-hover: #f5f7fa;
+$upload-file__item-color: $color-text-primary;
+$upload-file__item--is--error-color: $color-danger;
+$upload-picture__item-border: 1px solid $color-divider-line;
+$upload-picture__btn-background: #f5f6f7;
+$upload-picture__btn-background-hover: mix($color-white, #f5f6f7, 30%);
+$upload-picture__btn-border: 1px dashed $color-divider-line;
+$upload-picture__btn-border-radius: 4px;
+$upload-picture__btn-font-size: 14px;
+$upload-picture__btn-icon-color: #999;
+$upload-picture__btn--is--disabled-background: #fff;
+$upload-picture__btn--is--disabled-border-color: $color-divider-line;
+$upload-picture__btn--is--disabled-color: $color-text-disabled;
+$upload-picture__mask-background: rgb(41 46 51 / 60%);
+
+/* UploadPro
+-------------------------- */
+$upload-pro-bg-grey: #f5f6f7;
+$upload-pro-card__item-width: 174px;
+$upload-pro-card__item-height: 110px;
+$upload-pro-file__item-background-hover: #f5f7fa;
+$upload-pro-file__item-color: $color-text-primary;
+$upload-pro-file__item--is--error-color: $color-danger;
+$upload-pro-card__item-border: 1px solid $color-divider-line;
+$upload-pro-card__btn-background: #f5f6f7;
+$upload-pro-card__btn-background-hover: mix($color-white, #f5f6f7, 30%);
+$upload-pro-card__btn-border: 1px dashed $color-divider-line;
+$upload-pro-card__btn-border-radius: 4px;
+$upload-pro-card__btn-font-size: 14px;
+$upload-pro-card__btn-icon-color: #999;
+$upload-pro-card__btn--is--disabled-background: #fff;
+$upload-pro-card__btn--is--disabled-border-color: $color-divider-line;
+$upload-pro-card__btn--is--disabled-color: $color-text-disabled;
+$upload-pro-card__mask-background: rgb(41 46 51 / 60%);
+
+/* Tabs
+-------------------------- */
+$tabs-font-size: 16px;
+$tabs-line-color: $color-divider-line;
+$tabs-item-color: $color-text-secondary;
+$tabs-item-color-active: $color-primary;
+$tabs-item-color-disabled: $color-text-disabled;
+
+/* Pagination
+-------------------------- */
+$pagination-item-background: #fff;
+$pagination-item-background--is-disabled: #ededed;
+$pagination-item-color: $color-text-secondary;
+$pagination-item-color--is-disabled: $color-text-disabled;
+$pagination-item-prev-next-background: #fff;
+$pagination-item-font-size: 12px;
+$pagination-item-height: 26px;
+$pagination-border-radius: 1.6px;
+$pagination-background: #fff;
+$pagination-item-color--is-hover: $color-primary;
+$pagination-background--is-disabled: #ededed;
+$pagination-item-color--is-checked: #fff;
+$pagination-background--is-checked: $color-primary;
+$pagination-border-color--is-checked: $color-primary;
+
+/* Modal
+-------------------------- */
+$modal-background: #fff;
+$modal-border-radius: 4px;
+$modal-mask-background: rgb(41 41 51 / 60%);
+$modal-head-font-size: 20px;
+$modal-head-line-height: 1;
+$modal-icon-font-size: 18px;
+$modal-icon-color: #666;
+$modal-form-item-label-padding-right: 16px;
+$modal-form-padding-top: 16px;
+$modal-form-padding-bottom: 12px;
+
+/* Toast
+-------------------------- */
+$toast-font-size: 16px;
+$toast-color-info: #fff;
+$toast-color-success: $color-success;
+$toast-color-error: $color-danger;
+$toast-color-warning: $color-warning;
+$toast-background-info: rgb(51 51 51 / 50%);
+$toast-background-success: #efe;
+$toast-background-error: #ffedeb;
+$toast-background-warning: #fff6eb;
+$toast-border-raduis: $border-radius-base;
+
+/* Confirm
+-------------------------- */
+$confirm-font-size: 14px;
+$confirm-body-color: $color-text-primary;
+
+/* Break-point
+-------------------------- */
+$sm: 768px;
+$md: 992px;
+$lg: 1200px;
+$xl: 1920px;
+$breakpoints: (
+  "xs" : (max-width: $sm),
+  "sm" : (min-width: $sm),
+  "md" : (min-width: $md),
+  "lg" : (min-width: $lg),
+  "xl" : (min-width: $xl)
+);
+$breakpoints-spec: (
+  "xs-only" : (max-width: $sm - 1),
+  "sm-and-up" : (min-width: $sm),
+  "sm-only": (min-width: #{$sm}) and (max-width: #{$md} - 1),
+  "sm-and-down": (max-width: $md - 1),
+  "md-and-up" : (min-width: $md),
+  "md-only": (min-width: #{$md}) and (max-width: #{$lg } - 1),
+  "md-and-down": (max-width: $lg - 1),
+  "lg-and-up" : (min-width: $lg),
+  "lg-only": (min-width: #{$lg}) and (max-width: #{$xl } - 1),
+  "lg-and-down": (max-width: $xl - 1),
+  "xl-only" : (min-width: $xl),
+);

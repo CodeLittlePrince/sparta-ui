@@ -147,11 +147,13 @@ export default {
     &:hover {
       background: $button-plain-fill--hover;
       color: $color-primary;
+      opacity: $button-plain-opacity--hover;
     }
 
     &:active,
     &:active:focus {
       background-color: $button-plain-fill--active;
+      opacity: 1;
     }
 
     &:focus {
@@ -177,6 +179,7 @@ export default {
         background-color: #fff;
         border-color: $button-plain-border--disabled;
         color: $button-plain-color--disabled;
+        opacity: 1;
       }
     }
   }
@@ -250,6 +253,7 @@ export default {
     padding: 0;
     min-width: auto;
     height: auto;
+    font-weight: normal;
 
     &:hover {
       border-color: transparent;

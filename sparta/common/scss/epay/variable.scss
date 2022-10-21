@@ -106,6 +106,7 @@ $button-plain-fill--focus: $button-plain-fill;
 $button-plain-fill--active: #fbe1de;
 $button-plain-border--disabled: #ededed;
 $button-plain-color--disabled: $color-text-disabled;
+$button-plain-opacity--hover: 1;
 $button-primary-border: $color-primary;
 $button-primary-color: #fff;
 $button-primary-fill: $color-primary;
@@ -142,6 +143,7 @@ $password-box-shadow-focus: 0 0 0 1px #ffe9e6;
 /* Input
 -------------------------- */
 $input-height: 36px;
+$input-font-size: 14px;
 $input-color: $color-text-regular;
 $input-background: #fff;
 $input-background-disabled: #ededed;
@@ -170,7 +172,8 @@ $opiton-color-disabled: $color-text-disabled;
 /* Radio
 -------------------------- */
 $radio-color: $color-text-primary;
-$radio-color-active: $color-text-disabled;
+$radio-background-color-active: $color-text-disabled;
+$radio-border-color-active: $color-text-disabled;
 $radio-font-size: 14px;
 $radio-border-color: $border-color-base;
 $radio-background-color: #fff;
@@ -182,6 +185,7 @@ $radio-button-border-color-disabled: #e4e8ef;
 $radio-button-text-hover: $color-text-secondary;
 $radio-button-background-color-hover: #ffe9e6;
 $radio-button-color: $color-text-secondary;
+$radio-inner-background-color: #fff;
 
 /* Select
 -------------------------- */
@@ -208,9 +212,13 @@ $select-prepend-color: $color-text-tip;
 
 /* Form
 -------------------------- */
-$form-item-require-star: $color-danger;
 $form-item-error-color: $color-danger;
 $form-item-error-font-size: 12px;
+$form-item-label-padding-right: 56px;
+$form-item-label-error-color: $color-text-secondary;
+$form-item-error-min-height: 26px;
+$form-item-error-padding: 3px 0 6px;
+$form-item-error-line-height: 17px;
 
 /* Dropdown
 -------------------------- */
@@ -277,6 +285,7 @@ $time-picker-option-color--is-disabled: $color-text-disabled;
 
 /* DatePicker
 -------------------------- */
+$date-picker-height: 36px;
 $date-picker-color: $color-text-regular;
 $date-picker-border: $border-base;
 $date-picker-border-radius: 4px;
@@ -375,9 +384,13 @@ $pagination-border-color--is-checked: $color-primary;
 $modal-background: #fff;
 $modal-border-radius: 4px;
 $modal-mask-background: rgb(41 41 51 / 60%);
-$modal-head-font-size: 14px;
+$modal-head-font-size: 16px;
+$modal-head-line-height: 22px;
 $modal-icon-font-size: 18px;
 $modal-icon-color: #666;
+$modal-form-item-label-padding-right: 36px;
+$modal-form-padding-top: 20px;
+$modal-form-padding-bottom: 14px;
 
 /* Toast
 -------------------------- */

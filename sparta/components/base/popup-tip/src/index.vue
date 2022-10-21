@@ -19,6 +19,7 @@
         {'has--border': hasBorder},
         `is--theme-${theme}`
       ]"
+      :placement="placement"
       :popper-scroll-bind-elem="popperScrollBindElem"
       @mouseenter="handleMouseenter"
       @mouseleave="handleMouseleave"
@@ -61,7 +62,7 @@ export default {
       type: String,
       default: 'white',
       validator(val) {
-        return ['white', 'blue'].indexOf(val) !== -1
+        return ['white', 'blue', 'red'].indexOf(val) !== -1
       }
     },
 
@@ -74,7 +75,14 @@ export default {
       type: Boolean,
       default: false
     },
-    popperScrollBindElem: {}
+    popperScrollBindElem: {},
+    placement: {
+      type: String,
+      default: 'bottom',
+      validator: val => {
+        return ['top', 'bottom'].indexOf(val) !== -1
+      }
+    }
   },
 
   data() {
@@ -138,6 +146,19 @@ export default {
         border-bottom-color: #f0f3f7;
       }
     }
+    &.is--theme-red {
+      &.has--border {
+        border: 1px solid #fb791b;
+        box-shadow: none;
+      }
+      background-color: #ffeceb;
+      &::before {
+        border-bottom-color: #fb791b;
+      }
+      &::after {
+        border-bottom-color: #ffeceb;
+      }
+    }
 
     &::before,
     &::after {
@@ -184,6 +205,15 @@ export default {
       &.is--theme-blue {
         &::after {
           border-top-color: #f0f3f7;
+        }
+      }
+      &.is--theme-red {
+        margin-bottom: 9px;
+        &::before {
+          border-top-color: #fb791b;
+        }
+        &::after {
+          border-top-color: #ffeceb;
         }
       }
     }
