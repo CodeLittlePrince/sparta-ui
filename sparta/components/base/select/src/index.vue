@@ -50,7 +50,7 @@
         v-if="$slots.center && inputText"
         ref="center"
         class="sp-select__center"
-        tabindex="0"
+        :tabindex="tabindex"
         @click.stop="handleSelfClick"
         @keydown.down.prevent="navigateOptions('next')"
         @keydown.up.prevent="navigateOptions('prev')"
@@ -87,7 +87,7 @@
       <div
         ref="focusHelper"
         class="sp-select__focus-helper"
-        tabindex="1"
+        :tabindex="tabindex"
         @keydown.down.prevent="handleSelfClick"
         @keydown.up.prevent="handleSelfClick"
         @focus.stop="handleHelperFocus"
@@ -159,6 +159,7 @@ export default {
       type: Boolean,
       default: false
     },
+    tabindex: String,
     height: {
       type: [String, Number],
       default: 36

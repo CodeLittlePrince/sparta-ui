@@ -79,7 +79,11 @@ export default {
   
   methods: {
     handleKeydown(e) {
-      if(e.keyCode === 13 && e.target.tagName !== 'TEXTAREA') {
+      if(
+        e.keyCode === 13 &&
+        e.target.tagName !== 'TEXTAREA' &&
+        -1 === e.target.className.indexOf('sp-select__input')
+      ) {
         this.$emit('enter')
       }
     },
