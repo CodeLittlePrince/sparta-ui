@@ -133,7 +133,7 @@ describe('date-picker', () => {
         const ONE_DAY = 86400000 // 24 * 3600 * 1000
         const day = time.getDate()
         it('起始2个面板应分别展示起始点', async () => {
-          await wrapperRange.setData({ time1: [todayStart - 30 * ONE_DAY, todayEnd] })
+          await wrapperRange.setData({ time1: [todayStart - 31 * ONE_DAY, todayEnd] })
           await wrapperRange.find('.sp-date-picker-content').trigger('click')
           expect(wrapperRange.findAll('.sp-date-picker-pane-day').at(0).find('.sp-date-picker-pane-day__cell.is--checked').exists()).to.be.true
           expect(wrapperRange.findAll('.sp-date-picker-pane-day').at(1).find('.sp-date-picker-pane-day__cell.is--checked').exists()).to.be.true
