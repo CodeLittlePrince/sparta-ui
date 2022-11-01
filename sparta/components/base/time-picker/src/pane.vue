@@ -59,6 +59,8 @@ export default {
     _scrollToView() {
       this.$nextTick(() => {
         const dropdown = this.$refs.dropdown
+        if (!dropdown) return
+
         const children = dropdown?.children
         const dropdownTop = dropdown.parentNode.scrollTop
         const dropdownStyle = window.getComputedStyle(dropdown.parentNode)
