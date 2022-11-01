@@ -110,4 +110,19 @@ app.on('error', (err, ctx) => {
 })
 
 // 注意：这里的端口要和webpack里devServer的端口对应
-app.listen(proxyConfig.port)
+const server = app.listen(proxyConfig.port)
+
+;['SIGINT', 'SIGTERM', 'SIGHUP', 'SIGBREAK'].forEach(signal => {
+  process.on(signal, () => {
+    stop()
+  })
+})
+process.on('disconnect', () => {
+  stop()
+})
+
+function stop() {
+  server && server.close(() => {
+    process.exit(0)
+  })
+}
