@@ -251,6 +251,12 @@ export default {
       })
     },
 
+    showError(error) {
+      this.validateState = 'error'
+      this.validateMessage = error || '校验失败'
+      this.spForm && this.spForm.$emit('validate', this.prop, false, this.validateMessage)
+    },
+
     clearValidate() {
       this.validateState = ''
       this.validateMessage = ''
