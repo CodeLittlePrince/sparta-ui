@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Table from 'base/Table'
+import Table from 'base/table'
 
 export default {
   name: 'SpTable',

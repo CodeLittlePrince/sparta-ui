@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import Select from 'base/Select'
+import Select from 'base/select'
 
 export default {
   name: 'SpSelect',

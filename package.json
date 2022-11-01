@@ -65,6 +65,7 @@
     "babel-plugin-istanbul": "^6.1.1",
     "babel-plugin-transform-vue-jsx": "^4.0.1",
     "boom": "^7.3.0",
+    "case-sensitive-paths-webpack-plugin": "^1.1.4",
     "chai": "^4.2.0",
     "chalk": "^2.4.1",
     "clean-webpack-plugin": "^0.1.19",

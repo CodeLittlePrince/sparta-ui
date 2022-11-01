@@ -5,6 +5,7 @@ const TerserPlugin = require('terser-webpack-plugin')
 const webpackConfigBase = require('./webpack.config.base.js')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const THEME = process.env.THEME
 const extractCSS =
   new MiniCssExtractPlugin(
@@ -130,6 +131,7 @@ const config = Object.assign(webpackConfigBase.config, {
     ]
   },
   plugins: [
+    new CaseSensitivePathsPlugin(),
     // make sure to include the plugin for the magic
     webpackConfigBase.VueLoaderPluginInstance,
     // Scope hosting
