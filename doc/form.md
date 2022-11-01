@@ -444,6 +444,82 @@
 ```
 :::
 
+### 提交后后端接口校验错误
+虽然我们前端有一些校验了，但是，有时候，有些字段还是依赖后端接口的，这个时候我们需要在对应的`item`下显示后端的错误
+
+:::demo 只需要在接口错误的时候，调用`showErrors`方法，然后将错误信息作为参数即可
+```vue
+<template>
+  <sp-form
+    :model="validateFormRemote"
+    ref="validateFormRemote"
+    label-width="100px"
+    class="sp-form-demo"
+    :rules="rules2"
+  >
+    <!-- 姓名 -->
+    <sp-form-item label="姓名" prop="name">
+      <sp-input
+        v-model="validateFormRemote.name"
+        autocomplete="off"
+      />
+    </sp-form-item>
+    <!-- 年龄 -->
+    <sp-form-item label="年龄" prop="age">
+      <sp-input
+        v-model.number="validateFormRemote.age"
+        autocomplete="off"
+      />
+    </sp-form-item>
+    <!-- 按钮 -->
+    <sp-form-item>
+      <sp-button
+        type="primary"
+        @click="submitFormRemote"
+      >提交</sp-button>
+      <sp-button plain @click="resetForm('validateFormRemote')">重置</sp-button>
+    </sp-form-item>
+  </sp-form>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        validateFormRemote: {
+          favorite: '',
+          cities: []
+        },
+        rules2: {
+          name: [
+            { required: true, message: '姓名不能为空'},
+            { max: 5, message: '长度最长5个字符'}
+          ],
+          age: [
+            { required: true, message: '年龄不能为空'}
+          ],
+        }
+      }
+    },
+    methods: {
+      submitFormRemote() {
+        const validateFormRemote = this.$refs['validateFormRemote']
+        validateFormRemote.validate().then(() => {
+          this.$ajax.post('/api/submitError').then(() => {
+            alert('submit!')
+          }).catch((err) => {
+            validateFormRemote.showErrors(err.errors)
+          })
+        }).catch(() => {
+          console.log('error submit', validateFormRemote.getFirstErrorText())
+        })
+      },
+    }
+  }
+</script>
+```
+:::
+
 ### 校验触发方式
 指定校验的方式，用`trigger`指定即可，`trigger`只有`blur`或`change`两种方式，默认是`blur`加`change`。
 
@@ -596,6 +672,7 @@
 | resetFields | 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果 | —
 | clearValidate | 移除表单项的校验结果。传入待移除的表单项的 prop 属性或者 prop 组成的数组，如不传则移除整个表单的校验结果果 | Function(props: array | string)
 | getFirstErrorText | 获取第一个报错元素的错误文案 | —
+| showErrors | 获取第一个报错元素的错误文案 | Function(errors: object)
 
 ### Form Events
 | 事件名称 | 说明    | 回调参数  |
@@ -671,6 +748,10 @@
             { required: true, message: '年龄不能为空'}
           ],
         },
+        validateFormRemote: {
+          favorite: '',
+          cities: []
+        },
         validateForm3: {
           name: '',
           age: '',
@@ -696,6 +777,18 @@
           console.log(this.validateForm1)
         }).catch(() => {
           console.log('error submit', this.$refs[formName].getFirstErrorText())
+        })
+      },
+      submitFormRemote() {
+        const validateFormRemote = this.$refs['validateFormRemote']
+        validateFormRemote.validate().then(() => {
+          this.$ajax.post('/api/submitError').then(() => {
+            alert('submit!')
+          }).catch((err) => {
+            validateFormRemote.showErrors(err.errors)
+          })
+        }).catch(() => {
+          console.log('error submit', validateFormRemote.getFirstErrorText())
         })
       },
       validateFormPart(formName) {

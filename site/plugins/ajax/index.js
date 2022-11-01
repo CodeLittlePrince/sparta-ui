@@ -75,7 +75,8 @@ function _dealResponse(res, resolve, reject) {
   default:
     reject({
       text: data.message,
-      code: status
+      code: status,
+      errors: data.errors
     })
   }
 }

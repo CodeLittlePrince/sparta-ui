@@ -203,6 +203,14 @@ export default {
       }
     },
 
+    showErrors(errors) {
+      this.fields.forEach(field => {
+        if (errors[field.prop]) {
+          field.showError(errors[field.prop])
+        }
+      })
+    },
+
     getFirstErrorText() {
       return this.firstErrorText
     },
