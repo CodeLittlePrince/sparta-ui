@@ -3,7 +3,7 @@ export default {
   menuData: [
     {
       title: '介绍',
-      link: '/introduce',
+      link: '/base/introduce',
       index: '1'
     },
     {
@@ -12,7 +12,7 @@ export default {
       child: [
         {
           title: '安装',
-          link: '/install',
+          link: '/base/install',
           index: '2-1'
         }
       ]
@@ -27,17 +27,17 @@ export default {
           child: [
             {
               title: 'Color 色彩',
-              link: '/color',
+              link: '/base/color',
               index: '3-1-1'
             },
             {
               title: 'Icon 图标（新）',
-              link: '/icon',
+              link: '/base/icon',
               index: '3-1-2'
             },
             {
               title: 'Button 按钮（新）',
-              link: '/button',
+              link: '/base/button',
               index: '3-1-4'
             }
           ]
@@ -48,12 +48,12 @@ export default {
           child: [
             {
               title: 'Grid 栅格',
-              link: '/grid',
+              link: '/base/grid',
               index: '3-2-1'
             },
             {
               title: 'Layout 布局',
-              link: '/layout',
+              link: '/base/layout',
               index: '3-2-2'
             }
           ]
@@ -64,22 +64,22 @@ export default {
           child: [
             {
               title: 'Menu 菜单',
-              link: '/menu',
+              link: '/base/menu',
               index: '3-3-1'
             },
             {
               title: 'Window 窗口',
-              link: '/window',
+              link: '/base/window',
               index: '3-3-2'
             },
             {
               title: 'Dropdown 下拉菜单',
-              link: '/dropdown',
+              link: '/base/dropdown',
               index: '3-3-3'
             },
             {
               title: 'Pagination 分页',
-              link: '/pagination',
+              link: '/base/pagination',
               index: '3-3-4'
             }
           ]
@@ -90,57 +90,57 @@ export default {
           child: [
             {
               title: 'Checkbox 多选框（新）',
-              link: '/checkbox',
+              link: '/base/checkbox',
               index: '3-4-1'
             },
             {
               title: 'Select 选择器（新）',
-              link: '/select',
+              link: '/base/select',
               index: '3-4-2'
             },
             {
               title: 'Input 输入框（新）',
-              link: '/input',
+              link: '/base/input',
               index: '3-4-3'
             },
             {
               title: 'Radio 单选框（新）',
-              link: '/radio',
+              link: '/base/radio',
               index: '3-4-4'
             },
             {
               title: 'TimePicker 时间选择框',
-              link: '/time-picker',
+              link: '/base/time-picker',
               index: '3-4-5'
             },
             {
               title: 'TimeSelect 时间选择器（新）',
-              link: '/time-select',
+              link: '/base/time-select',
               index: '3-4-6'
             },
             {
               title: 'DatePicker 日期选择框（新）',
-              link: '/date-picker',
+              link: '/base/date-picker',
               index: '3-4-7'
             },
             {
               title: 'Upload 上传（新）',
-              link: '/upload',
+              link: '/base/upload',
               index: '3-4-8'
             },
             {
               title: 'UploadPro 上传（新）',
-              link: '/upload-pro',
+              link: '/base/upload-pro',
               index: '3-4-9'
             },
             {
               title: 'Form 表单（新）',
-              link: '/form',
+              link: '/base/form',
               index: '3-4-10'
             },
             {
               title: 'PasswordInput 密码输入（新）',
-              link: '/password-input',
+              link: '/base/password-input',
               index: '3-4-11'
             },
           ]
@@ -151,32 +151,32 @@ export default {
           child: [
             {
               title: 'Tag 标签',
-              link: '/tag',
+              link: '/base/tag',
               index: '3-5-1'
             },
             {
               title: 'Table 表格（新）',
-              link: '/table',
+              link: '/base/table',
               index: '3-5-2'
             },
             {
               title: 'Tabs 标签页（新）',
-              link: '/tabs',
+              link: '/base/tabs',
               index: '3-5-3'
             },
             {
               title: 'ImgPreview 图片查看器（新）',
-              link: '/img-preview',
+              link: '/base/img-preview',
               index: '3-5-4'
             },
             {
               title: 'PopupTip 浮层提示（新）',
-              link: '/popup-tip',
+              link: '/base/popup-tip',
               index: '3-5-5'
             },
             {
               title: 'Step 步骤条（新）',
-              link: '/step',
+              link: '/base/step',
               index: '3-5-6'
             },
             
@@ -188,22 +188,22 @@ export default {
           child: [
             {
               title: 'Modal 模态弹窗（新）',
-              link: '/modal',
+              link: '/base/modal',
               index: '3-6-1'
             },
             {
               title: 'Toast 全局提示（新）',
-              link: '/toast',
+              link: '/base/toast',
               index: '3-6-2'
             },
             {
               title: 'Confirm 全局确认（新）',
-              link: '/confirm',
+              link: '/base/confirm',
               index: '3-6-3'
             },
             {
               title: 'Progress 进度条',
-              link: '/progress',
+              link: '/base/progress',
               index: '3-6-4'
             }
           ]

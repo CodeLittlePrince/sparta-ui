@@ -46,7 +46,6 @@ describe('Select', () => {
     document.body.appendChild(wrapper.vm.$el)
 
     it('size small', async () => {
-      debugger
       await wrapper.setData({ size: 'small' })
       expect(wrapper.find('.sp-select.sp-select--small').exists()).to.be.true
     })
