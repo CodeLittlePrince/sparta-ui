@@ -1,9 +1,10 @@
 import { mount } from '@vue/test-utils'
-import Datepikcer from 'base/date-picker'
 import format from 'sparta/common/js/utils/format'
-import { transitionStub } from '../../../util';
+import { transitionStub, bootstrap } from '../../../../util'
 import sinon from 'sinon'
 const handleDateChange = sinon.spy()
+
+bootstrap()
 
 describe('date-picker', () => {
   const TODAY = new Date(new Date().setHours(0, 0, 0, 0)).getTime() // 获取当天的时间
@@ -36,11 +37,8 @@ describe('date-picker', () => {
         clearable
         @change="handleDateChange"
         class="disabled-date-picker" 
-       />
+      />
     </div>`,
-    components: {
-      'sp-date-picker': Datepikcer,
-    }
   }, {
     attachTo: document.body,
     stubs: {
@@ -118,11 +116,8 @@ describe('date-picker', () => {
         :disabled-date="disabledDate"
         :show-time="true"
         clearable
-       />
+      />
     </div>`,
-    components: {
-      'sp-date-picker': Datepikcer,
-    }
   }, {
     attachTo: document.body,
     stubs: {

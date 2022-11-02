@@ -1,6 +1,7 @@
-import { mount, shallowMount } from '@vue/test-utils'
-import Pagination from 'base/pagination'
-import { createTest, createVue, destroyVM } from '../../util';
+import { mount } from '@vue/test-utils'
+import { bootstrap } from '../../../util'
+
+bootstrap()
 
 describe('Pagination', () => {
   const wrapper = mount({
@@ -25,13 +26,10 @@ describe('Pagination', () => {
       :page-size="pageSize"
       :disabled="disabled"
       @change="handelPageChange">
-  </sp-pagination>
+    </sp-pagination>
     `,
-    components: {
-      'sp-pagination': Pagination
-    },
     methods: {
-      handelPageChange(index, pageSize){
+      handelPageChange(index, pageSize) {
         this.currentPage = index
         this.currentPageSize = pageSize
       }
@@ -54,7 +52,7 @@ describe('Pagination', () => {
 
       await wrapper.setData({pageIndex: 3 })
       expect(wrapper.find('.align--middle .is--checked').text()).to.be.equal('3')
-      await wrapper.setData({pageIndex: 2, total: 1000,  pageSize:20 })
+      await wrapper.setData({pageIndex: 2, total: 1000, pageSize:20 })
     })
   })
 

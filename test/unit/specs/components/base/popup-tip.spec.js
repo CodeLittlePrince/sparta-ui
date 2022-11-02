@@ -1,8 +1,10 @@
 import { mount } from '@vue/test-utils'
-import PopupTip from 'base/popup-tip'
+import { bootstrap } from '../../../util'
+
+bootstrap()
 
 describe('PopupTip', () => {
-  const wrapper  = mount({
+  const wrapper = mount({
     data() {
       return {
         width: '200',
@@ -26,9 +28,6 @@ describe('PopupTip', () => {
       </template>
     </sp-popup-tip>
     `,
-    components: {
-      'sp-popup-tip': PopupTip,
-    }
   })
   document.body.appendChild(wrapper.vm.$el)
 

@@ -1,8 +1,9 @@
 import { mount } from '@vue/test-utils'
-import Table from 'sparta/components/abroad/table'
-import TableColum from 'base/table-column'
+import { bootstrap } from '../../../util'
 
-const testDataArr = [];
+bootstrap('abroad')
+
+const testDataArr = []
 
 const getTestData = () => {
   return [
@@ -11,14 +12,14 @@ const getTestData = () => {
     { id: 3, name: 'Toy Story 2', release: '1999-11-24', director: 'John Lasseter', runtime: 92 },
     { id: 4, name: 'Monsters, Inc.', release: '2001-11-2', director: 'Andrew Stanton', runtime: 92 },
     { id: 5, name: 'Finding Nemo', release: '2003-5-30', director: 'Andrew Stanton', runtime: 100 }
-  ];
-};
+  ]
+}
 
 getTestData().forEach(cur => {
   Object.keys(cur).forEach(prop => {
-    testDataArr.push(cur[prop].toString());
-  });
-});
+    testDataArr.push(cur[prop].toString())
+  })
+})
 
 describe('Table', () => {
   describe('rendering data is correct', () => {
@@ -39,16 +40,12 @@ describe('Table', () => {
           <sp-table-column v-if="show" prop="runtime" label="时长（分）" />
        </sp-table>
       `,
-      components: {
-        'sp-table': Table,
-        'sp-table-column': TableColum
-      }
     })
 
     it('vertical border', async () => {
       await wrapper.setData({ border: true })
       expect(wrapper.find('.sp-table.is--has-border').exists()).to.be.true
-    });
+    })
   })
   describe('methods', () => {
     const wrapper = mount({
@@ -63,25 +60,21 @@ describe('Table', () => {
         }
       },
       template: `
-       <sp-table 
-          :list="testData" 
-          @selection-change="handleSelectionChange"
-          ref="table"
-          :selection="true"
-          :paginationOption="{ totalSize: 1000 }"
-          :hasMore="true"
-          >
-          <sp-table-column prop="id" />
-          <sp-table-column prop="name" label="片名" />
-          <sp-table-column prop="release" label="发行日期" />
-          <sp-table-column prop="director" label="导演" />
-          <sp-table-column prop="runtime" label="时长（分）" />
-       </sp-table>
+      <sp-table 
+        :list="testData" 
+        @selection-change="handleSelectionChange"
+        ref="table"
+        :selection="true"
+        :paginationOption="{ totalSize: 1000 }"
+        :hasMore="true"
+        >
+        <sp-table-column prop="id" />
+        <sp-table-column prop="name" label="片名" />
+        <sp-table-column prop="release" label="发行日期" />
+        <sp-table-column prop="director" label="导演" />
+        <sp-table-column prop="runtime" label="时长（分）" />
+      </sp-table>
       `,
-      components: {
-        'sp-table': Table,
-        'sp-table-column': TableColum
-      },
       methods: {
         handleSelectionChange(data) {
           this.changeCount++

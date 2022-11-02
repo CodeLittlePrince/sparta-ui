@@ -1,7 +1,6 @@
 import Vue from 'vue'
-import Sparta from '../../sparta/components/globalpay'
-
-Vue.use(Sparta)
+import Globalpay from '../../sparta/components/globalpay'
+import Abroad from '../../sparta/components/abroad'
 
 let id = 0
 
@@ -12,6 +11,17 @@ const createElm = function() {
   document.body.appendChild(elm)
 
   return elm
+}
+
+export async function bootstrap(theme) {
+  switch (theme) {
+  case 'abroad':
+    Vue.use(Abroad)
+    break
+  default:
+    Vue.use(Globalpay)
+    break
+  }
 }
 
 export const isVisable = el => {
@@ -114,8 +124,8 @@ export const triggerKeyDown = (el, keyCode) => {
 
 /**
  * 暂停
- * @param {*} ms 
- * @returns 
+ * @param {*} ms
+ * @returns
  */
 export async function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
@@ -124,6 +134,6 @@ export async function sleep(ms) {
 // transition mock
 export const transitionStub = {
   render() {
-    return this.$options._renderChildren;
+    return this.$options._renderChildren
   },
 }

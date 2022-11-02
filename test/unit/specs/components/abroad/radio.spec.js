@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
-import RadioGroup from 'base/radio-group'
-import Radio from 'sparta/components/abroad/radio'
+import { bootstrap } from '../../../util'
+
+bootstrap('abroad')
 
 describe('Radio', () => {
   const wrapper = mount({
@@ -19,10 +20,6 @@ describe('Radio', () => {
       <sp-radio :size="size" label="pear">梨</sp-radio>
     </sp-radio-group>
     `,
-    components: {
-      'sp-radio': Radio,
-      'sp-radio-group': RadioGroup
-    }
   })
   document.body.appendChild(wrapper.vm.$el)
   let radios = null
@@ -32,6 +29,6 @@ describe('Radio', () => {
       radios = await wrapper.findAll('.sp-radio__wrap')
       await wrapper.setData({ size: 'small' })
       expect(radios.wrappers[0].find('.sp-radio--small').exists()).to.be.true
-    });
+    })
   })
 })

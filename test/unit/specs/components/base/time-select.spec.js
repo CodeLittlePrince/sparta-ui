@@ -1,8 +1,8 @@
-import { mount, shallowMount } from '@vue/test-utils'
-import TimeSelect from 'base/time-select'
-import { createTest, createVue, destroyVM } from '../../util';
+import { mount } from '@vue/test-utils'
+import { bootstrap } from '../../../util'
 import sinon from 'sinon'
 const spy = sinon.spy()
+bootstrap()
 
 describe('time-select', () => {
  
@@ -23,9 +23,6 @@ describe('time-select', () => {
           :pickerOptions="pickerOptions">
         </sp-time-select>
       `,
-      components: {
-        'sp-time-select': TimeSelect,
-      }
     })
     document.body.appendChild(wrapper.vm.$el)
 
@@ -76,7 +73,7 @@ describe('time-select', () => {
       await input.setValue('02:00')
       expect(wrapper.vm.val).to.equal('02:00')
       input.trigger('focus')
-      await wrapper.find('.sp-icon-close-bold').trigger("click")
+      await wrapper.find('.sp-icon-close-bold').trigger('click')
       expect(wrapper.vm.val).to.equal('')
     })
 
@@ -98,12 +95,12 @@ describe('time-select', () => {
         minTime: '05:00',
         maxTime: '06:00',
       }
-     })
-     const input = wrapper.find('input')
-     await input.trigger('focus')
-     const selectOption = wrapper.find('.sp-time-picker-option')
-     await selectOption.trigger('click')
-     expect(wrapper.vm.val).to.equal('')
+      })
+      const input = wrapper.find('input')
+      await input.trigger('focus')
+      const selectOption = wrapper.find('.sp-time-picker-option')
+      await selectOption.trigger('click')
+      expect(wrapper.vm.val).to.equal('')
     })
 
     it('pickerOptions set', async () => {
@@ -114,9 +111,9 @@ describe('time-select', () => {
         minTime: '05:00',
         maxTime: '06:00',
       }
-     })
-     await wrapper.setData({ val: ''})
-     expect(wrapper.vm.val).to.equal('')
+      })
+      await wrapper.setData({ val: ''})
+      expect(wrapper.vm.val).to.equal('')
     })
   })
 
@@ -139,9 +136,6 @@ describe('time-select', () => {
           :pickerOptions="pickerOptions">
         </sp-time-select>
       `,
-      components: {
-        'sp-time-select': TimeSelect,
-      }
     })
 
     const div = document.createElement('div')
@@ -323,7 +317,7 @@ describe('time-select', () => {
       const input = wrapper.find('input')
       await input.trigger('focus')
       await wrapper.find('.sp-time-select__range').trigger('click')
-      const dropdown =  wrapper.find('.is--range-dropdown')
+      const dropdown = wrapper.find('.is--range-dropdown')
       let timeStartSelectOption = dropdown.find('.sp-time-picker-pane').find('.sp-time-picker-option')
       let timeEndSelectOption = dropdown.findAll('.sp-time-picker-pane').wrappers[1].findAll('.sp-time-picker-option').wrappers[8]
       await timeStartSelectOption.trigger('click')
@@ -336,7 +330,7 @@ describe('time-select', () => {
       await timeEndSelectOption.trigger('click')
       expect(wrapper.vm.val).to.deep.equal(['02:00','08:00'])
 
-      // 只变更结束时间 
+      // 只变更结束时间
       timeEndSelectOption = dropdown.findAll('.sp-time-picker-pane').wrappers[1].findAll('.sp-time-picker-option').wrappers[6]
       await timeStartSelectOption.trigger('click')
       await timeEndSelectOption.trigger('click')
@@ -388,7 +382,7 @@ describe('time-select', () => {
       it('查看开始时间的点亮逻辑和结束时间的disabled逻辑', async () => {
         // 查看开始时间的点亮逻辑和结束时间的disabled逻辑
         await inputList.wrappers[0].setValue('03:00')
-        const selectedOption =  wrapper.find('.is--selected')
+        const selectedOption = wrapper.find('.is--selected')
         expect(selectedOption.text()).to.be.equal('03:00')
         expect(paneList.wrappers[1].find('.is-disabled').text()).to.be.equal('00:00')
       })
@@ -482,11 +476,11 @@ describe('time-select', () => {
           minTime: '05:00',
           maxTime: '06:00',
         }
-       })
-       const input = wrapper.find('input')
-       await input.trigger('focus')
-       await handleRangePaneClick(wrapper)
-       expect(wrapper.vm.val).to.deep.equal([])
+        })
+        const input = wrapper.find('input')
+        await input.trigger('focus')
+        await handleRangePaneClick(wrapper)
+        expect(wrapper.vm.val).to.deep.equal([])
       })
 
       it('pickerOptions set, click able value', async () => {
@@ -496,15 +490,15 @@ describe('time-select', () => {
           step: '01:00',
           maxTime: '15:00',
         }
-       })
-       const input = wrapper.find('input')
-       await input.trigger('focus')
-       await handleRangePaneClick(wrapper)
-       expect(wrapper.vm.val).to.deep.equal(['06:00','07:00'])
+        })
+        const input = wrapper.find('input')
+        await input.trigger('focus')
+        await handleRangePaneClick(wrapper)
+        expect(wrapper.vm.val).to.deep.equal(['06:00','07:00'])
       })
 
       it('pickerOptions set, set data', async () => {
-        await wrapper.setData({  
+        await wrapper.setData({
           val: [],
           pickerOptions: {
             start: '06:00',
@@ -545,7 +539,7 @@ describe('time-select', () => {
       await wrapper.setData({ val: ['02:00','18:00'] })
       const input = wrapper.find('input')
       await input.trigger('focus')
-      await wrapper.find('.sp-icon-close-bold').trigger("click")
+      await wrapper.find('.sp-icon-close-bold').trigger('click')
       expect(wrapper.vm.val).to.deep.equal([])
     })
 
@@ -578,9 +572,6 @@ describe('time-select', () => {
           type="range" >
         </sp-time-select>
       `,
-      components: {
-        'sp-time-select': TimeSelect,
-      }
     })
   })
 
@@ -588,7 +579,7 @@ describe('time-select', () => {
 
 
 async function handleRangePaneClick(wrapper) {
-  const dropdown =  wrapper.find('.is--range-dropdown')
+  const dropdown = wrapper.find('.is--range-dropdown')
   const timeStartSelectOption = dropdown.find('.sp-time-picker-pane').find('.sp-time-picker-option')
   const timeEndSelectOption = dropdown.findAll('.sp-time-picker-pane').wrappers[1].findAll('.sp-time-picker-option').wrappers[1]
   await timeStartSelectOption.trigger('click')

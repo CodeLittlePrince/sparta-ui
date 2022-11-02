@@ -1,16 +1,18 @@
-import { mount, shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import Select from 'base/select'
-import { createTest, createVue, destroyVM , sleep } from '../../util';
+import { bootstrap } from '../../../util'
+
+bootstrap()
 
 const getTestData = function() {
   return [
     { id: 1, name: 'cat', disabled: false, icon: 'sp-icon-file' },
     { id: 2, name: 'dog', disabled: false, icon: 'sp-icon-check' },
     { id: 3, name: 'pig', disabled: false, icon:'sp-icon-search'},
-    { id: 4, name: 'tiger', disabled: false, icon: 'sp-icon-file'   },
-    { id: 5, name: 'elephant', disabled: false, icon: 'sp-icon-check'  }
-  ];
-};
+    { id: 4, name: 'tiger', disabled: false, icon: 'sp-icon-file' },
+    { id: 5, name: 'elephant', disabled: false, icon: 'sp-icon-check' }
+  ]
+}
 
 const getTestGroupData = function() {
   return [{
@@ -23,7 +25,7 @@ const getTestGroupData = function() {
       label: '王府井',
       disabled: true
     }]
-    }, {
+  }, {
     label: '上海',
     options: [{
       value: 'Lujiazui',
@@ -32,8 +34,8 @@ const getTestGroupData = function() {
       value: 'Nanjinglu',
       label: '南京路'
     }]
-  }];
-};
+  }]
+}
 
 describe('Select', () => {
 
@@ -82,10 +84,10 @@ describe('Select', () => {
     document.body.appendChild(wrapper.vm.$el)
 
     it('set data', async () => {
-     await wrapper.setData({ val: 3 })
-     expect(wrapper.find('.sp-select__input').element.value).to.be.equal('pig')
-     await wrapper.setData({ val: '' })
-    });
+      await wrapper.setData({ val: 3 })
+      expect(wrapper.find('.sp-select__input').element.value).to.be.equal('pig')
+      await wrapper.setData({ val: '' })
+    })
 
     it('Attributes', async () => {
       await wrapper.setData({ readonly: true })
@@ -110,7 +112,7 @@ describe('Select', () => {
 
       await wrapper.setData({ filterable: true })
       await wrapper.find('.sp-select').trigger('click')
-      await wrapper.setData({ emptyText: "emptyText" })
+      await wrapper.setData({ emptyText: 'emptyText' })
       await wrapper.find('.sp-select__input').trigger('focus')
       await wrapper.find('.sp-select__input').setValue('mmm')
       expect(wrapper.find('.sp-select-list-emptyText').text()).to.be.equal('emptyText')
@@ -123,7 +125,7 @@ describe('Select', () => {
       await wrapper.find('.sp-select__input').setValue('mmm')
       await wrapper.find('.sp-select-other-button').trigger('click')
       await wrapper.find('.sp-select__input').trigger('blur')
-    });
+    })
 
     it('events', async () => {
       await wrapper.find('.sp-select').trigger('click')
@@ -139,7 +141,7 @@ describe('Select', () => {
       await wrapper.setData({ optionsData: options })
       await wrapper.find('.sp-select').trigger('click')
       expect(wrapper.find('.sp-option.is--disabled').exists()).to.be.true
-    });
+    })
 
     it('panel', async () => {
       await wrapper.setData({ val: '' })
@@ -148,35 +150,35 @@ describe('Select', () => {
       expect(wrapper.findAll('.sp-select-list .sp-option').wrappers.length).to.be.equal(6)
       await wrapper.find('.sp-select-list .sp-option').trigger('mouseover')
       await wrapper.findAll('.sp-select-list .sp-option').wrappers[1].trigger('mouseover')
-      await wrapper.find('.sp-select-list .sp-option').trigger('click')      
+      await wrapper.find('.sp-select-list .sp-option').trigger('click')
       await wrapper.findAll('.sp-select-list .sp-option').wrappers[1].trigger('click')
       expect(wrapper.vm.val).to.be.equal(2)
       await wrapper.find('.sp-select-other-button').trigger('click')
       await wrapper.find('.sp-select').trigger('click')
       expect(wrapper.findAll('.sp-select-list .sp-option').wrappers.length).to.be.equal(6)
       expect(wrapper.find('.sp-select-list .is--selected').text()).to.be.equal('dog')
-    });
+    })
 
     it('keyboard operations', async () => {
       await wrapper.find('.sp-select').trigger('click')
       await wrapper.find('.sp-select__input').trigger('focus')
-      const select = wrapper.vm.$children[1];
-      let i = 3;
+      const select = wrapper.vm.$children[1]
+      let i = 3
       while (i--) {
-         select.navigateOptions('next');
+        select.navigateOptions('next')
       }
-      select.navigateOptions('prev');
+      select.navigateOptions('prev')
       select.handleInputEnter()
       expect(wrapper.vm.val).to.deep.equal(4)
 
       await wrapper.find('.sp-select').trigger('click')
       await wrapper.find('.sp-select__input').trigger('focus')
       await wrapper.setData({ filterable: true })
-      i = 13;
+      i = 13
       while (i--) {
-         select.navigateOptions('next');
+        select.navigateOptions('next')
       }
-      select.navigateOptions('prev');
+      select.navigateOptions('prev')
       select.handleInputEnter()
     })
 
@@ -229,23 +231,23 @@ describe('Select', () => {
         await clearSelect(wrapper)
         await selectClick(wrapper)
         expect(wrapper.find('.sp-select-dropdown').isVisible()).to.be.true
-        expect(getVisibleOptionsLength(wrapper).length).to.be.equal(5) 
+        expect(getVisibleOptionsLength(wrapper).length).to.be.equal(5)
         expect(wrapper.find('.sp-select-list .is--selected').exists()).to.be.false
-       });
+      })
 
-       it('点击组件，显示所有下拉选项，全部没有点亮，输入异常的值，显示无匹配数据', async () => {
+      it('点击组件，显示所有下拉选项，全部没有点亮，输入异常的值，显示无匹配数据', async () => {
         await setSelectVal(wrapper,'mnh')
         expect(wrapper.find('.sp-select-list-emptyText').isVisible()).to.be.true
-        await handelOtherClick(wrapper) 
-       });
+        await handelOtherClick(wrapper)
+      })
 
-       it('点击组件，显示所有下拉选项，全部没有点亮，输入异常的值，显示无匹配数据，再点击其他地方，清空异常的数据，并隐藏下拉框，组件无新值传出', async () => {
+      it('点击组件，显示所有下拉选项，全部没有点亮，输入异常的值，显示无匹配数据，再点击其他地方，清空异常的数据，并隐藏下拉框，组件无新值传出', async () => {
         expect(wrapper.find('.sp-select-dropdown').isVisible()).to.be.false
         expect(wrapper.vm.$children[1].inputText).to.be.equal('')
         expect(wrapper.vm.val).to.be.equal('')
-       });
+      })
 
-       it('点击组件，显示所有下拉选项，全部没有点亮，输入包含的值，正确过滤选项，点击选项，正确显示文案和icon， 并将新值传出', async () => {
+      it('点击组件，显示所有下拉选项，全部没有点亮，输入包含的值，正确过滤选项，点击选项，正确显示文案和icon， 并将新值传出', async () => {
         await selectClick(wrapper)
         await setSelectVal(wrapper, 'pi')
         expect(getVisibleOptionsLength(wrapper).length).to.be.equal(1)
@@ -256,18 +258,18 @@ describe('Select', () => {
         expect(wrapper.vm.$children[1].inputText).to.be.equal('pig')
         expect(wrapper.vm.val).to.be.equal(3)
         expect(wrapper.vm.icon).to.be.equal('sp-icon-search')
-       });
+      })
 
-       it('点击组件，显示所有下拉选项，全部没有点亮，输入包含的值，正确过滤选项，点击选项，正确显示文案和icon， 并将新值传出，再点击显示所有的选项，并且请选择的地址显示已选的文案，滚动和点亮已选项', async () => {
+      it('点击组件，显示所有下拉选项，全部没有点亮，输入包含的值，正确过滤选项，点击选项，正确显示文案和icon， 并将新值传出，再点击显示所有的选项，并且请选择的地址显示已选的文案，滚动和点亮已选项', async () => {
         await selectClick(wrapper)
         expect(getVisibleOptionsLength(wrapper).length).to.be.equal(5)
         expect(wrapper.vm.$children[1].inputText).to.be.equal('')
         expect(wrapper.find('.sp-select__prepend').isVisible()).to.be.false
         expect(wrapper.find('.sp-select-list .is--selected').exists()).to.be.true
         await handelOtherClick(wrapper)
-       });
+      })
 
-       it('点击组件，显示所有下拉选项，全部没有点亮，输入完全符合的值，点击其他地方，下拉框隐藏，还是显示请选择，无新值传出', async () => {
+      it('点击组件，显示所有下拉选项，全部没有点亮，输入完全符合的值，点击其他地方，下拉框隐藏，还是显示请选择，无新值传出', async () => {
         await clearSelect(wrapper)
         expect(wrapper.vm.val).to.be.equal('')
         expect(wrapper.vm.$children[1].inputText).to.be.equal('')
@@ -280,19 +282,19 @@ describe('Select', () => {
         expect(wrapper.find('.sp-select-dropdown').isVisible()).to.be.false
         expect(wrapper.vm.val).to.be.equal('')
         expect(wrapper.vm.$children[1].inputText).to.be.equal('')
-       });
+      })
     })
 
     describe('默认无值-键盘操作', () => {
-      const select = wrapper.vm.$children[1];
+      const select = wrapper.vm.$children[1]
       it('直接使用键盘向上/向下，显示所有下拉选项，全部没有点亮', async () => {
         await handelOtherClick(wrapper)
         await clearSelect(wrapper)
         await select.navigateOptions('next')
         expect(wrapper.find('.sp-select-dropdown').isVisible()).to.be.true
-        expect(getVisibleOptionsLength(wrapper).length).to.be.equal(5) 
+        expect(getVisibleOptionsLength(wrapper).length).to.be.equal(5)
         expect(wrapper.find('.sp-select-list .is--selected').exists()).to.be.false
-      });
+      })
 
       it('直接使用键盘向上/向下，显示所有下拉选项，全部没有点亮，输入包含的值，正确过滤数据，使用键盘移动，并选择一个选项, 下拉框关闭，正确显示正常的文案和icon, 并将新值传出， 再次使用键盘向上/向下，显示所有下拉选项，并且请选择的地址显示已选的文案，滚动和点亮已选项', async () => {
         await setSelectVal(wrapper, 'pi')
@@ -309,9 +311,9 @@ describe('Select', () => {
         await select.navigateOptions('next')
         await wrapper.vm.$nextTick()
         expect(wrapper.find('.sp-select-dropdown').isVisible()).to.be.true
-        expect(getVisibleOptionsLength(wrapper).length).to.be.equal(1) 
+        expect(getVisibleOptionsLength(wrapper).length).to.be.equal(1)
         expect(wrapper.find('.sp-select-list .is--selected').exists()).to.be.true
-      });
+      })
     })
 
     describe('默认有值-点选', () => {
@@ -342,14 +344,14 @@ describe('Select', () => {
     })
 
     describe('默认有值-键盘操作', () => {
-      const select = wrapper.vm.$children[1];
+      const select = wrapper.vm.$children[1]
       it('直接使用键盘向上/向下，显示所有下拉选项，滚动并点亮已选项，输入包含的值，正确过滤数据，使用键盘移动，并选择一个选项, 下拉框关闭，正确显示正常的文案和icon, 并将新值传出， 再次使用键盘向上/向下，显示所有下拉选项，并且请选择的地址显示已选的文案，滚动和点亮已选项', async () => {
         await wrapper.setData({ val: 3})
         await wrapper.vm.$nextTick()
         await select.navigateOptions('next')
 
         expect(wrapper.find('.sp-select-dropdown').isVisible()).to.be.true
-        expect(getVisibleOptionsLength(wrapper).length).to.be.equal(1) 
+        expect(getVisibleOptionsLength(wrapper).length).to.be.equal(1)
         expect(wrapper.find('.sp-select-list .is--selected').exists()).to.be.true
 
         await setSelectVal(wrapper, 'pig')
@@ -366,7 +368,7 @@ describe('Select', () => {
     })
     after(() => {
       //  document.body.removeChild(wrapper.vm.$el)
-    }) 
+    })
   })
 
   describe('Option Group Attributes', () => {
@@ -453,9 +455,9 @@ describe('Select', () => {
       expect(wrapper.findAll('.sp-tag-box .sp-tag').length).to.be.equal(2)
       await wrapper.setData({ val: [] })
       
-     })
+    })
 
-     it('panel', async () => {
+    it('panel', async () => {
       await wrapper.setData({ val: [] })
       await wrapper.find('.sp-select').trigger('click')
       expect(wrapper.find('.sp-select-dropdown').isVisible()).to.be.true
@@ -468,7 +470,7 @@ describe('Select', () => {
       await wrapper.find('.sp-tag-box .sp-icon-close').trigger('click')
       expect(wrapper.vm.val).to.deep.equal([])
       await wrapper.destroy()
-     })
+    })
 
   })
 
@@ -481,10 +483,10 @@ describe('Select', () => {
             val: '',
             optionsData: [
               { id: 1, name: 'cat', disabled: true },
-              { id: 2, name: 'dog', disabled: true  },
-              { id: 3, name: 'pig', disabled: true  },
-              { id: 4, name: 'tiger', disabled: true  },
-              { id: 5, name: 'elephant', disabled: true  }
+              { id: 2, name: 'dog', disabled: true },
+              { id: 3, name: 'pig', disabled: true },
+              { id: 4, name: 'tiger', disabled: true },
+              { id: 5, name: 'elephant', disabled: true }
             ],
             readonly: true,
             disabled: true,
@@ -529,7 +531,7 @@ describe('Select', () => {
         await wrapper.find('.sp-select-list .sp-option').trigger('click')
         expect(wrapper.vm.val).to.be.equal('')
         await wrapper.setData({ filterable: true })
-        const select = wrapper.vm.$children[1];
+        const select = wrapper.vm.$children[1]
         select.handleInputEnter()
         expect(wrapper.vm.val).to.be.equal('')
         await wrapper.destroy()
@@ -681,22 +683,22 @@ describe('Select', () => {
     it('keyboard operations', async () => {
       await wrapper.find('.sp-select').trigger('click')
       await wrapper.find('.sp-select__input').trigger('focus')
-      const select = wrapper.vm.$children[1];
-      let i = 3;
+      const select = wrapper.vm.$children[1]
+      let i = 3
       while (i--) {
-         select.navigateOptions('next');
+        select.navigateOptions('next')
       }
-      select.navigateOptions('prev');
+      select.navigateOptions('prev')
       select.handleInputEnter()
       expect(wrapper.vm.val).to.deep.equal([2])
 
       await wrapper.find('.sp-select-other-button').trigger('click')
       await wrapper.find('.sp-select__input').trigger('focus')
-      i = 3;
+      i = 3
       while (i--) {
-         select.navigateOptions('next');
+        select.navigateOptions('next')
       }
-      select.navigateOptions('prev');
+      select.navigateOptions('prev')
       expect(wrapper.vm.val).to.deep.equal([2])
     })
   })
@@ -741,27 +743,27 @@ describe('Select', () => {
     document.body.appendChild(wrapper.vm.$el)
 
     it('slot', async () => {
-      await wrapper.find(".sp-select").trigger('click')
-      await wrapper.find(".sp-select__input").trigger('focus')
+      await wrapper.find('.sp-select').trigger('click')
+      await wrapper.find('.sp-select__input').trigger('focus')
       expect(wrapper.find('.sp-select-dropdown').isVisible()).to.be.true
-      await wrapper.find(".sp-select__input").setValue('piuu') // todo 模拟用户输入
-      await wrapper.find(".sp-select__input").trigger('focus')
+      await wrapper.find('.sp-select__input').setValue('piuu') // todo 模拟用户输入
+      await wrapper.find('.sp-select__input').trigger('focus')
       expect(wrapper.find('.sp-select-list-emptyText').isVisible()).to.be.true
-      await wrapper.find(".sp-select__input").setValue('pi')
-      await wrapper.find(".sp-select__input").trigger('focus')
-      let options = wrapper.findAll(".sp-select-list .sp-option")
+      await wrapper.find('.sp-select__input').setValue('pi')
+      await wrapper.find('.sp-select__input').trigger('focus')
+      let options = wrapper.findAll('.sp-select-list .sp-option')
       expect(options.wrappers.filter(item => item.element.style.display !=='none').length).to.be.equal(1)
-      const select = wrapper.vm.$children[1];
+      const select = wrapper.vm.$children[1]
       select.navigateOptions('next')
       select.handleInputEnter()
       expect(wrapper.vm.val).to.be.equal(3)
 
-      await wrapper.find(".sp-select__input").trigger('blur')
+      await wrapper.find('.sp-select__input').trigger('blur')
       await wrapper.find('.sp-select-other-button').trigger('click')
-      await wrapper.find(".sp-select").trigger('click')
-      await wrapper.find(".sp-select__input").trigger('focus')
+      await wrapper.find('.sp-select').trigger('click')
+      await wrapper.find('.sp-select__input').trigger('focus')
       expect(wrapper.find('.sp-select-dropdown').isVisible()).to.be.true
-      options = wrapper.findAll(".sp-select-list .sp-option")
+      options = wrapper.findAll('.sp-select-list .sp-option')
       expect(options.wrappers.filter(item => item.element.style.display !=='none').length).to.be.equal(5)
     })
 
@@ -835,15 +837,15 @@ describe('interact', () => {
 
 /**
  * 清空组件值
- * @param {*} wrapper 
+ * @param {*} wrapper
  */
- function clearSelect(wrapper) {
+function clearSelect(wrapper) {
   return wrapper.setData({ val: ''})
 }
 
 /**
  * 点击组件
- * @param {*} wrapper 
+ * @param {*} wrapper
  */
 function selectClick(wrapper) {
   return wrapper.find('.sp-select').trigger('click')
@@ -851,10 +853,10 @@ function selectClick(wrapper) {
 
 /**
  * 设置值
- * @param {*} wrapper 
- * @param {*} val 
+ * @param {*} wrapper
+ * @param {*} val
  */
- async function setSelectVal (wrapper, val) {
+async function setSelectVal (wrapper, val) {
   await wrapper.find('.sp-select__input').trigger('focus')
   await wrapper.find('.sp-select__input').setValue(val)
   return wrapper.find('.sp-select__input').trigger('focus')
@@ -862,7 +864,7 @@ function selectClick(wrapper) {
 
 /**
  * 点击其他地方，失焦
- * @param {*} wrapper 
+ * @param {*} wrapper
  */
 function handelOtherClick(wrapper) {
   return wrapper.vm.$el.querySelector('.sp-select-other-button').click()
@@ -870,8 +872,8 @@ function handelOtherClick(wrapper) {
 
 /**
  * 获取可见的options
- * @param {*} wrapper 
- * @returns 
+ * @param {*} wrapper
+ * @returns
  */
 function getVisibleOptionsLength(wrapper) {
   return wrapper.findAll('.sp-select-list .sp-option').filter(item => item.element.style.display!== 'none')
@@ -879,8 +881,8 @@ function getVisibleOptionsLength(wrapper) {
 
 /**
  * 点击第一个选项
- * @param {*} wrapper 
- * @returns 
+ * @param {*} wrapper
+ * @returns
  */
 function clickFirstOptions(wrapper) {
   const options = wrapper.findAll('.sp-select-list .sp-option').filter(item => item.element.style.display!== 'none')
