@@ -1,9 +1,10 @@
 import { mount } from '@vue/test-utils'
-import Datepikcer from 'base/date-picker'
 import format from 'sparta/common/js/utils/format'
-import { transitionStub } from '../../../util';
+import { transitionStub, bootstrap } from '../../../../util'
 import sinon from 'sinon'
 const handleDateChange = sinon.spy()
+
+bootstrap()
 
 describe('date-picker', () => {
   const wrapper = mount({
@@ -41,21 +42,19 @@ describe('date-picker', () => {
     <div>
       <sp-button class="test-datepikcer-date-button">测试datepicker</sp-button>
       <sp-date-picker
-      ref="wrapper"
-      v-model="time1"
-      :default-time="defaultTime"
-      :disabled-date="disabledDate"
-      :disabled="disabled"
-      :show-time="showTime"
-      :disabled-time="disabledDateTime"
-      :value-format="valueFormat"
-      clearable
-      @change="handleDateChange"
-      class="data-picker-1"  />
+        ref="wrapper"
+        v-model="time1"
+        :default-time="defaultTime"
+        :disabled-date="disabledDate"
+        :disabled="disabled"
+        :show-time="showTime"
+        :disabled-time="disabledDateTime"
+        :value-format="valueFormat"
+        clearable
+        @change="handleDateChange"
+        class="data-picker-1"
+      />
     </div>`,
-    components: {
-      'sp-date-picker': Datepikcer,
-    }
   }, {
     attachTo: document.body,
     stubs: {

@@ -1,15 +1,10 @@
 import { mount } from '@vue/test-utils'
-import FormItem from 'sparta/components/abroad/form-item'
-import Form from 'base/form'
-import Input from 'base/input'
+import { bootstrap } from '../../../util'
+
+bootstrap('abroad')
 
 describe('FormItem', () => {
   const wrapper = mount({
-    components: {
-      'sp-form-item': FormItem,
-      'sp-form': Form,
-      'sp-input': Input
-    },
     data() {
       return {
         required: false
@@ -30,5 +25,5 @@ describe('FormItem', () => {
     expect(wrapper.find('.sp-form-item__label-required').exists()).to.be.false
     await wrapper.setData({ required: true })
     expect(wrapper.find('.sp-form-item__label-required').exists()).to.be.true
-   });
+  })
 })

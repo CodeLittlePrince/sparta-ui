@@ -1,9 +1,10 @@
-import { mount, createWrapper } from '@vue/test-utils'
-import Datepikcer from 'base/date-picker'
+import { mount } from '@vue/test-utils'
 import format from 'sparta/common/js/utils/format'
-import { sleep, transitionStub, triggerEvent } from '../../../util';
+import { transitionStub, bootstrap } from '../../../../util'
 import sinon from 'sinon'
 const handleDaterangeChange = sinon.spy()
+
+bootstrap()
 
 describe('date-picker', () => {
   const wrapper = mount({
@@ -40,24 +41,21 @@ describe('date-picker', () => {
     <div>
       <sp-button class="test-datepikcer-daterange-button">测试datepicker 范围</sp-button>
       <sp-date-picker
-      class="data-picker-2"
-      v-model="time"
-      type="daterange"
-      :default-time="defaultTime"
-      :disabled-date="disabledDateRange"
-      :disabled-time="disabledRangeTime"
-      :show-time="showTime"
-      :disabled="disabled"
-      :value-format="valueFormat"
-      clearable
-      @change="handleDaterangeChange"
-      start-placeholder="开始日期"
-      end-placeholder="结束日期"
-    />
+        class="data-picker-2"
+        v-model="time"
+        type="daterange"
+        :default-time="defaultTime"
+        :disabled-date="disabledDateRange"
+        :disabled-time="disabledRangeTime"
+        :show-time="showTime"
+        :disabled="disabled"
+        :value-format="valueFormat"
+        clearable
+        @change="handleDaterangeChange"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期"
+      />
     </div>`,
-    components: {
-      'sp-date-picker': Datepikcer,
-    }
   }, {
     attachTo: document.body,
     stubs: {
@@ -84,7 +82,7 @@ describe('date-picker', () => {
         })
         describe('设置默认时间defatul-time为["12:00:00","12:00:00"]', () => {
           it('绑定值的时分秒，开始时间应为12:00:00，结束时间应为12:00:00', async () => {
-            await wrapper.setData({ defaultTime: ["12:00:00", "12:00:00"] })
+            await wrapper.setData({ defaultTime: ['12:00:00', '12:00:00'] })
             await wrapper.find('.sp-date-picker-range-start .sp-input__inner').setValue('2019-02-11')
             await wrapper.find('.test-datepikcer-daterange-button').trigger('click')
             expect(wrapper.vm.time).to.deep.equal([+new Date(new Date('2019/02/11')).setHours(12, 0, 0, 0), +new Date(new Date('2021/11/12')).setHours(12, 0, 0, 0)])
@@ -94,7 +92,7 @@ describe('date-picker', () => {
 
       describe('event: change', () => {
         it('选择完成 起 始 日期后，应派发change事件', async () => {
-          await wrapper.setData({ defaultTime: ["00:00:00", "23:59:59"] })
+          await wrapper.setData({ defaultTime: ['00:00:00', '23:59:59'] })
           const start = wrapper.findAll('.sp-date-picker-range__pane').at(0)
           const end = wrapper.findAll('.sp-date-picker-range__pane').at(1)
           await wrapper.find('.sp-date-picker-content').trigger('click')

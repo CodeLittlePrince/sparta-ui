@@ -1,8 +1,9 @@
 import { mount } from '@vue/test-utils'
-import Datepikcer from 'base/date-picker'
-import { transitionStub } from '../../../util';
+import { transitionStub, bootstrap } from '../../../../util'
 import sinon from 'sinon'
 const handleDateChange = sinon.spy()
+
+bootstrap()
 
 describe('date-picker', () => {
   const wrapper = mount({
@@ -18,16 +19,13 @@ describe('date-picker', () => {
     template: `
     <div>
       <sp-date-picker
-      ref="wrapper"
-      v-model="time1"
-      :show-time="showTime"
-      clearable
-      @change="handleDateChange"
+        ref="wrapper"
+        v-model="time1"
+        :show-time="showTime"
+        clearable
+        @change="handleDateChange"
       />
     </div>`,
-    components: {
-      'sp-date-picker': Datepikcer,
-    }
   }, {
     attachTo: document.body,
     stubs: {
