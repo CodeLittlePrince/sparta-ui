@@ -15,7 +15,7 @@
           <router-link to="/">首页</router-link>
         </li>
         <li>
-          <router-link to="/components">组件</router-link>
+          <router-link to="/components/base/install">组件</router-link>
         </li>
       </ul>
       <div>
