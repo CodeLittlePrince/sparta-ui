@@ -74,7 +74,7 @@ export default {
 
 <style lang="scss">
 @use "sass:math";
-@import "sparta/common/scss/mixin";
+@import "sparta/common/scss/base/mixin";
 
 [class*="sp-col-"] {
   float: left;
