@@ -154,7 +154,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "sparta/common/scss/mixin";
+@import "sparta/common/scss/base/mixin";
 
 .sp-date-picker-pane-year {
   padding: 6px 0 4px;

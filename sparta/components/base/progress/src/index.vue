@@ -184,7 +184,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "sparta/common/scss/mixin";
+@import "sparta/common/scss/base/mixin";
 
 .sp-progress {
   position: relative;

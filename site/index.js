@@ -10,7 +10,6 @@ Vue.prototype.$SPARTA = {
   zIndex: 3000,
   THEME: process.env.THEME
 }
-
 Vue.use(Sparta)
 
 new Vue({

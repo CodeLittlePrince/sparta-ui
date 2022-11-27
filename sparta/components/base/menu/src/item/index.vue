@@ -219,8 +219,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "sparta/common/scss/transition";
-@import "sparta/common/scss/mixin";
+@import "sparta/common/scss/base/transition";
+@import "sparta/common/scss/base/mixin";
 
 .sp-menu-item {
   user-select: none;
