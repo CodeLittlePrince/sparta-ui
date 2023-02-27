@@ -72,20 +72,20 @@ module.exports = function(config) {
       // 'IE' // karma-ie-launcher
     ],
 
-    // customLaunchers: {
-    //   IE9: {
-    //     base: 'IE',
-    //     'x-ua-compatible': 'IE=EmulateIE9'
-    //   },
-    //   IE10: {
-    //     base: 'IE',
-    //     'x-ua-compatible': 'IE=EmulateIE10'
-    //   },
-    //   IE11: {
-    //     base: 'IE',
-    //     'x-ua-compatible': 'IE=EmulateIE11'
-    //   }
-    // },
+    customLaunchers: process.env.BROWSER === 'IE' ? {
+      IE9: {
+        base: 'IE',
+        'x-ua-compatible': 'IE=EmulateIE9'
+      },
+      IE10: {
+        base: 'IE',
+        'x-ua-compatible': 'IE=EmulateIE10'
+      },
+      IE11: {
+        base: 'IE',
+        'x-ua-compatible': 'IE=EmulateIE11'
+      }
+    } : {},
 
 
     // Continuous Integration mode
