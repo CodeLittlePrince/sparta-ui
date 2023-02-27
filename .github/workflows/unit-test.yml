@@ -15,7 +15,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  test-in-chorme:
+  test-in-chrome-on-mac:
     # The type of runner that the job will run on
     runs-on: macos-latest
 
@@ -42,7 +42,7 @@ jobs:
         run: |
           echo End.
 
-  test-in-safari:
+  test-in-safari-on-mac:
     # The type of runner that the job will run on
     runs-on: macos-latest
 
@@ -65,6 +65,60 @@ jobs:
       - name: Unit test
         run: |
           npm run CI:test:unit:safari
+      - name: End
+        run: |
+          echo End.
+
+  test-in-chrome-on-win:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: '16.x'
+      
+      - name: npm install
+        run: |
+          npm install --legacy-peer-deps
+      - name: Lint js
+        run: |
+          npm run lint
+      - name: Unit test
+        run: |
+          npm run CI:test:unit:chrome
+      - name: End
+        run: |
+          echo End.
+
+  test-in-ie-on-win:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: '16.x'
+      
+      - name: npm install
+        run: |
+          npm install --legacy-peer-deps
+      - name: Lint js
+        run: |
+          npm run lint
+      - name: Unit test
+        run: |
+          npm run CI:test:unit:ie
       - name: End
         run: |
           echo End.
