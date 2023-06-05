@@ -355,9 +355,6 @@ export default {
   },
   
   mounted() {
-    if (this.disableOperation) {
-      return
-    }
     if(this.isCustomFilter) {
       this.getDebounceFilterMethod()
     } // 自定义搜索防抖
@@ -366,9 +363,6 @@ export default {
   },
   
   beforeDestroy() {
-    if (this.disableOperation) {
-      return
-    }
     this.debounceFilterMethod?.cancel()
     document.removeEventListener('click', this.handleOtherAreaClick)
   },
