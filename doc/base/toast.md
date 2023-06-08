@@ -65,6 +65,33 @@ export default{
 ```
 :::
 
+### 自定义toast存在的时间
+
+:::demo 分别有：全局配置，调用声明，两种方式。
+```vue
+<template>
+  <sp-button
+    @click="showTipResetDuration"
+  >一个 5s 的消息</sp-button>
+</template>
+
+<script>
+Vue.prototype.$sparta.success = Toast('success', 5000) // 全局配置
+// 单独调用的话，在调用的时候声明即可
+export default{
+  methods: {
+    showTipResetDuration() {
+      // 调用声明
+      this.$sparta.success('一个 5s 的消息', 5000)
+      // 全局配置后可以这样调用
+      this.$sparta.success('一个 5s 的消息')
+    }
+  }
+}
+</script>
+```
+:::
+
 <script>
 export default{
   methods: {
@@ -80,12 +107,8 @@ export default{
     showError() {
       this.$sparta.error('一个消息')
     },
-    show() {
-      this.$info({
-        top: '15vh',
-        message: '一个消息',
-        duration: 5000
-      })
+    showTipResetDuration() {
+      this.$sparta.success('一个 5s 的消息', 5000)
     }
   }
 }

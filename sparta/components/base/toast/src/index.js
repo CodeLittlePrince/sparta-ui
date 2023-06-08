@@ -2,11 +2,12 @@ import Vue from 'vue'
 import Main from './main.vue'
 let ToastConstructor = Vue.extend(Main)
 
-const Toast = type => {
-  return function(message) {
+const Toast = (type, durationGlobal) => {
+  return function(message, durationLocal) {
     const options = {
-      type: type,
-      message: message
+      type,
+      message,
+      duration: durationGlobal || durationLocal || 3000,
     } || {}
     // 如果是直接字符串，那直接赋值给message就好了
     // 实例化
