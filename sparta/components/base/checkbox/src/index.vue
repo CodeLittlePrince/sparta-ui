@@ -53,6 +53,9 @@ export default {
     },
     SpFormItem: {
       default: ''
+    },
+    SpCheckboxGroup: {
+      default: ''
     }
   },
 
@@ -63,7 +66,7 @@ export default {
     disabled: Boolean,
     checked: Boolean,
     trueLabel: [String, Number],
-    falseLabel: [String, Number]
+    falseLabel: [String, Number],
   },
 
   data() {
@@ -76,23 +79,23 @@ export default {
   computed: {
     model: {
       get() {
-        return this.isGroup
+        return this.SpCheckboxGroup
           ? this.store : this.value !== undefined
             ? this.value : this.selfModel
       },
 
       set(val) {
-        if (this.isGroup) {
+        if (this.SpCheckboxGroup) {
           this.isLimitExceeded = false;
           (
-            this._checkboxGroup.min !== undefined &&
-            val.length < this._checkboxGroup.min &&
+            this.SpCheckboxGroup.min !== undefined &&
+            val.length < this.SpCheckboxGroup.min &&
             (this.isLimitExceeded = true)
           );
 
           (
-            this._checkboxGroup.max !== undefined &&
-            val.length > this._checkboxGroup.max &&
+            this.SpCheckboxGroup.max !== undefined &&
+            val.length > this.SpCheckboxGroup.max &&
             (this.isLimitExceeded = true)
           )
 
@@ -116,34 +119,20 @@ export default {
       return false
     },
 
-    isGroup() {
-      let parent = this.$parent
-      while (parent) {
-        if (parent.$options.name !== 'SpCheckboxGroup') {
-          parent = parent.$parent
-        } else {
-          // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-          this._checkboxGroup = parent
-          return true
-        }
-      }
-      return false
-    },
-
     store() {
-      return this._checkboxGroup ? this._checkboxGroup.value : this.value
+      return this.SpCheckboxGroup ? this.SpCheckboxGroup.value : this.value
     },
 
     isDisabled() {
-      return this.isGroup
-        ? this._checkboxGroup.disabled || this.disabled || (this.spForm || {}).disabled
+      return this.SpCheckboxGroup
+        ? this.SpCheckboxGroup.disabled || this.disabled || (this.spForm || {}).disabled
         : this.disabled || (this.spForm || {}).disabled
     }
   },
 
   watch: {
-    value(value) {
-      this.dispatch('SpFormItem', 'sp.form.change', value)
+    value(val) {
+      this.dispatch('SpFormItem', 'sp.form.change', val)
     }
   },
 
@@ -170,8 +159,8 @@ export default {
       }
       this.$emit('change', value, ev)
       this.$nextTick(() => {
-        if (this.isGroup) {
-          this.dispatch('SpCheckboxGroup', 'change', [this._checkboxGroup.value])
+        if (this.SpCheckboxGroup) {
+          this.dispatch('SpCheckboxGroup', 'change', [this.SpCheckboxGroup.value])
         }
       })
     }
