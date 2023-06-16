@@ -2,7 +2,13 @@
   <div
     ref="spSelect"
     class="sp-select"
-    :class="{ isFocus, cursorPoiner, 'is--disabled': disabled, 'is--readonly': readonly }"
+    :class="{
+      isFocus,
+      cursorPoiner,
+      'is--disabled': disabled,
+      'is--readonly': readonly,
+      'is-group-multiple': groupMultiple,
+    }"
     @click="handleSelfClick"
   >
     <div
@@ -30,6 +36,17 @@
             >{{ tag.label }}</sp-tag>
           </transition-group>
         </div>
+      </template>
+      <template v-else-if="groupMultiple">
+        <div
+          ref="sp-tag-box"
+          class="sp-tag-box"
+          @click="focusSelectInput"
+        >{{ groupMultiSelectInputText }}</div>
+        <div
+          v-show="showGroupMultiSelectNum"
+          class="sp-select__input-box__num"
+        >+{{ groupMultiSelectNum }}</div>
       </template>
       <!-- 非多选情况-->
       <!-- 前置元素 -->
@@ -100,7 +117,7 @@
         @click="handleSuffixClick($event)"
       >
         <i
-          v-show="showClearIcon && !multiple"
+          v-show="showClearIcon && !isMulti"
           class="sp-icon-close-bold"
         />
         <i
@@ -122,7 +139,14 @@
           ref="dropdown"
           class="sp-select-list"
         >
-          <slot></slot>
+          <template v-if="groupMultiple">
+            <sp-checkbox-group v-model="groupMultipleSelected">
+              <slot></slot>
+            </sp-checkbox-group>
+          </template>
+          <template v-else>
+            <slot></slot>
+          </template>
           <!-- 无数据情况 -->
           <li
             v-show="loading || !hasSpOptions || (hasSpOptions && spOptionsAllInVisible)"
@@ -195,6 +219,10 @@ export default {
       type: Boolean,
       default: false
     },
+    groupMultiple: {
+      type: Boolean,
+      default: false
+    },
     validateEvent: {
       type: Boolean,
       default: true
@@ -227,6 +255,7 @@ export default {
       cursorPoiner: !this.disabled && !this.readonly,
       inputText: this.value && this.value.length ? ' ' : '',
       spOptions: [],
+      spOptionGroups: [],
       evOptionHoverIndex: -1,
       selected: [],
       selectInputBoxHeight: this.height - 2 + 'px',
@@ -235,6 +264,8 @@ export default {
       isOnComposition: false,
       singleSelected: '',
       needFilterMethod: false, // 是否应该调用filterMethod方法，用户主动选择的时候，虽然输入框的值变化了，但是不应再去过滤了
+      groupMultipleSelected: [],
+      groupMultiSelectInputText: '',
     }
   },
 
@@ -248,8 +279,11 @@ export default {
     spOptionsAllInVisible() {
       return this.spOptions.every(option => !option.visible)
     },
+    isMulti() {
+      return this.multiple || this.groupMultiple
+    },
     showClearIcon() {
-      return this.clearable && this.inputText !== '' && this.isHover && !this.multiple && this.value
+      return this.clearable && this.inputText !== '' && this.isHover && !this.isMulti && this.value
     },
     hasSpOptions() {
       return this.spOptions && this.spOptions.length
@@ -274,6 +308,34 @@ export default {
     },
     isCustomFilter() { // 是否是自定义搜索
       return this.filterable && this.filterMethod && typeof this.filterMethod === 'function'
+    },
+    groupMultiSelectInputTxtMapList() {
+      let txtMap = [] // 为了保证顺序，所以用数组而不是map
+
+      this.spOptionGroups.forEach(item => {
+        txtMap.push({
+          label: item.label,
+          value: item.value,
+        })
+      })
+
+      this.spOptions.forEach(item => {
+        txtMap.push({
+          label: item.label,
+          value: item.value,
+        })
+      })
+
+      return txtMap
+    },
+    groupMultiSelectNum() {
+      let count = this.groupMultipleSelected.length - 1
+      let parentCount = 0
+
+      return count - parentCount
+    },
+    showGroupMultiSelectNum() {
+      return 2 <= this.groupMultipleSelected.length
     }
   },
 
@@ -290,7 +352,7 @@ export default {
     visible(val) {
       if (val) {
         this.singleSelected = ''
-        if (this.currentValue !== '') {
+        if (this.currentValue !== '' && !this.groupMultiple) {
           this.$nextTick(() => this.scrollToView())
         }
         // 为了每次弹出dropdown，都会根据处的环境做适应
@@ -320,6 +382,36 @@ export default {
     selected(val) {
       if (val) {
         this.inputText = val.length ? ' ' : ''
+      }
+    },
+    groupMultipleSelected(newVal, oldVal) {
+      if (newVal) {
+        this.inputText = newVal.length ? ' ' : ''
+      }
+
+      // 只留第一个元素的文案
+      if (1 <= newVal?.length) {
+        this.groupMultiSelectInputText = this.getTextFromMapList(newVal, this.groupMultiSelectInputTxtMapList)
+      } else {
+        this.groupMultiSelectInputText = ''
+      }
+
+      // 根据新老数组的长度可知，是新增还是减少
+      if (oldVal.length < newVal.length) {
+        const extraValus = newVal.filter(item => !oldVal.includes(item))
+        
+        extraValus.forEach(value => {
+          if (this.currentValue.indexOf(value) === -1) {
+            this.currentValue.push(value)
+          }
+        })
+      } else if (oldVal.length > newVal.length) {
+        const extraValus = oldVal.filter(item => !newVal.includes(item))
+
+        extraValus.forEach(value => {
+          const index = this.currentValue.findIndex(item => item === value)
+          this.currentValue.splice(index, 1)
+        })
       }
     },
     inputText() {
@@ -399,43 +491,54 @@ export default {
         })
       })
     },
-    
+
     setCurrentValue(val, noTrigger) {
       this.currentValue = val
+      
       if (this.validateEvent && !noTrigger) {
         this.dispatch('SpFormItem', 'sp.form.change', [val])
       }
-      // 设置输入框显示文案
-      if ((!val) || (this.multiple && val && val.length === 0)) {
-        // 没有值则置空
-        this.inputText = ''
-        if (this.multiple) {
-          this.selected = []
-          this.spOptions.map(item => {
-            return item.selected = false
-          })
-        }
-      }
 
-      if (this.multiple) {
-        this.selected = []
-        // 多选情况
-        for (let i = 0, len = this.spOptions.length; i < len; i++) {
-          for (let j = 0, len = val.length; j < len; j++) {
-            if (this.spOptions[i].value === val[j]) {
-              this.selected.push({ label: this.spOptions[i].label, value: this.spOptions[i].value })
-              this.spOptions[i].selected = true
-            }
+      if (this.groupMultiple) {
+        this.groupMultipleSelected = val
+        // 设置输入框显示文案
+        if ((!val) || (val && val.length === 0)) {
+          // 没有值则置空
+          this.inputText = ''
+        }
+      } else {
+        // 设置输入框显示文案
+        if ((!val) || (this.multiple && val && val.length === 0)) {
+          // 没有值则置空
+          this.inputText = ''
+          if (this.multiple) {
+            this.selected = []
+            this.spOptions.map(item => {
+              return item.selected = false
+            })
           }
         }
-        this.updateTagboxHeight()
-      } else {
+
+        if (this.multiple) {
+          this.selected = []
+          // 多选情况
+          for (let i = 0, len = this.spOptions.length; i < len; i++) {
+            for (let j = 0, len = val.length; j < len; j++) {
+              if (this.spOptions[i].value === val[j]) {
+                this.selected.push({ label: this.spOptions[i].label, value: this.spOptions[i].value })
+                this.spOptions[i].selected = true
+              }
+            }
+          }
+          this.updateTagboxHeight()
+        } else {
         // 单选情况
-        for (let i = 0, len = this.spOptions.length; i < len; i++) {
-          if (this.spOptions[i].value === val) {
-            this.inputText = this.spOptions[i].label
-            this.evOptionHoverIndex = i
-            break
+          for (let i = 0, len = this.spOptions.length; i < len; i++) {
+            if (this.spOptions[i].value === val) {
+              this.inputText = this.spOptions[i].label
+              this.evOptionHoverIndex = i
+              break
+            }
           }
         }
       }
@@ -474,11 +577,11 @@ export default {
      * 通过键盘的Enter键选定条目
      */
     handleInputEnter() {
-      if (this.filterable && this.spOptionsAllInVisible) {
+      if (this.filterable && this.spOptionsAllInVisible || this.groupMultiple) {
         return
       }
       const hoverItem = this.spOptions[this.evOptionHoverIndex]
-      if (hoverItem && this.multiple) {
+      if (hoverItem && this.isMulti) {
         const valueIndex = this.currentValue.indexOf(hoverItem.value)
         // 将选择的值加入tag
         if (valueIndex !== -1) {
@@ -603,7 +706,7 @@ export default {
      * 通过键盘的上下键(up/down)控制hover的位置
      */
     navigateOptions(direction) {
-      if (this.readonly) return
+      if (this.readonly || this.groupMultiple) return
       if (!this.visible) {
         this.visible = true
         return
@@ -658,12 +761,31 @@ export default {
         }
       }
       dropdown.scrollTop = offset
-    }
+    },
+
+    getTextFromMapList(valueList, mapList) {
+      // txt需要先把valueList参考mapList做排序，最后取第一个元素
+      let txt = ''
+      let txtIndex = -1
+
+      valueList?.forEach(value => {
+        const index = mapList.findIndex(item => item.value === value)
+
+        if (index <= txtIndex || txtIndex === -1) {
+          txt = mapList.find(item => item.value === value).label
+          txtIndex = index
+        }
+      })
+
+      return txt
+    },
   }
 }
 </script>
 
 <style lang="scss">
+@import "sparta/common/scss/base/mixin";
+
 .sp-select {
   position: relative;
   display: block;
@@ -834,6 +956,31 @@ export default {
   }
   .is--readonly &__suffix {
     background-color: $select-background-readonly;
+  }
+
+  &.is-group-multiple &__input-box {
+    .sp-tag-box {
+      @include ellipsis;
+      right: 85px;
+      line-height: 34px;
+      padding-left: 10px;
+      padding-bottom: 0;
+    }
+
+    .sp-select__input-box__num {
+      position: absolute;
+      top: 50%;
+      right: 48px;
+      transform: translateY(-50%);
+      min-width: 26px;
+      height: 18px;
+      border-radius: 2px;
+      background-color: #eaeef2;
+      font-size: 12px;
+      line-height: 18px;
+      text-align: center;
+      color: #97a2b5;
+    }
   }
 
   &-list {

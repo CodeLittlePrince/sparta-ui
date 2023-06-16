@@ -572,6 +572,7 @@ export default{
         v-for="group in list6"
         :key="group.label"
         :label="group.label"
+        :disabled="group.disabled"
       >
         <sp-option
           v-for="item in group.options"
@@ -591,25 +592,39 @@ export default{
 export default{
   data(){
     return {
-      list6: [{
-        label: '北京',
-        options: [{
-          value: 'Sanlitun',
-          label: '三里屯'
-        }, {
-          value: 'Wangfujing',
-          label: '王府井'
-        }]
-        }, {
-        label: '上海',
-        options: [{
-          value: 'Lujiazui',
-          label: '陆家嘴'
-        }, {
-          value: 'Nanjinglu',
-          label: '南京路'
-        }]
-      }],
+      list6: [
+        {
+          label: '北京',
+          options: [{
+            value: 'Sanlitun',
+            label: '三里屯'
+          }, {
+            value: 'Wangfujing',
+            label: '王府井'
+          }]
+        },
+        {
+          label: '上海',
+          options: [{
+            value: 'Lujiazui',
+            label: '陆家嘴'
+          }, {
+            value: 'Nanjinglu',
+            label: '南京路'
+          }]
+        },
+        {
+          label: '浙江',
+          disabled: true,
+          options: [{
+            value: 'Hangzhou',
+            label: '杭州'
+          }, {
+            value: 'Jinhua',
+            label: '金华'
+          }]
+        }
+      ],
       value6: ''
     }
   },
@@ -670,12 +685,163 @@ export default{
 ```
 :::
 
+### 分组多选
+分组多选，目前只支持一层。
+
+:::demo 为`sp-select`设置`group-multiple`属性即可启用多选，此时`v-model`的值为当前选中值所组成的数组。
+```vue
+<template>
+  <div class="select-demo">
+    <div style="margin-bottom: 5px;">分组的多选</div>
+    <sp-select
+      v-model="value14"
+      group-multiple
+    >
+      <sp-option-group
+        v-for="(item, index) in list14"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+        :disabled="item.disabled"
+      >
+        <sp-option
+          v-for="child in item.children"
+          :key="child.value"
+          :label="child.label"
+          :value="child.value"
+          :disabled="child.disabled"
+        ></sp-option>
+        <sp-option
+          :label="`王多鱼${ index }`"
+          :value="`X${ index }`"
+        >
+          王多鱼
+          <p style="font-size: 12px;color:#747d8c">我是小tip</p>
+        </sp-option>
+      </sp-option-group>
+    </sp-select>
+    <div style="margin: 20px 0 5px;">单组的多选</div>
+    <sp-select
+      v-model="value15"
+      group-multiple
+      filter-parent
+    >
+      <sp-option-group
+        label="全选"
+        value="ALL"
+      >
+        <sp-option
+          v-for="item in list7"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></sp-option>
+        <sp-option
+          :label="`王多鱼`"
+          :value="`X`"
+        >
+          王多鱼
+          <p style="font-size: 12px;color:#747d8c">我是小tip</p>
+        </sp-option>
+      </sp-option-group>
+    </sp-select>
+    <div style="margin: 20px 0 5px;">不分组的多选（暂保留以前的基础多选，之后再规划统一）</div>
+    <sp-select
+      v-model="value16"
+      group-multiple
+      filter-parent
+    >
+      <sp-option
+        v-for="item in list7"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      ></sp-option>
+      <sp-option
+        :label="`王多鱼`"
+        :value="`X`"
+      >
+        王多鱼
+        <p style="font-size: 12px;color:#747d8c">我是小tip</p>
+      </sp-option>
+    </sp-select>
+  </div>
+</template>
+
+<script>
+export default{
+  data(){
+    return {
+      list14: [
+        {
+          value: 'parent 1-0',
+          label: 'parent 1-0',
+          children: [
+            {
+              value: 'I dance 1',
+              label: 'I dance 1',
+              disabled: true,
+            },
+            {
+              value: 'I dance 2',
+              label: 'I dance 2',
+            },
+          ],
+        },
+        {
+          value: 'parent 1-1',
+          label: 'parent 1-1',
+          children: [
+            {
+              value: 'You dance 1',
+              label: 'You dance 1',
+            },
+          ],
+        },
+        {
+          value: 'parent 1-2',
+          label: 'parent 1-2',
+          disabled: true,
+          children: [
+            {
+              value: 'He dances 1',
+              label: 'He dances 1',
+            },
+            {
+              value: 'He dances 2',
+              label: 'He dances 2',
+            },
+          ],
+        },
+      ],
+      value14: [],
+      value15: [],
+      value16: [],
+    }
+  },
+  watch: {
+    value14(val) {
+      console.log(val)
+    },
+    value15(val) {
+      console.log(val)
+    },
+    value16(val) {
+      console.log(val)
+    },
+  }
+}
+</script>
+```
+:::
+
 ### Select Attributes
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
 | height | 设置高度 | string/number | — | 36 |
 | readonly | 设置是否只读 | boolean | — | false |
 | multiple | 是否多选 | boolean | — | false |
+| group-multiple | 是否分组多选 | boolean | — | false |
 | disabled | 是否禁用 | boolean | — | false |
 | clearable | 是否可以清空选项 | boolean | — | false |
 | placeholder | 占位符 | string | — | 请选择 |
@@ -687,7 +853,6 @@ export default{
 | emptyText | 过滤时候没有匹配值的文案 | string | — | 请选择 |
 | limitDropdownWidth | 是否限制下拉框宽度成1.5倍 | boolean | — | true |
 | popperScrollBindElem | popper浮动定位的锚点元素 | string/Element | — | - |
-
 
 ### Select Slots
 |   name  | 说明     |
@@ -756,25 +921,39 @@ export default{
         { label: '杭州', value: 'hangzhou' }
       ],
       value5: '',
-      list6: [{
-        label: '北京',
-        options: [{
-          value: 'Sanlitun',
-          label: '三里屯'
-        }, {
-          value: 'Wangfujing',
-          label: '王府井'
-        }]
-       }, {
-        label: '上海',
-        options: [{
-          value: 'Lujiazui',
-          label: '陆家嘴'
-        }, {
-          value: 'Nanjinglu',
-          label: '南京路'
-        }]
-      }],
+      list6: [
+        {
+          label: '北京',
+          options: [{
+            value: 'Sanlitun',
+            label: '三里屯'
+          }, {
+            value: 'Wangfujing',
+            label: '王府井'
+          }]
+        },
+        {
+          label: '上海',
+          options: [{
+            value: 'Lujiazui',
+            label: '陆家嘴'
+          }, {
+            value: 'Nanjinglu',
+            label: '南京路'
+          }]
+        },
+        {
+          label: '浙江',
+          disabled: true,
+          options: [{
+            value: 'Hangzhou',
+            label: '杭州'
+          }, {
+            value: 'Jinhua',
+            label: '金华'
+          }]
+        }
+      ],
       value6: '',
       list7: [
         { label: '听音乐', value: 'music' },
@@ -817,6 +996,51 @@ export default{
       value12: '',
       list4_1: [],
       value4_1: '',
+      list14: [
+        {
+          value: 'parent 1-0',
+          label: 'parent 1-0',
+          children: [
+            {
+              value: 'I dance 1',
+              label: 'I dance 1',
+              disabled: true,
+            },
+            {
+              value: 'I dance 2',
+              label: 'I dance 2',
+            },
+          ],
+        },
+        {
+          value: 'parent 1-1',
+          label: 'parent 1-1',
+          children: [
+            {
+              value: 'You dance 1',
+              label: 'You dance 1',
+            },
+          ],
+        },
+        {
+          value: 'parent 1-2',
+          label: 'parent 1-2',
+          disabled: true,
+          children: [
+            {
+              value: 'He dances 1',
+              label: 'He dances 1',
+            },
+            {
+              value: 'He dances 2',
+              label: 'He dances 2',
+            },
+          ],
+        },
+      ],
+      value14: [],
+      value15: [],
+      value16: [],
       loading: false
     }
   },
@@ -858,6 +1082,15 @@ export default{
       console.log(val)
     },
     value12(val) {
+      console.log(val)
+    },
+    value14(val) {
+      console.log(val)
+    },
+    value15(val) {
+      console.log(val)
+    },
+    value16(val) {
       console.log(val)
     }
   },

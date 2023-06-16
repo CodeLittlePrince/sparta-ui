@@ -22,6 +22,12 @@ export default {
     }
   },
 
+  provide() {
+    return {
+      'SpCheckboxGroup': this
+    }
+  },
+
   props: {
     value: {},
     disabled: Boolean,
