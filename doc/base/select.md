@@ -724,7 +724,6 @@ export default{
     <sp-select
       v-model="value15"
       group-multiple
-      filter-parent
     >
       <sp-option-group
         label="全选"
@@ -749,7 +748,6 @@ export default{
     <sp-select
       v-model="value16"
       group-multiple
-      filter-parent
     >
       <sp-option
         v-for="item in list7"

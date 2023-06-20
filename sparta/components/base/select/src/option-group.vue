@@ -57,9 +57,14 @@ export default {
 
   watch: {
     'spSelect.groupMultipleSelected'(valList) {
+      const childValueList = this.getChildValueList()
+
+      if (!childValueList?.length) {
+        return
+      }
+      
       // 为了当所有子项都点亮的时候，则group 的checkbox 也自动点亮；
       // 反之，但凡有一个子项没有点亮，则group 的checkbox 也不应该点亮。
-      const childValueList = this.getChildValueList()
       const index = valList.findIndex(item => item === this.value)
       let count = 0
 
