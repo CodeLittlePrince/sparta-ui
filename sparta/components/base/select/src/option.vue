@@ -84,7 +84,7 @@ export default {
     this.spSelect.spOptions.splice(this.spSelect.spOptions.findIndex(item => item === this), 1)
 
     if (this.SpOptionGroup) {
-      this.SpOptionGroup.spOptions.splice(this.spSelect.spOptions.findIndex(item => item === this), 1)
+      this.SpOptionGroup.spOptions.splice(this.SpOptionGroup.spOptions.findIndex(item => item === this), 1)
     }
   },
   methods: {

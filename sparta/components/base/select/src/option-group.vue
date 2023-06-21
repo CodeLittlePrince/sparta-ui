@@ -86,6 +86,10 @@ export default {
     this.spSelect.spOptionGroups.push(this)
   },
 
+  beforeDestroy() {
+    this.spSelect.spOptionGroups.splice(this.spSelect.spOptionGroups.findIndex(item => item === this), 1)
+  },
+
   methods: {
     handleCheckboxChange(val) {
       let selected = this.spSelect.groupMultipleSelected
