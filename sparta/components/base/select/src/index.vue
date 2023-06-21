@@ -140,6 +140,7 @@
           class="sp-select-list"
         >
           <template v-if="groupMultiple">
+            {{ groupMultipleSelected }}
             <sp-checkbox-group v-model="groupMultipleSelected">
               <slot></slot>
             </sp-checkbox-group>
@@ -223,6 +224,10 @@ export default {
       type: Boolean,
       default: false
     },
+    filterGroupParent: {
+      type: Boolean,
+      default: false
+    },
     validateEvent: {
       type: Boolean,
       default: true
@@ -265,6 +270,7 @@ export default {
       singleSelected: '',
       needFilterMethod: false, // 是否应该调用filterMethod方法，用户主动选择的时候，虽然输入框的值变化了，但是不应再去过滤了
       groupMultipleSelected: this.value,
+      groupMultipleSelectedFilterParent: this.value,
       groupMultiSelectInputText: '',
     }
   },
@@ -315,7 +321,7 @@ export default {
       this.spOptionGroups.forEach(item => {
         txtMap.push({
           label: item.label,
-          value: item.value,
+          value: item.checkboxValue,
         })
       })
 
@@ -410,7 +416,12 @@ export default {
         
         extraValus.forEach(value => {
           if (this.currentValue.indexOf(value) === -1) {
-            this.currentValue.push(value)
+            if (
+              !this.filterGroupParent ||
+              (this.filterGroupParent && !value?.startsWith('SPARTA-SELECT-GROUP'))
+            ) {
+              this.currentValue.push(value)
+            }
           }
         })
       } else if (oldVal.length > newVal.length) {
@@ -504,7 +515,11 @@ export default {
       this.currentValue = val
 
       if (this.groupMultiple) {
-        this.groupMultipleSelected = val
+        if (this.filterGroupParent) {
+          this.groupMultipleSelectedFilterParent = val
+        } else {
+          this.groupMultipleSelected = val
+        }
         // 设置输入框显示文案
         if ((!val) || (val && val.length === 0)) {
           // 没有值则置空

@@ -2,7 +2,7 @@
   <ul class="sp-option-group" :class="{ 'sp-option-group--is-group-multi': spSelect.groupMultiple }">
     <template v-if="spSelect.groupMultiple">
       <sp-checkbox
-        :label="value"
+        :label="checkboxValue"
         :disabled="disabled"
         @change="handleCheckboxChange"
       >
@@ -52,6 +52,7 @@ export default {
   data() {
     return {
       spOptions: [],
+      checkboxValue: this.spSelect.filterGroupParent ? `SPARTA-SELECT-GROUP-${ this._uid }` : this.value
     }
   },
 
@@ -62,11 +63,10 @@ export default {
       if (!childValueList?.length) {
         return
       }
-      
-      // 为了当所有子项都点亮的时候，则group 的checkbox 也自动点亮；
-      // 反之，但凡有一个子项没有点亮，则group 的checkbox 也不应该点亮。
-      const index = valList.findIndex(item => item === this.value)
+
       let count = 0
+      const key = this.spSelect.filterGroupParent ? 'groupMultipleSelected' : 'currentValue'
+      const index = valList.findIndex(item => item === this.checkboxValue)
 
       childValueList.forEach(value => {
         if (valList.includes(value)) {
@@ -74,10 +74,12 @@ export default {
         }
       })
 
+      // 为了当所有子项都点亮的时候，则group 的checkbox 也自动点亮；
+      // 反之，但凡有一个子项没有点亮，则group 的checkbox 也不应该点亮。
       if (count === childValueList.length && index === -1) {
-        this.spSelect.currentValue.push(this.value)
+        this.spSelect[key].push(this.checkboxValue)
       } else if (count < childValueList.length && -1 < index) {
-        this.spSelect.currentValue.splice(index, 1)
+        this.spSelect[key].splice(index, 1)
       }
     }
   },
@@ -107,7 +109,7 @@ export default {
 
         while(len--) {
           if (childValueList.includes(selected[len])) {
-            selected.splice(len, 1)
+            this.spSelect.groupMultipleSelected.splice(len, 1)
           }
         }
       }

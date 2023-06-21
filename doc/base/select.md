@@ -686,7 +686,7 @@ export default{
 :::
 
 ### 分组多选
-分组多选，目前只支持一层。
+分组多选，树状目前只支持二层。
 
 :::demo 为`sp-select`设置`group-multiple`属性即可启用多选，此时`v-model`的值为当前选中值所组成的数组。
 ```vue
@@ -695,7 +695,7 @@ export default{
     <div style="margin-bottom: 5px;">分组的多选</div>
     <sp-select
       v-model="value14"
-      group-multiple
+      :group-multiple="true"
     >
       <sp-option-group
         v-for="(item, index) in list14"
@@ -723,7 +723,7 @@ export default{
     <div style="margin: 20px 0 5px;">单组的多选</div>
     <sp-select
       v-model="value15"
-      group-multiple
+      :group-multiple="true"
     >
       <sp-option-group
         label="全选"
@@ -747,7 +747,7 @@ export default{
     <div style="margin: 20px 0 5px;">不分组的多选（暂保留以前的基础多选，之后再规划统一）</div>
     <sp-select
       v-model="value16"
-      group-multiple
+      :group-multiple="true"
     >
       <sp-option
         v-for="item in list7"
@@ -825,6 +825,133 @@ export default{
       console.log(val)
     },
     value16(val) {
+      console.log(val)
+    },
+  }
+}
+</script>
+```
+:::
+
+### 分组多选（过滤 option-group 的值）
+分组多选，树状目前只支持二层。
+
+:::demo `sp-select`设置`filter-group-parent`，这样`sp-option-group`的值在`sp-select`的`v-model`中就会被过滤了。
+```vue
+<template>
+  <div class="select-demo">
+    <div style="margin-bottom: 5px;">分组的多选</div>
+    <sp-select
+      v-model="value17"
+      :group-multiple="true"
+      :filter-group-parent="true"
+    >
+      <sp-option-group
+        v-for="(item, index) in list14"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+        :disabled="item.disabled"
+      >
+        <sp-option
+          v-for="child in item.children"
+          :key="child.value"
+          :label="child.label"
+          :value="child.value"
+          :disabled="child.disabled"
+        ></sp-option>
+        <sp-option
+          :label="`王多鱼${ index }`"
+          :value="`X${ index }`"
+        >
+          王多鱼
+          <p style="font-size: 12px;color:#747d8c">我是小tip</p>
+        </sp-option>
+      </sp-option-group>
+    </sp-select>
+    <div style="margin: 20px 0 5px;">单组的多选</div>
+    <sp-select
+      v-model="value18"
+      :group-multiple="true"
+      :filter-group-parent="true"
+    >
+      <sp-option-group
+        label="全选"
+        value="ALL"
+      >
+        <sp-option
+          v-for="item in list7"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></sp-option>
+        <sp-option
+          :label="`王多鱼`"
+          :value="`X`"
+        >
+          王多鱼
+          <p style="font-size: 12px;color:#747d8c">我是小tip</p>
+        </sp-option>
+      </sp-option-group>
+    </sp-select>
+  </div>
+</template>
+
+<script>
+export default{
+  data(){
+    return {
+      list14: [
+        {
+          value: 'parent 1-0',
+          label: 'parent 1-0',
+          children: [
+            {
+              value: 'I dance 1',
+              label: 'I dance 1',
+              disabled: true,
+            },
+            {
+              value: 'I dance 2',
+              label: 'I dance 2',
+            },
+          ],
+        },
+        {
+          value: 'parent 1-1',
+          label: 'parent 1-1',
+          children: [
+            {
+              value: 'You dance 1',
+              label: 'You dance 1',
+            },
+          ],
+        },
+        {
+          value: 'parent 1-2',
+          label: 'parent 1-2',
+          disabled: true,
+          children: [
+            {
+              value: 'He dances 1',
+              label: 'He dances 1',
+            },
+            {
+              value: 'He dances 2',
+              label: 'He dances 2',
+            },
+          ],
+        },
+      ],
+      value17: [],
+      value18: [],
+    }
+  },
+  watch: {
+    value17(val) {
+      console.log(val)
+    },
+    value18(val) {
       console.log(val)
     },
   }
@@ -1039,6 +1166,8 @@ export default{
       value14: [],
       value15: [],
       value16: [],
+      value17: [],
+      value18: [],
       loading: false
     }
   },
@@ -1089,6 +1218,12 @@ export default{
       console.log(val)
     },
     value16(val) {
+      console.log(val)
+    },
+    value17(val) {
+      console.log(val)
+    },
+    value18(val) {
       console.log(val)
     }
   },
