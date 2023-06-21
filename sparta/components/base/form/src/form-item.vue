@@ -218,6 +218,7 @@ export default {
     validate(trigger, callback = noop) {
       this.validateDisabled = false
       const rules = this.getFilteredRule(trigger)
+      
       if ((!rules || rules.length === 0) && this.required === undefined) {
         callback()
         return true

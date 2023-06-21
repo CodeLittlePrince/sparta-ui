@@ -18,7 +18,7 @@
     <sp-form-item
       prop="name"
       label="姓名"
-      labelTipWidth="150px"
+      label-tip-width="150px"
       :rules="[
         { required: true, message: '姓名不能为空'}
       ]"
@@ -118,7 +118,7 @@
     <sp-form-item
       prop="timeSelectList"
       label="时间区间"
-      labelTipWidth="150px"
+      label-tip-width="150px"
       :rules="[
         { required: true, message: '时间区间不能为空'}
       ]"
@@ -133,7 +133,7 @@
      <sp-form-item
       prop="timeSelect"
       label="时间"
-      labelTipWidth="150px"
+      label-tip-width="150px"
       :rules="[
         { required: true, message: '时间不能为空'}
       ]"
@@ -179,6 +179,42 @@
         >{{city}}</sp-checkbox>
       </sp-checkbox-group>
       <div slot="tip">最多选两个</div>
+    </sp-form-item>
+    <!-- 喜欢的运功 -->
+    <sp-form-item
+      label="喜欢的运功"
+      prop="sports"
+      :rules="[
+        { required: true, message: '喜欢的运功不能为空'}
+      ]"
+    >
+      <sp-select
+        v-model="validateForm1.sports"
+        group-multiple
+      >
+        <sp-option-group
+          v-for="(item, index) in sportsOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+          :disabled="item.disabled"
+        >
+          <sp-option
+            v-for="child in item.children"
+            :key="child.value"
+            :label="child.label"
+            :value="child.value"
+            :disabled="child.disabled"
+          ></sp-option>
+          <sp-option
+            :label="`王多鱼${ index }`"
+            :value="`X${ index }`"
+          >
+            王多鱼
+            <p style="font-size: 12px;color:#747d8c">我是小tip</p>
+          </sp-option>
+        </sp-option-group>
+      </sp-select>
     </sp-form-item>
     <!-- 性别 -->
     <sp-form-item
@@ -308,6 +344,7 @@
           age: '',
           birth: '',
           favorite: '',
+          sports: [],
           cities: [],
           favoriteFruit: '',
           picture: [],
@@ -323,6 +360,48 @@
           { label: '跳舞', value: 'dance' },
           { label: '篮球', value: 'basketball' },
           { label: '电影', value: 'movie' }
+        ],
+        sportsOptions: [
+          {
+            value: 'parent 1-0',
+            label: 'parent 1-0',
+            children: [
+              {
+                value: 'I dance 1',
+                label: 'I dance 1',
+                disabled: true,
+              },
+              {
+                value: 'I dance 2',
+                label: 'I dance 2',
+              },
+            ],
+          },
+          {
+            value: 'parent 1-1',
+            label: 'parent 1-1',
+            children: [
+              {
+                value: 'You dance 1',
+                label: 'You dance 1',
+              },
+            ],
+          },
+          {
+            value: 'parent 1-2',
+            label: 'parent 1-2',
+            disabled: true,
+            children: [
+              {
+                value: 'He dances 1',
+                label: 'He dances 1',
+              },
+              {
+                value: 'He dances 2',
+                label: 'He dances 2',
+              },
+            ],
+          },
         ],
         citiesList: ['上海', '北京', '广州', '深圳']
       }
@@ -716,6 +795,7 @@
           age: '',
           birth: '',
           favorite: '',
+          sports: [],
           cities: [],
           favoriteFruit: '',
           picture: [],
@@ -731,6 +811,48 @@
           { label: '跳舞', value: 'dance' },
           { label: '篮球', value: 'basketball' },
           { label: '电影', value: 'movie' }
+        ],
+        sportsOptions: [
+          {
+            value: 'parent 1-0',
+            label: 'parent 1-0',
+            children: [
+              {
+                value: 'I dance 1',
+                label: 'I dance 1',
+                disabled: true,
+              },
+              {
+                value: 'I dance 2',
+                label: 'I dance 2',
+              },
+            ],
+          },
+          {
+            value: 'parent 1-1',
+            label: 'parent 1-1',
+            children: [
+              {
+                value: 'You dance 1',
+                label: 'You dance 1',
+              },
+            ],
+          },
+          {
+            value: 'parent 1-2',
+            label: 'parent 1-2',
+            disabled: true,
+            children: [
+              {
+                value: 'He dances 1',
+                label: 'He dances 1',
+              },
+              {
+                value: 'He dances 2',
+                label: 'He dances 2',
+              },
+            ],
+          },
         ],
         citiesList: ['上海', '北京', '广州', '深圳'],
         validateForm2: {

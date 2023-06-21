@@ -264,7 +264,7 @@ export default {
       isOnComposition: false,
       singleSelected: '',
       needFilterMethod: false, // 是否应该调用filterMethod方法，用户主动选择的时候，虽然输入框的值变化了，但是不应再去过滤了
-      groupMultipleSelected: [],
+      groupMultipleSelected: this.value,
       groupMultiSelectInputText: '',
     }
   },
@@ -385,6 +385,14 @@ export default {
       }
     },
     groupMultipleSelected(newVal, oldVal) {
+      // 新老值如果一模一样就没必要发现变更了
+      if (
+        newVal.length === oldVal.length &&
+        newVal.every(newItem => oldVal.every( oldItem => oldItem === newItem ))
+      ) {
+        return
+      }
+
       if (newVal) {
         this.inputText = newVal.length ? ' ' : ''
       }
@@ -494,10 +502,6 @@ export default {
 
     setCurrentValue(val, noTrigger) {
       this.currentValue = val
-      
-      if (this.validateEvent && !noTrigger) {
-        this.dispatch('SpFormItem', 'sp.form.change', [val])
-      }
 
       if (this.groupMultiple) {
         this.groupMultipleSelected = val
@@ -507,6 +511,10 @@ export default {
           this.inputText = ''
         }
       } else {
+        // groupMultiple模式checkbox本身已经会触发了
+        if (this.validateEvent && !noTrigger) {
+          this.dispatch('SpFormItem', 'sp.form.change', '')
+        }
         // 设置输入框显示文案
         if ((!val) || (this.multiple && val && val.length === 0)) {
           // 没有值则置空
