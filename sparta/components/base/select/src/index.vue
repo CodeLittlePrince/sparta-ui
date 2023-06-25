@@ -279,6 +279,25 @@ export default {
     spOptionsAllInVisible() {
       return this.spOptions.every(option => !option.visible)
     },
+    groupMultiSelectInputTxtMapList() {
+      let txtMap = [] // 为了保证顺序，所以用数组而不是map
+
+      this.spOptionGroups.forEach(item => {
+        txtMap.push({
+          label: item.label,
+          value: item.value,
+        })
+      })
+
+      this.spOptions.forEach(item => {
+        txtMap.push({
+          label: item.label,
+          value: item.value,
+        })
+      })
+
+      return txtMap
+    },
     isMulti() {
       return this.multiple || this.groupMultiple
     },
@@ -308,25 +327,6 @@ export default {
     },
     isCustomFilter() { // 是否是自定义搜索
       return this.filterable && this.filterMethod && typeof this.filterMethod === 'function'
-    },
-    groupMultiSelectInputTxtMapList() {
-      let txtMap = [] // 为了保证顺序，所以用数组而不是map
-
-      this.spOptionGroups.forEach(item => {
-        txtMap.push({
-          label: item.label,
-          value: item.value,
-        })
-      })
-
-      this.spOptions.forEach(item => {
-        txtMap.push({
-          label: item.label,
-          value: item.value,
-        })
-      })
-
-      return txtMap
     },
     groupMultiSelectNum() {
       let count = this.groupMultipleSelected.length - 1
@@ -399,11 +399,12 @@ export default {
 
       // 只留第一个元素的文案
       if (1 <= newVal?.length) {
-        this.groupMultiSelectInputText = this.getTextFromMapList(newVal, this.groupMultiSelectInputTxtMapList)
+        this.$nextTick(() => {
+          this.groupMultiSelectInputText = this.getTextFromMapList(newVal)
+        })
       } else {
         this.groupMultiSelectInputText = ''
       }
-
       // 根据新老数组的长度可知，是新增还是减少
       if (oldVal.length < newVal.length) {
         const extraValus = newVal.filter(item => !oldVal.includes(item))
@@ -420,7 +421,10 @@ export default {
 
         extraValus.forEach(value => {
           const index = this.currentValue.findIndex(item => item === value)
-          this.currentValue.splice(index, 1)
+
+          if (-1 < index) { // 可能新值是外面直接赋值的，这时候就可能会出现index为-1的情况，而splice(-1, 1)会把第一个元素去掉
+            this.currentValue.splice(index, 1)
+          }
         })
 
         this.$emit('change', this.currentValue)
@@ -514,10 +518,12 @@ export default {
           // 没有值则置空
           this.inputText = ''
         } else {
-          // 有值则需要显示对应文案
-          this.groupMultiSelectInputText = this.getTextFromMapList(val, this.groupMultiSelectInputTxtMapList)
-          // 是否全选要点亮
-          this.broadcast('SpOptionGroup', 'lightGroupCheckbox')
+          this.$nextTick(() => { // 这里因为groupMultiSelectInputTxtMapList中获取optionGroup和option的时候元素还未渲染完，所以用nextTick
+            // 有值则需要显示对应文案
+            this.groupMultiSelectInputText = this.getTextFromMapList(val)
+            // 是否全选要点亮
+            this.broadcast('SpOptionGroup', 'lightGroupCheckbox')
+          })
         }
       } else {
         // groupMultiple模式checkbox本身已经会触发了
@@ -780,10 +786,11 @@ export default {
       dropdown.scrollTop = offset
     },
 
-    getTextFromMapList(valueList, mapList) {
+    getTextFromMapList(valueList) {
       // txt需要先把valueList参考mapList做排序，最后取第一个元素
       let txt = ''
       let txtIndex = -1
+      const mapList = this.groupMultiSelectInputTxtMapList
 
       valueList?.forEach(value => {
         const index = mapList.findIndex(item => item.value === value)

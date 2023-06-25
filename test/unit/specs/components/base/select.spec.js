@@ -566,8 +566,11 @@ describe('Select', () => {
 
     it('set data', async () => {
       await wrapper.setData({ val: ['I dance 2'] })
+      await wrapper.vm.$nextTick()
       expect(wrapper.find('.sp-tag-box').text()).to.be.equal('I dance 2') // 因为所有可选节点已点亮，所以父节自动点亮，然后input里只显示第一项文案
+      await wrapper.vm.$nextTick()
       await wrapper.setData({ val: ['I dance 2', 'I dance 3'] })
+      await wrapper.vm.$nextTick()
       expect(wrapper.find('.sp-tag-box').text()).to.be.equal('parent 1-0') // 因为所有可选节点已点亮，所以父节自动点亮，然后input里只显示第一项文案
       await wrapper.setData({ val: [] })
     })
@@ -576,12 +579,15 @@ describe('Select', () => {
       await wrapper.find('.sp-select').trigger('click')
       expect(wrapper.find('.sp-select-dropdown').isVisible()).to.be.true
       await wrapper.find('.sp-select-list .sp-option').trigger('click') // 点击 disabled 的条目
+      await wrapper.vm.$nextTick()
       expect(wrapper.find('.sp-tag-box').text()).to.be.equal('')
       await wrapper.find('.sp-select-list .sp-checkbox__wrap').trigger('click') // 点击第一个父条目，对应非disabled子条目应该都点亮
+      await wrapper.vm.$nextTick()
       expect(wrapper.find('.sp-tag-box').text()).to.be.equal('parent 1-0')
       expect(wrapper.findAll('.sp-option-group .sp-option').at(0).find('.sp-checkbox').classes('is--checked')).to.be.false
       expect(wrapper.findAll('.sp-option-group .sp-option').at(1).find('.sp-checkbox').classes('is--checked')).to.be.true
       expect(wrapper.findAll('.sp-option-group .sp-option').at(2).find('.sp-checkbox').classes('is--checked')).to.be.true
+      await wrapper.destroy()
     })
   })
 
@@ -645,7 +651,7 @@ describe('Select', () => {
       },
       template: `
       <div>
-        <sp-button class="sp-select-other-button">分组多选</sp-button>
+        <sp-button class="sp-select-other-button">分组多选2</sp-button>
         <sp-select
           v-model="val"
           group-multiple
@@ -681,10 +687,13 @@ describe('Select', () => {
 
     it('set data', async () => {
       await wrapper.setData({ val: ['I dance 2'] })
+      await wrapper.vm.$nextTick()
       expect(wrapper.find('.sp-tag-box').text()).to.be.equal('I dance 2') // 因为所有可选节点已点亮，所以父节自动点亮，然后input里只显示第一项文案
       await wrapper.setData({ val: ['I dance 2', 'I dance 3'] })
+      await wrapper.vm.$nextTick()
       expect(wrapper.find('.sp-tag-box').text()).to.be.equal('parent 1-0') // 因为所有可选节点已点亮，所以父节自动点亮，然后input里只显示第一项文案
       await wrapper.setData({ val: [] })
+      await wrapper.destroy()
     })
   })
 
