@@ -585,6 +585,109 @@ describe('Select', () => {
     })
   })
 
+  describe('group-multiple:has-default-value', () => {
+    const wrapper = mount({
+      data() {
+        return {
+          val: [
+            'I dance 2',
+            'I dance 3'
+          ],
+          optionsData: [
+            {
+              value: 'parent 1-0',
+              label: 'parent 1-0',
+              children: [
+                {
+                  value: 'I dance 1',
+                  label: 'I dance 1',
+                  disabled: true,
+                },
+                {
+                  value: 'I dance 2',
+                  label: 'I dance 2',
+                },
+                {
+                  value: 'I dance 3',
+                  label: 'I dance 3',
+                },
+              ],
+            },
+            {
+              value: 'parent 1-1',
+              label: 'parent 1-1',
+              children: [
+                {
+                  value: 'You dance 1',
+                  label: 'You dance 1',
+                },
+              ],
+            },
+            {
+              value: 'parent 1-2',
+              label: 'parent 1-2',
+              disabled: true,
+              children: [
+                {
+                  value: 'He dances 1',
+                  label: 'He dances 1',
+                },
+                {
+                  value: 'He dances 2',
+                  label: 'He dances 2',
+                },
+              ],
+            },
+          ],
+          clearable: false,
+          filterable: false
+        }
+      },
+      template: `
+      <div>
+        <sp-button class="sp-select-other-button">分组多选</sp-button>
+        <sp-select
+          v-model="val"
+          group-multiple
+        >
+          <sp-option-group
+            v-for="(item, index) in optionsData"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+            :disabled="item.disabled"
+          >
+            <sp-option
+              v-for="child in item.children"
+              :key="child.value"
+              :label="child.label"
+              :value="child.value"
+              :disabled="child.disabled"
+            ></sp-option>
+          </sp-option-group>
+        </sp-select>
+      </div>
+      `,
+      components: {
+        'sp-select': Select,
+      }
+    })
+    document.body.appendChild(wrapper.vm.$el)
+
+    it('create', async () => {
+      expect(wrapper.find('.sp-tag-box').exists()).to.be.true
+      expect(wrapper.find('.sp-tag-box').text()).to.be.equal('parent 1-0')
+    })
+
+    it('set data', async () => {
+      await wrapper.setData({ val: ['I dance 2'] })
+      expect(wrapper.find('.sp-tag-box').text()).to.be.equal('I dance 2') // 因为所有可选节点已点亮，所以父节自动点亮，然后input里只显示第一项文案
+      await wrapper.setData({ val: ['I dance 2', 'I dance 3'] })
+      expect(wrapper.find('.sp-tag-box').text()).to.be.equal('parent 1-0') // 因为所有可选节点已点亮，所以父节自动点亮，然后input里只显示第一项文案
+      await wrapper.setData({ val: [] })
+    })
+  })
+
   describe('other', () => {
 
     describe('spOptionsAllDisabled', async () => {

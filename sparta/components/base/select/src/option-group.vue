@@ -56,34 +56,21 @@ export default {
   },
 
   watch: {
-    'spSelect.groupMultipleSelected'(valList) {
-      const childValueList = this.getChildValueList()
-
-      if (!childValueList?.length) {
-        return
-      }
-      
-      // 为了当所有子项都点亮的时候，则group 的checkbox 也自动点亮；
-      // 反之，但凡有一个子项没有点亮，则group 的checkbox 也不应该点亮。
-      const index = valList.findIndex(item => item === this.value)
-      let count = 0
-
-      childValueList.forEach(value => {
-        if (valList.includes(value)) {
-          count++
-        }
-      })
-
-      if (count === childValueList.length && index === -1) {
-        this.spSelect.currentValue.push(this.value)
-      } else if (count < childValueList.length && -1 < index) {
-        this.spSelect.currentValue.splice(index, 1)
-      }
+    'spSelect.groupMultipleSelected'() {
+      this.lightGroupCheckbox()
     }
   },
 
   created() {
     this.spSelect.spOptionGroups.push(this)
+  },
+
+  mounted() {
+    this.$on('lightGroupCheckbox', () => {
+      if (this.spSelect) {
+        this.lightGroupCheckbox()
+      }
+    })
   },
 
   beforeDestroy() {
@@ -110,6 +97,31 @@ export default {
             selected.splice(len, 1)
           }
         }
+      }
+    },
+
+    lightGroupCheckbox() {
+      const childValueList = this.getChildValueList()
+
+      if (!childValueList?.length) {
+        return
+      }
+      
+      // 为了当所有子项都点亮的时候，则group 的checkbox 也自动点亮；
+      // 反之，但凡有一个子项没有点亮，则group 的checkbox 也不应该点亮。
+      const index = this.spSelect.groupMultipleSelected.findIndex(item => item === this.value)
+      let count = 0
+
+      childValueList.forEach(value => {
+        if (this.spSelect.groupMultipleSelected.includes(value)) {
+          count++
+        }
+      })
+
+      if (count === childValueList.length && index === -1) {
+        this.spSelect.currentValue.push(this.value)
+      } else if (count < childValueList.length && -1 < index) {
+        this.spSelect.currentValue.splice(index, 1)
       }
     },
 

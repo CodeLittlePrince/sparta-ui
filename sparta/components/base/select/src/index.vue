@@ -413,6 +413,8 @@ export default {
             this.currentValue.push(value)
           }
         })
+
+        this.$emit('change', this.currentValue)
       } else if (oldVal.length > newVal.length) {
         const extraValus = oldVal.filter(item => !newVal.includes(item))
 
@@ -420,6 +422,8 @@ export default {
           const index = this.currentValue.findIndex(item => item === value)
           this.currentValue.splice(index, 1)
         })
+
+        this.$emit('change', this.currentValue)
       }
     },
     inputText() {
@@ -509,6 +513,11 @@ export default {
         if ((!val) || (val && val.length === 0)) {
           // 没有值则置空
           this.inputText = ''
+        } else {
+          // 有值则需要显示对应文案
+          this.groupMultiSelectInputText = this.getTextFromMapList(val, this.groupMultiSelectInputTxtMapList)
+          // 是否全选要点亮
+          this.broadcast('SpOptionGroup', 'lightGroupCheckbox')
         }
       } else {
         // groupMultiple模式checkbox本身已经会触发了
