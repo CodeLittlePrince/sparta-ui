@@ -994,7 +994,7 @@ export default {
     .sp-select__input-box__num {
       position: absolute;
       top: 50%;
-      right: 48px;
+      right: 39px;
       transform: translateY(-50%);
       min-width: 26px;
       height: 18px;
