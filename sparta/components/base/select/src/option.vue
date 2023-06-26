@@ -199,7 +199,7 @@ $option-height: 34px;
   }
   .sp-checkbox {
     vertical-align: top;
-    margin-top: 4px;
+    margin-top: 2px;
 
     &__wrap {
       height: auto;
