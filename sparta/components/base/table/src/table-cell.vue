@@ -69,7 +69,7 @@ export default {
         class: cellClass,
         attrs: {
           style: `width: ${cellWidth}`,
-          title: propsData.ellipsis ? cellCopy : undefined
+          title: (propsData.ellipsis && typeof cellCopy !== 'object') ? cellCopy : undefined
         }
       },
       cellCopy
