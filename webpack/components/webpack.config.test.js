@@ -60,7 +60,10 @@ const config = Object.assign(webpackConfigBase.config, {
             loader: 'sass-resources-loader',
             options: {
               sourceMap: true,
-              resources: webpackConfigBase.resolve('sparta/common/scss/globalpay/variable.scss')
+              resources: [
+                webpackConfigBase.resolve('sparta/common/scss/globalpay/variable.scss'),
+                webpackConfigBase.resolve('sparta/common/scss/browser/variable.scss')
+              ]
             }
           }
         ]
