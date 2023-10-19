@@ -1,0 +1,461 @@
+/* Transition
+-------------------------- */
+$transition-all: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+$transition-all-quick: all 0.1 cubic-bezier(0.645, 0.045, 0.355, 1);
+$transition-fade: opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+$transition-fade-linear: opacity 0.2s linear;
+$transition-md-fade: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+$transition-border-base: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+$transition-color-base: color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+/* Colors
+-------------------------- */
+$color-white: #fff;
+$color-black: #000;
+$color-primary: #09f;
+$color-success: #67c23a;
+$color-warning: #e6a23c;
+$color-danger: #f94040;
+$color-info: #909399;
+$color-success-light: mix($color-white, $color-success, 80%);
+$color-warning-light: mix($color-white, $color-warning, 80%);
+$color-danger-light: mix($color-white, $color-danger, 80%);
+$color-info-light: mix($color-white, $color-info, 80%);
+$color-success-lighter: mix($color-white, $color-success, 90%);
+$color-warning-lighter: mix($color-white, $color-warning, 90%);
+$color-danger-lighter: mix($color-white, $color-danger, 90%);
+$color-info-lighter: mix($color-white, $color-info, 90%);
+$color-text-primary: #0d1233;
+$color-text-regular: #0d1233;
+$color-text-secondary: #7e808c;
+$color-text-placeholder: #a1a3b3;
+$color-text-tip: #cecfd6;
+$color-primary-light-1: mix($color-white, $color-primary, 10%);
+$color-primary-light-2: mix($color-white, $color-primary, 20%);
+$color-primary-light-3: mix($color-white, $color-primary, 30%);
+$color-primary-light-4: mix($color-white, $color-primary, 40%);
+$color-primary-light-5: mix($color-white, $color-primary, 50%);
+$color-primary-light-6: mix($color-white, $color-primary, 60%);
+$color-primary-light-7: mix($color-white, $color-primary, 70%);
+$color-primary-light-8: mix($color-white, $color-primary, 80%);
+$color-primary-light-9: mix($color-white, $color-primary, 90%);
+$color-danger-light-1: mix($color-white, $color-danger, 10%);
+$color-danger-light-2: mix($color-white, $color-danger, 20%);
+$color-danger-light-3: mix($color-white, $color-danger, 30%);
+$color-danger-light-4: mix($color-white, $color-danger, 40%);
+$color-danger-light-5: mix($color-white, $color-danger, 50%);
+$color-danger-light-6: mix($color-white, $color-danger, 60%);
+$color-danger-light-7: mix($color-white, $color-danger, 70%);
+$color-danger-light-8: mix($color-white, $color-danger, 80%);
+$color-danger-light-9: mix($color-white, $color-danger, 90%);
+
+/* Shadow
+-------------------------- */
+$float-box-shadow-box: 0 2px 10px 0 rgb(0 53 111 / 10%);
+
+/* Scrollbar
+-------------------------- */
+$scrollbar-background: #f5f5f5;
+$scrollbar-track-color: #f5f5f5;
+$scrollbar-thumb-color: #d7d9df;
+
+/* Border
+-------------------------- */
+$border-width-base: 1px;
+$border-style-base: solid;
+$border-color-base: #dadee0;
+$border-color-light: #e4e7ed;
+$border-color-lighter: #ebeef5;
+$border-color-extra-light: #f2f6fc;
+$border-color-hover: $color-text-placeholder;
+$border-base: $border-width-base $border-style-base $border-color-base;
+$border-radius-base: 4px;
+$border-radius-small: 2px;
+$border-radius-circle: 100%;
+
+/* Button
+-------------------------- */
+$button-font-size: 14px;
+$button-font-weight: normal;
+$button-min-width: 120px;
+$button-height: 40px;
+$button-border-radius: 4px;
+$button-medium-font-size: 14px;
+$button-medium-min-width: 108px;
+$button-medium-height: 36px;
+$button-small-font-size: 14px;
+$button-small-min-width: 96px;
+$button-small-height: 32px;
+$button-mini-font-size: 13px;
+$button-mini-min-width: 84px;
+$button-mini-height: 28px;
+$button-default-color: #08f;
+$button-default-fill: #fff;
+$button-default-border: $color-primary;
+$button-default-fill--hover: #ebf7ff;
+$button-default-fill--focus: #ddf2ff;
+$button-default-fill--active: #ddf2ff;
+$button-default-fill--disabled: #fff;
+$button-default-border--disabled: #e9edf0;
+$button-default-color--disabled: #cecfd6;
+$button-color--disabled: #cecfd6;
+$button-fill--disabled: #f0f4f7;
+$button-border--disabled: #f0f4f7;
+$button-plain-fill: #fff;
+$button-plain-fill--hover: #f3f7fa;
+$button-plain-fill--focus: #f0f4f7;
+$button-plain-fill--active: #f0f4f7;
+$button-plain-border: #c1c5c7;
+$button-plain-color: $color-text-primary;
+$button-plain-border--disabled: #e9edf0;
+$button-plain-color--disabled: #cecfd6;
+$button-plain-fill--disabled: #fff;
+$button-plain-opacity--hover: 1;
+$button-primary-border: $color-primary;
+$button-primary-color: #fff;
+$button-primary-fill: $color-primary;
+$button-primary-fill--hover: #0083e6;
+$button-primary-border--hover: #0083e6;
+$button-primary-fill--focus: #006dcc;
+$button-primary-border--focus: #006dcc;
+$button-primary-fill--active: #006dcc;
+$button-primary-border--active: #006dcc;
+$button-primary-color--disabled: #cecfd6;
+$button-primary-fill--disabled: #f0f4f7;
+$button-primary-border--disabled: #f0f4f7;
+$button-text-color: $button-default-color;
+$button-text-color--hover: #0073e6;
+$button-text-color--focus: #006dcc;
+$button-text-color--active: #006dcc;
+$button-text-color--disabled: #cecfd6;
+/* Checkbox
+-------------------------- */
+$checkbox-background: #fff;
+$checkbox-background-disabled: #f0f4f7;
+$checkbox-color-hover: $color-primary-light-5;
+$checkbox-color-click: $color-primary;
+$checkbox-border-color: #dadee0;
+$checkbox-checkmark-color: #fff;
+$checkbox-checkmark-color-disabled: #dadee0;
+$checkbox-font-color-disabled: #cecfd6;
+$checkbox-checked-color: $color-primary;
+
+/* PasswordInput
+-------------------------- */
+$item-height: 36px;
+$password-input-width: 224px;
+$password-box-border-focus: $color-primary;
+$password-box-shadow-focus: 0 0 0 1px rgb(25 119 234 / 20%);
+
+/* Input
+-------------------------- */
+$input-height: 36px;
+$input-font-size: 14px;
+$input-color: $color-text-regular;
+$input-background: #fff;
+$input-background-disabled: #f0f4f7;
+$input-background-readonly: #f5f8fc;
+$input-background-append: $input-background-disabled;
+$input-background-format: #e6f1ff;
+$input-color-append: $color-text-regular;
+$input-border: $border-base;
+$input-box-shadow-focus: 0 0 0 1px $color-primary-light-8;
+$input-box-shadow-focus-error: 0 0 0 1px $color-danger-light-8;
+$input-box-border-focus: $color-primary;
+$input-box-border-hover: $input-box-border-focus;
+$input-border-radius: 4px;
+$input-medium-font-size: 14px;
+$input-medium-height: 36px;
+$input-small-font-size: 13px;
+$input-small-height: 32px;
+$input-mini-font-size: 12px;
+$input-mini-height: 28px;
+
+/* Option
+-------------------------- */
+$opiton-color: $color-text-regular;
+$opiton-color-disabled: #c0c4cc;
+
+/* Radio
+-------------------------- */
+$radio-color: $color-text-primary;
+$radio-background-color-active: $color-primary;
+$radio-border-color-active: $color-primary;
+$radio-font-size: 14px;
+$radio-border-color: $border-color-base;
+$radio-background-color: #fff;
+$radio-color-disabled: #cecfd6;
+$radio-border-color-disabled: $border-color-base;
+$radio-background-color-disabled: #f0f4f7;
+$radio-button-background-color-active: #e6f1ff;
+$radio-button-border-color-disabled: #e9edf0;
+$radio-button-background-color-hover: $radio-background-color;
+$radio-button-text-hover: $color-primary;
+$radio-button-color: #a1a3b3;
+$radio-inner-background-color: #fff;
+
+/* Select
+-------------------------- */
+$select-height: 36px;
+$select-background: #fff;
+$select-background-disabled: #f0f4f7;
+$select-background-readonly: #f5f8fc;
+$select-suffix-background-color: #f0f4f7;
+$select-suffix-background-color-focus: $color-primary;
+$select-suffix-border-left: 1px solid $border-color-base;
+$select-suffix-color-focus: #fff;
+$select-input-border-color: $border-color-base;
+$select-input-border-color-disabled: #c0c4cc;
+$select-input-border-color-hover: $color-primary;
+$select-input-box-shadow-focus: 0 0 0 1px $color-primary-light-8;
+$select-input-border-color-focus: $color-primary;
+$select-input-box-shadow-focus-error: 0 0 0 2px $color-danger-light;
+$select-input-border-color-focus-error: $color-danger;
+$select-input-font-color: $color-text-regular;
+$select-dropdown-item-background: #fff;
+$select-dropdown-item-background-hover: #e6f1ff;
+$select-dropdown-border-color: $border-color-base;
+$select-prepend-color: inherit;
+
+/* Form
+-------------------------- */
+$form-item-error-color: $color-danger;
+$form-item-error-font-size: 12px;
+$form-item-label-padding-right: 56px;
+$form-item-label-error-color: $color-text-secondary;
+$form-item-error-min-height: 26px;
+$form-item-error-padding: 3px 0 6px;
+$form-item-error-line-height: 17px;
+
+/* Dropdown
+-------------------------- */
+$dropdown-background: #fff;
+$dropdown-background-disabled: #f5f7fa;
+$dropdown-item-color-hover: $color-primary;
+$dropdown-item-background: #fff;
+$dropdown-item-background-hover: #f5f7fa;
+$dropdown-border-radius: 4px;
+$dropdown-border-color: #e4e7ed;
+$dropdown-color: $color-text-regular;
+$dropdown-color-disabled: #c0c4cc;
+
+/* Tag
+-------------------------- */
+$tag-background: $color-primary;
+$tag-border-color: $color-primary;
+$tag-background--success: $color-success;
+$tag-border-color--success: $color-success;
+$tag-background--warning: $color-warning;
+$tag-border-color--warning: $color-warning;
+$tag-background--info: $color-info;
+$tag-border-color--info: $color-info;
+$tag-background--danger: $color-danger;
+$tag-border-color--danger: $color-danger;
+
+/* Table
+-------------------------- */
+$table-font-size: 14px;
+$table-line-height: 1;
+$table-background: #fff;
+$table-background--is-disabled: #f5f7fa;
+$table-divider-color: #dbdfe6;
+$table-border: 1px solid #e9edf0;
+$table-outer-border: none;
+$table-thead-color: $color-text-secondary;
+$table-tbody-color: $color-text-regular;
+$table-min-height: 84px;
+$table-loading-background: rgb(255 255 255 / 50%);
+$table-loading-color: #a1a3b3;
+$table-empty-color: #cecfd6;
+$table-indent: 30px;
+$table-head-padding: 15px $table-indent;
+$table-body-padding: 0 $table-indent;
+$table-row-height: 84px;
+$table-td-padding-vertical: 10px;
+$table-cell-padding-horizontal: 10px;
+$table-selection-margin-left: 0;
+
+/* TimePicker
+-------------------------- */
+$time-picker-color: $color-text-primary;
+$time-picker-border: $border-base;
+$time-picker-border-radius: 4px;
+$time-picker-pane-border: $border-base;
+$time-picker-pane-background: #fff;
+$time-picker-pane-width: 52px;
+$time-picker-pane-max-height: 187px;
+$time-picker-option-font-size: 14px;
+$time-picker-option-height: 34px;
+$time-picker-option-color: $color-text-regular;
+$time-picker-option-color--is-selected: $color-primary;
+$time-picker-option-color--is-disabled: #c0c4cc;
+
+/* DatePicker
+-------------------------- */
+$date-picker-height: 36px;
+$date-picker-color: $color-text-regular;
+$date-picker-border: $border-base;
+$date-picker-border-radius: 4px;
+$date-picker-pane-border: $border-base;
+$date-picker-pane-background: #fff;
+$date-picker-pane-width: 200px;
+$date-picker-pane-font-size: 12px;
+$date-picker-pane__header-height: 17px;
+$date-picker-pane__header-icon-color: #cecfd6;
+$date-picker-pane__header-color: $color-text-regular;
+$date-picker-pane__header-a-hover-color: $color-primary;
+$date-picker-pane__header-border: 1px solid #e8e8e8;
+$date-picker-pane__cell--is-disabled-color: #cecfd6;
+$date-picker-pane__cell--is-disabled-background: #f0f4f7;
+$date-picker-pane__cell--is-checked-background: $color-primary;
+$date-picker-pane__cell--is-checked-color: #fff;
+$date-picker-pane__cell--is-checked-border-radius: 2px;
+$date-picker-pane__cell--is-today-background: $color-primary-light-7;
+$date-picker-pane__cell--is-today-border-radius: 2px;
+$date-picker-pane__cell--is-ranging-background: #e6f1ff;
+$date-picker-pane__cell--is-ln-month-color: #cecfd6;
+$date-picker-pane__cell-background-hover: #f5f7fa;
+$date-picker-pane__cell-color-hover: $color-primary;
+$date-picker-range-icon-color: #c0c4cc;
+$data-picker-range-border: $border-base;
+$date-picker__footer-a: $color-primary;
+$date-picker__footer-a-hover: $color-primary-light-3;
+
+/* Upload
+-------------------------- */
+$upload-bg-grey: #f0f4f7;
+$upload-picture__item-width: 174px;
+$upload-picture__item-height: 110px;
+$upload-file__item-background-hover: #f5f7fa;
+$upload-file__item-color: $color-text-primary;
+$upload-file__item--is--error-color: $color-danger;
+$upload-picture__item-border: 1px solid #d9d9d9;
+$upload-picture__btn-background: #f0f4f7;
+$upload-picture__btn-background-hover: mix($color-white, #f0f4f7, 30%);
+$upload-picture__btn-border: 1px dashed #d9d9d9;
+$upload-picture__btn-border-radius: 4px;
+$upload-picture__btn-font-size: 14px;
+$upload-picture__btn-icon-color: #999;
+$upload-picture__btn--is--disabled-background: #fff;
+$upload-picture__btn--is--disabled-border-color: #d9d9d9;
+$upload-picture__btn--is--disabled-color: #c0c4cc;
+$upload-picture__mask-background: rgb(0 0 0 / 50%);
+
+/* UploadPro
+-------------------------- */
+$upload-pro-bg-grey: #f0f4f7;
+$upload-pro-card__item-width: 174px;
+$upload-pro-card__item-height: 110px;
+$upload-pro-file__item-background-hover: #f5f7fa;
+$upload-pro-file__item-color: $color-text-primary;
+$upload-pro-file__item--is--error-color: $color-danger;
+$upload-pro-card__item-border: 1px solid #d9d9d9;
+$upload-pro-card__btn-background: #f0f4f7;
+$upload-pro-card__btn-background-hover: mix($color-white, #f0f4f7, 30%);
+$upload-pro-card__btn-border: 1px dashed #d9d9d9;
+$upload-pro-card__btn-border-radius: 4px;
+$upload-pro-card__btn-font-size: 14px;
+$upload-pro-card__btn-icon-color: #999;
+$upload-pro-card__btn--is--disabled-background: #fff;
+$upload-pro-card__btn--is--disabled-border-color: #d9d9d9;
+$upload-pro-card__btn--is--disabled-color: #c0c4cc;
+$upload-pro-card__mask-background: rgb(0 0 0 / 50%);
+
+/* Tabs
+-------------------------- */
+$tabs-font-size: 16px;
+$tabs-line-color: #dbdfe6;
+$tabs-item-color: #7e808c;
+$tabs-item-color-active: $color-primary;
+$tabs-item-color-disabled: #b6babf;
+
+/* Pagination
+-------------------------- */
+$pagination-item-background: #fff;
+$pagination-item-background--is-disabled: #f0f4f7;
+$pagination-item-color: #7e808c;
+$pagination-item-color--is-disabled: #cecfd6;
+$pagination-item-prev-next-background: #f0f4f7;
+$pagination-item-font-size: 14px;
+$pagination-item-height: 26px;
+$pagination-border-radius: 2px;
+$pagination-background: #fff;
+$pagination-item-color--is-hover: $color-primary;
+$pagination-background--is-disabled: #e0e7f1;
+$pagination-item-color--is-checked: #fff;
+$pagination-background--is-checked: $color-primary;
+$pagination-border-color--is-checked: $color-primary;
+
+/* Modal
+-------------------------- */
+$modal-background: #fff;
+$modal-border-radius: 4px;
+$modal-mask-background: rgb(41 41 51 / 60%);
+$modal-head-font-size: 16px;
+$modal-head-line-height: 22px;
+$modal-icon-font-size: 18px;
+$modal-icon-color: #666;
+$modal-form-item-label-padding-right: 36px;
+$modal-form-padding-top: 20px;
+$modal-form-padding-bottom: 14px;
+
+/* Toast
+-------------------------- */
+$toast-font-size: 14px;
+$toast-color-info: $color-info;
+$toast-color-success: $color-success;
+$toast-color-error: $color-danger;
+$toast-color-warning: $color-warning;
+$toast-background-info: #ecf3ff;
+$toast-background-success: #eeffef;
+$toast-background-error: #ffefef;
+$toast-background-warning: #fff6eb;
+$toast-border-raduis: $border-radius-base;
+
+/* Confirm
+-------------------------- */
+$confirm-font-size: 14px;
+$confirm-body-color: $color-text-primary;
+
+/* Menu
+-------------------------- */
+$menu-font-size: 14px;
+$menu-item--is-active-color: #08f;
+$menu-item--is-active-background: #ebf7ff;
+$menu-item--is-hover-color: #08f;
+$menu-item--is--hover-font-weight: bold;
+$menu-root-item-font-size: 16px;
+$menu-root-item-font-weight: normal;
+$menu-root-item-color: #8a8c99;
+$menu-root-item--is-hover-color: #0d1233;
+$menu-root-item--is-hover-font-weight: bold;
+$menu-root-item--is-active-background: transparent;
+$menu-item-arrow-font-size: 12px;
+$menu-item-arrow-color: #0d1233;
+
+/* Break-point
+-------------------------- */
+$sm: 768px;
+$md: 992px;
+$lg: 1200px;
+$xl: 1920px;
+$breakpoints: (
+  "xs" : (max-width: $sm),
+  "sm" : (min-width: $sm),
+  "md" : (min-width: $md),
+  "lg" : (min-width: $lg),
+  "xl" : (min-width: $xl)
+);
+$breakpoints-spec: (
+  "xs-only" : (max-width: $sm - 1),
+  "sm-and-up" : (min-width: $sm),
+  "sm-only": (min-width: #{$sm}) and (max-width: #{$md} - 1),
+  "sm-and-down": (max-width: $md - 1),
+  "md-and-up" : (min-width: $md),
+  "md-only": (min-width: #{$md}) and (max-width: #{$lg } - 1),
+  "md-and-down": (max-width: $lg - 1),
+  "lg-and-up" : (min-width: $lg),
+  "lg-only": (min-width: #{$lg}) and (max-width: #{$xl } - 1),
+  "lg-and-down": (max-width: $xl - 1),
+  "xl-only" : (min-width: $xl),
+);
