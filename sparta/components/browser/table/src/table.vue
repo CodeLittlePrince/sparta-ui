@@ -1,9 +1,9 @@
 <template>
   <Table
     ref="table"
+    :cell-empty-text="cellEmptyText"
     v-bind="$attrs"
     :border="border"
-    :class="{ 'is--has-border': border }"
     v-on="$listeners"
   >
     <slot v-for="(_, name) in $slots" :slot="name" :name="name"></slot>
@@ -19,9 +19,9 @@ export default {
     Table
   },
   props: {
-    border: {
-      type: Boolean,
-      default: true
+    cellEmptyText: {
+      type: String,
+      default: '—'
     }
   },
   methods: {
@@ -45,6 +45,35 @@ export default {
   }
   .sp-table__head {
     box-sizing: border-box;
+    padding: 15px 10px;
+    border-bottom: 1px solid #dadee0;
+    th {
+      line-height: 19px;
+    }
+  }
+  .sp-table__body {
+    padding: 0 10px;
+  }
+  .sp-table-cell {
+    line-height: 1.5;
+  }
+  .sp-table__footer {
+    margin: 20px 0 30px;
+    height: 30px;
+  }
+  .sp-table__footer-center {
+    .sp-pagination {
+      padding-top: 0;
+    }
+  }
+  .sp-table__footer-right-content {
+    height: auto;
+  }
+  .sp-table__footer-left,&.is--selection .sp-table__footer-left {
+    left: 20px;
+  }
+  &.is--no-footer .sp-table__body tr:last-child {
+    border-bottom: 1px solid #e9edf0;
   }
 }
 </style>
