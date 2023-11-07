@@ -45,27 +45,25 @@
         :class="{ active: isOpen }"
       ></i>
       <!-- 副标题 -->
-      <span v-if="data[subTitleKey]" class="sp-menu-item__text__subtitle">{{ data[subTitleKey] }}</span>
+      <span v-if="data[subTitleKey] || data[subTitleKey]===0" class="sp-menu-item__text__subtitle">{{ data[subTitleKey] }}</span>
     </div>
-    <transition-group name="sp-slide-fade-in-top">
-      <template v-if="data">
-        <sp-menu-item
-          v-for="item in data[childKey]"
-          v-show="isOpen"
-          :key="item[indexKey]"
-          :data="item"
-          :theme="theme"
-          :unique="unique"
-          :parent-is-page="parentIsPage"
-          :deep="deep + 1"
-          :active-index="activeIndexSelf"
-          :opened-indexes="openedIndexes"
-          @select="_handleSelectSelf"
-          @open="_handleOpenSelf"
-          @close="_handleCloseSelf"
-        />
-      </template>
-    </transition-group>
+    <template v-if="data">
+      <sp-menu-item
+        v-for="item in data[childKey]"
+        v-show="isOpen"
+        :key="item[indexKey]"
+        :data="item"
+        :theme="theme"
+        :unique="unique"
+        :parent-is-page="parentIsPage"
+        :deep="deep + 1"
+        :active-index="activeIndexSelf"
+        :opened-indexes="openedIndexes"
+        @select="_handleSelectSelf"
+        @open="_handleOpenSelf"
+        @close="_handleCloseSelf"
+      />
+    </template>
   </div>
 </template>
 
@@ -243,7 +241,7 @@ export default {
     position: relative;
     padding: 8px 20px;
     margin: 4px 0;
-    line-height: 20px;
+    line-height: 22px;
     transition: all 0.2s;
     &:hover,
     &.active {
@@ -264,6 +262,7 @@ export default {
       font-weight: $menu-root-item-font-weight;
       color: $menu-root-item-color;
       margin: 10px 0;
+      padding-left: 20px;
       &:hover,
       &.active {
         color: $menu-root-item--is-hover-color;
@@ -286,9 +285,11 @@ export default {
     }
     .sp-icon-arrow-down-bold {
       position: absolute;
-      right: 10px;
-      top: 50%;
-      margin-top: -8px;
+      right: 20px;
+      margin-top: 0;
+      top: 8px;
+      width: 20px;
+      text-align: center;
       transition: transform 0.2s;
       font-size: $menu-item-arrow-font-size;
       color: $menu-item-arrow-color;
@@ -298,10 +299,10 @@ export default {
     }
     &__subtitle {
       position: absolute;
-      right: 10px;
-      top: 50%;
-      margin-top: -8px;
-      width: 12px;
+      right: 20px;
+      margin-top: 0;
+      top: 8px;
+      width: 20px;
       text-align: center;
       font-size: 12px;
     }

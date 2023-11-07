@@ -1,3 +1,7 @@
-import Form from 'base/form'
+import SpForm from './src/index'
 
-export default Form
+SpForm.install = Vue => {
+  Vue.component(SpForm.name, SpForm)
+}
+
+export default SpForm
