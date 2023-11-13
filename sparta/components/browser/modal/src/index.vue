@@ -1,20 +1,9 @@
-<template>
-  <Modal
-    v-bind="$attrs"
-    v-on="$listeners"
-  >
-    <slot v-for="(_, name) in $slots" :slot="name" :name="name"></slot>
-  </Modal>
-</template>
-
 <script>
 import Modal from 'base/modal'
 
 export default {
   name: 'SpModal',
-  components: {
-    Modal
-  },
+  extends: Modal
 }
 </script>
 

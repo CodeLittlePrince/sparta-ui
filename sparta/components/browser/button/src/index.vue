@@ -1,21 +1,9 @@
-<template>
-  <Button
-    ref="table"
-    v-bind="$attrs"
-    v-on="$listeners"
-  >
-    <slot v-for="(_, name) in $slots" :slot="name" :name="name"></slot>
-  </Button>
-</template>
-
 <script>
 import Button from 'base/button'
 
 export default {
   name: 'SpButton',
-  components: {
-    Button
-  },
+  extends: Button
 }
 </script>
 
