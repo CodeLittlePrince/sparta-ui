@@ -239,11 +239,18 @@ export default {
   &__text {
     @include ellipsis;
     position: relative;
-    padding: 8px 20px;
+    padding: 7px 20px;
     margin: 4px 0;
     line-height: 22px;
     transition: all 0.2s;
-    &:hover,
+    color: $menu-root-item-color;
+    &:hover {
+      font-weight: $menu-item--is--hover-font-weight;
+      background-color: $menu-item--is-active-background;
+      .sp-menu-item__text__subtitle {
+        font-weight: $menu-item--is--hover-font-weight;
+      }
+    }
     &.active {
       color: $menu-item--is-active-color;
       font-weight: $menu-item--is--hover-font-weight;
