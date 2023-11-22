@@ -1043,6 +1043,7 @@ export default{
 | pagination | 设置表格分页 | boolean | — | false |
 | paginationOption | 设置表格分页参数参考Pagination组件 | object | — | {} |
 | hasMore | 设置显示更多按钮 | boolean | — | false |
+| hasMoreText | 设置更多按钮文案 | string | — | 查看全部 |
 | disabled | 设置表格不可勾选 | boolean | — | false |
 | needScroll | 设置表格是否超出滚动 | boolean | — | false |
 
