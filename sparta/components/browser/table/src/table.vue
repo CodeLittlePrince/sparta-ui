@@ -102,7 +102,7 @@
               :disabled="disabled"
               @click="handleViewMore"
             >
-              查看更多
+              {{ hasMoreText }}
               <i class="sp-icon-arrow-down-bold"></i></sp-button>
           </div>
         </slot>
@@ -238,6 +238,10 @@ export default {
       type: Boolean,
       default: false
     },
+    hasMoreText: {
+      type: String,
+      default: '查看全部'
+    },
     selectionAllLabel: {
       type: String,
       default: '全选'
@@ -289,7 +293,7 @@ export default {
     },
     hasFooter() {
       return (this.selection && this.showAllSelect)
-        || (this.pagination && (this.paginationTotal > this.paginationPageSize))
+        || this.pagination
         || this.$slots.footerRightContent
         || this.$slots.footerLeftContent
     },

@@ -36,6 +36,14 @@ const config = insertMenuItems(base, [
       index: '3-3-1'
     }
   },
+  {
+    parentIndex: '3-4',
+    data: {
+      title: 'Form 表单（新）',
+      link: '/base/form',
+      index: '3-4-10'
+    },
+  }
 ])
 
 export default config

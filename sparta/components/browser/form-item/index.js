@@ -1,3 +1,7 @@
-import FormItem from 'base/form-item'
+import SpFormItem from './src/index'
 
-export default FormItem
+SpFormItem.install = Vue => {
+  Vue.component(SpFormItem.name, SpFormItem)
+}
+
+export default SpFormItem
