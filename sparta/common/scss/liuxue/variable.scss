@@ -12,11 +12,11 @@ $transition-color-base: color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
 -------------------------- */
 $color-white: #fff;
 $color-black: #000;
-$color-primary: #fb472c;
-$color-success: #09bb07;
+$color-primary: #0049ef;
+$color-success: #00cc7b;
 $color-warning: #e6a23c;
-$color-danger: #fb472c;
-$color-info: #999;
+$color-danger: #ee5e3e;
+$color-info: #909399;
 $color-success-light: mix($color-white, $color-success, 80%);
 $color-warning-light: mix($color-white, $color-warning, 80%);
 $color-danger-light: mix($color-white, $color-danger, 80%);
@@ -25,13 +25,11 @@ $color-success-lighter: mix($color-white, $color-success, 90%);
 $color-warning-lighter: mix($color-white, $color-warning, 90%);
 $color-danger-lighter: mix($color-white, $color-danger, 90%);
 $color-info-lighter: mix($color-white, $color-info, 90%);
-$color-text-primary: #333;
-$color-text-regular: #333;
-$color-text-secondary: #666;
-$color-text-placeholder: #bfbfbf;
-$color-text-tip: #999;
-$color-text-disabled: #bfbfbf;
-$color-divider-line: #dbdbdb;
+$color-text-primary: #181818;
+$color-text-regular: #181818;
+$color-text-secondary: #7e828c;
+$color-text-placeholder: #cdced1;
+$color-text-tip: #99a0b3;
 $color-primary-light-1: mix($color-white, $color-primary, 10%);
 $color-primary-light-2: mix($color-white, $color-primary, 20%);
 $color-primary-light-3: mix($color-white, $color-primary, 30%);
@@ -65,7 +63,7 @@ $scrollbar-thumb-color: #d7d9df;
 -------------------------- */
 $border-width-base: 1px;
 $border-style-base: solid;
-$border-color-base: #ccc;
+$border-color-base: #dadce0;
 $border-color-light: #e4e7ed;
 $border-color-lighter: #ebeef5;
 $border-color-extra-light: #f2f6fc;
@@ -92,54 +90,54 @@ $button-mini-font-size: 13px;
 $button-mini-min-width: 84px;
 $button-mini-height: 28px;
 $button-default-color: $color-primary;
-$button-default-fill: #ffe9e6;
-$button-default-border: #ffe9e6;
-$button-default-fill--hover: #fbe1de;
+$button-default-fill: #f2f6ff;
+$button-default-border: #f2f6ff;
+$button-default-fill--hover: #d8e8fe;
 $button-default-fill--focus: $button-default-fill;
-$button-default-fill--active: #fbe1de;
-$button-color--disabled: $color-text-disabled;
-$button-fill--disabled: #ededed;
+$button-default-fill--active: #cde0fa;
+$button-color--disabled: #cdced1;
+$button-fill--disabled: #eef0f5;
 $button-border--disabled: $border-color-lighter;
 $button-plain-fill: #fff;
-$button-plain-border: $color-primary;
-$button-plain-fill--hover: #ffe9e6;
+$button-plain-border: #0d1233;
+$button-plain-fill--hover: #f3f5fa;
 $button-plain-fill--focus: $button-plain-fill;
-$button-plain-fill--active: #fbe1de;
-$button-plain-border--disabled: #ededed;
-$button-plain-color--disabled: $color-text-disabled;
+$button-plain-fill--active: #eef0f5;
+$button-plain-border--disabled: #e9ebf0;
+$button-plain-color--disabled: #cdced1;
 $button-plain-opacity--hover: 1;
 $button-primary-border: $color-primary;
 $button-primary-color: #fff;
 $button-primary-fill: $color-primary;
-$button-primary-fill--hover: #ec3f25;
-$button-primary-border--hover: #ec3f25;
+$button-primary-fill--hover: #0042d9;
+$button-primary-border--hover: #0042d9;
 $button-primary-fill--focus: $button-primary-fill;
 $button-primary-border--focus: $button-primary-border;
-$button-primary-fill--active: #ec3f25;
-$button-primary-border--active: #ec3f25;
-$button-text-color: #1167dc;
-$button-text-color--hover: #1062d1;
+$button-primary-fill--active: #003abd;
+$button-primary-border--active: #003abd;
+$button-text-color: $color-primary;
+$button-text-color--hover: #0042d9;
 $button-text-color--focus: $button-text-color;
-$button-text-color--active: #0f5dc7;
-$button-text-color--disabled: $color-text-disabled;
+$button-text-color--active: #002fa7;
+$button-text-color--disabled: #cdced1;
 /* Checkbox
 -------------------------- */
 $checkbox-background: #fff;
-$checkbox-background-disabled: #ededed;
-$checkbox-color-hover: #999;
-$checkbox-color-click: #999;
-$checkbox-border-color: $border-color-base;
+$checkbox-background-disabled: #eef0f5;
+$checkbox-color-hover: $color-primary-light-5;
+$checkbox-color-click: $color-primary;
+$checkbox-border-color: #dadce0;
 $checkbox-checkmark-color: #fff;
-$checkbox-checkmark-color-disabled: #ccc;
-$checkbox-font-color-disabled: $color-text-disabled;
-$checkbox-checked-color: $color-text-disabled;
+$checkbox-checkmark-color-disabled: #dadce0;
+$checkbox-font-color-disabled: #cdced1;
+$checkbox-checked-color: $color-primary;
 
 /* PasswordInput
 -------------------------- */
 $item-height: 36px;
 $password-input-width: 224px;
-$password-box-border-focus: #999;
-$password-box-shadow-focus: 0 0 0 1px #ffe9e6;
+$password-box-border-focus: $color-primary;
+$password-box-shadow-focus: 0 0 0 1px rgb(25 119 234 / 20%);
 
 /* Input
 -------------------------- */
@@ -147,16 +145,16 @@ $input-height: 36px;
 $input-font-size: 14px;
 $input-color: $color-text-regular;
 $input-background: #fff;
-$input-background-disabled: #ededed;
-$input-background-readonly: #ededed;
-$input-background-append: #fff;
-$input-background-format: #ffe9e6;
-$input-color-append: $color-text-secondary;
+$input-background-disabled: #eef0f5;
+$input-background-readonly: #f5f8fc;
+$input-background-append: $input-background-disabled;
+$input-background-format: #f2f6ff;
+$input-color-append: $color-text-regular;
 $input-border: $border-base;
-$input-box-shadow-focus: none;
-$input-box-shadow-focus-error: none;
-$input-box-border-focus: #999;
-$input-box-border-hover: #999;
+$input-box-shadow-focus: 0 0 0 1px $color-primary-light-8;
+$input-box-shadow-focus-error: 0 0 0 1px $color-danger-light-8;
+$input-box-border-focus: $color-primary;
+$input-box-border-hover: $input-box-border-focus;
 $input-border-radius: 4px;
 $input-medium-font-size: 14px;
 $input-medium-height: 36px;
@@ -168,48 +166,48 @@ $input-mini-height: 28px;
 /* Option
 -------------------------- */
 $opiton-color: $color-text-regular;
-$opiton-color-disabled: $color-text-disabled;
+$opiton-color-disabled: #c0c4cc;
 
 /* Radio
 -------------------------- */
 $radio-color: $color-text-primary;
-$radio-background-color-active: $color-text-disabled;
-$radio-border-color-active: $color-text-disabled;
+$radio-background-color-active: $color-primary;
+$radio-border-color-active: $color-primary;
 $radio-font-size: 14px;
 $radio-border-color: $border-color-base;
 $radio-background-color: #fff;
-$radio-color-disabled: $color-text-disabled;
+$radio-color-disabled: #cdced1;
 $radio-border-color-disabled: $border-color-base;
-$radio-background-color-disabled: #ededed;
-$radio-button-background-color-active: #ffe9e6;
-$radio-button-border-color-disabled: #e4e8ef;
-$radio-button-text-hover: $color-text-secondary;
-$radio-button-background-color-hover: #ffe9e6;
-$radio-button-color: $color-text-secondary;
+$radio-background-color-disabled: #eef0f5;
+$radio-button-background-color-active: #f2f6ff;
+$radio-button-border-color-disabled: #e9ebf0;
+$radio-button-background-color-hover: $radio-background-color;
+$radio-button-text-hover: $color-primary;
+$radio-button-color: #99a0b3;
 $radio-inner-background-color: #fff;
 
 /* Select
 -------------------------- */
 $select-height: 36px;
 $select-background: #fff;
-$select-background-disabled: #ededed;
-$select-background-readonly: #ededed;
-$select-suffix-background-color: #fff;
-$select-suffix-background-color-focus: #fff;
-$select-suffix-border-left: none;
-$select-suffix-color-focus: $color-text-tip;
+$select-background-disabled: #eef0f5;
+$select-background-readonly: #f5f8fc;
+$select-suffix-background-color: #eef0f5;
+$select-suffix-background-color-focus: $color-primary;
+$select-suffix-border-left: 1px solid $border-color-base;
+$select-suffix-color-focus: #fff;
 $select-input-border-color: $border-color-base;
-$select-input-border-color-disabled: #ccc;
-$select-input-border-color-hover: $input-box-border-hover;
-$select-input-box-shadow-focus: $input-box-shadow-focus;
-$select-input-border-color-focus: $input-box-border-focus;
-$select-input-box-shadow-focus-error: $input-box-shadow-focus;
+$select-input-border-color-disabled: #c0c4cc;
+$select-input-border-color-hover: $color-primary;
+$select-input-box-shadow-focus: 0 0 0 1px $color-primary-light-8;
+$select-input-border-color-focus: $color-primary;
+$select-input-box-shadow-focus-error: 0 0 0 2px $color-danger-light;
 $select-input-border-color-focus-error: $color-danger;
 $select-input-font-color: $color-text-regular;
 $select-dropdown-item-background: #fff;
-$select-dropdown-item-background-hover: #ffe9e6;
+$select-dropdown-item-background-hover: #f2f6ff;
 $select-dropdown-border-color: $border-color-base;
-$select-prepend-color: $color-text-tip;
+$select-prepend-color: inherit;
 
 /* Form
 -------------------------- */
@@ -224,14 +222,14 @@ $form-item-error-line-height: 17px;
 /* Dropdown
 -------------------------- */
 $dropdown-background: #fff;
-$dropdown-background-disabled: #f5f6f7;
+$dropdown-background-disabled: #f5f7fa;
 $dropdown-item-color-hover: $color-primary;
 $dropdown-item-background: #fff;
-$dropdown-item-background-hover: #f5f6f7;
+$dropdown-item-background-hover: #f5f7fa;
 $dropdown-border-radius: 4px;
-$dropdown-border-color: $border-color-base;
+$dropdown-border-color: #e4e7ed;
 $dropdown-color: $color-text-regular;
-$dropdown-color-disabled: $color-text-disabled;
+$dropdown-color-disabled: #c0c4cc;
 
 /* Tag
 -------------------------- */
@@ -249,25 +247,25 @@ $tag-border-color--danger: $color-danger;
 /* Table
 -------------------------- */
 $table-font-size: 14px;
-$table-line-height: normal;
-$table-background: #f5f6f7;
-$table-background--is-disabled: #f5f6f7;
-$table-divider-color: $color-divider-line;
-$table-border: 1px solid $table-divider-color;
-$table-outer-border: 1px solid $table-divider-color;
+$table-line-height: 1;
+$table-background: #fff;
+$table-background--is-disabled: #f5f7fa;
+$table-divider-color: #dbdfe6;
+$table-border: 1px solid #e9ebf0;
+$table-outer-border: none;
 $table-thead-color: $color-text-secondary;
 $table-tbody-color: $color-text-regular;
-$table-min-height: 150px;
+$table-min-height: 84px;
 $table-loading-background: rgb(255 255 255 / 50%);
-$table-loading-color: $color-text-tip;
-$table-empty-color: $color-text-disabled;
-$table-indent: 0;
+$table-loading-color: #99a0b3;
+$table-empty-color: #cdced1;
+$table-indent: 30px;
 $table-head-padding: 15px $table-indent;
 $table-body-padding: 0 $table-indent;
-$table-row-height: auto;
-$table-td-padding-vertical: 15px;
-$table-cell-padding-horizontal: 20px;
-$table-selection-margin-left: 10px;
+$table-row-height: 84px;
+$table-td-padding-vertical: 10px;
+$table-cell-padding-horizontal: 10px;
+$table-selection-margin-left: 0;
 
 /* TimePicker
 -------------------------- */
@@ -282,7 +280,7 @@ $time-picker-option-font-size: 14px;
 $time-picker-option-height: 34px;
 $time-picker-option-color: $color-text-regular;
 $time-picker-option-color--is-selected: $color-primary;
-$time-picker-option-color--is-disabled: $color-text-disabled;
+$time-picker-option-color--is-disabled: #c0c4cc;
 
 /* DatePicker
 -------------------------- */
@@ -295,20 +293,20 @@ $date-picker-pane-background: #fff;
 $date-picker-pane-width: 200px;
 $date-picker-pane-font-size: 12px;
 $date-picker-pane__header-height: 17px;
-$date-picker-pane__header-icon-color: $color-text-tip;
+$date-picker-pane__header-icon-color: #cdced1;
 $date-picker-pane__header-color: $color-text-regular;
 $date-picker-pane__header-a-hover-color: $color-primary;
-$date-picker-pane__header-border: 1px solid $border-color-base;
-$date-picker-pane__cell--is-disabled-color: $color-text-disabled;
-$date-picker-pane__cell--is-disabled-background: #ededed;
+$date-picker-pane__header-border: 1px solid #e8e8e8;
+$date-picker-pane__cell--is-disabled-color: #cdced1;
+$date-picker-pane__cell--is-disabled-background: #eef0f5;
 $date-picker-pane__cell--is-checked-background: $color-primary;
 $date-picker-pane__cell--is-checked-color: #fff;
 $date-picker-pane__cell--is-checked-border-radius: 2px;
 $date-picker-pane__cell--is-today-background: $color-primary-light-7;
 $date-picker-pane__cell--is-today-border-radius: 2px;
-$date-picker-pane__cell--is-ranging-background: #ffe9e6;
-$date-picker-pane__cell--is-ln-month-color: $color-text-disabled;
-$date-picker-pane__cell-background-hover: #f5f6f7;
+$date-picker-pane__cell--is-ranging-background: #f2f6ff;
+$date-picker-pane__cell--is-ln-month-color: #cdced1;
+$date-picker-pane__cell-background-hover: #f5f7fa;
 $date-picker-pane__cell-color-hover: $color-primary;
 $date-picker-range-icon-color: #c0c4cc;
 $data-picker-range-border: $border-base;
@@ -317,65 +315,65 @@ $date-picker__footer-a-hover: $color-primary-light-3;
 
 /* Upload
 -------------------------- */
-$upload-bg-grey: #f5f6f7;
+$upload-bg-grey: #eef0f5;
 $upload-picture__item-width: 174px;
 $upload-picture__item-height: 110px;
 $upload-file__item-background-hover: #f5f7fa;
 $upload-file__item-color: $color-text-primary;
 $upload-file__item--is--error-color: $color-danger;
-$upload-picture__item-border: 1px solid $color-divider-line;
-$upload-picture__btn-background: #f5f6f7;
-$upload-picture__btn-background-hover: mix($color-white, #f5f6f7, 30%);
-$upload-picture__btn-border: 1px dashed $color-divider-line;
+$upload-picture__item-border: 1px solid #d9d9d9;
+$upload-picture__btn-background: #eef0f5;
+$upload-picture__btn-background-hover: mix($color-white, #eef0f5, 30%);
+$upload-picture__btn-border: 1px dashed #d9d9d9;
 $upload-picture__btn-border-radius: 4px;
 $upload-picture__btn-font-size: 14px;
 $upload-picture__btn-icon-color: #999;
 $upload-picture__btn--is--disabled-background: #fff;
-$upload-picture__btn--is--disabled-border-color: $color-divider-line;
-$upload-picture__btn--is--disabled-color: $color-text-disabled;
-$upload-picture__mask-background: rgb(41 46 51 / 60%);
+$upload-picture__btn--is--disabled-border-color: #d9d9d9;
+$upload-picture__btn--is--disabled-color: #c0c4cc;
+$upload-picture__mask-background: rgb(0 0 0 / 50%);
 
 /* UploadPro
 -------------------------- */
-$upload-pro-bg-grey: #f5f6f7;
+$upload-pro-bg-grey: #eef0f5;
 $upload-pro-card__item-width: 174px;
 $upload-pro-card__item-height: 110px;
 $upload-pro-file__item-background-hover: #f5f7fa;
 $upload-pro-file__item-color: $color-text-primary;
 $upload-pro-file__item--is--error-color: $color-danger;
-$upload-pro-card__item-border: 1px solid $color-divider-line;
-$upload-pro-card__btn-background: #f5f6f7;
-$upload-pro-card__btn-background-hover: mix($color-white, #f5f6f7, 30%);
-$upload-pro-card__btn-border: 1px dashed $color-divider-line;
+$upload-pro-card__item-border: 1px solid #d9d9d9;
+$upload-pro-card__btn-background: #eef0f5;
+$upload-pro-card__btn-background-hover: mix($color-white, #eef0f5, 30%);
+$upload-pro-card__btn-border: 1px dashed #d9d9d9;
 $upload-pro-card__btn-border-radius: 4px;
 $upload-pro-card__btn-font-size: 14px;
 $upload-pro-card__btn-icon-color: #999;
 $upload-pro-card__btn--is--disabled-background: #fff;
-$upload-pro-card__btn--is--disabled-border-color: $color-divider-line;
-$upload-pro-card__btn--is--disabled-color: $color-text-disabled;
-$upload-pro-card__mask-background: rgb(41 46 51 / 60%);
+$upload-pro-card__btn--is--disabled-border-color: #d9d9d9;
+$upload-pro-card__btn--is--disabled-color: #c0c4cc;
+$upload-pro-card__mask-background: rgb(0 0 0 / 50%);
 
 /* Tabs
 -------------------------- */
 $tabs-font-size: 16px;
-$tabs-line-color: $color-divider-line;
-$tabs-item-color: $color-text-secondary;
+$tabs-line-color: #dbdfe6;
+$tabs-item-color: #7e828c;
 $tabs-item-color-active: $color-primary;
-$tabs-item-color-disabled: $color-text-disabled;
+$tabs-item-color-disabled: #b6babf;
 
 /* Pagination
 -------------------------- */
 $pagination-item-background: #fff;
-$pagination-item-background--is-disabled: #ededed;
-$pagination-item-color: $color-text-secondary;
-$pagination-item-color--is-disabled: $color-text-disabled;
-$pagination-item-prev-next-background: #fff;
+$pagination-item-background--is-disabled: #eef0f5;
+$pagination-item-color: #7e828c;
+$pagination-item-color--is-disabled: #cdced1;
+$pagination-item-prev-next-background: #eef0f5;
 $pagination-item-font-size: 14px;
 $pagination-item-height: 26px;
 $pagination-border-radius: 2px;
 $pagination-background: #fff;
 $pagination-item-color--is-hover: $color-primary;
-$pagination-background--is-disabled: #ededed;
+$pagination-background--is-disabled: #e0e7f1;
 $pagination-item-color--is-checked: #fff;
 $pagination-background--is-checked: $color-primary;
 $pagination-border-color--is-checked: $color-primary;
@@ -395,14 +393,14 @@ $modal-form-padding-bottom: 14px;
 
 /* Toast
 -------------------------- */
-$toast-font-size: 16px;
-$toast-color-info: #fff;
+$toast-font-size: 14px;
+$toast-color-info: $color-info;
 $toast-color-success: $color-success;
 $toast-color-error: $color-danger;
 $toast-color-warning: $color-warning;
-$toast-background-info: rgb(51 51 51 / 50%);
-$toast-background-success: #efe;
-$toast-background-error: #ffedeb;
+$toast-background-info: #ecf3ff;
+$toast-background-success: #eeffef;
+$toast-background-error: #ffefef;
 $toast-background-warning: #fff6eb;
 $toast-border-raduis: $border-radius-base;
 

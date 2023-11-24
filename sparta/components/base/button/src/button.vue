@@ -141,7 +141,7 @@ export default {
   }
 
   &.is--plain {
-    border-color: $color-primary;
+    border-color: $button-plain-border;
     background-color: $button-plain-fill;
 
     &:hover {
