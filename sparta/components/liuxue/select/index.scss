@@ -1,0 +1,13 @@
+.sp-select {
+
+  &__suffix {
+    background: transparent;
+    border: none;
+    color: #181818;
+    font-weight: lighter;
+  }
+
+  &.isFocus &__suffix {
+    background: transparent;
+  }
+}
