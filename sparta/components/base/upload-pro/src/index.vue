@@ -254,6 +254,10 @@ export default {
       default: ''
     },
     limit: [Number, String],
+    maxSize: {
+      type: [Number, String],
+      default: 1024 * 1024 * 10 // 默认 10M
+    },
     exampleImage: {
       type: String,
       default: ''
@@ -304,6 +308,10 @@ export default {
       default: function() {}
     },
     onExceed: {
+      type: Function,
+      default: function() {}
+    },
+    onOversize: {
       type: Function,
       default: function() {}
     },
@@ -537,6 +545,10 @@ export default {
       if (!this._limitValidate(files)) {
         return
       }
+      // 文件大小限制处理
+      if (!this._maxSizeValidate(files)) {
+        return
+      }
       // 文件遍历上传
       let postFiles = Array.prototype.slice.call(files)
       if (!this.multiple) { postFiles = postFiles.slice(0, 1) }
@@ -552,6 +564,31 @@ export default {
       if (this.limitNum && this.uploadFiles.length + files.length > this.limitNum) {
         this.toastError(`最多上传${ this.limitNum }个文件`)
         this.onExceed(files, this.uploadFiles)
+        this._resetUploadValue()
+        return false
+      }
+
+      return true
+    },
+    
+    _maxSizeValidate(files) {
+      if (this.maxSize && Array.from(files).some(file => file.size > this.maxSize)) {
+        // 将maxSize转为KB、MB、GB
+        let maxSize = this.maxSize
+        let unit = 'B'
+        if (maxSize >= 1024 * 1024 * 1024) {
+          maxSize = maxSize / (1024 * 1024 * 1024)
+          unit = 'GB'
+        } else if (maxSize >= 1024 * 1024) {
+          maxSize = maxSize / (1024 * 1024)
+          unit = 'MB'
+        } else if (maxSize >= 1024) {
+          maxSize = maxSize / 1024
+          unit = 'KB'
+        }
+
+        this.toastError(`上传的文件不能超过${ maxSize }${ unit }，请重新上传`)
+        this.onOversize(files, this.uploadFiles)
         this._resetUploadValue()
         return false
       }
