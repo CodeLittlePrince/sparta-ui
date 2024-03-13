@@ -90,7 +90,10 @@ const components = [
   Modal,
   PasswordInput,
   PopupTip,
-  TimeSelect
+  TimeSelect,
+  Cascader,
+  CascaderPanel,
+  ScrollBar
 ]
 
 let Sparta = {}

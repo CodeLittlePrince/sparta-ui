@@ -163,5 +163,8 @@ export {
   PopupTip,
   ImgPreview,
   Toast,
-  TimeSelect
+  TimeSelect,
+  Cascader,
+  CascaderPanel,
+  ScrollBar
 }
