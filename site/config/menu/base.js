@@ -99,49 +99,54 @@ export default {
               index: '3-4-2'
             },
             {
+              title: 'Cascader 级联选择器',
+              link: '/base/cascader',
+              index: '3-4-3'
+            },
+            {
               title: 'Input 输入框（新）',
               link: '/base/input',
-              index: '3-4-3'
+              index: '3-4-4'
             },
             {
               title: 'Radio 单选框（新）',
               link: '/base/radio',
-              index: '3-4-4'
+              index: '3-4-5'
             },
             {
               title: 'TimePicker 时间选择框',
               link: '/base/time-picker',
-              index: '3-4-5'
+              index: '3-4-6'
             },
             {
               title: 'TimeSelect 时间选择器（新）',
               link: '/base/time-select',
-              index: '3-4-6'
+              index: '3-4-7'
             },
             {
               title: 'DatePicker 日期选择框（新）',
               link: '/base/date-picker',
-              index: '3-4-7'
+              index: '3-4-8'
             },
             {
               title: 'Upload 上传（新）',
               link: '/base/upload',
-              index: '3-4-8'
+              index: '3-4-9'
             },
             {
               title: 'UploadPro 上传（新）',
               link: '/base/upload-pro',
-              index: '3-4-9'
+              index: '3-4-10'
             },
             {
               title: 'Form 表单（新）',
               link: '/base/form',
-              index: '3-4-10'
+              index: '3-4-11'
             },
             {
               title: 'PasswordInput 密码输入（新）',
               link: '/base/password-input',
-              index: '3-4-11'
+              index: '3-4-12'
             },
           ]
         },
@@ -179,11 +184,7 @@ export default {
               link: '/base/step',
               index: '3-5-6'
             },
-            {
-              title: 'Cascader 级联选择器',
-              link: '/base/cascader',
-              index: '3-5-7'
-            },
+            
           ]
         },
         {
