@@ -179,7 +179,11 @@ export default {
               link: '/base/step',
               index: '3-5-6'
             },
-            
+            {
+              title: 'Cascader 级联选择器',
+              link: '/base/cascader',
+              index: '3-5-7'
+            },
           ]
         },
         {

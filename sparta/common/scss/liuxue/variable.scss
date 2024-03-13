@@ -49,6 +49,10 @@ $color-danger-light-7: mix($color-white, $color-danger, 70%);
 $color-danger-light-8: mix($color-white, $color-danger, 80%);
 $color-danger-light-9: mix($color-white, $color-danger, 90%);
 
+/* Disable base
+-------------------------- */
+$disabled-color-base: $color-text-placeholder !default;
+
 /* Shadow
 -------------------------- */
 $float-box-shadow-box: 0 2px 10px 0 rgb(0 53 111 / 10%);
@@ -408,6 +412,27 @@ $toast-border-raduis: $border-radius-base;
 -------------------------- */
 $confirm-font-size: 14px;
 $confirm-body-color: $color-text-primary;
+
+/* Cascader
+-------------------------- */
+$--cascader-menu-font-color: $color-text-regular;
+$--cascader-menu-selected-font-color: $color-primary;
+$--cascader-menu-fill: $color-white;
+$--cascader-menu-font-size: 14px;
+$--cascader-menu-radius: $border-radius-base;
+$--cascader-menu-border: solid 1px $border-color-base;
+$--cascader-menu-border-split: solid 1px #e9edf0;
+$--cascader-menu-shadow: 0 2px 10px 0 rgb(0 53 111 / 10%);
+$--cascader-node-background-hover: #ebf7ff;
+$--cascader-node-color-disabled: $color-text-placeholder;
+$--cascader-color-empty: $color-text-placeholder;
+$--cascader-tag-background: #f0f2f5;
+$--cascader-height: 200px;
+
+/* Scrollbar
+-------------------------- */
+$--scrollbar-background-color: rgba($color-text-secondary, 0.3);
+$--scrollbar-hover-background-color: rgba($color-text-secondary, 0.5);
 
 /* Break-point
 -------------------------- */
