@@ -12,10 +12,43 @@
     @click="() => toggleDropDownVisible(readonly ? undefined : true)"
     @keydown="handleKeyDown"
   >
-
     <sp-input
+      v-if="multiple"
       ref="input"
-      v-model="multiple ? presentText : inputValue"
+      v-model="presentText"
+      :size="realSize"
+      :placeholder="placeholder"
+      :readonly="readonly"
+      :disabled="isDisabled"
+      :validate-event="false"
+      :class="{ 'is-focus': dropDownVisible }"
+      @focus="handleFocus"
+      @blur="handleBlur"
+      @input="handleInput"
+    >
+      <template slot="suffix">
+        <i
+          v-if="clearBtnVisible"
+          key="clear"
+          class="sp-input__icon sp-icon-close"
+          @click.stop="handleClear"
+        ></i>
+        <i
+          v-else
+          key="arrow-down"
+          :class="[
+            'sp-input__icon',
+            'sp-icon-arrow-down-bold',
+            dropDownVisible && 'is-reverse'
+          ]"
+          @click.stop="toggleDropDownVisible()"
+        ></i>
+      </template>
+    </sp-input>
+    <sp-input
+      v-else
+      ref="input"
+      v-model="inputValue"
       :size="realSize"
       :placeholder="placeholder"
       :readonly="readonly"
