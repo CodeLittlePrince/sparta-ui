@@ -274,7 +274,7 @@ describe('Cascader', () => {
     // expect(vm.$el.querySelectorAll('.sp-tag').length).to.equal(2)
 
     vm.disabled = true
-    await waitImmediate()
+    await wait(500)
     expect(getCloseButton(vm.$el).length).to.equal(0)
   })
 
