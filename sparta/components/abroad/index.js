@@ -44,6 +44,9 @@ import confirm from './confirm'
 import PasswordInput from './password-input'
 import PopupTip from './popup-tip'
 import TimeSelect from './time-select'
+import Cascader from './cascader'
+import CascaderPanel from './cascader-panel'
+import ScrollBar from './scrollbar'
 
 const components = [
   Row,
@@ -87,7 +90,10 @@ const components = [
   Modal,
   PasswordInput,
   PopupTip,
-  TimeSelect
+  TimeSelect,
+  Cascader,
+  CascaderPanel,
+  ScrollBar
 ]
 
 let Sparta = {}
@@ -157,5 +163,8 @@ export {
   PopupTip,
   ImgPreview,
   Toast,
-  TimeSelect
+  TimeSelect,
+  Cascader,
+  CascaderPanel,
+  ScrollBar
 }
