@@ -24,6 +24,26 @@ Modal 模态弹窗
       scroll-when-error
       @enter="submitForm('validateForm1')"
       >
+    <sp-form-item 
+      label="地区" 
+      prop="area"
+      :rules="[
+        { required: true, message: '地区不能为空'}
+      ]"
+    >
+     <sp-cascader
+      v-model="validateForm1.area"
+      :options="areaOptions"
+      :props="{
+        checkStrictly: true,
+        emitPath: false,
+        value: 'departmentId',
+        label: 'departmentName',
+        children: 'nextDepartments'
+      }"
+      filterable
+     />
+    </sp-form-item>
         <!-- 姓名 -->
         <sp-form-item
           prop="name"
@@ -591,6 +611,7 @@ export default{
       visible12: false,
       validateForm1: {
         name: '',
+        area: '',
         localBankCode: '',
         password: '',
         age: '',
@@ -608,7 +629,55 @@ export default{
         { label: '篮球', value: 'basketball' },
         { label: '电影', value: 'movie' }
       ],
-      citiesList: ['上海', '北京', '广州', '深圳']
+      citiesList: ['上海', '北京', '广州', '深圳'],
+      areaOptions:  [
+        {
+            "departmentName": "大团队",
+            "departmentId": "63000019750124824X",
+            "nextDepartments": [
+                {
+                    "departmentName": "亚马逊北美站店铺运营",
+                    "departmentId": "610000197010035510",
+                    "nextDepartments": [
+                        {
+                            "departmentName": "选品",
+                            "departmentId": "230000201908318179",
+                            "nextDepartments": [
+                                {
+                                    "departmentName": "美国",
+                                    "departmentId": "35000019920126766X"
+                                },
+                                {
+                                    "departmentName": "加拿大",
+                                    "departmentId": "440000198508301268"
+                                },
+                                {
+                                    "departmentName": "墨西哥",
+                                    "departmentId": "810000201305173490"
+                                }
+                            ]
+                        },
+                        {
+                            "departmentName": "广告服务",
+                            "departmentId": "130000199908153147"
+                        },
+                        {
+                            "departmentName": "财务",
+                            "departmentId": "530000197711089829"
+                        }
+                    ]
+                },
+                {
+                    "departmentName": "亚马逊欧洲站店铺运营",
+                    "departmentId": "110000199410069809"
+                },
+                {
+                    "departmentName": "其他",
+                    "departmentId": "370000200406212987"
+                }
+            ]
+        }
+    ]
     }
   },
   methods: {

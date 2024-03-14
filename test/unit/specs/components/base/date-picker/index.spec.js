@@ -137,7 +137,7 @@ describe('date-picker', () => {
         describe('再切换为：近两周', () => {
           it('起始点应只在开始面板中展示', async () => {
             let rangeParams = []
-            if (day < 14) {
+            if (day <= 14) {
               rangeParams = [todayStart, todayEnd + 14 * ONE_DAY]
             } else {
               rangeParams = [todayStart - 14 * ONE_DAY, todayEnd]
