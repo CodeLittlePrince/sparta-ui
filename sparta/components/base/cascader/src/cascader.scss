@@ -26,6 +26,7 @@ $--index-normal: 1;
     }
 
     .sp-input__inner {
+      transition: none;
       text-overflow: ellipsis;
 
       &:focus {
