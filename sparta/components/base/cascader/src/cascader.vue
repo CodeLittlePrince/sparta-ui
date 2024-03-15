@@ -210,6 +210,10 @@ const PopperMixin = {
     popperOptions: Popper.props.popperOptions,
     transformOrigin: Popper.props.transformOrigin
   },
+  methods: Popper.methods,
+  data: Popper.data,
+  created: Popper.created,
+  beforeDestroy: Popper.beforeDestroy
 }
 
 const InputSizeMap = {
@@ -230,7 +234,7 @@ export default {
     SpCascaderPanel
   },
 
-  mixins: [Popper, PopperMixin, Emitter],
+  mixins: [PopperMixin, Emitter],
 
   inject: {
     spForm: {
