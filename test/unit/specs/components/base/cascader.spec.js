@@ -159,10 +159,10 @@ describe('Cascader', () => {
       }
     }, true)
 
-    // const el = vm.$el
+    const el = vm.$el
     vm.value = selectedValue
     await waitImmediate()
-    // expect(getMenus(el).length).to.equal(3)
+    expect(getMenus(el).length).to.equal(3)
     // expect(getOptions(el, 2)[0].querySelector('i').className).to.includes('sp-icon-check')
     expect(vm.$el.querySelector('input').value).to.equal('Zhejiang / Hangzhou / West Lake')
   })
