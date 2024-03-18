@@ -56,7 +56,10 @@ export default {
     // 渲染
     return h('div',
       {
-        class: cellClass
+        class: cellClass,
+        attrs: {
+          title: (propsData.ellipsis && typeof cellCopy !== 'object') ? cellCopy : undefined
+        }
       },
       cellCopy
     )
