@@ -140,7 +140,7 @@ export default {
   computed: {
     // 是否点亮
     isActive() {
-      return this.activeIndexSelf === this.data[this.indexKey] || this.hasChild && this.showRootClass && this.data[this.childKey].some(item => item[this.indexKey] === this.activeIndexSelf)
+      return this.activeIndexSelf === this.data[this.indexKey] || this.hasChild && this.showRootClass && this.hasActiveChild(this.data, this.childKey, this.activeIndexSelf)
     },
     // 是否该条目已打开
     isOpen() {
@@ -220,6 +220,18 @@ export default {
     },
     _handleCloseSelf(index, itemData) {
       this.$emit('close', index, itemData)
+    },
+    // 递归遍历，如果有子项，则只要有一个子项被点亮，则该条目也被点亮
+    hasActiveChild(data, childKey, activeIndex) {
+      return data[childKey].some(item => {
+        if (item.index === activeIndex) {
+          return true
+        }
+        if (item[childKey] && item[childKey].length) {
+          return this.hasActiveChild(item, childKey, activeIndex)
+        }
+        return false
+      })
     }
   }
 }

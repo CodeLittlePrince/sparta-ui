@@ -16,6 +16,21 @@
   @include e(wrap) {
     overflow: scroll;
     height: 100%;
+    &::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+      background-color: #f5f5f5;
+    }
+
+    &::-webkit-scrollbar-track {
+      border-radius: 10px;
+      background-color: #f5f5f5;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: #d7d9df;
+    }
 
     @include m(hidden-default) {
       scrollbar-width: none;
