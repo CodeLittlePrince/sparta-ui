@@ -140,19 +140,7 @@ export default {
   computed: {
     // 是否点亮
     isActive() {
-      // 递归遍历，如果有子项，则只要有一个子项被点亮，则该条目也被点亮
-      function hasActiveChild(data, childKey, activeIndex) {
-        return data[childKey].some(item => {
-          if (item.index === activeIndex) {
-            return true
-          }
-          if (item[childKey] && item[childKey].length) {
-            return hasActiveChild(item, childKey, activeIndex)
-          }
-          return false
-        })
-      }
-      return this.activeIndexSelf === this.data[this.indexKey] || this.hasChild && this.showRootClass && hasActiveChild(this.data, this.childKey, this.activeIndexSelf)
+      return this.activeIndexSelf === this.data[this.indexKey] || this.hasChild && this.showRootClass && this.hasActiveChild(this.data, this.childKey, this.activeIndexSelf)
     },
     // 是否该条目已打开
     isOpen() {
@@ -232,6 +220,18 @@ export default {
     },
     _handleCloseSelf(index, itemData) {
       this.$emit('close', index, itemData)
+    },
+    // 递归遍历，如果有子项，则只要有一个子项被点亮，则该条目也被点亮
+    hasActiveChild(data, childKey, activeIndex) {
+      return data[childKey].some(item => {
+        if (item.index === activeIndex) {
+          return true
+        }
+        if (item[childKey] && item[childKey].length) {
+          return this.hasActiveChild(item, childKey, activeIndex)
+        }
+        return false
+      })
     }
   }
 }
