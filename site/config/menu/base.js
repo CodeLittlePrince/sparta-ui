@@ -148,6 +148,11 @@ export default {
               link: '/base/password-input',
               index: '3-4-12'
             },
+            {
+              title: 'Switch 开关',
+              link: '/base/switch',
+              index: '3-4-13'
+            },
           ]
         },
         {

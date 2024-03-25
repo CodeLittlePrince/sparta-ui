@@ -54,6 +54,7 @@ $color-danger-light-9: mix($color-white, $color-danger, 90%);
 /* Disable base
 -------------------------- */
 $disabled-color-base: $color-text-placeholder !default;
+$disabled-background-base: #afafaf;
 
 /* Shadow
 -------------------------- */
@@ -438,6 +439,16 @@ $--cascader-height: 200px;
 -------------------------- */
 $--scrollbar-background-color: rgba($color-text-secondary, 0.3);
 $--scrollbar-hover-background-color: rgba($color-text-secondary, 0.5);
+
+/* Switch
+-------------------------- */
+$--switch-on-color: $color-primary;
+$--switch-off-color: $border-color-base;
+$--switch-font-size: 14px;
+$--switch-core-border-radius: 11px;
+$--switch-width: 44px;
+$--switch-height: 22px;
+$--switch-button-size: 18px;
 
 /* Break-point
 -------------------------- */

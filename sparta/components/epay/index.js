@@ -47,6 +47,7 @@ import TimeSelect from './time-select'
 import Cascader from './cascader'
 import CascaderPanel from './cascader-panel'
 import ScrollBar from './scrollbar'
+import Switch from './switch'
 
 const components = [
   Row,
@@ -93,7 +94,8 @@ const components = [
   TimeSelect,
   Cascader,
   CascaderPanel,
-  ScrollBar
+  ScrollBar,
+  Switch,
 ]
 
 let Sparta = {}
@@ -166,5 +168,6 @@ export {
   TimeSelect,
   Cascader,
   CascaderPanel,
-  ScrollBar
+  ScrollBar,
+  Switch,
 }
