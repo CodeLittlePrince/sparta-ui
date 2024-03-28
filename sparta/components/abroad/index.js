@@ -47,6 +47,7 @@ import TimeSelect from './time-select'
 import Cascader from './cascader'
 import CascaderPanel from './cascader-panel'
 import ScrollBar from './scrollbar'
+import Tree from './tree'
 import Switch from './switch'
 
 const components = [
@@ -95,6 +96,7 @@ const components = [
   Cascader,
   CascaderPanel,
   ScrollBar,
+  Tree,
   Switch,
 ]
 
@@ -169,5 +171,6 @@ export {
   Cascader,
   CascaderPanel,
   ScrollBar,
+  Tree,
   Switch,
 }
