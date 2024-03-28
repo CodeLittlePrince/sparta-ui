@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Globalpay from '../../sparta/components/globalpay'
 import Abroad from '../../sparta/components/abroad'
+import Browser from '../../sparta/components/browser'
 
 let id = 0
 
@@ -17,6 +18,9 @@ export async function bootstrap(theme) {
   switch (theme) {
   case 'abroad':
     Vue.use(Abroad)
+    break
+  case 'browser':
+    Vue.use(Browser)
     break
   default:
     Vue.use(Globalpay)
