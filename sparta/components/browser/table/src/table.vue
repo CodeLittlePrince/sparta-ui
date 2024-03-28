@@ -64,9 +64,15 @@
         </colgroup>
         <tbody>
           <tr
-            v-for="(item, rIndex) in list"
+            v-for="(item, rIndex) in tableList"
             :key="rIndex"
-            :class="{ 'is--striped': rIndex%2 !== 0 }"
+            :class="[
+              {
+                'is--striped': rIndex%2 !== 0,
+                'is--expand': isExpand(item),
+                'is--hide': isHide(item, rIndex)
+              }
+            ]"
           >
             <td v-if="selection">
               <div class="sp-table-cell">
@@ -85,10 +91,21 @@
               <sp-table-cell
                 :key="cIndex + tableKey"
                 :column="tdItem"
-                :list="list"
+                :list="tableList"
                 :c-index="cIndex"
                 :r-index="rIndex"
-              ></sp-table-cell>
+                :level="item.spTreeTableRowLevel"
+              >
+                <template v-if="isTreeTable">
+                  <i
+                    v-if="cIndex === 0 && hasSub(item)"
+                    slot="pre"
+                    class="sp-icon-caret-right sp-table__expand-ico"
+                    :class="{ 'is--expand': childRowIsExpand(item) }"
+                    @click="handleRowExpand(item, rIndex, rowKey)"
+                  />
+                </template>
+              </sp-table-cell>
             </td>
           </tr>
         </tbody>
@@ -224,7 +241,7 @@ export default {
     selectable: Function,
     selectionWidth: {
       type: String,
-      default: '33'
+      default: '20'
     },
     pagination: {
       type: Boolean,
@@ -258,6 +275,14 @@ export default {
       type: Boolean,
       default: false
     },
+
+    /* 树形tale props */
+    rowKey: { // 行数据的 Key，用来优化 Table 的渲染；显示树形数据时该属性是必填的
+      type: [String, Function],
+      default: 'id'
+    },
+   
+    
   },
 
   data() {
@@ -273,6 +298,9 @@ export default {
   },
 
   computed: {
+    tableList() {
+      return this.list
+    },
     isIE9() {
       return navigator.appVersion.indexOf('MSIE 9.0') > -1
     },
@@ -298,8 +326,11 @@ export default {
         || this.$slots.footerLeftContent
     },
     hasData() {
-      return this.list && this.list.length
-    }
+      return this.tableList && this.tableList.length
+    },
+    isTreeTable() {
+      return false
+    },
   },
 
   watch: {
@@ -375,12 +406,13 @@ export default {
     },
 
     _initCheckedList() {
-      let len = this.list.length
+      let len = this.tableList.length
       while(len) {
         len--
         this.$set(this.checkedList, len, {
+          spTreeTableRowId: this.tableList[len]?.[this.rowKey],
           isChecked: false,
-          disabled: this.isSelectDisable(this.list[len], len)
+          disabled: this.isSelectDisable(this.tableList[len], len)
         })
       }
     },
@@ -392,7 +424,7 @@ export default {
       this.checkedList.forEach((item, index) => {
         if (item.isChecked) {
           isCheckedIndexList.push(index)
-          result.push(this.list[index])
+          result.push(this.tableList[index])
         }
       })
       if(!scalarArrayEquals(isCheckedIndexList, this.oldIsCheckedIndexList || [])) {
@@ -407,12 +439,12 @@ export default {
      */
     _processCheckBoxRelation() {
       const checkedAccount = this.checkedList.filter(item => {
-        return item.isChecked
+        return item.isChecked || item.disabled
       }).length
-      if (checkedAccount === this.list.length) {
+      if (checkedAccount === this.tableList.length) {
         this.checkAll = true
         this.isIndeterminate = false
-      } else if (0 < checkedAccount && checkedAccount < this.list.length) {
+      } else if (0 < checkedAccount && checkedAccount < this.tableList.length) {
         this.isIndeterminate = true
         this.checkAll = false
       } else {
@@ -421,13 +453,14 @@ export default {
       }
     },
     _setCheckState(checkState) {
-      let len = this.list.length
+      let len = this.tableList.length
       let isEmitChange = false
       while(len) {
         len--
         if(!this.checkedList[len].disabled) {
           isEmitChange = true
           this.$set(this.checkedList, len, {
+            spTreeTableRowId: this.tableList[len]?.[this.rowKey],
             disabled: this.checkedList[len].disabled,
             isChecked: checkState
           })
@@ -451,6 +484,7 @@ export default {
       // 更新checkedList
       if(!this.checkedList[index].disabled) {
         this.$set(this.checkedList, index, {
+          spTreeTableRowId: this.tableList[index]?.[this.rowKey],
           disabled: this.checkedList[index].disabled,
           isChecked
         })
@@ -470,6 +504,18 @@ export default {
     isSelectDisable(row, index) {
       if(this.disabled) return true
       if(typeof this.selectable === 'function') return !this.selectable(row, index)
+      return false
+    },
+
+    isExpand() {
+      return false
+    },
+
+    childRowIsExpand() {
+      return false
+    },
+
+    isHide() {
       return false
     }
   },
@@ -536,11 +582,6 @@ export default {
         padding: $table-td-padding-vertical 0;
         box-sizing: border-box;
 
-        &:first-child {
-          .sp-table-cell {
-            padding-left: $table-cell-padding-horizontal;
-          }
-        }
         &:last-child {
           .sp-table-cell {
             padding-right: $table-cell-padding-horizontal;
@@ -550,7 +591,10 @@ export default {
         .sp-checkbox__wrap {
           display: block;
           height: 14px;
+          width: 13px;
           line-height: 15px;
+          position: relative;
+          top: -1px;
           .sp-checkbox {
             font-size: 0;
           }
@@ -721,8 +765,8 @@ export default {
           td {
             &:first-child {
               .sp-table-cell {
-                padding-right: 7px;
-                padding-left: 10px;
+                padding-right: 0;
+                width: 20px;
                 margin-left: $table-selection-margin-left;
               }
             }
