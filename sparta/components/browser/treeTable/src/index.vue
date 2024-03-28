@@ -205,7 +205,17 @@ export default {
           : [...this.expandedRowKeyList, ...expandKeys]
       }
     },
-
+    /**
+     * 批量切换选中状态
+     */
+    toggleRowsSelection(indexList, isChecked) {
+      if(!this.disabled && Array.isArray(indexList) && typeof isChecked === 'boolean') {
+        Promise.all(indexList.map(index => this.checkHandle(index, isChecked))).then(() => {
+          this._processCheckBoxRelation()
+          this._emitChange()
+        })
+      }
+    },
 
     /**
      * 单选框单独点击
@@ -213,31 +223,39 @@ export default {
      * @param {*} isChecked
      */
     handleCheck(index, isChecked) {
-      // 1. 判断当前节点是否disabled
-      // 2. 如果当前节点不是disabled，判断是否有子节点，如果有子节点，递归调用
-      // 3. 如果当前节点不是disabled，判断是否有父节点，如果有父节点，递归调用选中状态
-      if(!this.checkedList[index].disabled) {
-        const rowData = this.tableList[index]
-        let allNeedCheckIndexList = [index]
-        this.getTreeTableListChildIndex(rowData.spTreeTableRowId, allNeedCheckIndexList)
-
-        this.getTreeTableListParentIndex(rowData, allNeedCheckIndexList)
-
-        for (let i = 0; i < allNeedCheckIndexList.length; i++) {
-          const checkedListIndex = allNeedCheckIndexList[i]
-          const checkItem = this.checkedList[checkedListIndex]
-          if(!checkItem.disabled) {
-            // 如果是disabled，跳过
-            this.$set(this.checkedList, checkedListIndex, {
-              spTreeTableRowId: this.tableList[checkedListIndex].spTreeTableRowId,
-              disabled: this.checkedList[checkedListIndex].disabled,
-              isChecked
-            })
-          }
-        }
+      this.checkHandle(index, isChecked).then(() => {
         this._processCheckBoxRelation()
         this._emitChange()
-      }
+      })
+    },
+
+    checkHandle(index, isChecked) {
+      return new Promise((resolve) => {
+        // 1. 判断当前节点是否disabled
+        // 2. 如果当前节点不是disabled，判断是否有子节点，如果有子节点，递归调用
+        // 3. 如果当前节点不是disabled，判断是否有父节点，如果有父节点，递归调用选中状态
+        if(!this.checkedList[index].disabled) {
+          const rowData = this.tableList[index]
+          let allNeedCheckIndexList = [index]
+          this.getTreeTableListChildIndex(rowData.spTreeTableRowId, allNeedCheckIndexList)
+
+          this.getTreeTableListParentIndex(rowData, allNeedCheckIndexList)
+
+          for (let i = 0; i < allNeedCheckIndexList.length; i++) {
+            const checkedListIndex = allNeedCheckIndexList[i]
+            const checkItem = this.checkedList[checkedListIndex]
+            if(!checkItem.disabled) {
+              // 如果是disabled，跳过
+              this.$set(this.checkedList, checkedListIndex, {
+                spTreeTableRowId: this.tableList[checkedListIndex].spTreeTableRowId,
+                disabled: this.checkedList[checkedListIndex].disabled,
+                isChecked
+              })
+            }
+          }
+        }
+        resolve()
+      })
     },
 
     /**
