@@ -2,6 +2,144 @@
 
 用于展示批量数据
 
+### 带选择框的树形表格
+
+:::demo 当`sp-table`元素中注入`list`对象数组后，在`sp-table-column`中用`prop`属性来对应对象中的键名即可填入数据，用`label`属性来定义表格的列名。<br>可以使用`width`属性来定义列宽。通过`template`自定义单元格内容，用`scope`单元格对应的值。
+```vue
+<template>
+  <sp-tree-table
+    :list="tableTreeList"
+    row-key="id"
+    :tree-props="{ children: 'childList', hasChildren: true }"
+    selection
+    :selectable="isTreeTableSelectable"
+    :default-expand-all="true"
+    ref="treeTable"
+    @selection-change="handleSelectionChange"
+  >
+    <sp-table-column
+      :ellipsis="true"
+      prop="name"
+      label="部门名称"
+      width="200">
+    </sp-table-column>
+    <sp-table-column
+      prop="number"
+      label="部门人数"
+      width="200">
+    </sp-table-column>
+    <sp-table-column
+      prop="userName"
+      label="部门负责人"
+      width="200">
+    </sp-table-column>
+    <sp-table-column
+      prop="groupName"
+      label="部门群名称"
+      width="200">
+    </sp-table-column>
+    <sp-table-column
+      prop="groupUserName"
+      label="部门群群主"
+      :formatter="formatter"
+      width="698">
+    </sp-table-column>
+  </sp-tree-table>
+</template>
+
+
+<script>
+export default{
+  data() {
+    return {
+      tableTreeList: [
+        {
+          id: 1,
+          name: 'UE设计',
+          number: '7',
+          userName: '',
+          groupName: 'UE设计',
+          groupUserName: 'wang wu'
+        },
+        {
+          id: 2,
+          name: 'UI设计',
+          number: '10',
+          userName: '',
+          groupName: 'UI设计',
+          groupUserName: 'wang wu',
+          childList: [
+            {
+              id: 21,
+              name: 'C端UI',
+              number: '2',
+              userName: '',
+              groupName: 'C端UI',
+              groupUserName: 'wang wu',
+            },
+            {
+              id: 22,
+              name: 'B端UI',
+              number: '3',
+              userName: '',
+              groupName: 'B端UI',
+              groupUserName: 'wang wu',
+              childList: [
+                {
+                  id: 221,
+                  name: 'home',
+                  number: '5',
+                  userName: '',
+                  groupName: 'home',
+                  groupUserName: 'wang wu',
+                  childList: [
+                    {
+                      id: 2211,
+                      name: '设计师',
+                      number: '16',
+                      userName: '',
+                      groupName: '设计师',
+                      groupUserName: 'wang wu',
+                      childList: [
+                        {
+                          id: 22111,
+                          name: '家装设计师',
+                          number: '2',
+                          userName: '',
+                          groupName: '家装设计师',
+                          groupUserName: 'wang wu',
+                          childList: [
+                            {
+                              id: 221111,
+                              name: '软装设计师软装设计师软装设计师软装设计师',
+                              number: '1',
+                              userName: '',
+                              groupName: '软装设计师',
+                              groupUserName: 'wang wu',
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+      ]
+    }
+  },
+  methods: {
+    formatter(cell) {
+      return cell + '元'
+    }
+  }
+}
+</script>
+```
+:::
+
 ### 基本用法
 
 :::demo 当`sp-table`元素中注入`list`对象数组后，在`sp-table-column`中用`prop`属性来对应对象中的键名即可填入数据，用`label`属性来定义表格的列名。<br>可以使用`width`属性来定义列宽。通过`template`自定义单元格内容，用`scope`单元格对应的值。
@@ -1046,6 +1184,10 @@ export default{
 | hasMoreText | 设置更多按钮文案 | string | — | 查看全部 |
 | disabled | 设置表格不可勾选 | boolean | — | false |
 | needScroll | 设置表格是否超出滚动 | boolean | — | false |
+| rowKey | 行数据的 Key，用来优化 Table 的渲染, 显示树形数据时，该属性是必填的 | Function(row)/String | — | —  |
+| default-expand-all | 是否默认展开所有行，当 Table为树形表格时有效 | boolean | — | false |
+| tree-props| 渲染嵌套数据的配置选项 | Object | — | { children: 'children' } |
+
 
 ### Table Events
 | 事件名称      | 说明    | 回调参数      |
@@ -1060,6 +1202,7 @@ export default{
 | clearSelection      | 用于多选表格，清空用户的选择    | —      |
 | toggleAllSelection      | 用于多选表格，切换所有行的选中状态    | —      |
 | toggleRowSelection | 用于多选表格，切换某一行的选中状态，如果使用了第二个参数，则是设置这一行选中与否（selected 为 true 则选中）    | index(数组下标,从0开始),selected   |
+| toggleRowsSelection | 用于多选表格，切换多行的选中状态，如果使用了第二个参数，则是设置这一行选中与否（selected 为 true 则选中）    | index(数组下标,从0开始),selected   |
 
 
 ### Table-column Attributes
@@ -1128,6 +1271,108 @@ export default{
           amount: ''
         }
       ],
+      tableTreeList: [
+         {
+          id: 1,
+          name: 'UE设计',
+          number: '7',
+          userName: '1',
+          groupName: 'UE设计',
+          groupUserName: 'wang wu'
+        },
+        {
+          id: 2,
+          name: 'UI设计',
+          number: '10',
+          userName: '2',
+          groupName: 'UI设计',
+          groupUserName: 'wang wu',
+          childList: [
+            {
+              id: 21,
+              name: 'C端UI',
+              number: '2',
+              userName: '21',
+              groupName: 'C端UI',
+              groupUserName: 'wang wu',
+            },
+            {
+              id: 22,
+              name: 'B端UI',
+              number: '3',
+              userName: '22',
+              groupName: 'B端UI',
+              groupUserName: 'wang wu',
+              childList: [
+                {
+                  id: 221,
+                  name: 'home',
+                  number: '5',
+                  userName: '221',
+                  groupName: 'home',
+                  groupUserName: 'wang wu',
+                  childList: [
+                    {
+                      id: 2211,
+                      name: '设计师',
+                      number: '16',
+                      userName: '2211',
+                      groupName: '设计师',
+                      groupUserName: 'wang wu',
+                      childList: [
+                        {
+                          id: 22111,
+                          name: '家装设计师',
+                          number: '2',
+                          userName: '22111',
+                          groupName: '家装设计师',
+                          groupUserName: 'wang wu',
+                          childList: [
+                            {
+                              id: 221111,
+                              name: '软装设计师软装设计师软装设计师软装设计师',
+                              number: '1',
+                              userName: '221111',
+                              groupName: '软装设计师',
+                              groupUserName: 'wang wu',
+                            }
+                          ]
+                        },
+                        {
+                          id: 22112,
+                          name: '家装设计师2',
+                          number: '2',
+                          userName: '22112',
+                          groupName: '家装设计师2',
+                          groupUserName: 'wang wu',
+                          childList: [
+                            {
+                              id: 221121,
+                              name: '软装设计师软装设计师软装设计师软装设计师2',
+                              number: '1',
+                              userName: '221121',
+                              groupName: '软装设计师2',
+                              groupUserName: 'wang wu',
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  id: 222,
+                  name: 'C端UI2',
+                  number: '2',
+                  userName: '222',
+                  groupName: 'C端UI2',
+                  groupUserName: 'wang wu2',
+                },
+              ]
+            }
+          ]
+        },
+      ],
       loading: false,
       loading2: false,
       showTableColumn: true
@@ -1135,6 +1380,7 @@ export default{
   },
   mounted() {
     this.popperScrollBindElem = document.querySelector('.components--main.markdown-body')
+    window.treeTable = this.$refs.treeTable
   },
   methods: {
     formatter(cell) {
@@ -1207,6 +1453,9 @@ export default{
     },
     isSelectable2(row, index) {
       return !['30.00'].includes(row.withdrawing)
+    },
+    isTreeTableSelectable(row, index) {
+      return ![222].includes(row.id)
     }
   }
 }
