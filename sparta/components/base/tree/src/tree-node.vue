@@ -69,6 +69,7 @@
           :render-after-expand="renderAfterExpand"
           :show-checkbox="showCheckbox"
           :node="child"
+          :props="props"
           @node-expand="handleChildNodeExpand"
         >
         </sp-tree-node>
