@@ -41,7 +41,7 @@ const config = insertMenuItems(base, [
     data: {
       title: 'Form 表单（新）',
       link: '/base/form',
-      index: '3-4-10'
+      index: '3-4-11'
     },
   }
 ])

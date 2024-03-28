@@ -24,6 +24,14 @@
   }
 }
 
+.sp-icon-caret-right:before {
+  content: "\e615";
+}
+
+.sp-icon-arrow-down:before {
+  content: "\e612";
+}
+
 .sp-icon-clock::before {
   content: "\e62a";
 }

@@ -35,7 +35,7 @@ function hasClass(el, cls) {
   }
 }
 
-function addClass(el, cls) {
+export function addClass(el, cls) {
   if (!el) return
   var curClass = el.className
   var classes = (cls || '').split(' ')
@@ -55,7 +55,7 @@ function addClass(el, cls) {
   }
 }
 
-function removeClass(el, cls) {
+export function removeClass(el, cls) {
   if (!el || !cls) return
   var classes = cls.split(' ')
   var curClass = ' ' + el.className + ' '
@@ -112,6 +112,4 @@ export const off = (function () {
 export default {
   getElementCoords,
   hasClass,
-  addClass,
-  removeClass
 }

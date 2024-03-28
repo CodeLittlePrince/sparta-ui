@@ -60,6 +60,9 @@ $disabled-background-base: #afafaf;
 -------------------------- */
 $float-box-shadow-box: 0 2px 10px 0 rgb(0 53 111 / 10%);
 
+// Background
+$background-color-base: #fff8f4;
+
 /* Scrollbar
 -------------------------- */
 $scrollbar-background: #f7f7f7;
@@ -429,7 +432,7 @@ $--cascader-menu-radius: $border-radius-base;
 $--cascader-menu-border: solid 1px $border-color-base;
 $--cascader-menu-border-split: solid 1px #e9edf0;
 $--cascader-menu-shadow: 0 2px 10px 0 rgb(0 53 111 / 10%);
-$--cascader-node-background-hover: #ebf7ff;
+$--cascader-node-background-hover: $background-color-base;
 $--cascader-node-color-disabled: $color-text-placeholder;
 $--cascader-color-empty: $color-text-placeholder;
 $--cascader-tag-background: #f0f2f5;
@@ -439,6 +442,12 @@ $--cascader-height: 200px;
 -------------------------- */
 $--scrollbar-background-color: rgba($color-text-secondary, 0.3);
 $--scrollbar-hover-background-color: rgba($color-text-secondary, 0.5);
+
+/* Tree
+-------------------------- */
+$--tree-node-hover-background-color: $background-color-base;
+$--tree-font-color: $color-text-regular;
+$--tree-expand-icon-color: $color-text-placeholder;
 
 /* Switch
 -------------------------- */
