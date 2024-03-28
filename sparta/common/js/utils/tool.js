@@ -158,6 +158,15 @@ export const valueEquals = (a, b) => {
   return true
 }
 
+export const arrayFindIndex = function (arr, pred) {
+  for (let i = 0; i !== arr.length; ++i) {
+    if (pred(arr[i])) {
+      return i
+    }
+  }
+  return -1
+}
+
 export function merge(target) {
   for (let i = 1, j = arguments.length; i < j; i++) {
     let source = arguments[i] || {}

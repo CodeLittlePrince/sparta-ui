@@ -170,24 +170,29 @@ export default {
               index: '3-5-2'
             },
             {
+              title: 'Tree 树形控件',
+              link: '/base/tree',
+              index: '3-5-3'
+            },
+            {
               title: 'Tabs 标签页（新）',
               link: '/base/tabs',
-              index: '3-5-3'
+              index: '3-5-4'
             },
             {
               title: 'ImgPreview 图片查看器（新）',
               link: '/base/img-preview',
-              index: '3-5-4'
+              index: '3-5-5'
             },
             {
               title: 'PopupTip 浮层提示（新）',
               link: '/base/popup-tip',
-              index: '3-5-5'
+              index: '3-5-6'
             },
             {
               title: 'Step 步骤条（新）',
               link: '/base/step',
-              index: '3-5-6'
+              index: '3-5-7'
             },
             
           ]
