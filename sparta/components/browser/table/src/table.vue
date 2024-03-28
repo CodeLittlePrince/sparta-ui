@@ -382,6 +382,22 @@ export default {
         this.handleCheck(index, selected)
       }
     },
+    toggleRowsSelection(indexList, isChecked) {
+      if(!this.disabled && Array.isArray(indexList) && typeof isChecked === 'boolean') {
+        indexList.forEach(index => {
+          if(!this.checkedList[index].disabled) {
+            this.$set(this.checkedList, index, {
+              spTreeTableRowId: this.tableList[index]?.[this.rowKey],
+              disabled: this.checkedList[index].disabled,
+              isChecked
+            })
+          }
+        })
+        
+        this._processCheckBoxRelation()
+        this._emitChange()
+      }
+    },
     _initTableWidth() {
       let width = 0
       for (let i = 0, len = this.children.length; i < len; i++) {
