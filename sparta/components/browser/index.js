@@ -48,6 +48,7 @@ import Cascader from './cascader'
 import CascaderPanel from './cascader-panel'
 import ScrollBar from './scrollbar'
 import Switch from './switch'
+import TreeTable from './treeTable'
 
 const components = [
   Row,
@@ -96,6 +97,7 @@ const components = [
   CascaderPanel,
   ScrollBar,
   Switch,
+  TreeTable,
 ]
 
 let Sparta = {}
@@ -170,4 +172,5 @@ export {
   CascaderPanel,
   ScrollBar,
   Switch,
+  TreeTable
 }
