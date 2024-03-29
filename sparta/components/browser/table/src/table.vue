@@ -95,13 +95,15 @@
                 :c-index="cIndex"
                 :r-index="rIndex"
                 :level="item.spTreeTableRowLevel"
+                :selection="selection"
               >
                 <template v-if="isTreeTable">
                   <i
-                    v-if="cIndex === 0 && hasSub(item)"
+                    v-if="cIndex === 0"
                     slot="pre"
                     class="sp-icon-caret-right sp-table__expand-ico"
                     :class="{ 'is--expand': childRowIsExpand(item) }"
+                    :style="{ visibility: hasSub(item) ? 'visible' : 'hidden' }"
                     @click="handleRowExpand(item, rIndex, rowKey)"
                   />
                 </template>

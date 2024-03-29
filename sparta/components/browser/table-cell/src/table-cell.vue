@@ -21,7 +21,11 @@ export default {
     },
     level: {
       type: Number,
-      default: 0
+      default: -1
+    },
+    selection: {
+      type: Boolean,
+      default: false
     }
   },
   render(h) {
@@ -57,7 +61,17 @@ export default {
       cellClass += ' ellipsis'
     }
 
-    const paddingLeft = this.cIndex === 0 ? this.level * 16 + 'px' : 0
+    let paddingLeft = 0
+    if(this.cIndex === 0) {
+      paddingLeft = '10px'
+      if(this.level !== -1) {
+        paddingLeft = this.level * 16
+        if(!this.selection) {
+          paddingLeft += 10
+        }
+        paddingLeft += 'px'
+      }
+    }
     
     // 渲染
     return h('div',
