@@ -81,10 +81,10 @@ export default {
           paddingLeft
         }
       },
-      [
+      this.$slots.pre ? [
         this.$slots.pre,
         cellCopy
-      ]
+      ] : cellCopy
     )
   }
 }
