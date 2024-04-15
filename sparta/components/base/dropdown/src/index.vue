@@ -11,6 +11,7 @@
     </div>
     <sp-dropdown-item-wrap
       v-model="visible"
+      :class="dropdownWrapClass"
       :placement="placement"
       :popper-scroll-bind-elem="popperScrollBindElem"
       @mouseenter="handleMouseenter"
@@ -57,6 +58,10 @@ export default {
       default: 'bottom-start'
     },
     popperScrollBindElem: {},
+    dropdownWrapClass: {
+      type: String,
+      default: ''
+    }
   },
 
   data() {

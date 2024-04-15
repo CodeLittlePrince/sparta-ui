@@ -101,6 +101,7 @@
 | placement    | 菜单弹出位置     | string | top/top-start/top-end/bottom/bottom-start/bottom-end  | bottom-end |
 | trigger      | 触发下拉的行为   | string | hover, click  | hover |
 | popperScrollBindElem | popper浮动定位的锚点元素 | string/Element | — | - |
+| dropdownWrapClass | 浮层自定义样式 | string | — | '' |
 
 ### Dropdown Slots
 
