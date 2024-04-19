@@ -113,7 +113,7 @@ export default {
     },
     handleClick() {
       if (this.trigger === 'click') {
-        this.visible = !this.visible
+        this.toggleVisible()
       }
     },
     /**
@@ -124,6 +124,9 @@ export default {
         this.isFocus = false
         this.visible = false
       }
+    },
+    toggleVisible() {
+      this.visible = !this.visible
     }
   }
 }
