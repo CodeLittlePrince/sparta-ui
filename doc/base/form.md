@@ -811,7 +811,7 @@
 | resetFields | 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果 | —
 | clearValidate | 移除表单项的校验结果。传入待移除的表单项的 prop 属性或者 prop 组成的数组，如不传则移除整个表单的校验结果果 | Function(props: array | string)
 | getFirstErrorText | 获取第一个报错元素的错误文案 | —
-| showErrors | 获取第一个报错元素的错误文案 | Function(errors: object)
+| showErrors | 根据prop进行自定义的报错提示 | Function(errors: object)
 
 ### Form Events
 | 事件名称 | 说明    | 回调参数  |
