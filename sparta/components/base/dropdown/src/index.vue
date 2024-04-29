@@ -127,6 +127,12 @@ export default {
     },
     toggleVisible() {
       this.visible = !this.visible
+    },
+    hide() {
+      this.visible = false
+    },
+    show() {
+      this.visible = true
     }
   }
 }

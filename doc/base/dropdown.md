@@ -118,8 +118,9 @@
 ### Methods
 | 方法名 | 说明 | 参数 |
 | ---- | ---- | ---- |
-| toggleVisible | 切换下拉框是否显示 | - |
-
+| toggleVisible | 切换浮层是否显示 | - |
+| show | 显示浮层 | - |
+| hide | 隐藏浮层 | - |
 
 <style>
 .sp-dropdown-demo {
