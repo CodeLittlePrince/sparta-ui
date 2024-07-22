@@ -1,5 +1,6 @@
 <template>
   <div class="sp-pagination" :class="{'is--disabled': disabled}">
+    <div v-if="showTotal" class="sp-pagination__total">共{{ total }}条</div>
     <ul :class="`align--${ align }`">
       <!-- prev -->
       <li
@@ -51,6 +52,26 @@
         <i class="sp-icon-arrow-right"></i>
       </li>
     </ul>
+    <div v-if="showSizes" class="sp-pagination__sizes">
+      <sp-select v-model="limit" height="28" @change="handleSizeChange">
+        <sp-option
+          v-for="item in pageSizes"
+          :key="item"
+          :value="item"
+          :label="`${item}条/页`"
+        ></sp-option>
+      </sp-select>
+    </div>
+    <div v-if="showJumper" class="sp-pagination__jump">
+      跳至<sp-input
+        ref="jumperInput"
+        v-model="jumperPage"
+        size="mini"
+        :filter-char="/[^\d]/g"
+        @change="handleJumpChange"
+        @keydown.enter.native="handleInputEnter"
+      />页
+    </div>
   </div>
 </template>
 
@@ -87,6 +108,11 @@ export default {
       type : [Number, String],
       default : 10
     },
+    // 每页显示个数选择器的选项设置
+    pageSizes : {
+      type : Array,
+      default : () => []
+    },
     // 总记录数
     total : {
       type : [Number, String],
@@ -96,6 +122,15 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    // 组件布局，子组件名用逗号分隔
+    layout: {
+      type: String,
+      default: '',
+      validator(val) {
+        if(!val) return true
+        return val.split(',').every(item => ['sizes', 'jumper', 'total'].includes(item))
+      }
     }
   },
 
@@ -107,7 +142,8 @@ export default {
       showPrevMore: false,
       showNextMore: false,
       firstItem: 1,
-      lastItem: 1
+      lastItem: 1,
+      jumperPage: +this.pageIndex
     }
   },
 
@@ -151,8 +187,20 @@ export default {
         array.push(i)
       }
 
-      // 去除收尾
+      // 去除首尾
       return array.slice(1, -1)
+    },
+
+    showTotal() {
+      return this.layout?.split(',')?.includes('total')
+    },
+
+    showSizes() {
+      return this.layout?.split(',')?.includes('sizes') && this.pageSizes?.length
+    },
+
+    showJumper() {
+      return this.layout?.split(',')?.includes('jumper')
     }
   },
 
@@ -167,6 +215,19 @@ export default {
 
     total(val) {
       this.size = val || 1
+    },
+
+    index(val) {
+      this.jumperPage = val
+    },
+
+    pageSizes: {
+      handler(val) {
+        if (val?.length) {
+          this.limit = val[0]
+        }
+      },
+      immediate: true
     }
   },
 
@@ -199,8 +260,28 @@ export default {
       if (this.index !== page && !this.disabled) {
         this.index = page
         // emit给父组件处理
-        this.$emit('change', this.index, this.pageSize)
+        this.$emit('change', this.index, this.limit)
       }
+    },
+
+    handleJumpChange(val) {
+      if(!val || val < 1) {
+        val = 1
+      }
+      this.go(Number(val))
+    },
+
+    handleSizeChange() {
+      this.go(1)
+      this.$emit('size-change', this.limit)
+    },
+
+    handleInputEnter() {
+      // 修复回车之后光标显示在值前面的问题
+      this.$refs.jumperInput?.$refs?.input?.blur?.()
+      this.$nextTick(() => {
+        this.$refs.jumperInput?.$refs?.input?.focus?.()
+      })
     }
   }
 }
@@ -213,6 +294,60 @@ export default {
 .sp-pagination {
   text-align: center;
   @include clearfix;
+  font-size: 0;
+
+  &__total {
+    display: inline-block;
+    line-height: 28px;
+    height: 28px;
+    vertical-align: top;
+    color: #0d1233;
+    font-size: 14px;
+    margin-right: 16px;
+  }
+
+  &__sizes {
+    display: inline-block;
+    width: 94px;
+    margin-left: 16px;
+    vertical-align: top;
+    .sp-select__input-box {
+      min-height: 29px;
+      font-size: 12px;
+      .sp-select__input {
+        padding-right: 0;
+      }
+
+      .sp-select__suffix {
+        padding-left: 4px;
+        background-color: transparent;
+        border-color: transparent;
+
+        .sp-icon-arrow-down-bold {
+          color: #0d1233;
+          &.rotate {
+            transform: rotate(180deg);
+            color: #09f;
+          }
+        }
+      }
+    }
+  }
+
+  &__jump {
+    display: inline-block;
+    vertical-align: top;
+    width: 104px;
+    line-height: 28px;
+    height: 28px;
+    color: #0d1233;
+    font-size: 14px;
+    margin-left: 8px;
+    .sp-input {
+      width: 50px;
+      margin: 0 6px;
+    }
+  }
 
   &.is--disabled {
     cursor: not-allowed;

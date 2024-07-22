@@ -334,7 +334,8 @@ export default{
 ```vue
 <template>
   <sp-table 
-  :list="tableList1" 
+  :list="tableList1"
+  :pagination-option="paginationOption"
   pagination>
     <sp-table-column
       :ellipsis="true"
@@ -379,7 +380,81 @@ export default{
           withdrawing: '20.00',
           tag: 'yo'
         }
-      ]
+      ],
+      paginationOption: {
+        pageSize: 10,
+        totalSize: 100,
+      }
+    }
+  },
+  methods: {
+    formatter(cell) {
+      return cell + '元'
+    }
+  }
+}
+</script>
+```
+:::
+
+### 带分页的(跳转)
+
+:::demo 。
+```vue
+<template>
+  <sp-table 
+  :list="tableList1"
+  :pagination-option="paginationOption1"
+  pagination>
+    <sp-table-column
+      :ellipsis="true"
+      prop="name"
+      label="店铺名称"
+      width="200">
+    </sp-table-column>
+    <sp-table-column
+      prop="withdrawing"
+      label="提现中的金额"
+      :formatter="formatter"
+      width="200">
+    </sp-table-column>
+    <sp-table-column
+      prop="tag"
+      label="操作">
+      <template slot-scope="scope">
+        <sp-button
+          type="primary"
+          size="small"
+        >
+          {{ scope.cell }}
+          {{ scope.row.tag }}
+        </sp-button>
+      </template>
+    </sp-table-column>
+  </sp-table>
+</template>
+
+<script>
+export default{
+  data() {
+    return {
+      tableList1: [
+        {
+          name: 'Steven Jobs',
+          withdrawing: '20.00',
+          tag: 'yo'
+        },
+        {
+          name: 'Steven Jobs',
+          withdrawing: '20.00',
+          tag: 'yo'
+        }
+      ],
+      paginationOption1: {
+        layout: 'sizes,jumper,total',
+        pageSizes: [5, 10 ,15, 20],
+        totalSize: 1000,
+      }
     }
   },
   methods: {
@@ -1041,7 +1116,7 @@ export default{
 | selection | 带选择的表格 | boolean | — | false |
 | showAllSelect | 设置全选选项是否显示，需要在selection为true的情况下生效 | boolean | — | true |
 | pagination | 设置表格分页 | boolean | — | false |
-| paginationOption | 设置表格分页参数参考Pagination组件 | object | — | {} |
+| paginationOption | 设置表格分页参数参考Pagination组件 | object | — | { perPages, queryPageNo, pageSize, totalSize, align, layout } |
 | hasMore | 设置显示更多按钮 | boolean | — | false |
 | disabled | 设置表格不可勾选 | boolean | — | false |
 | needScroll | 设置表格是否超出滚动 | boolean | — | false |
@@ -1129,7 +1204,16 @@ export default{
       ],
       loading: false,
       loading2: false,
-      showTableColumn: true
+      showTableColumn: true,
+      paginationOption: {
+        pageSize: 10,
+        totalSize: 100,
+      },
+      paginationOption1: {
+        layout: 'sizes,jumper,total',
+        pageSizes: [5, 10 ,15, 20],
+        totalSize: 1000,
+      }
     }
   },
   mounted() {
