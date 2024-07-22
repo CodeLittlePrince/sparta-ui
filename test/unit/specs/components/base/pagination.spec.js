@@ -15,6 +15,8 @@ describe('Pagination', () => {
         disabled: false,
         currentPage: -1,
         currentPageSize: -1,
+        layout: '',
+        pageSizes: []
       }
     },
     template: `
@@ -24,13 +26,19 @@ describe('Pagination', () => {
       :page-index="pageIndex"
       :total="total"
       :page-size="pageSize"
+      :page-sizes="pageSizes"
       :disabled="disabled"
+      :layout="layout"
+      @size-change="handlePageSizeChange"
       @change="handelPageChange">
     </sp-pagination>
     `,
     methods: {
       handelPageChange(index, pageSize) {
         this.currentPage = index
+        this.currentPageSize = pageSize
+      },
+      handlePageSizeChange(pageSize) {
         this.currentPageSize = pageSize
       }
     }
@@ -53,6 +61,15 @@ describe('Pagination', () => {
       await wrapper.setData({pageIndex: 3 })
       expect(wrapper.find('.align--middle .is--checked').text()).to.be.equal('3')
       await wrapper.setData({pageIndex: 2, total: 1000, pageSize:20 })
+    })
+
+    it('layout', async () => {
+      expect(wrapper.find('.sp-pagination__total').exists()).to.be.false
+      await wrapper.setData({ layout: 'total,sizes,jumper', pageSizes: [20, 30, 40, 50] })
+      expect(wrapper.find('.sp-pagination__total').exists()).to.be.true
+      expect(wrapper.find('.sp-pagination__sizes').exists()).to.be.true
+      expect(wrapper.find('.sp-pagination__jump').exists()).to.be.true
+      await wrapper.setData({ layout: '', pageSizes: [] })
     })
   })
 
@@ -87,11 +104,22 @@ describe('Pagination', () => {
       expect(wrapper.find('.align--middle .is--checked').text()).to.be.equal('50')
     })
 
+    it('size-change', async () => {
+      await wrapper.setData({ layout: 'sizes,jumper', pageSizes: [5, 10, 15, 20, 25] })
+      await wrapper.findAll('.align--middle li').wrappers[1].trigger('click')
+      expect(wrapper.find('.align--middle .is--checked').text()).to.be.equal('1')
+      expect(wrapper.vm.currentPageSize).to.be.equal(5)
+      expect(wrapper.find('.sp-pagination__sizes').exists()).to.be.true
+      await wrapper.find('.sp-pagination__sizes .sp-select').trigger('click')
+      await wrapper.findAll('.sp-select-list .sp-option').wrappers[3].trigger('click')
+      expect(wrapper.vm.currentPageSize).to.be.equal(20)
+    })
+
     it('disable', async () => {
       await wrapper.setData({ disabled: true })
       await wrapper.find('.align--middle li').trigger('click')
-      expect(wrapper.find('.align--middle .is--checked').text()).to.be.equal('50')
-      expect(wrapper.vm.currentPage).to.be.equal(50)
+      expect(wrapper.find('.align--middle .is--checked').text()).to.be.equal('1')
+      expect(wrapper.vm.currentPage).to.be.equal(1)
       expect(wrapper.vm.currentPageSize).to.be.equal(20)
     })
     after(() => {

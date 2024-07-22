@@ -472,7 +472,8 @@ export default{
 ```vue
 <template>
   <sp-table 
-  :list="tableList1" 
+  :list="tableList1"
+  :pagination-option="paginationOption"
   pagination>
     <sp-table-column
       :ellipsis="true"
@@ -517,7 +518,11 @@ export default{
           withdrawing: '20.00',
           tag: 'yo'
         }
-      ]
+      ],
+      paginationOption: {
+        total: 1000,
+        layout: 'sizes,jumper,total'
+      }
     }
   },
   methods: {
@@ -1375,7 +1380,11 @@ export default{
       ],
       loading: false,
       loading2: false,
-      showTableColumn: true
+      showTableColumn: true,
+      paginationOption: {
+        totalSize: 1000,
+        layout: 'sizes,jumper,total'
+      }
     }
   },
   mounted() {

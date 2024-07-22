@@ -182,6 +182,7 @@
           :disabled="loading"
           :total="paginationTotal"
           :page-size="paginationPageSize"
+          :layout="paginationLayout"
           @change="handlePageChange"
         >
         </sp-pagination>
@@ -320,6 +321,9 @@ export default {
     },
     paginationAlign() {
       return this.paginationOption && this.paginationOption.align || 'middle'
+    },
+    paginationLayout() {
+      return this.paginationOption && this.paginationOption.layout || ''
     },
     hasFooter() {
       return (this.selection && this.showAllSelect)
