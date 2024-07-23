@@ -64,9 +64,10 @@
         {{ helperText }}
       </p>
       <div
-        v-if="$slots.center && inputText"
+        v-if="centerSlotVisible"
         ref="center"
         class="sp-select__center"
+        :class="centerSlotClass"
         tabindex="0"
         @click.stop="handleSelfClick"
         @keydown.down.prevent="navigateOptions('next')"
@@ -83,7 +84,8 @@
         ref="selectInput"
         v-model="inputText"
         class="sp-select__input"
-        :style="{ height: selectInputBoxHeight }"
+        :class="selectInputClass"
+        :style="selectInputStyle"
         type="text"
         :placeholder="placeholderText"
         :readonly="_readonly"
@@ -266,12 +268,27 @@ export default {
       needFilterMethod: false, // 是否应该调用filterMethod方法，用户主动选择的时候，虽然输入框的值变化了，但是不应再去过滤了
       groupMultipleSelected: this.value,
       groupMultiSelectInputText: '',
+      selectInputVisible: false, // 控制selectInput是否显示
     }
   },
 
   computed: {
     _readonly() {
       return !this.filterable || this.readonly
+    },
+    // 自定义内容center插槽的显示时机
+    centerSlotVisible() {
+      return (this.$slots.center && this.inputText && !this.isCustomFilter) || (this.useCenterSlotCustomFilter && !!this.value)
+    },
+    // 自定义内容center插槽的动态class
+    centerSlotClass() {
+      return {'sp-select__center--bg': this.useCenterSlotCustomFilter && this.selectInputVisible }
+    }, 
+    selectInputClass() {
+      return { 'sp-selectInput__absolute': this.useCenterSlotCustomFilter && !!this.value && this.selectInputVisible, 'sp-selectInput__show': this.inputText || this.isOnComposition }
+    },
+    selectInputStyle() {
+      return { height: this.selectInputBoxHeight, '--suffix-width': this.$refs['sp-select-suffix']?.clientWidth + 'px' }
     },
     spOptionsAllDisabled() {
       return this.spOptions.every(option => option.disabled)
@@ -301,8 +318,9 @@ export default {
     isMulti() {
       return this.multiple || this.groupMultiple
     },
+    // 显示清空icon
     showClearIcon() {
-      return this.clearable && this.inputText !== '' && this.isHover && !this.isMulti && this.value
+      return (this.clearable && this.inputText !== '' && this.isHover && !this.isMulti && this.value) || (this.filterMethod && this.isHover && !this.isMulti && this.value)
     },
     hasSpOptions() {
       return this.spOptions && this.spOptions.length
@@ -323,7 +341,7 @@ export default {
     },
     placeholderText() {
       // IE10和IE11上，如果有placeholder，input显示以后IE辣鸡浏览器会自动触发input事件
-      return this.isIE ? '' : this.helperText
+      return this.isIE ? '' : this.useCenterSlotCustomFilter && this.selectInputVisible && !!this.value ? '' : this.helperText
     },
     isCustomFilter() { // 是否是自定义搜索
       return this.filterable && this.filterMethod && typeof this.filterMethod === 'function'
@@ -336,6 +354,10 @@ export default {
     },
     showGroupMultiSelectNum() {
       return 2 <= this.groupMultipleSelected.length
+    },
+    // 开启自定义内容搜索：指定了filter-method且使用了center插槽
+    useCenterSlotCustomFilter() {
+      return this.$slots.center && this.isCustomFilter
     }
   },
 
@@ -359,20 +381,24 @@ export default {
         this.broadcast('SpSelectDropdown', 'updatePopper')
       } else {
         // 如果filterable开启了，用户输入的值在options中不存在的话，清空
+        this.broadcast('SpSelectDropdown', 'destroyPopper')
         if (this.filterable) {
           // 清空
           this.inputText = ''
+          if (this.useCenterSlotCustomFilter) {
+            this.debounceFilterMethod?.()
+            return
+          }
           if (this.oldInputText) {
             this.inputText = this.oldInputText
           }
           if (this.singleSelected) {
             this.inputText = this.singleSelected
           }
-          if(this.inputText == '') {
+          if (this.inputText == '') {
             this.clearValue()
           }
         }
-        this.broadcast('SpSelectDropdown', 'destroyPopper')
       }
       // 触发form的校验
       if (this.validateEvent && !val) {
@@ -555,10 +581,10 @@ export default {
           }
           this.updateTagboxHeight()
         } else {
-        // 单选情况
+          // 单选情况
           for (let i = 0, len = this.spOptions.length; i < len; i++) {
             if (this.spOptions[i].value === val) {
-              this.inputText = this.spOptions[i].label
+              this.inputText = this.useCenterSlotCustomFilter ? '' : this.spOptions[i].label
               this.evOptionHoverIndex = i
               break
             }
@@ -583,8 +609,20 @@ export default {
         // 导致显示Bug，因此，暂时降低体验处理
         this.visible = this.isCustomFilter && !(this.inputText || this.oldInputText) && !this.spOptions.length ? false : true // 自定义搜索时，没有输入任何文字时，不展示拉下框
         this.isFocus = true
-        this.focusSelectInput()
+        this.toggleSelectInputShow(true)
+        this.$nextTick(() => {
+          this.focusSelectInput()
+        })
         this.storeInputTextWhenFilterable()
+      }
+    },
+    /**
+     * 切换文本输入框显示
+     */
+    toggleSelectInputShow(show) {
+      if (this.useCenterSlotCustomFilter) {
+        this.selectInputVisible = show
+        this.selectInputBoxHeight = show && !!this.value ? '100%' : this.height - 2 + 'px'
       }
     },
     /**
@@ -594,6 +632,7 @@ export default {
       if (!this.$el.contains(e.target)) {
         this.isFocus = false
         this.visible = false
+        this.toggleSelectInputShow(false)
       }
     },
     /**
@@ -666,6 +705,7 @@ export default {
       if (!this.visible) {
         this.isFocus = false
       }
+      this.toggleSelectInputShow(false)
       // 触发form的校验
       if (this.validateEvent && !this.isFocus) {
         this.dispatch('SpFormItem', 'sp.form.blur', [this.currentValue])
@@ -938,6 +978,26 @@ export default {
 
   &__center ~ &__input {
     display: none;
+  }
+
+  &__center--bg {
+    opacity: 0.2;
+    color: #012257;
+  }
+
+  &__center ~ .sp-selectInput__absolute {
+    position: absolute;
+    width: calc(100% - var(--suffix-width, 0px));
+    left: 0;
+    z-index: 1;
+    display: block;
+    background-color: transparent;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .sp-selectInput__show {
+    background-color: #fff;
   }
 
   &.isFocus &__input-box {
