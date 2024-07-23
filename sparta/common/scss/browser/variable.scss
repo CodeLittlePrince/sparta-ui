@@ -505,3 +505,9 @@ $breakpoints-spec: (
   "lg-and-down": (max-width: $xl - 1),
   "xl-only" : (min-width: $xl),
 );
+
+/* Drawer
+-------------------------- */
+$--dialog-background-color: #fff;
+$--dialog-padding-primary: 20px;
+$--font-size-extra-large: 14px;

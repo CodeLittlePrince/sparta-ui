@@ -222,6 +222,17 @@ export default {
               index: '3-6-4'
             }
           ]
+        },
+        {
+          group: '其他',
+          index: '3-7',
+          child: [
+            {
+              title: 'Drawer 抽屉（新）',
+              link: '/base/drawer',
+              index: '3-7-1'
+            }
+          ]
         }
       ]
     }

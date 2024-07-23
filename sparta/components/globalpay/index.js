@@ -8,6 +8,7 @@ import Aside from './aside'
 import Main from './main'
 import Menu from './menu'
 import Window from './window'
+import Drawer from './drawer'
 import Dropdown from './dropdown'
 import DropdownItem from './dropdown-item'
 import Button from './button'
@@ -98,6 +99,7 @@ const components = [
   ScrollBar,
   Tree,
   Switch,
+  Drawer
 ]
 
 let Sparta = {}
@@ -173,4 +175,5 @@ export {
   ScrollBar,
   Tree,
   Switch,
+  Drawer
 }

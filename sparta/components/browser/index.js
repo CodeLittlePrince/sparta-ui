@@ -50,6 +50,7 @@ import ScrollBar from './scrollbar'
 import Tree from './tree'
 import Switch from './switch'
 import TreeTable from './treeTable'
+import Drawer from './drawer'
 
 const components = [
   Row,
@@ -100,6 +101,7 @@ const components = [
   Tree,
   Switch,
   TreeTable,
+  Drawer,
 ]
 
 let Sparta = {}
@@ -175,5 +177,6 @@ export {
   ScrollBar,
   Tree,
   Switch,
-  TreeTable
+  TreeTable,
+  Drawer
 }
