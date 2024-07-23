@@ -425,6 +425,29 @@ export default{
         :value="item.value"
       ></sp-option>
     </sp-select>
+    <p>自定义内容筛选</p>
+    <sp-select
+      v-model="value4_2"
+      filterable
+      clearable
+      :loading="loading"
+      :filter-method="myFilterMethod"
+    >
+      <div slot="center" class="bindCardSelectItemBox">
+        <div>{{ currentSelectCenterSlot.bankAccountName }}</div>
+        <div>{{ currentSelectCenterSlot.bankName }}尾号({{ currentSelectCenterSlot.bankAccount }})</div>
+      </div>
+      <sp-option
+        v-for="item in list4_2_filtered"
+        :key="item.accountId"
+        :label="item.accountId"
+        :value="item.accountId"
+      >
+        <div>
+          {{ item.bankAccountName}} {{ item.bankName }} {{ item.bankAccount }}
+        </div>
+      </sp-option>
+    </sp-select>
   </div>
 </template>
 
@@ -441,7 +464,10 @@ export default{
       value4: 0,
       list4_1: [],
       value4_1: '',
-      loading: false
+      loading: false,
+      value4_2: '',
+      list4_2: [],
+      list4_2_filtered: [],
     }
   },
   watch: {
@@ -449,6 +475,9 @@ export default{
       console.log(val)
     },
     value4_1(val) {
+      console.log(val)
+    },
+    value4_2(val) {
       console.log(val)
     }
   },
@@ -463,6 +492,16 @@ export default{
           this.list4_1 = res
           this.loading = false
         }, 200);
+      })
+    },
+    myFilterMethod(value) {
+      console.log('myFilterMethod', value)
+      if(!value) {
+        this.list4_2_filtered = this.list4_2
+        return
+      }
+      this.list4_2_filtered = this.list4_2.filter(item => {
+        return item.bankAccountName.includes(value) || item.bankName.includes(value) || item.bankAccount.includes(value)
       })
     }
   }
@@ -1036,6 +1075,192 @@ export default{
           ],
         },
       ],
+      value4_2: '',
+      list4_2: [
+        {
+            "bankAccount": "9769",
+            "accountId": "2021032516BC01987368",
+            "bankAccountName": "阿拉蕾1",
+            "bankName": "上海银行",
+            "bankStyleId": "0024",
+            "bankCountry": "CN",
+            "currency": "CNY",
+            "needBackFillCertFile": false,
+            "payerNameType": "HIDE",
+            "globalNameEnable": true,
+            "merchantNameEnable": true,
+            "canAddCard": false,
+            "merchantNameNote": "",
+            "canModify": false,
+            "modifyNote": ""
+        },
+        {
+            "bankAccount": "1459",
+            "accountId": "2021040921BC02064252",
+            "accountType": "ABC",
+            "bankId": "19",
+            "bankAccountName": "阿拉蕾2",
+            "bankName": "浙商银行",
+            "bankStyleId": "0129",
+            "bankCountry": "CN",
+            "currency": "USD",
+            "needBackFillCertFile": true,
+            "fillPayerAddress": "kkk",
+            "fillPayerName": "yyy",
+            "certificateList": [
+                {
+                    "fileId": "",
+                    "fileName": "20170623202110_XcRUz.jpeg",
+                    "fileType": "image",
+                    "fileUrl": "https://nos.netease.com/epay-platform-test-test/ccdd4a4891a349b8b8aba62a48dc6e84.jpeg",
+                    "suffix": ".jpeg"
+                }
+            ],
+            "contractList": [
+                {
+                    "fileId": "",
+                    "fileName": "20200711195518_pggco.jpg",
+                    "fileType": "image",
+                    "fileUrl": "https://nos.netease.com/epay-platform-test-test/5720f87d891c43378dba2f0848460460.jpg",
+                    "suffix": ".jpg"
+                }
+            ],
+            "canAddCard": false,
+            "merchantNameNote": "",
+            "canModify": false,
+            "modifyNote": ""
+        },
+        {
+            "bankAccount": "0371",
+            "accountId": "140000201205298325",
+            "accountType": "ABC",
+            "bankId": "2",
+            "bankAccountName": "阿拉蕾3",
+            "bankName": "农业银行",
+            "bankStyleId": "0002",
+            "bankCountry": "CN",
+            "currency": "CNY",
+            "needBackFillCertFile": false,
+            "payerNameType": "GLOBAL_NAME",
+            "globalNameEnable": true,
+            "merchantNameEnable": true,
+            "canAddCard": false,
+            "merchantNameNote": "",
+            "canModify": false,
+            "modifyNote": ""
+        },
+        {
+            "bankAccount": "4444",
+            "accountId": "2021051114BC02250476",
+            "accountType": "ABC",
+            "bankId": "88",
+            "bankAccountName": "阿拉蕾4",
+            "bankName": "测试银行",
+            "bankStyleId": "9999",
+            "bankCountry": "CN",
+            "currency": "CNY",
+            "needBackFillCertFile": false,
+            "payerNameType": "MERCHANT_NAME",
+            "globalNameEnable": true,
+            "merchantNameEnable": true,
+            "canAddCard": false,
+            "merchantNameNote": "",
+            "canModify": false,
+            "modifyNote": ""
+        },
+        {
+            "bankAccount": "4628",
+            "accountId": "2021122717BC03938794",
+            "accountType": "ABC",
+            "bankId": "1",
+            "bankAccountName": "阿拉蕾5",
+            "bankName": "工商银行",
+            "bankStyleId": "0001",
+            "bankCountry": "CN",
+            "currency": "SGD",
+            "needBackFillCertFile": false,
+            "canAddCard": false,
+            "merchantNameNote": "",
+            "canModify": false,
+            "modifyNote": ""
+        },
+        {
+            "bankAccount": "4638",
+            "accountId": "2021122717BC03938812",
+            "accountType": "ABC",
+            "bankId": "1",
+            "bankAccountName": "阿拉蕾",
+            "bankName": "工商银行",
+            "bankStyleId": "0001",
+            "bankCountry": "CN",
+            "currency": "CNY",
+            "needBackFillCertFile": false,
+            "payerNameType": "MERCHANT_NAME",
+            "globalNameEnable": true,
+            "merchantNameEnable": true,
+            "canAddCard": false,
+            "merchantNameNote": "",
+            "canModify": true,
+            "modifyNote": "若需要修改付款方展示名称，请补齐付款类型与收款方证件号码，前往"
+        },
+        {
+            "bankAccount": "4639",
+            "accountId": "2021122717BC03938899",
+            "accountType": "ABC",
+            "bankId": "1",
+            "bankAccountName": "阿拉蕾x",
+            "bankName": "工商银行",
+            "bankStyleId": "0001",
+            "bankCountry": "CN",
+            "currency": "CNY",
+            "needBackFillCertFile": false,
+            "payerNameType": "GLOBAL_NAME",
+            "globalNameEnable": false,
+            "merchantNameEnable": false,
+            "canAddCard": true,
+            "merchantNameNote": "决群周线加快农器报速现织学北约条育入流在",
+            "canModify": true,
+            "modifyNote": "若需要修改付款方展示名称，请补齐付款类型与收款方证件号码，前往"
+        },
+        {
+            "bankAccount": "145X",
+            "accountId": "2021040921BC02064211",
+            "accountType": "ABC",
+            "bankId": "20",
+            "bankAccountName": "阿拉蕾9",
+            "bankName": "浙商银行2",
+            "bankStyleId": "0129",
+            "bankCountry": "CN",
+            "currency": "USD",
+            "needBackFillCertFile": true,
+            "fillPayerAddress": "kkk",
+            "fillPayerName": "yyy",
+            "certificateList": [
+                {
+                    "fileId": "",
+                    "fileName": "20170623202110_XcRUz.jpeg",
+                    "fileType": "image",
+                    "fileUrl": "https://nos.netease.com/epay-platform-test-test/ccdd4a4891a349b8b8aba62a48dc6e84.jpeg",
+                    "suffix": ".jpeg"
+                }
+            ],
+            "contractList": [
+                {
+                    "fileId": "",
+                    "fileName": "20200711195518_pggco.jpg",
+                    "fileType": "image",
+                    "fileUrl": "https://nos.netease.com/epay-platform-test-test/5720f87d891c43378dba2f0848460460.jpg",
+                    "suffix": ".jpg"
+                }
+            ],
+            "canAddCard": false,
+            "merchantNameNote": "",
+            "canModify": false,
+            "modifyNote": ""
+        }
+      ],
+      list4_2_filtered: [],
+      currentSelectCenterSlot: {},
       value14: [],
       value15: [],
       value16: [],
@@ -1057,6 +1282,10 @@ export default{
     },
     value4_1(val) {
       console.log(val)
+    },
+    value4_2(val) {
+      console.log(val)
+      this.currentSelectCenterSlot = this.list4_2_filtered.find(item => item.accountId === val) || {}
     },
     value5(val) {
       console.log(val)
@@ -1124,6 +1353,16 @@ export default{
           this.list4_1 = res
           this.loading = false
         }, 200);
+      })
+    },
+    myFilterMethod(value) {
+      console.log('myFilterMethod', value)
+      if(!value) {
+        this.list4_2_filtered = this.list4_2
+        return
+      }
+      this.list4_2_filtered = this.list4_2.filter(item => {
+        return item.bankAccountName.includes(value) || item.bankName.includes(value) || item.bankAccount.includes(value)
       })
     }
   }

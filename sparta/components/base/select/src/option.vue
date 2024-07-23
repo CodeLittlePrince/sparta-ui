@@ -122,6 +122,7 @@ export default {
         this.spSelect.visible = false
       }
       this.spSelect.$refs.focusHelper.focus()
+      this.spSelect.toggleSelectInputShow(false)
     },
     
     handleCheckboxClick(value) {

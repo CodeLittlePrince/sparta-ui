@@ -37,6 +37,59 @@ const getTestGroupData = function() {
   }]
 }
 
+const getFilterableData = function() {
+  return [
+    {
+        "bankAccount": "9769",
+        "accountId": "2021032516BC01987368",
+        "bankAccountName": "阿拉蕾1",
+        "bankName": "上海银行",
+    },
+    {
+        "bankAccount": "1459",
+        "accountId": "2021040921BC02064252",
+        "bankAccountName": "阿拉蕾2",
+        "bankName": "浙商银行",
+    },
+    {
+        "bankAccount": "0371",
+        "accountId": "140000201205298325",
+        "bankAccountName": "阿拉蕾3",
+        "bankName": "农业银行",
+    },
+    {
+        "bankAccount": "4444",
+        "accountId": "2021051114BC02250476",
+        "bankAccountName": "阿拉蕾4",
+        "bankName": "测试银行",
+    },
+    {
+        "bankAccount": "4628",
+        "accountId": "2021122717BC03938794",
+        "bankAccountName": "阿拉蕾5",
+        "bankName": "工商银行",
+    },
+    {
+        "bankAccount": "4638",
+        "accountId": "2021122717BC03938812",
+        "bankAccountName": "阿拉蕾",
+        "bankName": "工商银行",
+    },
+    {
+        "bankAccount": "4639",
+        "accountId": "2021122717BC03938899",
+        "bankAccountName": "阿拉蕾x",
+        "bankName": "工商银行",
+    },
+    {
+        "bankAccount": "145X",
+        "accountId": "2021040921BC02064211",
+        "bankAccountName": "阿拉蕾9",
+        "bankName": "浙商银行2",
+    }
+  ]
+}
+
 describe('Select', () => {
 
   describe('single', () => {
@@ -368,6 +421,151 @@ describe('Select', () => {
     })
     after(() => {
       //  document.body.removeChild(wrapper.vm.$el)
+    })
+  })
+
+  describe('自定义内容搜索', () => {
+    const wrapper = mount({
+      data() {
+        return {
+          optionsData: getFilterableData(),
+          clearable: false,
+          currentSelectCenterSlot: {
+            bankAccountName: '',
+            bankName: '',
+            bankAccount: ''
+          },
+          filterValue: '',
+          filterList: [],
+        }
+      },
+      template: `
+      <div>
+        <sp-button class="sp-select-other-button">测试自定义内容搜索</sp-button>
+        <sp-select 
+          ref="select"
+          v-model="filterValue"
+          filterable
+          :filter-method="filterMethod"
+        >
+          <div ref="center" slot="center" class="bindCardSelectItemBox">
+            <div>{{ currentSelectCenterSlot.bankAccountName }}</div>
+            <div>{{ currentSelectCenterSlot.bankName }}尾号({{ currentSelectCenterSlot.bankAccount }})</div>
+          </div>
+          <sp-option 
+            v-for="(item, index) in optionsData"
+            :key="index"
+            :label="item.accountId"
+            :value="item.accountId" 
+          >
+            <div>
+              {{ item.bankAccountName}} {{ item.bankName }} {{ item.bankAccount }}
+            </div>
+          </sp-option>
+        </sp-select>
+      </div>
+      `,
+      components: {
+        'sp-select': Select,
+      },
+      watch: {
+        filterValue(val) {
+          this.currentSelectCenterSlot = this.filterList.find(item => item.accountId === val) || {}
+        },
+      },
+      methods: {
+        filterMethod(value) {
+          if(!value) {
+            this.filterList = this.optionsData
+            return
+          }
+          this.filterList = this.optionsData.filter(item => {
+            return item.bankAccountName.includes(value) || item.bankName.includes(value) || item.bankAccount.includes(value)
+          })
+        }
+      }
+    })
+    document.body.appendChild(wrapper.vm.$el)
+
+    describe('默认无值-点选', () => {
+      it('点击输入框，显示所有下拉选项', async () => {
+        await clearSelect(wrapper)
+        await selectClick(wrapper)
+        expect(wrapper.find('.sp-select-dropdown').isVisible()).to.be.true
+        expect(getVisibleOptionsLength(wrapper).length).to.be.equal(8)
+        expect(wrapper.find('.sp-select-list .is--selected').exists()).to.be.false
+      })
+
+      it('点击组件，显示所有下拉选项，全部没有点亮，输入异常的值，显示无匹配数据', async () => {
+        await setSelectVal(wrapper,'mnh')
+        expect(wrapper.find('.sp-select-list-emptyText').isVisible()).to.be.false
+        await handelOtherClick(wrapper)
+      })
+
+      it('点击组件，显示所有下拉选项，全部没有点亮，输入异常的值，显示无匹配数据，再点击其他地方，清空异常的数据，并隐藏下拉框，组件无新值传出', async () => {
+        expect(wrapper.find('.sp-select-dropdown').isVisible()).to.be.false
+        expect(wrapper.vm.$children[1].inputText).to.be.equal('')
+        expect(wrapper.vm.filterValue).to.be.equal('')
+      })
+
+      it('点击组件，显示所有下拉选项，全部没有点亮，输入包含的值，正确过滤选项，点击选项，正确显示自定义内容， 并将新值传出', async () => {
+        await selectClick(wrapper)
+        await setSelectVal(wrapper, '2021032516BC01987368')
+        expect(getVisibleOptionsLength(wrapper).length).to.be.equal(8)
+
+        await clickFirstOptions(wrapper)
+
+        expect(wrapper.find('.sp-select-dropdown').isVisible()).to.be.false
+        expect(wrapper.vm.filterValue).to.be.equal('2021032516BC01987368')
+      })
+
+      it('点击组件，显示所有下拉选项，全部没有点亮，输入包含的值，正确过滤选项，点击选项，正确自定义内容，并将新值传出，再点击显示所有的选项，并且请选择的地址显示已选的文案，滚动和点亮已选项', async () => {
+        await selectClick(wrapper)
+        expect(getVisibleOptionsLength(wrapper).length).to.be.equal(8)
+        expect(wrapper.vm.$children[1].inputText).to.be.equal('')
+        expect(wrapper.find('.sp-select__prepend').isVisible()).to.be.false
+        expect(wrapper.find('.sp-select-list .is--selected').exists()).to.be.true
+        await handelOtherClick(wrapper)
+      })
+
+      it('点击组件，显示所有下拉选项，全部没有点亮，输入完全符合的值，点击其他地方，保留上一次的选择', async () => {
+        await clearSelect(wrapper)
+        expect(wrapper.vm.filterValue).to.be.equal('2021032516BC01987368')
+
+        await selectClick(wrapper)
+        expect(getVisibleOptionsLength(wrapper).length).to.be.equal(8)
+        await setSelectVal(wrapper, '2021032516BC01987368')
+        await handelOtherClick(wrapper)
+
+        expect(wrapper.find('.sp-select-dropdown').isVisible()).to.be.false
+        expect(wrapper.vm.filterValue).to.be.equal('2021032516BC01987368')
+      })
+    })
+
+    describe('默认有值-点选', () => {
+      it('点击组件，显示所有下拉选项，滚动并点亮已选项，输入异常的值，显示无匹配数据，再点击其他地方，正常显示之前的已选项，并隐藏下拉框，组件无新值传出', async () => {
+        await wrapper.setData({ filterValue: '2021032516BC01987368' })
+        await selectClick(wrapper)
+        expect(wrapper.find('.sp-select-dropdown').isVisible()).to.be.true
+        expect(getVisibleOptionsLength(wrapper).length).to.be.equal(8)
+        expect(wrapper.find('.sp-select-list .is--selected').exists()).to.be.true
+
+        await setSelectVal(wrapper, '2021032516BC01987368')
+        await handelOtherClick(wrapper)
+        expect(wrapper.find('.sp-select-dropdown').isVisible()).to.be.false
+        expect(wrapper.vm.filterValue).to.be.equal('2021032516BC01987368')
+      })
+
+      it('点击组件，显示所有下拉选项，滚动并点亮已选项，输入包含的值，正确过滤选项，点击选项，正确显示自定义内容，并将新值传出，再点击显示所有的选项，并且请选择的地址显示已选的文案，滚动和点亮已选项', async () => {
+        await selectClick(wrapper)
+        await setSelectVal(wrapper, '2021032516BC01987368')
+
+        await clickFirstOptions(wrapper)
+
+        expect(wrapper.find('.sp-select-dropdown').isVisible()).to.be.false
+        expect(wrapper.vm.$children[1].inputText).to.be.equal('')
+        expect(wrapper.vm.filterValue).to.be.equal('2021032516BC01987368')
+      })
     })
   })
 
