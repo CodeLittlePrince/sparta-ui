@@ -213,6 +213,10 @@ export default {
       type: Function,
       default: null
     },
+    remoteMethod: {
+      type: Function,
+      default: null
+    },
     emptyText: {
       type: String,
       default: '无匹配数据'
@@ -266,6 +270,7 @@ export default {
       isOnComposition: false,
       singleSelected: '',
       needFilterMethod: false, // 是否应该调用filterMethod方法，用户主动选择的时候，虽然输入框的值变化了，但是不应再去过滤了
+      needRemoteMethod: false, // 是否应该调用remoteMethod方法，用户主动选择的时候，虽然输入框的值变化了，但是不应再去过滤了
       groupMultipleSelected: this.value,
       groupMultiSelectInputText: '',
       selectInputVisible: false, // 控制selectInput是否显示
@@ -283,7 +288,7 @@ export default {
     // 自定义内容center插槽的动态class
     centerSlotClass() {
       return {'sp-select__center--bg': this.useCenterSlotCustomFilter && this.selectInputVisible }
-    }, 
+    },
     selectInputClass() {
       return { 'sp-selectInput__absolute': this.useCenterSlotCustomFilter && !!this.value && this.selectInputVisible, 'sp-selectInput__show': this.inputText || this.isOnComposition }
     },
@@ -320,7 +325,7 @@ export default {
     },
     // 显示清空icon
     showClearIcon() {
-      return (this.clearable && this.inputText !== '' && this.isHover && !this.isMulti && this.value) || (this.filterMethod && this.isHover && !this.isMulti && this.value)
+      return this.clearable && this.inputText !== '' && this.isHover && !this.isMulti && this.value
     },
     hasSpOptions() {
       return this.spOptions && this.spOptions.length
@@ -341,10 +346,16 @@ export default {
     },
     placeholderText() {
       // IE10和IE11上，如果有placeholder，input显示以后IE辣鸡浏览器会自动触发input事件
-      return this.isIE ? '' : this.useCenterSlotCustomFilter && this.selectInputVisible && !!this.value ? '' : this.helperText
+      if (this.isIE || (this.useCenterSlotCustomFilter && this.selectInputVisible && !!this.value)) {
+        return ''
+      }
+      return this.helperText
     },
     isCustomFilter() { // 是否是自定义搜索
       return this.filterable && this.filterMethod && typeof this.filterMethod === 'function'
+    },
+    isCustomFilterForRemote() { // 是否是自定义远程搜索
+      return this.filterable && this.remoteMethod && typeof this.remoteMethod === 'function'
     },
     groupMultiSelectNum() {
       let count = this.groupMultipleSelected.length - 1
@@ -381,12 +392,12 @@ export default {
         this.broadcast('SpSelectDropdown', 'updatePopper')
       } else {
         // 如果filterable开启了，用户输入的值在options中不存在的话，清空
-        this.broadcast('SpSelectDropdown', 'destroyPopper')
         if (this.filterable) {
           // 清空
           this.inputText = ''
           if (this.useCenterSlotCustomFilter) {
             this.debounceFilterMethod?.()
+            this.broadcast('SpSelectDropdown', 'destroyPopper')
             return
           }
           if (this.oldInputText) {
@@ -399,6 +410,7 @@ export default {
             this.clearValue()
           }
         }
+        this.broadcast('SpSelectDropdown', 'destroyPopper')
       }
       // 触发form的校验
       if (this.validateEvent && !val) {
@@ -465,7 +477,12 @@ export default {
       }
     },
     spOptions() {
-      const currentValue = this.isCustomFilter && this.inputText && this.inputText != ' ' ? this.inputText : this.value
+      let currentValue = ''
+      if ((this.isCustomFilter || this.isCustomFilterForRemote) && this.inputText && this.inputText != ' ') {
+        currentValue = this.inputText
+      } else {
+        currentValue = this.value
+      }
       this.setCurrentValue(currentValue, true)
     },
     isFocus(val) {
@@ -476,35 +493,48 @@ export default {
       }
     },
     loading(val) {
-      if(val) {
+      if (val) {
         this.oldInputText = null
       }
       this.broadcast('SpSelectDropdown', 'updatePopper')
     },
     isCustomFilter(val) {
-      if(val) {
+      if (val) {
         this.getDebounceFilterMethod()
+      }
+    },
+    isCustomFilterForRemote(val) {
+      if (val) {
+        this.getDebounceRemoteMethod()
       }
     }
   },
   
   mounted() {
-    if(this.isCustomFilter) {
+    if (this.isCustomFilter) {
       this.getDebounceFilterMethod()
     } // 自定义搜索防抖
+    if (this.isCustomFilterForRemote) {
+      this.getDebounceRemoteMethod()
+    }
     this.setCurrentValue(this.value)
     document.addEventListener('click', this.handleOtherAreaClick)
   },
   
   beforeDestroy() {
     this.debounceFilterMethod?.cancel()
+    this.debounceRemoteMethod?.cancel()
     document.removeEventListener('click', this.handleOtherAreaClick)
   },
 
   methods: {
     filterOptionsVisible() {
-      if(this.isCustomFilter) {
-        if(this.needFilterMethod) this.debounceFilterMethod?.()
+      if (this.isCustomFilter) {
+        if (this.needFilterMethod) this.debounceFilterMethod?.()
+        return
+      }
+      if (this.isCustomFilterForRemote) {
+        if (this.needRemoteMethod) this.debounceRemoteMethod?.()
         return
       }
       for (let i = 0, len = this.spOptions.length; i < len; i++) {
@@ -584,7 +614,11 @@ export default {
           // 单选情况
           for (let i = 0, len = this.spOptions.length; i < len; i++) {
             if (this.spOptions[i].value === val) {
-              this.inputText = this.useCenterSlotCustomFilter ? '' : this.spOptions[i].label
+              if (this.useCenterSlotCustomFilter) {
+                this.inputText = ''
+              } else {
+                this.inputText = this.spOptions[i].label
+              }
               this.evOptionHoverIndex = i
               break
             }
@@ -598,6 +632,9 @@ export default {
     getDebounceFilterMethod() {
       this.debounceFilterMethod = debounce(() => { this.filterMethod?.(this.inputText) }, this.wait, { leading: true })
     },
+    getDebounceRemoteMethod() {
+      this.debounceRemoteMethod = debounce(() => { this.remoteMethod?.(this.inputText) }, this.wait, { leading: true })
+    },
     /**
      * 点击自身处理
      */
@@ -607,7 +644,7 @@ export default {
         // 但是IE9上聚焦就会触发input事件
         // input又会影响下拉显示状态，input事件又在click前触发
         // 导致显示Bug，因此，暂时降低体验处理
-        this.visible = this.isCustomFilter && !(this.inputText || this.oldInputText) && !this.spOptions.length ? false : true // 自定义搜索时，没有输入任何文字时，不展示拉下框
+        this.visible = (this.isCustomFilter || this.isCustomFilterForRemote) && !(this.inputText || this.oldInputText) && !this.spOptions.length ? false : true // 自定义搜索时，没有输入任何文字时，不展示拉下框
         this.isFocus = true
         this.toggleSelectInputShow(true)
         this.$nextTick(() => {
@@ -622,7 +659,11 @@ export default {
     toggleSelectInputShow(show) {
       if (this.useCenterSlotCustomFilter) {
         this.selectInputVisible = show
-        this.selectInputBoxHeight = show && !!this.value ? '100%' : this.height - 2 + 'px'
+        if (show && !!this.value) {
+          this.selectInputBoxHeight = '100%'
+        } else {
+          this.selectInputBoxHeight = this.height - 2 + 'px'
+        }
       }
     },
     /**
@@ -656,7 +697,7 @@ export default {
           this.spOptions[this.evOptionHoverIndex].selected = true
         }
       } else if (hoverItem) {
-        if(this.filterable) {
+        if (this.filterable) {
           this.singleSelected = hoverItem.label
           this.oldInputText = hoverItem.label
         }
@@ -664,6 +705,7 @@ export default {
         this.$emit('input', hoverItem.value)
         this.$emit('change', hoverItem.value)
         this.needFilterMethod = false
+        this.needRemoteMethod = false
         this.inputText = hoverItem.label
         this.visible = false
       }
@@ -675,12 +717,13 @@ export default {
         this.visible = true
       }
       this.needFilterMethod = true
+      this.needRemoteMethod = true
     },
 
     handleHelperFocus() {
       this.isFocus = true
       
-      if(this.filterable) {
+      if (this.filterable) {
         this.oldInputText = null
       }
     },
@@ -715,6 +758,7 @@ export default {
     handleSuffixClick(e) {
       if (this.showClearIcon) {
         this.needFilterMethod = true
+        this.needRemoteMethod = true
         this.clearValue()
         this.$refs.selectInput.blur()
         this.visible = false
@@ -760,7 +804,7 @@ export default {
       this.$refs.selectInput.focus()
     },
     storeInputTextWhenFilterable() {
-      if(this.filterable && this.inputText && this.hasLabelInOptions()) {
+      if (this.filterable && this.inputText && this.hasLabelInOptions()) {
         this.oldInputText = this.inputText
         this.inputText = ''
       }
