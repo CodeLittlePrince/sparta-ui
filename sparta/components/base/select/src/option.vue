@@ -94,6 +94,7 @@ export default {
       }
 
       this.spSelect.needFilterMethod = false
+      this.spSelect.needRemoteMethod = false
 
       // 多选情况，将选择的值加入tag
       if (this.spSelect.multiple) {
