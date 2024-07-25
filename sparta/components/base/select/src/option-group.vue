@@ -1,16 +1,18 @@
 <template>
   <ul class="sp-option-group" :class="{ 'sp-option-group--is-group-multi': spSelect.groupMultiple }">
-    <template v-if="spSelect.groupMultiple">
-      <sp-checkbox
-        :label="value"
-        :disabled="disabled"
-        @change="handleCheckboxChange"
-      >
-        <li>{{ label }}</li>
-      </sp-checkbox>
-    </template>
-    <template v-else>
-      <li class="sp-option-group-title">{{ label }}</li>
+    <template v-if="!spSelect.groupFilterValue">
+      <template v-if="spSelect.groupMultiple">
+        <sp-checkbox
+          :label="value"
+          :disabled="disabled"
+          @change="handleCheckboxChange"
+        >
+          <li>{{ label }}</li>
+        </sp-checkbox>
+      </template>
+      <template v-else>
+        <li class="sp-option-group-title">{{ label }}</li>
+      </template>
     </template>
     <li>
       <ul class="sp-option-group-content">
@@ -100,6 +102,9 @@ export default {
       }
     },
 
+    /**
+     * 点亮group的checkbox选中项
+     */
     lightGroupCheckbox() {
       const childValueList = this.getChildValueList()
 

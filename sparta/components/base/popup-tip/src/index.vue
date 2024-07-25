@@ -17,7 +17,8 @@
       v-model="visible"
       :class="[
         {'has--border': hasBorder},
-        `is--theme-${theme}`
+        `is--theme-${theme}`,
+        customClass
       ]"
       :placement="placement"
       :popper-scroll-bind-elem="popperScrollBindElem"
@@ -82,6 +83,15 @@ export default {
       validator: val => {
         return ['top', 'bottom'].indexOf(val) !== -1
       }
+    },
+    // 自定义样式
+    customClass: {
+      type: String,
+      default: ''
+    },
+    showPopupTipWhenSlot: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -105,6 +115,9 @@ export default {
 
   methods: {
     handleMouseenter() {
+      if(this.showPopupTipWhenSlot && !this.$slots.popup) {
+        return
+      }
       this.visible = true
       this.timeId && clearTimeout(this.timeId)
     },

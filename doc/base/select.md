@@ -1025,6 +1025,182 @@ export default{
 ```
 :::
 
+### 分组多选支持搜索
+适用广泛的基础单选（支持键盘控制）
+
+:::demo 为`sp-select`设置`group-multiple`属性即可启用多选, 设置`filterable`属性即可启用搜索，`filterable`是自定义搜索方法， 此时`v-model`的值为当前选中值所组成的数组。
+```vue
+<template>
+  <div class="select-demo" id="groupMultipleFilter">
+    <div style="margin-bottom: 5px;">分组的多选</div>
+    <sp-select
+      v-model="value17"
+      group-multiple
+      filterable
+    >
+      <sp-option-group
+        v-for="(item, index) in list17"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+        :disabled="item.disabled"
+      >
+        <sp-option
+          v-for="child in item.children"
+          :key="child.value"
+          :label="child.label"
+          :value="child.value"
+          :disabled="child.disabled"
+        ></sp-option>
+        <sp-option
+          :label="`王多鱼${ index }`"
+          :value="`X${ index }`"
+        >
+          王多鱼
+          <p style="font-size: 12px;color:#747d8c">我是小tip</p>
+        </sp-option>
+      </sp-option-group>
+    </sp-select>
+    <div style="margin: 20px 0 5px;">单组的多选</div>
+    <sp-select
+      v-model="value18"
+      group-multiple
+      filterable
+    >
+      <sp-option-group
+        label="全选"
+        value="ALL"
+      >
+        <sp-option
+          v-for="item in list18"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></sp-option>
+        <sp-option
+          :label="`王多鱼`"
+          :value="`X`"
+        >
+          王多鱼
+          <p style="font-size: 12px;color:#747d8c">我是小tip</p>
+        </sp-option>
+      </sp-option-group>
+    </sp-select>
+    <div style="margin: 20px 0 5px;">不分组的多选（暂保留以前的基础多选，之后再规划统一）</div>
+    <sp-select
+      v-model="value19"
+      group-multiple
+      filterable
+      :filter-method="handleGroupMultipleFilterMethod"
+      :show-group-multi-popup-tip="true"
+    >
+      <sp-option
+        v-for="(item, index) in list19_filter"
+        :key="item.value + index"
+        :label="item.label"
+        :value="item.value"
+      ></sp-option>
+    </sp-select>
+  </div>
+</template>
+
+<script>
+export default{
+  data(){
+    return {
+      list17: [
+        {
+          value: 'parent 1-0',
+          label: 'parent 1-0',
+          children: [
+            {
+              value: 'I dance 1',
+              label: 'I dance 1',
+              disabled: true,
+            },
+            {
+              value: 'I dance 2',
+              label: 'I dance 2',
+            },
+          ],
+        },
+        {
+          value: 'parent 1-1',
+          label: 'parent 1-1',
+          children: [
+            {
+              value: 'You dance 1',
+              label: 'You dance 1',
+            },
+          ],
+        },
+        {
+          value: 'parent 1-2',
+          label: 'parent 1-2',
+          disabled: true,
+          children: [
+            {
+              value: 'He dances 1',
+              label: 'He dances 1',
+            },
+            {
+              value: 'He dances 2',
+              label: 'He dances 2',
+            },
+          ],
+        },
+      ],
+      list18: [
+        { label: '听音乐', value: 'music' },
+        { label: '看电影', value: 'movie' },
+        { label: '绘画', value: 'drawing' },
+        { label: '跑步', value: 'running' }
+      ],
+      list19_filter: [
+        { label: '听音乐', value: 'music' },
+        { label: '看电影', value: 'movie' },
+        { label: '绘画', value: 'drawing' },
+        { label: '跑步', value: 'running' },
+        { label: '看话剧', value: 'drama' }
+      ],
+      list19: [
+        { label: '听音乐', value: 'music' },
+        { label: '看电影', value: 'movie' },
+        { label: '绘画', value: 'drawing' },
+        { label: '跑步', value: 'running' },
+        { label: '看话剧', value: 'drama' }
+      ],
+      value17: [],
+      value18: [],
+      value19: [],
+    }
+  },
+  watch: {
+    value17(val) {
+      console.log(val)
+    },
+    value18(val) {
+      console.log(val)
+    },
+    value19(val) {
+      console.log(val)
+    },
+  },
+  methods:{
+     handleGroupMultipleFilterMethod(value) {
+      if(!value) {
+        this.list19_filter = this.list19
+        return
+      }
+      this.list19_filter = this.list19.filter(item => item.label.includes(value))
+    },
+  }
+}
+</script>
+```
+:::
+
+
 ### Select Attributes
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
@@ -1044,6 +1220,8 @@ export default{
 | emptyText | 过滤时候没有匹配值的文案 | string | — | 请选择 |
 | limitDropdownWidth | 是否限制下拉框宽度成1.5倍 | boolean | — | true |
 | popperScrollBindElem | popper浮动定位的锚点元素 | string/Element | — | - |
+| show-group-multi-popup-tip | 显示多选popupTip | boolean | — | false |
+| custom-popup-tip-class | 自定义popupTip的样式 | string | — | - |
 
 ### Select Slots
 |   name  | 说明     |
@@ -1357,6 +1535,71 @@ export default{
           "bankName": "浙商银行2",
         }
       ],
+      list17: [
+        {
+          value: 'parent 1-0',
+          label: 'parent 1-0',
+          children: [
+            {
+              value: 'I dance 1',
+              label: 'I dance 1',
+              disabled: true,
+            },
+            {
+              value: 'I dance 2',
+              label: 'I dance 2',
+            },
+          ],
+        },
+        {
+          value: 'parent 1-1',
+          label: 'parent 1-1',
+          children: [
+            {
+              value: 'You dance 1',
+              label: 'You dance 1',
+            },
+          ],
+        },
+        {
+          value: 'parent 1-2',
+          label: 'parent 1-2',
+          disabled: true,
+          children: [
+            {
+              value: 'He dances 1',
+              label: 'He dances 1',
+            },
+            {
+              value: 'He dances 2',
+              label: 'He dances 2',
+            },
+          ],
+        },
+      ],
+      list18: [
+        { label: '听音乐', value: 'music' },
+        { label: '看电影', value: 'movie' },
+        { label: '绘画', value: 'drawing' },
+        { label: '跑步', value: 'running' }
+      ],
+      list19_filter: [
+        { label: '听音乐', value: 'music' },
+        { label: '看电影', value: 'movie' },
+        { label: '绘画', value: 'drawing' },
+        { label: '跑步', value: 'running' },
+        { label: '看话剧', value: 'drama' }
+      ],
+      list19: [
+        { label: '听音乐', value: 'music' },
+        { label: '看电影', value: 'movie' },
+        { label: '绘画', value: 'drawing' },
+        { label: '跑步', value: 'running' },
+        { label: '看话剧', value: 'drama' }
+      ],
+      value17: [],
+      value18: [],
+      value19: ['running','drama'],
       currentSelectCenterSlot: {},
       value4_3: '',
       list4_3: [],
@@ -1421,7 +1664,16 @@ export default{
     },
     value16(val) {
       console.log(val)
-    }
+    },
+    value17(val) {
+      console.log(val)
+    },
+    value18(val) {
+      console.log(val)
+    },
+    value19(val) {
+      console.log(val)
+    },
   },
   computed: {
     icon() {
@@ -1445,6 +1697,14 @@ export default{
     }
   },
   methods: {
+    handleGroupMultipleFilterMethod(value) {
+      console.log("handleGroupMultipleFilterMethod", value)
+      if(!value) {
+        this.list19_filter = this.list19
+        return
+      }
+      this.list19_filter = this.list19.filter(item => item.label.includes(value))
+    },
     filterMethod(value) {
       console.log('filterMethod', value)
       if(!value) {

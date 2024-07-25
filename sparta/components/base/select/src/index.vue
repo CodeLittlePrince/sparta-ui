@@ -37,17 +37,52 @@
           </transition-group>
         </div>
       </template>
-      <template v-else-if="groupMultiple">
-        <div
-          ref="sp-tag-box"
-          class="sp-tag-box"
-          @click="focusSelectInput"
-        >{{ groupMultiSelectInputText }}</div>
-        <div
-          v-show="showGroupMultiSelectNum"
-          class="sp-select__input-box__num"
-        >+{{ groupMultiSelectNum }}</div>
-      </template>
+      <div v-else-if="groupMultiple">
+        <sp-popup-tip
+          ref="popupTip"
+          :custom-class="customPopupTipClass"
+          color="#0D1233"
+          has-border
+          placement="top"
+          theme="white"
+          width="auto"
+          :show-popup-tip-when-slot="true"
+        >
+          <div class="sp-select__input-box__group-multi">
+            <div
+              ref="sp-tag-box"
+              class="sp-tag-box"
+              @click="focusSelectInput"
+            >{{ groupMultiSelectInputText }}</div>
+            <div
+              v-show="showGroupMultiSelectNum"
+              class="sp-select__input-box__num"
+            >+{{ groupMultiSelectNum }}</div>
+            <!-- 多选过滤搜索输入框 -->
+            <input
+              v-if="isGroupMultipleFilterable"
+              id="filterInput"
+              ref="filterInput"
+              v-model="groupFilterValue"
+              type="text"
+              autocomplete="off"
+              class="sp-select__input--filter"
+              :class="{'has--selected': groupMultiSelectInputText }"
+              @blur="handleBlurGroupMultipleFilterInput"
+              @keydown.tab="visible = false"
+              @input="handleInputGroupMultipleFilterInput"
+              @keydown.esc.stop.prevent="visible = false"
+              @compositionstart="handleComposition"
+              @compositionupdate="handleComposition"
+              @compositionend="handleComposition;"
+            />
+          </div>
+          <template v-if="showGroupMultiPopupTip && !isFocus && groupMultipleSelected && groupMultipleSelected.length" slot="popup">
+            {{ groupMultipleSelected.map(item => getGroupMultiTextByValue(item)).join(',') }}
+          </template>
+        </sp-popup-tip>
+      </div>
+   
       <!-- 非多选情况-->
       <!-- 前置元素 -->
       <div
@@ -81,6 +116,7 @@
         <slot name="center"></slot>
       </div>
       <input
+        v-show="selectInputShow"
         ref="selectInput"
         v-model="inputText"
         class="sp-select__input"
@@ -89,7 +125,7 @@
         type="text"
         :placeholder="placeholderText"
         :readonly="_readonly"
-        :disabled="disabled"
+        :disabled="disabled || isGroupMultipleFilterable"
         autocomplete="off"
         @input="handleInputSelectInput"
         @focus="handleSelfClick"
@@ -142,7 +178,7 @@
           class="sp-select-list"
         >
           <template v-if="groupMultiple">
-            <sp-checkbox-group v-model="groupMultipleSelected">
+            <sp-checkbox-group v-model="groupMultipleSelected" @change="handleGroupMultipleSelectedChange">
               <slot></slot>
             </sp-checkbox-group>
           </template>
@@ -249,6 +285,16 @@ export default {
     wait: { // 自定义搜索防抖等待时间
       type: [String, Number],
       default: 300 // ms
+    },
+    // 显示多选的的popup 默认不显示
+    showGroupMultiPopupTip: {
+      type: Boolean,
+      default: false
+    },
+    // 自定义popup-tip的class
+    customPopupTipClass: {
+      type: String,
+      default: ''
     }
   },
 
@@ -263,7 +309,7 @@ export default {
       spOptions: [],
       spOptionGroups: [],
       evOptionHoverIndex: -1,
-      selected: [],
+      selected: [], // 老的多选选中的值， 现在用不到了
       selectInputBoxHeight: this.height - 2 + 'px',
       currentValue: this.value,
       oldInputText: null,
@@ -274,6 +320,7 @@ export default {
       groupMultipleSelected: this.value,
       groupMultiSelectInputText: '',
       selectInputVisible: false, // 控制selectInput是否显示
+      groupFilterValue: '', // 多选过滤搜索输入框的值
     }
   },
 
@@ -369,6 +416,12 @@ export default {
     // 开启自定义内容搜索：指定了filter-method且使用了center插槽
     useCenterSlotCustomFilter() {
       return this.$slots.center && this.isCustomFilter
+    },
+    isGroupMultipleFilterable() {
+      return this.groupMultiple && this.filterable
+    },
+    selectInputShow() {
+      return !this.isGroupMultipleFilterable || (this.isGroupMultipleFilterable && !this.groupMultipleSelected?.length && !this.visible)
     }
   },
 
@@ -394,6 +447,11 @@ export default {
         // 如果filterable开启了，用户输入的值在options中不存在的话，清空
         if (this.filterable) {
           // 清空
+          if(this.isGroupMultipleFilterable) {
+            this.groupFilterValue = '' //
+            return
+          }
+
           this.inputText = ''
           if (this.useCenterSlotCustomFilter) {
             this.debounceFilterMethod?.()
@@ -431,8 +489,12 @@ export default {
         return
       }
 
-      if (newVal) {
+      if (newVal && !this.isGroupMultipleFilterable) {
         this.inputText = newVal.length ? ' ' : ''
+      }
+      
+      if(this.isGroupMultipleFilterable) {
+        this.groupFilterValue = ''
       }
 
       // 只留第一个元素的文案
@@ -477,6 +539,7 @@ export default {
       }
     },
     spOptions() {
+      // 下拉选项变化
       let currentValue = ''
       if ((this.isCustomFilter || this.isCustomFilterForRemote) && this.inputText && this.inputText != ' ') {
         currentValue = this.inputText
@@ -486,6 +549,17 @@ export default {
       this.setCurrentValue(currentValue, true)
     },
     isFocus(val) {
+      if(this.isGroupMultipleFilterable) {
+        if(val) {
+          this.$nextTick(() => {
+            if(this.$refs.popupTip) {
+              this.$refs.popupTip.visible = false
+            }
+          })
+        }
+        return
+      }
+
       if (this.filterable) {
         if (!val) {
           this.oldInputText = null
@@ -506,6 +580,11 @@ export default {
     isCustomFilterForRemote(val) {
       if (val) {
         this.getDebounceRemoteMethod()
+      }
+    },
+    groupFilterValue() { // 多选过滤搜索输入框的值
+      if(this.isGroupMultipleFilterable) {
+        this.filterOptionsVisible()
       }
     }
   },
@@ -537,8 +616,10 @@ export default {
         if (this.needRemoteMethod) this.debounceRemoteMethod?.()
         return
       }
+      //
+      const filterKeyword = this.isGroupMultipleFilterable ? this.groupFilterValue : this.inputText
       for (let i = 0, len = this.spOptions.length; i < len; i++) {
-        if (this.spOptions[i].label.indexOf(this.inputText) !== -1) {
+        if (this.spOptions[i].label.indexOf(filterKeyword) !== -1) {
           this.spOptions[i].visible = true
         } else {
           this.spOptions[i].visible = false
@@ -569,17 +650,18 @@ export default {
 
       if (this.groupMultiple) {
         this.groupMultipleSelected = val
+        if(this.isGroupMultipleFilterable) {
+          if(!noTrigger) {
+            this.setGroupMultiSelectInputText(val)
+          }
+          return
+        }
         // 设置输入框显示文案
         if ((!val) || (val && val.length === 0)) {
           // 没有值则置空
           this.inputText = ''
         } else {
-          this.$nextTick(() => { // 这里因为groupMultiSelectInputTxtMapList中获取optionGroup和option的时候元素还未渲染完，所以用nextTick
-            // 有值则需要显示对应文案
-            this.groupMultiSelectInputText = this.getTextFromMapList(val)
-            // 是否全选要点亮
-            this.broadcast('SpOptionGroup', 'lightGroupCheckbox')
-          })
+          this.setGroupMultiSelectInputText(val)
         }
       } else {
         // groupMultiple模式checkbox本身已经会触发了
@@ -626,11 +708,21 @@ export default {
         }
       }
     },
+    setGroupMultiSelectInputText(val) {
+      this.$nextTick(() => { // 这里因为groupMultiSelectInputTxtMapList中获取optionGroup和option的时候元素还未渲染完，所以用nextTick
+        // 有值则需要显示对应文案
+        this.groupMultiSelectInputText = this.getTextFromMapList(val)
+        // 是否全选要点亮
+        this.broadcast('SpOptionGroup', 'lightGroupCheckbox')
+      })
+    },
     /**
      * 进行防抖处理
      */
     getDebounceFilterMethod() {
-      this.debounceFilterMethod = debounce(() => { this.filterMethod?.(this.inputText) }, this.wait, { leading: true })
+      this.debounceFilterMethod = debounce(() => {
+        this.filterMethod?.( this.isGroupMultipleFilterable ? this.groupFilterValue : this.inputText)
+      }, this.wait, { leading: true })
     },
     getDebounceRemoteMethod() {
       this.debounceRemoteMethod = debounce(() => { this.remoteMethod?.(this.inputText) }, this.wait, { leading: true })
@@ -645,12 +737,15 @@ export default {
         // input又会影响下拉显示状态，input事件又在click前触发
         // 导致显示Bug，因此，暂时降低体验处理
         this.visible = (this.isCustomFilter || this.isCustomFilterForRemote) && !(this.inputText || this.oldInputText) && !this.spOptions.length ? false : true // 自定义搜索时，没有输入任何文字时，不展示拉下框
+        
         this.isFocus = true
-        this.toggleSelectInputShow(true)
-        this.$nextTick(() => {
-          this.focusSelectInput()
-        })
-        this.storeInputTextWhenFilterable()
+        if(!this.isGroupMultipleFilterable) {
+          this.toggleSelectInputShow(true)
+          this.$nextTick(() => {
+            this.focusSelectInput()
+          })
+          this.storeInputTextWhenFilterable()
+        }
       }
     },
     /**
@@ -723,6 +818,8 @@ export default {
     handleHelperFocus() {
       this.isFocus = true
       
+      if(this.isGroupMultipleFilterable) return
+
       if (this.filterable) {
         this.oldInputText = null
       }
@@ -772,6 +869,12 @@ export default {
       this.$emit('input', '')
       this.$emit('change', '')
       this.inputText = ''
+     
+      if(this.isGroupMultipleFilterable) {
+        this.groupFilterValue = ''
+        return
+      }
+
       if (this.filterable) {
         this.oldInputText = null
       }
@@ -804,6 +907,10 @@ export default {
       this.$refs.selectInput.focus()
     },
     storeInputTextWhenFilterable() {
+      if(this.isGroupMultipleFilterable) {
+        return
+      }
+
       if (this.filterable && this.inputText && this.hasLabelInOptions()) {
         this.oldInputText = this.inputText
         this.inputText = ''
@@ -871,6 +978,7 @@ export default {
     },
 
     getTextFromMapList(valueList) {
+  
       // txt需要先把valueList参考mapList做排序，最后取第一个元素
       let txt = ''
       let txtIndex = -1
@@ -880,12 +988,43 @@ export default {
         const index = mapList.findIndex(item => item.value === value)
 
         if (index <= txtIndex || txtIndex === -1) {
-          txt = mapList.find(item => item.value === value).label
+          txt = mapList.find(item => item.value === value)?.label
           txtIndex = index
         }
       })
 
       return txt
+    },
+
+    getGroupMultiTextByValue(val) {
+      return this.groupMultiSelectInputTxtMapList?.find(item => item.value === val)?.label || val
+    },
+
+    /**
+     * 多选过滤输入框失焦
+     */
+    handleBlurGroupMultipleFilterInput() {
+      if(this.visible) return
+
+      this.isFocus = false
+      this.groupFilterValue = ''
+    },
+
+    /**
+     * 多选过滤输入框值变化
+     */
+    handleInputGroupMultipleFilterInput() {
+      this.needFilterMethod = true
+    },
+
+    /**
+     * 组多选值变化
+     */
+    handleGroupMultipleSelectedChange() {
+      this.groupFilterValue = ''
+      this.$nextTick(() => {
+        this.$refs.filterInput?.focus?.()
+      })
     },
   }
 }
@@ -955,6 +1094,7 @@ export default {
     overflow: hidden;
 
     .sp-select__input {
+      background-color: white;
       &-placeholder {
         position: absolute;
         left: 0;
@@ -986,7 +1126,22 @@ export default {
       box-sizing: border-box;
       border-radius: 4px;
       color: inherit;
-      font-size: inherit;
+    }
+
+    .sp-popup-tip {
+      display: block;
+    }
+
+    .sp-select__input--filter {
+      background-color: transparent;
+      height: 34px;
+      flex: 1;
+      padding-right: 46px;
+      border: none;
+      outline: none;
+      &.has--selected {
+        padding-left: 10px;
+      }
     }
 
     &:hover {
@@ -994,10 +1149,7 @@ export default {
     }
 
     .sp-tag-box {
-      position: absolute;
       padding-bottom: 3px;
-      left: 0;
-      right: 28px;
     }
 
     .sp-tag {
@@ -1010,6 +1162,15 @@ export default {
     .sp-icon-arrow-down-bold .rotate {
       transition: $transition-all;
       transform: rotate(180deg);
+    }
+
+    &__group-multi {
+      display: flex;
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 33px;
+      bottom: 0;
     }
   }
 
@@ -1098,7 +1259,7 @@ export default {
     .sp-select__input-box__num {
       position: absolute;
       top: 50%;
-      right: 39px;
+      right: 10px;
       transform: translateY(-50%);
       min-width: 26px;
       height: 18px;
