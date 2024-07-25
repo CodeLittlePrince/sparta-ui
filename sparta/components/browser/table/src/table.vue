@@ -182,6 +182,7 @@
           :disabled="loading"
           :total="paginationTotal"
           :page-size="paginationPageSize"
+          :page-sizes="paginationPageSizes"
           :layout="paginationLayout"
           @change="handlePageChange"
         >
@@ -321,6 +322,9 @@ export default {
     },
     paginationAlign() {
       return this.paginationOption && this.paginationOption.align || 'middle'
+    },
+    paginationPageSizes() {
+      return this.paginationOption && this.paginationOption.pageSizes || []
     },
     paginationLayout() {
       return this.paginationOption && this.paginationOption.layout || ''

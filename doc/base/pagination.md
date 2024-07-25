@@ -109,6 +109,19 @@ export default{
         @change="pageChange">
       </sp-pagination>
     </div>
+     <div>
+      完整功能（居右）
+      <sp-pagination
+        align="right"
+        page-index="2"
+        total="160"
+        page-size="10"
+        :page-sizes="[5,50,100]"
+        layout="total,sizes,jumper"
+        @size-change="sizeChange"
+        @change="pageChange">
+      </sp-pagination>
+    </div>
   </div>
 </template>
 

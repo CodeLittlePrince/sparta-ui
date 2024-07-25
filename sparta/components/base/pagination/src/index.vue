@@ -1,76 +1,78 @@
 <template>
-  <div class="sp-pagination" :class="{'is--disabled': disabled}">
-    <div v-if="showTotal" class="sp-pagination__total">共{{ total }}条</div>
-    <ul :class="`align--${ align }`">
-      <!-- prev -->
-      <li
-        class="sp-pagination__li-prev"
-        :class="{'is--disabled' : index === 1}"
-        @click="prev"
-      >
-        <i class="sp-icon-arrow-left"></i>
-      </li>
-      <li
-        :class="{'is--checked' : index === 1}"
-        @click="first()"
-      >
-        1
-      </li>
-      <li
-        v-if="showPrevMore"
-        class="item--more"
-      >
-        ...
-      </li>
-      <li
-        v-for="(pager, i) in pagers"
-        :key="i"
-        :class="{'is--checked' : index === pager}"
-        @click="go(pager)"
-      >
-        {{ pager }}
-      </li>
-      <li
-        v-if="showNextMore"
-        class="item--more"
-      >
-        ...
-      </li>
-      <li
-        v-if="pages !== 1"
-        :class="{'is--checked' : index === pages}"
-        @click="last"
-      >
-        {{ pages }}
-      </li>
-      <!-- next -->
-      <li
-        class="sp-pagination__li-next"
-        :class="{'is--disabled' : index === pages}"
-        @click="next"
-      >
-        <i class="sp-icon-arrow-right"></i>
-      </li>
-    </ul>
-    <div v-if="showSizes" class="sp-pagination__sizes">
-      <sp-select v-model="limit" height="28" @change="handleSizeChange">
-        <sp-option
-          v-for="item in pageSizes"
-          :key="item"
-          :value="item"
-          :label="`${item}条/页`"
-        ></sp-option>
-      </sp-select>
-    </div>
-    <div v-if="showJumper" class="sp-pagination__jump">
-      跳至<sp-input
-        ref="jumperInput"
-        v-model="jumperPage"
-        size="mini"
-        :filter-char="/[^\d]/g"
-        @change="handleJumpChange"
-        @keydown.enter.native="handleInputEnter"
-      />页
+  <div class="sp-pagination" :class="{'is--disabled': disabled }">
+    <div :class="`align--${ align }`">
+      <div v-if="showTotal" class="sp-pagination__total">共{{ total }}条</div>
+      <ul>
+        <!-- prev -->
+        <li
+          class="sp-pagination__li-prev"
+          :class="{'is--disabled' : index === 1}"
+          @click="prev"
+        >
+          <i class="sp-icon-arrow-left"></i>
+        </li>
+        <li
+          :class="{'is--checked' : index === 1}"
+          @click="first()"
+        >
+          1
+        </li>
+        <li
+          v-if="showPrevMore"
+          class="item--more"
+        >
+          ...
+        </li>
+        <li
+          v-for="(pager, i) in pagers"
+          :key="i"
+          :class="{'is--checked' : index === pager}"
+          @click="go(pager)"
+        >
+          {{ pager }}
+        </li>
+        <li
+          v-if="showNextMore"
+          class="item--more"
+        >
+          ...
+        </li>
+        <li
+          v-if="pages !== 1"
+          :class="{'is--checked' : index === pages}"
+          @click="last"
+        >
+          {{ pages }}
+        </li>
+        <!-- next -->
+        <li
+          class="sp-pagination__li-next"
+          :class="{'is--disabled' : index === pages}"
+          @click="next"
+        >
+          <i class="sp-icon-arrow-right"></i>
+        </li>
+      </ul>
+      <div v-if="showSizes" class="sp-pagination__sizes">
+        <sp-select v-model="limit" height="28" @change="handleSizeChange">
+          <sp-option
+            v-for="item in pageSizes"
+            :key="item"
+            :value="item"
+            :label="`${item}条/页`"
+          ></sp-option>
+        </sp-select>
+      </div>
+      <div v-if="showJumper" class="sp-pagination__jump">
+        跳至<sp-input
+          ref="jumperInput"
+          v-model="jumperPage"
+          size="mini"
+          :filter-char="/[^\d]/g"
+          @change="handleJumpChange"
+          @keydown.enter.native="handleInputEnter"
+        />页
+      </div>
     </div>
   </div>
 </template>
@@ -370,7 +372,7 @@ export default {
     float: right;
   }
 
-  .align--middle {
+  .align--middle, ul {
     display: inline-block;
   }
 
