@@ -544,7 +544,7 @@ describe('CascaderPanel', () => {
     expect(firstOption.querySelector('i').className).to.includes('sp-icon-arrow-right')
     expect(getMenus(el).length).to.equal(2)
     getOptions(el, 1)[0].click()
-    await wait(1000)
+    await wait(500)
     getOptions(el, 2)[0].click()
     await waitImmediate()
     expect(vm.value.length).to.equal(3)
