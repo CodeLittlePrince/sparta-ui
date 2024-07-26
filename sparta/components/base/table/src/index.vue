@@ -167,6 +167,7 @@
           :page-sizes="paginationPageSizes"
           :layout="paginationLayout"
           @change="handlePageChange"
+          @size-change="handlePageSizeChange"
         >
         </sp-pagination>
       </div>
@@ -481,6 +482,10 @@ export default {
 
     handlePageChange(index, pageSize) {
       this.$emit('pagination-change', index, pageSize)
+    },
+
+    handlePageSizeChange(pageSize) {
+      this.$emit('pagination-size-change', pageSize)
     },
 
     handleViewMore() {
