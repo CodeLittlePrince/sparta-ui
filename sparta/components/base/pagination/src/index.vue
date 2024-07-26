@@ -224,8 +224,9 @@ export default {
     },
 
     pageSizes: {
-      handler(val) {
-        if (val?.length) {
+      handler(val, oldVal) {
+        // !!这里为什么要判断长度或第一个值，是因为使用方在外面使用的时候大部分情况是重新赋值的，这种情况下，虽然值没变，但还会触发这里，所以需要判断是否真正改变
+        if (val?.length && (val?.length !== oldVal?.length || val[0] !== oldVal[0])) {
           this.limit = val[0]
         }
       },
