@@ -1199,6 +1199,7 @@ export default{
 |---------- |-------- |---------- |
 | selection-change  | checkbox选择触发 | selection（选中了数据数组） |
 | pagination-change  | 改变页码时的回调 | (index, pageSize) index为当前页码，pageSize为每页显示条数 |
+| pagination-size-change  | pageSize 改变时会触发 | (pageSize) pageSize为每页显示条数 |
 | table-view-more  | 查看更多触发 | - |
 
 ### Table Methods
