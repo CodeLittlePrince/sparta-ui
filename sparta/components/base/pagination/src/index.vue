@@ -328,7 +328,6 @@ export default {
         .sp-icon-arrow-down-bold {
           color: #0d1233;
           &.rotate {
-            transform: rotate(180deg);
             color: #09f;
           }
         }
