@@ -411,7 +411,7 @@ $directions: right, left, top, bottom;
     background-color: transparent;
 
     .sp-dialog__close {
-      font-size: $--font-size-extra-large;
+      font-size: 16px;
     }
   }
 
