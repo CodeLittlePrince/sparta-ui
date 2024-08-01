@@ -63,7 +63,7 @@
           ></sp-option>
         </sp-select>
       </div>
-      <div v-if="showJumper" class="sp-pagination__jump">
+      <div v-if="showJumper && pages > 1" class="sp-pagination__jump">
         跳至<sp-input
           ref="jumperInput"
           v-model="jumperPage"

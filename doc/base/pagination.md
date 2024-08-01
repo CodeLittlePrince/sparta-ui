@@ -116,7 +116,7 @@ export default{
         page-index="2"
         total="160"
         page-size="10"
-        :page-sizes="[5,50,100]"
+        :page-sizes="[5,50,100,200]"
         layout="total,sizes,jumper"
         @size-change="sizeChange"
         @change="pageChange">
