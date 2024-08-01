@@ -139,7 +139,7 @@ export default {
   data() {
     return {
       index: +this.pageIndex, //当前页码
-      limit: +this.pageSize, //每页显示条数
+      limit: 0, //每页显示条数
       size: +this.total || 1, //总记录数
       showPrevMore: false,
       showNextMore: false,
@@ -211,8 +211,11 @@ export default {
       this.index = val || 1
     },
 
-    pageSize(val) {
-      this.limit = val || 10
+    pageSize: {
+      immediate: true,
+      handler() {
+        this.handleSetPageSize()
+      }
     },
 
     total(val) {
@@ -226,8 +229,8 @@ export default {
     pageSizes: {
       handler(val, oldVal) {
         // !!这里为什么要判断长度或第一个值，是因为使用方在外面使用的时候大部分情况是重新赋值的，这种情况下，虽然值没变，但还会触发这里，所以需要判断是否真正改变
-        if (val?.length && (val?.length !== oldVal?.length || val[0] !== oldVal[0])) {
-          this.limit = val[0]
+        if (val?.length && (val?.length !== oldVal?.length || val?.join('') !== oldVal?.join(''))) {
+          this.handleSetPageSize()
         }
       },
       immediate: true
@@ -285,6 +288,18 @@ export default {
       this.$nextTick(() => {
         this.$refs.jumperInput?.$refs?.input?.focus?.()
       })
+    },
+
+    handleSetPageSize() {
+      if(this.pageSizes?.length) {
+        if(this.pageSizes.includes(this.pageSize)) {
+          this.limit = this.pageSize
+        } else {
+          this.limit = this.pageSizes[0]
+        }
+      } else {
+        this.limit = this.pageSize || 10
+      }
     }
   }
 }
@@ -443,4 +458,3 @@ export default {
   }
 }
 </style>
-
