@@ -38,7 +38,7 @@
         </div>
       </template>
       <div v-else-if="groupMultiple">
-        <sp-popup-tip
+        <popup-tip
           ref="popupTip"
           :custom-class="customPopupTipClass"
           color="#0D1233"
@@ -78,9 +78,9 @@
             />
           </div>
           <template v-if="showGroupMultiPopupTip && !isFocus && groupMultipleSelected && groupMultipleSelected.length" slot="popup">
-            {{ groupMultipleSelected.map(item => getGroupMultiTextByValue(item)).join(',') }}
+            <slot name="popupTipContent">{{ groupMultipleSelected.map(item => getGroupMultiTextByValue(item)).join('；') }}</slot>
           </template>
-        </sp-popup-tip>
+        </popup-tip>
       </div>
    
       <!-- 非多选情况-->
@@ -201,11 +201,13 @@
 import Emitter from 'sparta/common/js/mixins/emitter'
 import SpSelectDropdown from './select-dropdown'
 import { debounce } from 'sparta/common/js/utils/tool'
+import PopupTip from '../../popup-tip'
 export default {
   name: 'SpSelect',
 
   components: {
-    'sp-select-dropdown': SpSelectDropdown
+    'sp-select-dropdown': SpSelectDropdown,
+    'popup-tip': PopupTip
   },
 
   mixins: [Emitter],
@@ -1135,10 +1137,11 @@ export default {
     .sp-select__input--filter {
       background-color: transparent;
       height: 34px;
-      flex: 1;
+      min-width: 10px;
       padding-right: 46px;
       border: none;
       outline: none;
+      box-sizing: border-box;
       &.has--selected {
         padding-left: 10px;
       }
@@ -1150,6 +1153,7 @@ export default {
 
     .sp-tag-box {
       padding-bottom: 3px;
+      box-sizing: border-box;
     }
 
     .sp-tag {

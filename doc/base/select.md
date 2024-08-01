@@ -1229,6 +1229,8 @@ export default{
 |    —    | Option 组件列表 |
 | prefix | select框头部图标 |
 | center | select选中值显示 |
+| popupTipContent | select popupTip文案 |
+
 ### Select Events
 |   事件名称 | 说明     |
 |---------|---------|
