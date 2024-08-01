@@ -105,10 +105,13 @@ describe('Pagination', () => {
     })
 
     it('size-change', async () => {
-      await wrapper.setData({ layout: 'sizes,jumper', pageSizes: [5, 10, 15, 20, 25] })
+      await wrapper.setData({ layout: 'sizes,jumper', pageSize: 8, pageSizes: [5, 10, 15, 20, 25] })
+      expect(wrapper.find('.sp-selectInput__show').element.value).to.be.equal('5条/页')
+      await wrapper.setData({ layout: 'sizes,jumper', pageSize: 10, pageSizes: [5, 10, 15, 20, 25] })
+      expect(wrapper.find('.sp-selectInput__show').element.value).to.be.equal('10条/页')
       await wrapper.findAll('.align--middle li').wrappers[1].trigger('click')
       expect(wrapper.find('.align--middle .is--checked').text()).to.be.equal('1')
-      expect(wrapper.vm.currentPageSize).to.be.equal(5)
+      expect(wrapper.vm.currentPageSize).to.be.equal(10)
       expect(wrapper.find('.sp-pagination__sizes').exists()).to.be.true
       await wrapper.find('.sp-pagination__sizes .sp-select').trigger('click')
       await wrapper.findAll('.sp-select-list .sp-option').wrappers[3].trigger('click')
