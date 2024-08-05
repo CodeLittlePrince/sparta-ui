@@ -92,6 +92,16 @@ export default {
     showPopupTipWhenSlot: {
       type: Boolean,
       default: false
+    },
+    // 消失通过click其它区域触发
+    hideByClickOut: {
+      type: Boolean,
+      default: false
+    },
+    // freeze开启，mouseenter和mouseleave不再有效果，只能通过show方法显示
+    freeze: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -112,20 +122,54 @@ export default {
       }
     }
   },
+  
+  mounted() {
+    document.addEventListener('click', this.handleOtherAreaClick)
+  },
+
+  beforeDestroy() {
+    this.timeId && clearTimeout(this.timeId)
+    document.removeEventListener('click', this.handleOtherAreaClick)
+  },
 
   methods: {
     handleMouseenter() {
+      if (this.freeze) {
+        return
+      }
+
       if(this.showPopupTipWhenSlot && !this.$slots.popup) {
         return
       }
-      this.visible = true
-      this.timeId && clearTimeout(this.timeId)
+      
+      this.show()
     },
     handleMouseleave() {
+      if (this.hideByClickOut || this.freeze) {
+        return
+      }
+
+      this.hide()
+    },
+
+    /**
+     * 点击其他区域触发事件
+     */
+    handleOtherAreaClick(e) {
+      if (!this.$el.contains(e.target)) {
+        this.hide()
+      }
+    },
+
+    hide() {
       this.timeId = setTimeout(() => {
         this.visible = false
       }, 200)
     },
+
+    show() {
+      this.visible = true
+    }
   }
 }
 </script>
