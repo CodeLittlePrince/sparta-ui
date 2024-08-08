@@ -128,7 +128,7 @@ export default {
   },
 
   beforeDestroy() {
-    this.timeId && clearTimeout(this.timeId)
+    this._clearTimeId()
     document.removeEventListener('click', this.handleOtherAreaClick)
   },
 
@@ -141,6 +141,8 @@ export default {
       if(this.showPopupTipWhenSlot && !this.$slots.popup) {
         return
       }
+
+      this._clearTimeId()
       
       this.show()
     },
@@ -169,6 +171,10 @@ export default {
 
     show() {
       this.visible = true
+    },
+
+    _clearTimeId() {
+      this.timeId && clearTimeout(this.timeId)
     }
   }
 }
