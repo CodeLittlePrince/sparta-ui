@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { bootstrap } from '../../../util'
+import { bootstrap, wait } from '../../../util'
 
 bootstrap()
 
@@ -68,6 +68,10 @@ describe('Button', () => {
       await button.trigger('click')
       expect(clickSpy.callCount).to.be.equal(1)
       await wrapper.setData({ disabled: false })
+      // frequencyTimeout 300ms
+      await button.trigger('click')
+      expect(clickSpy.callCount).to.be.equal(1)
+      await wait(300)
       await button.trigger('click')
       expect(clickSpy.callCount).to.be.equal(2)
     })

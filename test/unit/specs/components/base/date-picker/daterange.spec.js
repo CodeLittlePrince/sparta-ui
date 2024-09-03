@@ -39,7 +39,7 @@ describe('date-picker', () => {
     },
     template: `
     <div>
-      <sp-button class="test-datepikcer-daterange-button">测试datepicker 范围</sp-button>
+      <sp-button class="test-datepikcer-daterange-button" :frequencyTimeout="0">测试datepicker 范围</sp-button>
       <sp-date-picker
         class="data-picker-2"
         v-model="time"

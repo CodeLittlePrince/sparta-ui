@@ -106,6 +106,7 @@
                 type="primary"
                 size="mini"
                 class="sp-date-picker__select"
+                :frequency-timeout="0"
                 @click="handleSubmitTime"
               >确认</sp-button>
               <a
@@ -296,6 +297,7 @@
                   type="primary"
                   size="mini"
                   class="sp-date-picker__range-select"
+                  :frequency-timeout="0"
                   @click="handleSubmitTimeRange"
                 >确认</sp-button>
                 <a

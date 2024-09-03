@@ -40,7 +40,7 @@ describe('date-picker', () => {
     },
     template: `
     <div>
-      <sp-button class="test-datepikcer-date-button">测试datepicker</sp-button>
+      <sp-button class="test-datepikcer-date-button" :frequencyTimeout="0">测试datepicker</sp-button>
       <sp-date-picker
         ref="wrapper"
         v-model="time1"

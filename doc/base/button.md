@@ -108,6 +108,7 @@
 | icon  | 图标类名 | string   |  —  |  —  |
 | autofocus  | 是否默认聚焦 | boolean   |  —  |  false  |
 | native-type | 原生 type 属性 | string | button / submit / reset | button |
+| frequency-timeout | 防止重复点击超时时间，单位毫秒 | number | 300 |
 
 ### Events
 | 事件名称      | 说明    | 回调参数      |

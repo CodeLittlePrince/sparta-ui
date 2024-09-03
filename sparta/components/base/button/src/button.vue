@@ -63,6 +63,10 @@ export default {
     disabled: Boolean,
     plain: Boolean,
     autofocus: Boolean,
+    frequencyTimeout: {
+      type: Number,
+      default: 300,
+    }
   },
 
   computed: {
@@ -80,8 +84,21 @@ export default {
     }
   },
 
+  beforeDestroy() {
+    this.timerId && clearTimeout(this.timerId)
+  },
+
   methods: {
     handleClick(evt) {
+      if (this.frequencyFlag) {
+        return
+      }
+      // 防止重复点击
+      this.frequencyFlag = true
+      this.timerId = setTimeout(() => {
+        this.frequencyFlag = false
+      }, this.frequencyTimeout)
+    
       this.$emit('click', evt)
     }
   }
