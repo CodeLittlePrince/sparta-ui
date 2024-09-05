@@ -6,7 +6,7 @@
 ```vue
 <template>
   <div class="md-demo-password-input">
-    <sp-password-input 
+    <sp-password-input
       v-model="value1" 
     />
   </div>
@@ -67,6 +67,12 @@
 | type         | 类型   | string  | password，number | password
 | validateEvent         | 验证   | boolean  | —  |true
 | value         | 绑定值           | string / number  | — | — |
+
+### Methods
+
+| 方法名      | 说明          | 参数
+|---------- |-------------- | --------------
+| focus | 聚焦 | —
 
 <script>
   export default {

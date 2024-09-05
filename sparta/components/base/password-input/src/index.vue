@@ -111,6 +111,10 @@ export default {
       }
     },
     handleClick() {
+      this.focus()
+    },
+
+    focus() {
       this.$refs.input && this.$refs.input.focus()
     },
 
