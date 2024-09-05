@@ -140,14 +140,14 @@ $checkbox-border-color: $border-color-base;
 $checkbox-checkmark-color: #fff;
 $checkbox-checkmark-color-disabled: #ccc;
 $checkbox-font-color-disabled: $color-text-disabled;
-$checkbox-checked-color: $color-text-disabled;
+$checkbox-checked-color: $color-primary;
 
 /* PasswordInput
 -------------------------- */
 $item-height: 36px;
 $password-input-width: 224px;
 $password-box-border-focus: #999;
-$password-box-shadow-focus: 0 0 0 1px #ffe9e6;
+$password-box-shadow-focus: none;
 
 /* Input
 -------------------------- */
@@ -181,8 +181,8 @@ $opiton-color-disabled: $color-text-disabled;
 /* Radio
 -------------------------- */
 $radio-color: $color-text-primary;
-$radio-background-color-active: $color-text-disabled;
-$radio-border-color-active: $color-text-disabled;
+$radio-background-color-active: $color-primary;
+$radio-border-color-active: $color-primary;
 $radio-font-size: 14px;
 $radio-border-color: $border-color-base;
 $radio-background-color: #fff;
