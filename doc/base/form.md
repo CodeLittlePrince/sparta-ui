@@ -470,7 +470,7 @@
       submitForm(formName) {
         this.$refs[formName].validate().then(() => {
           alert('submit!')
-          console.log(this.validateForm1)
+          console.log(this[formName])
         }).catch(() => {
           console.log('error submit', this.$refs[formName].getFirstErrorText())
         })
@@ -487,7 +487,7 @@
       validateFormPart(formName) {
         this.$refs[formName].validate(null, ['name', 'password']).then(() => {
           alert('submit!')
-          console.log(this.validateForm1)
+          console.log(this[formName])
         }).catch(() => {
           console.log('error submit', this.$refs[formName].getFirstErrorText())
         })
@@ -1004,7 +1004,7 @@
       submitForm(formName) {
         this.$refs[formName].validate().then(() => {
           alert('submit!')
-          console.log(this.validateForm1)
+          console.log(this[formName])
         }).catch(() => {
           console.log('error submit', this.$refs[formName].getFirstErrorText())
         })
@@ -1024,7 +1024,7 @@
       validateFormPart(formName) {
         this.$refs[formName].validate(null, ['name', 'password']).then(() => {
           alert('submit!')
-          console.log(this.validateForm1)
+          console.log(this[formName])
         }).catch(() => {
           console.log('error submit', this.$refs[formName].getFirstErrorText())
         })

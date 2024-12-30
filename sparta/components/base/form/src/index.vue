@@ -142,6 +142,10 @@ export default {
       if (hasPartFields) {
         fields = fields.filter(vm => partFields.includes(vm.prop))
       }
+      // 处理隐藏元素，不要去校验
+      fields = fields.filter(vm => {
+        return vm.$el && window.getComputedStyle(vm.$el).display !== 'none'
+      })
       fields.forEach(field => {
         field.validate('', (message, field) => {
           if (message) {
