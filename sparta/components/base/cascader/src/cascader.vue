@@ -284,7 +284,7 @@ export default {
       checkedValue: this.value,
       inputHover: false,
       inputValue: null,
-      presentText: null,
+      presentText: '',
       presentTags: [],
       checkedNodes: [],
       filtering: false,
@@ -353,26 +353,26 @@ export default {
     disabled() {
       this.computePresentContent()
     },
-    value(val) {
-      if (!isEqual(val, this.checkedValue)) {
-        this.checkedValue = val
+    value(newVal, oldVal) {
+      if (!isEqual(newVal, oldVal)) {
+        this.checkedValue = newVal
         this.computePresentContent()
       }
     },
-    checkedValue(val) {
-      const { value, dropDownVisible } = this
+    checkedValue(newVal, oldVal) {
+      const { dropDownVisible } = this
       const { checkStrictly, multiple } = this.config
 
-      if (!isEqual(val, value) || isUndefined(value)) {
+      if (!isEqual(newVal, oldVal) || isUndefined(oldVal)) {
         this.computePresentContent()
         // hide dropdown when single mode
         if (!multiple && !checkStrictly && dropDownVisible) {
           this.toggleDropDownVisible(false)
         }
 
-        this.$emit('input', val)
-        this.$emit('change', val)
-        this.dispatch('SpFormItem', 'sp.form.change', [val])
+        this.$emit('input', newVal)
+        this.$emit('change', newVal)
+        this.dispatch('SpFormItem', 'sp.form.change', newVal)
       }
     },
     options: {
@@ -517,7 +517,7 @@ export default {
       this.$nextTick(() => {
         if (this.config.multiple) {
           this.computePresentTags()
-          this.presentText = this.presentTags.length ? ' ' : undefined
+          this.presentText = this.presentTags.length ? ' ' : ''
         } else {
           this.computePresentText()
         }
@@ -533,6 +533,7 @@ export default {
     },
     computePresentText() {
       const { checkedValue, config } = this
+
       if (!this.isEmptyValue(checkedValue)) {
         const node = this.panel.getNodeByValue(checkedValue)
         if (node && (config.checkStrictly || node.isLeaf)) {
@@ -540,7 +541,7 @@ export default {
           return
         }
       }
-      this.presentText = null
+      this.presentText = ''
     },
     computePresentTags() {
       const { isDisabled, leafOnly, showAllLevels, separator, collapseTags } = this

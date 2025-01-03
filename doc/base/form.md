@@ -548,6 +548,18 @@
         autocomplete="off"
       />
     </sp-form-item>
+    <sp-form-item 
+      label="地区" 
+      prop="area"
+      :rules="[
+        { required: true, message: '地区不能为空'}
+      ]"
+    >
+     <sp-cascader
+      v-model="validateForm2.area"
+      :options="areaOptions"
+     />
+    </sp-form-item>
     <!-- 按钮 -->
     <sp-form-item>
       <sp-button
@@ -564,8 +576,9 @@
     data() {
       return {
         validateForm2: {
-          favorite: '',
-          cities: []
+          name: '',
+          age: '',
+          area: [],
         },
         rules2: {
           name: [
@@ -919,8 +932,7 @@
         validateForm2: {
           name: '',
           age: '',
-          favorite: '',
-          cities: []
+          area: [],
         },
         rules2: {
           name: [
