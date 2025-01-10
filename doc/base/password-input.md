@@ -45,11 +45,41 @@
   export default {
     data() {
       return {
-        value1: ''
+        value2: ''
       }
     },
     watch: {
-      value1(val) {
+      value2(val) {
+        console.log(val)
+      }
+    }
+  }
+</script>
+```
+:::
+
+### 长度控制
+
+:::demo 通过`length`控制长度。
+```vue
+<template>
+  <div class="md-demo-password-input">
+    <sp-password-input 
+      type="number"
+      :length="4"
+      v-model="value3" 
+    />
+  </div>
+</template>
+<script>
+  export default {
+    data() {
+      return {
+        value3: ''
+      }
+    },
+    watch: {
+      value3(val) {
         console.log(val)
       }
     }
@@ -67,6 +97,7 @@
 | type         | 类型   | string  | password，number | password
 | validateEvent         | 验证   | boolean  | —  |true
 | value         | 绑定值           | string / number  | — | — |
+| length         | 输入框长度           | number  | — |6
 
 ### Methods
 
@@ -80,6 +111,7 @@
       return {
         value1: '',
         value2: '',
+        value3: ''
       }
     },
     watch: {
@@ -87,6 +119,9 @@
         console.log(val)
       },
       value2(val) {
+        console.log(val)
+      },
+      value3(val) {
         console.log(val)
       }
     }

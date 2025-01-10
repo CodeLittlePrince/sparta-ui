@@ -2,7 +2,7 @@
   <div class="sp-password-input">
     <ul class="sp-password-input__security" @click="handleClick">
       <li
-        v-for="(item, index) in codeLength"
+        v-for="(item, index) in length"
         :key="index"
         class="sp-password-input__item"
         :index="index"
@@ -19,7 +19,7 @@
       ref="input"
       v-model="code"
       type="text"
-      :maxlength="codeLength"
+      :maxlength="length"
       class="sp-password-input__input"
       autocomplete="new-password"
       @focus="handleFocus"
@@ -49,13 +49,16 @@ export default {
     validateEvent: {
       type: Boolean,
       default: true
+    },
+    length: {
+      type: Number,
+      default: 6
     }
   },
   data() {
     return {
       code: this.value,
       isFocus: false,
-      codeLength: 6
     }
   },
   computed: {
@@ -68,7 +71,7 @@ export default {
   },
   watch: {
     code(newVal, oldVal) {
-      if (newVal.replace(/[^\d]/g, '') != newVal || (newVal && newVal.length > this.codeLength)) {
+      if (newVal.replace(/[^\d]/g, '') != newVal || (newVal && newVal.length > this.length)) {
         this.code = oldVal
         return false
       }
