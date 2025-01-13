@@ -58,6 +58,35 @@
 ```
 :::
 
+### 身份证后4位
+
+:::demo 通过设置`type`为`idCard`，当`type`为`idCard`，`length`值固定为`4`，无法更改。
+```vue
+<template>
+  <div class="md-demo-password-input">
+    <sp-password-input 
+      type="idCard"
+      v-model="value4" 
+    />
+  </div>
+</template>
+<script>
+  export default {
+    data() {
+      return {
+        value4: ''
+      }
+    },
+    watch: {
+      value4(val) {
+        console.log(val)
+      }
+    }
+  }
+</script>
+```
+:::
+
 ### 长度控制
 
 :::demo 通过`length`控制长度。
@@ -94,7 +123,7 @@
 
 | 参数          | 说明            | 类型            | 可选值                 | 默认值   |
 |-------------  |---------------- |---------------- |---------------------- |-------- |
-| type         | 类型   | string  | password，number | password
+| type         | 类型   | string  | password，number，idCard（身份证后4位） | password
 | validateEvent         | 验证   | boolean  | —  |true
 | value         | 绑定值           | string / number  | — | — |
 | length         | 输入框长度           | number  | — |6
@@ -111,6 +140,7 @@
       return {
         value1: '',
         value2: '',
+        value4: '',
         value3: ''
       }
     },
@@ -119,6 +149,9 @@
         console.log(val)
       },
       value2(val) {
+        console.log(val)
+      },
+      value4(val) {
         console.log(val)
       },
       value3(val) {

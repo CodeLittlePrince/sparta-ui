@@ -2,15 +2,15 @@
   <div class="sp-password-input">
     <ul class="sp-password-input__security" @click="handleClick">
       <li
-        v-for="(item, index) in length"
+        v-for="(item, index) in realLength"
         :key="index"
         class="sp-password-input__item"
         :index="index"
         :class="{ 'is--focus': isFocus && (cursorIndex === index || codeList[index]) }"
       >
         <i :class="{ 'is__animated': isFocus && cursorIndex === index }"></i>
-        <i v-if="codeList[index] && type ==='password'" class="sp-password-input__dot"></i>
-        <template v-if="type !=='password' ">
+        <i v-if="codeList[index] && type !=='number'" class="sp-password-input__dot"></i>
+        <template v-if="type ==='number' ">
           {{ codeList[index] }}
         </template>
       </li>
@@ -19,7 +19,7 @@
       ref="input"
       v-model="code"
       type="text"
-      :maxlength="length"
+      :maxlength="realLength"
       class="sp-password-input__input"
       autocomplete="new-password"
       @focus="handleFocus"
@@ -44,7 +44,7 @@ export default {
     type: {
       type: String,
       default: 'password',
-      validator: (val) => ['password', 'number'].includes(val)
+      validator: (val) => ['password', 'number', 'idCard'].includes(val)
     },
     validateEvent: {
       type: Boolean,
@@ -57,7 +57,7 @@ export default {
   },
   data() {
     return {
-      code: this.value,
+      code: '',
       isFocus: false,
     }
   },
@@ -67,11 +67,14 @@ export default {
     },
     cursorIndex() {
       return this.code.length
+    },
+    realLength() {
+      return this.type === 'idCard' ? 4 : this.length
     }
   },
   watch: {
     code(newVal, oldVal) {
-      if (newVal.replace(/[^\d]/g, '') != newVal || (newVal && newVal.length > this.length)) {
+      if (!this.isValidateCode(newVal)) {
         this.code = oldVal
         return false
       }
@@ -83,6 +86,7 @@ export default {
     }
   },
   mounted() {
+    this.setCurrentValue(this.value)
     document.addEventListener('click', this.handleOtherAreaClick)
   },
   beforeDestroy() {
@@ -90,7 +94,19 @@ export default {
   },
   methods: {
     setCurrentValue(value) {
-      this.code = value
+      this.code = this.isValidateCode(value) ? value?.toString().toUpperCase() : this.code
+    },
+    isValidateCode(value) {
+      if(value && value.length > this.realLength) {
+        return
+      }
+      if (value && ['password', 'number'].includes(this.type) && value.replace(/[^\d]/g, '') != value) {
+        return
+      }
+      if(value && this.type === 'idCard' && !/^\d{1,3}$|^\d{3}[xX]$|^\d{4}$/.test(value)) {
+        return
+      }
+      return true
     },
     handleFocus() {
       this.isFocus = true
