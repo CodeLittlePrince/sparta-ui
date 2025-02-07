@@ -26,19 +26,67 @@
 :::demo placement=top
 ```vue
 <template>
-  <p>
-    浮层在上方出现
-    <sp-popup-tip
-      width="200" color="#747d8c"
-      has-border
-      placement="top"
-    >
-      <i class="sp-icon-ques"></i>
-      <template slot="popup">
-        我是做好事不留名的红领巾
-      </template>
-    </sp-popup-tip>
-  </p>
+  <div>
+    <p class="placementBody">
+      浮层在上方出现
+      <sp-popup-tip
+        width="200" color="#747d8c"
+        placement="top"
+        has-border
+      >
+        <i class="sp-icon-ques"></i>
+        <template slot="popup">
+          我是做好事不留名的红领巾
+        </template>
+      </sp-popup-tip>
+    </p>
+    <p class="placementBody">
+      浮层在右边出现
+      <sp-popup-tip
+        has-border
+        width="200" color="#747d8c"
+        placement="right"
+      >
+        <i class="sp-icon-ques"></i>
+        <template slot="popup">
+          我是做好事不留名的红领巾
+          <p>我是做好事不留名的红领巾</p>
+          <p>我是做好事不留名的红领巾</p>
+          <p>我是做好事不留名的红领巾</p>
+          <p>我是做好事不留名的红领巾</p>
+        </template>
+      </sp-popup-tip>
+    </p>
+    <p class="placementBody">
+      浮层在左边出现
+      <sp-popup-tip
+        width="200" color="#747d8c"
+        placement="left"
+        has-border
+      >
+        <i class="sp-icon-ques"></i>
+        <template slot="popup">
+          我是做好事不留名的红领巾
+          <p>我是做好事不留名的红领巾</p>
+          <p>我是做好事不留名的红领巾</p>
+          <p>我是做好事不留名的红领巾</p>
+        </template>
+      </sp-popup-tip>
+    </p>
+     <p class="placementBody">
+      浮层在下方出现
+      <sp-popup-tip
+       has-border
+        width="200" color="#747d8c"
+        placement="bottom"
+      >
+        <i class="sp-icon-ques"></i>
+        <template slot="popup">
+          我是做好事不留名的红领巾
+        </template>
+      </sp-popup-tip>
+    </p>
+  </div>
 </template>
 ```
 :::
@@ -186,7 +234,7 @@
 | color | 设置浮层的字体颜色 | string | — | '#012257' |
 | hasBorder | 设置浮层是否有边框 | boolean | — | false |
 | popperScrollBindElem | popper浮动定位的锚点元素 | string/Element | — | - |
-| placement | Tooltip 组件出现的位置 | string | bottom/top | bottom |
+| placement | Tooltip 组件出现的位置 | string | bottom/top/left/right | bottom |
 | hide-by-click-out | 消失通过click其它区域触发,mouseleave将失效 | boolean | — | false |
 | freeze | freeze开启，mouseenter和mouseleave不再有效果，只能通过show方法显示 | boolean | — | false |
 
@@ -212,3 +260,9 @@
     }
   }
 </script>
+
+<style>
+  .placementBody {
+    margin-bottom: 30px;
+  }
+</style>

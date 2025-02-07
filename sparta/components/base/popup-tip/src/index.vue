@@ -81,7 +81,7 @@ export default {
       type: String,
       default: 'bottom',
       validator: val => {
-        return ['top', 'bottom'].indexOf(val) !== -1
+        return ['top', 'bottom','left', 'right'].indexOf(val) !== -1
       }
     },
     // 自定义样式
@@ -277,6 +277,93 @@ export default {
         }
         &::after {
           border-top-color: #ffeceb;
+        }
+      }
+    }
+    &.arrow--left {
+      margin-left: 6px;
+      margin-bottom: 8px;
+      &::before, &::after {
+        position: absolute;
+        content: "";
+        width: 0;
+        height: 0;
+        border: none;
+        top: 50%;
+        transform: translateY(-50%);
+        left: -6px;
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+      }
+      &::before {
+        border-right: 6px solid $border-color-base;
+      }
+      &::after {
+        border-right: 6px solid #fff;
+      }
+      &.has--border {
+        &::after {
+          left: -4px;
+        }
+        &::before {
+          border-right-color: $border-color-base;
+        }
+      }
+      &.is--theme-blue {
+        &::after {
+          border-right-color: #f0f3f7;
+        }
+      }
+      &.is--theme-red {
+        &::before {
+          border-right-color: #fb791b;
+        }
+        &::after {
+          border-right-color: #ffeceb;
+        }
+      }
+    }
+    &.arrow--right {
+      margin-right: 6px;
+      margin-bottom: 6px;
+      &::before, &::after {
+        position: absolute;
+        content: "";
+        width: 0;
+        height: 0;
+        border: none;
+        top: 50%;
+        left: auto;
+        transform: translateY(-50%);
+        right: -6px;
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+      }
+      &::before {
+        border-left: 6px solid $border-color-base;
+      }
+      &::after {
+        border-left: 6px solid #fff;
+      }
+      &.has--border {
+        &::after {
+          right: -4px;
+        }
+        &::before {
+          border-left-color: $border-color-base;
+        }
+      }
+      &.is--theme-blue {
+        &::after {
+          border-left-color: #f0f3f7;
+        }
+      }
+      &.is--theme-red {
+        &::before {
+          border-left-color: #fb791b;
+        }
+        &::after {
+          border-left-color: #ffeceb;
         }
       }
     }
