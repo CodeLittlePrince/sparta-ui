@@ -2,7 +2,11 @@
   <div
     v-show="value"
     class="sp-popup-tip__wrap"
-    :class="{'arrow--bottom': placementIsTop }"
+    :class="[
+      {'arrow--bottom': currentPlacement === 'top' },
+      {'arrow--left': currentPlacement === 'right' },
+      {'arrow--right': currentPlacement === 'left' }
+    ]"
     :style="{
       'width': widthComputed,
       'color': SpPopupTip.color
@@ -26,7 +30,7 @@ export default {
 
   data() {
     return {
-      placementIsTop: false
+      currentPlacement: 'bottom'
     }
   },
    
@@ -41,7 +45,7 @@ export default {
     }
   },
   created() {
-    this.placementIsTop = this.placement === 'top'
+    this.currentPlacement = this.placement || 'bottom'
   },
   mounted() {
     this.referenceElm = this.$parent.$refs.popupTip
@@ -52,7 +56,7 @@ export default {
         this.$nextTick(() => {
           this.updatePopper()
           // 修改箭头显示方向
-          this.$el && (this.placementIsTop = this.$el.getAttribute('x-placement') === 'top')
+          this.$el && (this.currentPlacement = this.$el.getAttribute('x-placement'))
         })
       }
     })
