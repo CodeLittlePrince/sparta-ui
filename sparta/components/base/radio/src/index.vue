@@ -4,6 +4,7 @@
     :class="[
       { 'is--disabled': disabled },
       { 'is--checked': checked },
+      { 'is--check': isCheck },
     ]"
     @click="handleClick"
   >
@@ -17,7 +18,7 @@
         @change="handleChange"
         @click.stop
       >
-      <span class="sp-radio__inner" />
+      <span class="sp-radio__inner" :class="{'sp-icon-check': checked && isCheck }" />
     </span>
     <span class="sp-radio__text"><slot></slot></span>
   </label>
@@ -38,7 +39,14 @@ export default {
     disabled: {
       type: Boolean,
       default: false
-    }
+    },
+    type: {
+      type: String,
+      default: 'round',
+      validator(val) {
+        return ['check', 'round'].indexOf(val) !== -1
+      }
+    },
   },
   computed: {
     checked() {
@@ -56,6 +64,9 @@ export default {
         }
       }
       return false
+    },
+    isCheck() {
+      return this.type === 'check'
     },
     model: {
       get() {
@@ -118,6 +129,19 @@ export default {
     vertical-align: middle;
     &:last-child {
       margin-right: 0;
+    }
+
+    &.is--check {
+      .sp-radio .sp-radio__inner {
+        padding-top: 3px;
+        padding-left: 2px;
+        color: white;
+        line-height: 8px;
+        font-size: 10px;
+        &::after {
+          opacity: 0;
+        }
+      }
     }
   }
 
