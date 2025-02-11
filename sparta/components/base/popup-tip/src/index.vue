@@ -117,8 +117,12 @@ export default {
       if (val) {
         // 为了每次弹出PopupTipWrap，都会根据处的环境做适应
         this.broadcast('SpPopupTipWrap', 'updatePopper')
+
+        this.$emit('show')
       } else {
         this.broadcast('SpPopupTipWrap', 'destroyPopper')
+
+        this.$emit('hide')
       }
     }
   },

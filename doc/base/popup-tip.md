@@ -251,6 +251,12 @@
 | — | 基础内容 |
 | popup | 悬浮层里的内容 |
 
+### Events
+| 事件名 | 说明 | 回调参数
+|------ | -------- | --------
+| show | 显示tip时触发 | —
+| hide | 隐藏tip时触发 | —
+
 <script>
   export default {
     mounted() {
