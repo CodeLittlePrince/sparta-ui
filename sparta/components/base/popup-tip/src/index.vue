@@ -285,7 +285,7 @@ export default {
       }
     }
     &.arrow--left {
-      margin-left: 6px;
+      margin-left: 9px;
       margin-bottom: 8px;
       &::before, &::after {
         position: absolute;
@@ -328,7 +328,7 @@ export default {
       }
     }
     &.arrow--right {
-      margin-right: 6px;
+      margin-right: 8px;
       margin-bottom: 6px;
       &::before, &::after {
         position: absolute;
