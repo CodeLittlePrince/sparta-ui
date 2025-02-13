@@ -1188,13 +1188,22 @@ function getBoundingClientRect(element) {
     -element.scrollTop :
     rect.top;
 
+    var scale = 1;
+    var bodyStyle = window.getComputedStyle(document.body);
+    if (bodyStyle.transform && bodyStyle.transform !== 'none') {
+      var matrix = bodyStyle.transform.match(/^matrix\((.+)\)$/);
+      if (matrix) {
+        scale = parseFloat(matrix[1].split(', ')[0]);
+      }
+    }
+
   return {
-    left: rect.left,
-    top: rectTop,
-    right: rect.right,
-    bottom: rect.bottom,
-    width: rect.right - rect.left,
-    height: rect.bottom - rectTop
+    left: rect.left / scale,
+    top: rectTop / scale,
+    right: rect.right / scale,
+    bottom: rect.bottom / scale,
+    width: (rect.right - rect.left) / scale,
+    height: (rect.bottom - rectTop)  / scale
   };
 }
 
