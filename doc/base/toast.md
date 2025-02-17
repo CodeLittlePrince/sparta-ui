@@ -91,6 +91,44 @@ export default{
 </script>
 ```
 :::
+### 自定义样式
+
+:::demo 分别有：全局配置，调用声明，两种方式。
+```vue
+<template>
+  <sp-button
+    @click="showTipResetClassName"
+  >一个消息</sp-button>
+</template>
+
+<script>
+Vue.prototype.$sparta.success = Toast('success', {
+  className: 'custom-class'
+}) // 全局配置
+// 单独调用的话，在调用的时候声明即可
+export default{
+  methods: {
+    showTipResetClassName() {
+      // 调用声明
+      this.$sparta.success('一个自定义class消息', {
+        className: 'custom-class'
+      })
+      // 全局配置后可以这样调用
+      this.$sparta.success('一个自定义class消息')
+    }
+  }
+}
+</script>
+<style>
+  .sp-toast.custom-class .sp-toast__contain {
+    background: #409EFF;
+    font-size: 34px;
+    color: white;
+    top: 180px;
+  }
+</style>
+```
+:::
 
 <script>
 export default{
@@ -109,7 +147,22 @@ export default{
     },
     showTipResetDuration() {
       this.$sparta.success('一个 5s 的消息', 5000)
+    },
+     showTipResetClassName() {
+      // 调用声明
+      this.$sparta.success('一个自定义class消息', {
+        className: 'custom-class',
+        duration: 5*1000
+      })
     }
   }
 }
 </script>
+<style>
+  .sp-toast.custom-class .sp-toast__contain {
+    background: #409EFF;
+    font-size: 34px;
+    color: white;
+    top: 180px;
+  }
+</style>

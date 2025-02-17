@@ -1,14 +1,14 @@
 <template>
-  <div class="sp-toast">
+  <div class="sp-toast" :class="className">
     <div
-      class="toast"
-      :class="`toast-${type} ${toastAnimateClass}`"
-      :style="`top: ${top};z-index: ${zIndex};`"
+      class="sp-toast__contain"
+      :class="`sp-toast-${type} ${toastAnimateClass}`"
+      :style="`z-index: ${zIndex};`"
       @mouseenter="clearTimer"
       @mouseleave="startTimer"
     >
       <!-- body -->
-      <div class="body">
+      <div class="sp-toast__body">
         <i :class="`sp-icon-${type}`"></i>
         <slot>{{ message }}</slot>
       </div>
@@ -30,7 +30,7 @@ export default {
       message: '',
       type: '',
       zIndex: 1,
-      top: '35px'
+      className: '',
     }
   },
 
@@ -75,7 +75,7 @@ export default {
 
 <style lang="scss">
 .sp-toast {
-  .toast {
+  &__contain {
     position: fixed;
     display: inline-block;
     left: 50%;
@@ -88,30 +88,31 @@ export default {
     text-align: center;
     font-size: $toast-font-size;
     box-sizing: border-box;
-    .body {
+    top: 35px;
+    .sp-toast__body {
       padding: 11px;
       line-height: 1.2;
     }
-    &-error {
-      background-color: $toast-background-error;
-      border-color: $toast-color-error;
-      color: $toast-color-error;
-    }
-    &-success {
-      background-color: $toast-background-success;
-      border-color: $toast-color-success;
-      color: $toast-color-success;
-    }
-    &-warning {
-      background-color: $toast-background-warning;
-      border-color: $toast-color-warning;
-      color: $toast-color-warning;
-    }
-    &-info {
-      background-color: $toast-background-info;
-      border-color: $toast-color-info;
-      color: $toast-color-info;
-    }
+  }
+  &-error {
+    background-color: $toast-background-error;
+    border-color: $toast-color-error;
+    color: $toast-color-error;
+  }
+  &-success {
+    background-color: $toast-background-success;
+    border-color: $toast-color-success;
+    color: $toast-color-success;
+  }
+  &-warning {
+    background-color: $toast-background-warning;
+    border-color: $toast-color-warning;
+    color: $toast-color-warning;
+  }
+  &-info {
+    background-color: $toast-background-info;
+    border-color: $toast-color-info;
+    color: $toast-color-info;
   }
 }
 </style>
