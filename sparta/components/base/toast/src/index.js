@@ -4,6 +4,14 @@ let ToastConstructor = Vue.extend(Main)
 
 const Toast = (type, globalCustomOptions) => {
   return function(message, customOptions) {
+    let useTransition = true
+    if (typeof globalCustomOptions?.useTransition === 'boolean') {
+      useTransition = globalCustomOptions.useTransition
+    }
+    if (typeof customOptions?.useTransition === 'boolean') {
+      useTransition = customOptions.useTransition
+    }
+
     let durationGlobal = globalCustomOptions?.durationGlobal || globalCustomOptions
     if (typeof durationGlobal !== 'number') {
       durationGlobal = 3000
@@ -17,7 +25,9 @@ const Toast = (type, globalCustomOptions) => {
       message,
       duration: durationGlobal || durationLocal || 3000,
       ...(globalCustomOptions||{}),
-      ...(customOptions || {})
+      ...(customOptions || {}),
+      useTransition,
+      toastAnimateClass: useTransition ? 'toast-fade-in-down animated' : ''
     } || {}
     // 如果是直接字符串，那直接赋值给message就好了
     // 实例化
