@@ -10,7 +10,6 @@
     <sp-popup-tip
       width="200" color="#747d8c"
       has-border
-      :use-transition="false"
     >
       <i class="sp-icon-ques"></i>
       <template slot="popup">

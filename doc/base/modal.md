@@ -12,7 +12,6 @@ Modal 模态弹窗
     v-model="visible1"
     @show="showHandle"
     @close="closeHandle"
-    :use-transition="false"
     width="650"
   >
     <div class="content">
