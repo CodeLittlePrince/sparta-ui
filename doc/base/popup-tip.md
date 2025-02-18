@@ -262,6 +262,7 @@
 | hide-by-click-out | 消失通过click其它区域触发,mouseleave将失效 | boolean | — | false |
 | freeze | freeze开启，mouseenter和mouseleave不再有效果，只能通过show方法显示 | boolean | — | false |
 | trigger | 触发行为 | string | click/hover | hover |
+| use-transition | 是否使用过度动画 | boolean	 | — | true |
 
 ### Form Methods
 
