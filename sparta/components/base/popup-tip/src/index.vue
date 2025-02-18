@@ -8,6 +8,7 @@
     ]"
     @mouseenter="handleMouseenter"
     @mouseleave="handleMouseleave"
+    @click="handleToggleClick"
   >
     <div class="sp-popup-tip__content">
       <slot></slot>
@@ -102,6 +103,14 @@ export default {
     freeze: {
       type: Boolean,
       default: false
+    },
+
+    trigger: {
+      type: String,
+      default: 'hover',
+      validator(val) {
+        return ['hover', 'click'].indexOf(val) !== -1
+      }
     }
   },
 
@@ -138,6 +147,40 @@ export default {
 
   methods: {
     handleMouseenter() {
+      if(this.trigger !== 'hover') {
+        return
+      }
+
+      this.showHandle()
+    },
+    handleMouseleave() {
+      if(this.trigger !== 'hover') {
+        return
+      }
+
+      this.hideHandle()
+    },
+
+    handleToggleClick() {
+      if (this.trigger === 'click') {
+        if(this.visible) {
+          this.hideHandle()
+          return
+        }
+        this.showHandle()
+      }
+    },
+
+    /**
+     * 点击其他区域触发事件
+     */
+    handleOtherAreaClick(e) {
+      if (!this.$el.contains(e.target)) {
+        this.hide()
+      }
+    },
+
+    showHandle() {
       if (this.freeze) {
         return
       }
@@ -150,21 +193,12 @@ export default {
       
       this.show()
     },
-    handleMouseleave() {
+
+    hideHandle() {
       if (this.hideByClickOut || this.freeze) {
         return
       }
-
       this.hide()
-    },
-
-    /**
-     * 点击其他区域触发事件
-     */
-    handleOtherAreaClick(e) {
-      if (!this.$el.contains(e.target)) {
-        this.hide()
-      }
     },
 
     hide() {
