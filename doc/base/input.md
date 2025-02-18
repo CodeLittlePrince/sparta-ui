@@ -13,6 +13,7 @@ Input 输入框
   <div class="sp-input-demo">
     <sp-input
       v-model="value1"
+      :use-span-placeholder="true"
       placeholder="basic usage"
     />
   </div>
@@ -427,6 +428,7 @@ export default {
 | tabindex | 输入框的tabindex | string | - | - |
 | tip-format | 格式化提示的格式定义 | Function | - | val => val
 | filter-char | 限制哪些字符不能输入。 | array / regrex | - | null
+| useSpanPlaceholder | 是否使用 span 标签包裹提示文本 | boolean | - | false
 
 ### Input Slots
 | name | 说明 |
