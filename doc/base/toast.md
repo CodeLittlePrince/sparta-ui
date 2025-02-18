@@ -151,8 +151,7 @@ export default{
      showTipResetClassName() {
       // 调用声明
       this.$sparta.success('一个自定义class消息', {
-        className: 'custom-class',
-        duration: 5*1000
+        className: 'custom-class'
       })
     }
   }

@@ -4,8 +4,14 @@ let ToastConstructor = Vue.extend(Main)
 
 const Toast = (type, globalCustomOptions) => {
   return function(message, customOptions) {
-    const durationGlobal = globalCustomOptions?.durationGlobal || globalCustomOptions
-    const durationLocal = customOptions?.duration || customOptions
+    let durationGlobal = globalCustomOptions?.durationGlobal || globalCustomOptions
+    if (typeof durationGlobal !== 'number') {
+      durationGlobal = 3000
+    }
+    let durationLocal = customOptions?.duration || customOptions
+    if (typeof durationLocal !== 'number') {
+      durationLocal = 3000
+    }
     const options = {
       type,
       message,
