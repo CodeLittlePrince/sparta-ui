@@ -226,6 +226,30 @@
 ```
 :::
 
+
+### click触发
+
+:::demo theme="red"
+```vue
+<template>
+  <p>
+    浮层red主题
+    <sp-popup-tip
+      width="200" color="#747d8c"
+      has-border
+      theme="red"
+      trigger="click"
+    >
+      <i class="sp-icon-ques"></i>
+      <template slot="popup">
+        我是做好事不留名的红领巾
+      </template>
+    </sp-popup-tip>
+  </p>
+</template>
+```
+:::
+
 ### Attributes
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
@@ -237,6 +261,7 @@
 | placement | Tooltip 组件出现的位置 | string | bottom/top/left/right | bottom |
 | hide-by-click-out | 消失通过click其它区域触发,mouseleave将失效 | boolean | — | false |
 | freeze | freeze开启，mouseenter和mouseleave不再有效果，只能通过show方法显示 | boolean | — | false |
+| trigger | 触发行为 | string | click/hover | hover |
 
 ### Form Methods
 
