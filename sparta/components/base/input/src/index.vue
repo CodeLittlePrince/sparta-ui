@@ -247,7 +247,7 @@ export default {
       default: '',
       validator: val => ['', 'upper', 'lower'].includes(val)
     },
-    useSpanPlaceholder: {
+    useFakePlaceholder: {
       type: Boolean,
       default: false
     }
@@ -301,7 +301,7 @@ export default {
         (this.isFocus || this.isHover)
     },
     isIE() {
-      return this.useSpanPlaceholder || window.ActiveXObject || 'ActiveXObject' in window
+      return this.useFakePlaceholder || window.ActiveXObject || 'ActiveXObject' in window
     },
     placeholderText() {
       // IE10和IE11上，如果有placeholder，input显示以后IE辣鸡浏览器会自动触发input事件
