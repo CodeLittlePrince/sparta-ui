@@ -1,46 +1,83 @@
 <template>
   <div class="sp-modal" :class="{ 'is--fullscreen': fullscreen }">
-    <transition
-      :name="fullscreen ? 'sp-modal-fade-out' : 'sp-modal-fade'"
-      @after-leave="handleAfterLeave"
-    >
+    <template v-if="useTransition">
+      <transition
+        :name="fullscreen ? 'sp-modal-fade-out' : 'sp-modal-fade'"
+        @after-leave="handleAfterLeave"
+      >
+        <div
+          v-show="visible"
+          class="sp-modal-wrap"
+          :style="`z-index: ${modalWrapperZIndex}`"
+        >
+          <div
+            class="sp-modal-content"
+            :style="{ width: fullscreen ? '1200px' : `${width}px` }"
+          >
+            <div
+              v-if="hasClose"
+              class="sp-modal__head__close"
+              @click="handleCloseClick"
+            >
+              <i class="sp-icon-close"></i>
+            </div>
+            <!-- head -->
+            <div v-if="!fullscreen" class="sp-modal__head">
+              <slot name="head">
+                <div v-if="title" class="sp-modal__title">{{ title }}</div>
+              </slot>
+            </div>
+            <!-- body -->
+            <div class="sp-modal__body" :style="{ 'max-height': fullscreen ? `calc(100vh - 47px - 54px)` : maxBodyHeight }">
+              <slot></slot>
+            </div>
+          </div>
+        </div>
+      </transition>
+      <!-- mask -->
+      <transition name="sp-fade">
+        <div
+          v-show="visible"
+          class="sp-modal__mask"
+          :style="`z-index: ${modalMaskZIndex}`"
+        ></div>
+      </transition>
+    </template>
+    <template v-else>
       <div
         v-show="visible"
         class="sp-modal-wrap"
         :style="`z-index: ${modalWrapperZIndex}`"
-      >
-        <div
-          class="sp-modal-content"
-          :style="{ width: fullscreen ? '1200px' : `${width}px` }"
         >
           <div
-            v-if="hasClose"
-            class="sp-modal__head__close"
-            @click="handleCloseClick"
+            class="sp-modal-content"
+            :style="{ width: fullscreen ? '1200px' : `${width}px` }"
           >
-            <i class="sp-icon-close"></i>
-          </div>
-          <!-- head -->
-          <div v-if="!fullscreen" class="sp-modal__head">
-            <slot name="head">
-              <div v-if="title" class="sp-modal__title">{{ title }}</div>
-            </slot>
-          </div>
-          <!-- body -->
-          <div class="sp-modal__body" :style="{ 'max-height': fullscreen ? `calc(100vh - 47px - 54px)` : maxBodyHeight }">
-            <slot></slot>
+            <div
+              v-if="hasClose"
+              class="sp-modal__head__close"
+              @click="handleCloseClick"
+            >
+              <i class="sp-icon-close"></i>
+            </div>
+            <!-- head -->
+            <div v-if="!fullscreen" class="sp-modal__head">
+              <slot name="head">
+                <div v-if="title" class="sp-modal__title">{{ title }}</div>
+              </slot>
+            </div>
+            <!-- body -->
+            <div class="sp-modal__body" :style="{ 'max-height': fullscreen ? `calc(100vh - 47px - 54px)` : maxBodyHeight }">
+              <slot></slot>
+            </div>
           </div>
         </div>
-      </div>
-    </transition>
-    <!-- mask -->
-    <transition name="sp-fade">
-      <div
-        v-show="visible"
-        class="sp-modal__mask"
-        :style="`z-index: ${modalMaskZIndex}`"
-      ></div>
-    </transition>
+        <div
+          v-show="visible"
+          class="sp-modal__mask"
+          :style="`z-index: ${modalMaskZIndex}`"
+        ></div>
+    </template>
   </div>
 </template>
 
@@ -84,6 +121,10 @@ export default {
     'beforeClose': {
       type: Function,
       default: null
+    },
+    'useTransition': {
+      type: Boolean,
+      default: true
     }
   },
   

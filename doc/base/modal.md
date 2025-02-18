@@ -12,6 +12,7 @@ Modal 模态弹窗
     v-model="visible1"
     @show="showHandle"
     @close="closeHandle"
+    :use-transition="false"
     width="650"
   >
     <div class="content">
@@ -578,6 +579,7 @@ export default{
 | priority | 设置 modal 的优先级，弹窗根据优先级只展示一个 | string/number | — | 0 |
 | fullscreen | 全屏模式 | boolean | — | false |
 | before-close | 关闭前的回调，会暂停 Modal 的关闭 | function(done)，done 用于关闭 Modal	 | — | — |
+| use-transition | 是否使用过度动画 | boolean	 | — | true |
 
 ### Slot
 | name | 说明 |
