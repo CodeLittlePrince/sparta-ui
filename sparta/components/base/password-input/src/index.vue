@@ -165,6 +165,7 @@ export default {
   }
 
   &__item {
+    user-select: none;
     box-sizing: border-box;
     position: relative;
     height: $item-height;

@@ -166,6 +166,7 @@ export default{
 | closeOnHashChange    | 是否在 hashchange 时关闭   | boolean | -  |     true   |
 | closeOnPopstate    | 是否在 活动历史记录条目更改 时关闭   | boolean | -  |     true   |
 | hasClose   | 右上角是否有关闭按钮   | boolean | -  |     true    |
+| use-transition | 是否使用过度动画 | boolean	 | — | true |
 
 <script>
 export default{

@@ -25,6 +25,7 @@ export default {
   data() {
     return {
       visible: false,
+      useTransition: true,
       toastAnimateClass: 'toast-fade-in-down animated',
       duration: 3000,
       message: '',
@@ -55,6 +56,11 @@ export default {
     startTimer() {
       if (this.duration > 0) {
         this.timer = setTimeout(() => {
+          if (!this.useTransition) {
+            this.visible = false
+            this.destroyElement()
+            return
+          }
           this.toastAnimateClass = 'toast-fade-out-up animated'
           // 为了动画更自然，加个延时
           setTimeout(() => {
