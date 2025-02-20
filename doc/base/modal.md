@@ -579,6 +579,7 @@ export default{
 | fullscreen | 全屏模式 | boolean | — | false |
 | before-close | 关闭前的回调，会暂停 Modal 的关闭 | function(done)，done 用于关闭 Modal	 | — | — |
 | use-transition | 是否使用过度动画 | boolean	 | — | true |
+| max-body-height | 设置 modal 内容的最大高度，如：100px | string | — | '' |
 
 ### Slot
 | name | 说明 |

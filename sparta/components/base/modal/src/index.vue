@@ -28,7 +28,7 @@
               </slot>
             </div>
             <!-- body -->
-            <div class="sp-modal__body" :style="{ 'max-height': fullscreen ? `calc(100vh - 47px - 54px)` : maxBodyHeight }">
+            <div class="sp-modal__body" :style="{ 'max-height': fullscreen ? `calc(100vh - 47px - 54px)` : maxBodyHeightInner }">
               <slot></slot>
             </div>
           </div>
@@ -48,35 +48,35 @@
         v-show="visible"
         class="sp-modal-wrap"
         :style="`z-index: ${modalWrapperZIndex}`"
+      >
+        <div
+          class="sp-modal-content"
+          :style="{ width: fullscreen ? '1200px' : `${width}px` }"
         >
           <div
-            class="sp-modal-content"
-            :style="{ width: fullscreen ? '1200px' : `${width}px` }"
+            v-if="hasClose"
+            class="sp-modal__head__close"
+            @click="handleCloseClick"
           >
-            <div
-              v-if="hasClose"
-              class="sp-modal__head__close"
-              @click="handleCloseClick"
-            >
-              <i class="sp-icon-close"></i>
-            </div>
-            <!-- head -->
-            <div v-if="!fullscreen" class="sp-modal__head">
-              <slot name="head">
-                <div v-if="title" class="sp-modal__title">{{ title }}</div>
-              </slot>
-            </div>
-            <!-- body -->
-            <div class="sp-modal__body" :style="{ 'max-height': fullscreen ? `calc(100vh - 47px - 54px)` : maxBodyHeight }">
-              <slot></slot>
-            </div>
+            <i class="sp-icon-close"></i>
+          </div>
+          <!-- head -->
+          <div v-if="!fullscreen" class="sp-modal__head">
+            <slot name="head">
+              <div v-if="title" class="sp-modal__title">{{ title }}</div>
+            </slot>
+          </div>
+          <!-- body -->
+          <div class="sp-modal__body" :style="{ 'max-height': fullscreen ? `calc(100vh - 47px - 54px)` : maxBodyHeightInner }">
+            <slot></slot>
           </div>
         </div>
-        <div
-          v-show="visible"
-          class="sp-modal__mask"
-          :style="`z-index: ${modalMaskZIndex}`"
-        ></div>
+      </div>
+      <div
+        v-show="visible"
+        class="sp-modal__mask"
+        :style="`z-index: ${modalMaskZIndex}`"
+      ></div>
     </template>
   </div>
 </template>
@@ -125,6 +125,10 @@ export default {
     'useTransition': {
       type: Boolean,
       default: true
+    },
+    'maxBodyHeight': {
+      type: String,
+      default: ''
     }
   },
   
@@ -134,7 +138,7 @@ export default {
       modalValue: this.value,
       modalWrapperZIndex: 1,
       modalMaskZIndex: 1,
-      maxBodyHeight: 'initial'
+      maxBodyHeightInner: this.maxBodyHeight || 'initial'
     }
   },
   
@@ -286,7 +290,7 @@ export default {
     },
 
     setModalContentMaxHeight() {
-      this.maxBodyHeight = `${ Math.round(window.innerHeight * 0.8) }px`
+      this.maxBodyHeightInner = this.maxBodyHeight || `${ Math.round(window.innerHeight * 0.8) }px`
     },
   }
 }
