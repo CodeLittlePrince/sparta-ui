@@ -6,10 +6,7 @@ const Comfirm = function (options) {
   if (typeof options === 'string') {
     options = {
       message: options,
-      useTransition: true
     }
-  } else if(typeof options?.useTransition !== 'boolean') {
-    options.useTransition = true
   }
   // 如果是直接字符串，那直接赋值给message就好了
   // 实例化

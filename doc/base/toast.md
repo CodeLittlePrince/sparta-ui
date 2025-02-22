@@ -132,43 +132,6 @@ export default{
 ```
 :::
 
-### 不使用动画
-
-:::demo 分别有：全局配置，调用声明，两种方式。
-```vue
-<template>
-  <sp-button
-    @click="showNoUseTransition"
-  >一个消息</sp-button>
-</template>
-
-<script>
-Vue.prototype.$sparta.success = Toast('success', {
-  useTransition: false
-}) // 全局配置
-// 单独调用的话，在调用的时候声明即可
-export default{
-  methods: {
-    showNoUseTransition() {
-      // 调用声明
-      this.$sparta.success('一个自定义class消息', {
-        useTransition: false
-      })
-    }
-  }
-}
-</script>
-<style>
-  .sp-toast.custom-class .sp-toast__contain {
-    background: #409EFF;
-    font-size: 34px;
-    color: white;
-    top: 180px;
-  }
-</style>
-```
-:::
-
 <script>
 export default{
   methods: {

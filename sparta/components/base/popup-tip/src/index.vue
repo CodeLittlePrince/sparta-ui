@@ -27,16 +27,11 @@
       @mouseenter="handleMouseenter"
       @mouseleave="handleMouseleave"
     >
-      <template v-if="useTransition">
-        <transition name="sp-zoom-in-top">
-          <div>
-            <slot name="popup"></slot>
-          </div>
-        </transition>
-      </template>
-      <div v-else>
-        <slot name="popup"></slot>
-      </div>
+      <transition name="sp-zoom-in-top">
+        <div>
+          <slot name="popup"></slot>
+        </div>
+      </transition>
     </sp-popup-tip-wrap>
   </div>
 </template>
@@ -122,11 +117,6 @@ export default {
         return ['hover', 'click'].indexOf(val) !== -1
       }
     },
-
-    useTransition: {
-      type: Boolean,
-      default: true
-    }
   },
 
   data() {

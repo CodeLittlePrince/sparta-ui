@@ -8,7 +8,8 @@ import Sparta from 'spartaComponents'
 
 Vue.prototype.$SPARTA = {
   zIndex: 3000,
-  THEME: process.env.THEME
+  THEME: process.env.THEME,
+  animation: false
 }
 Vue.use(Sparta)
 

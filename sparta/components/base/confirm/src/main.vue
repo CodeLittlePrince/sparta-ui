@@ -27,7 +27,6 @@ export default {
       closeOnHashChange: true,
       closeOnPopstate: true,
       hasClose: true,
-      useTransition: true
     }
   },
 
@@ -100,7 +99,6 @@ export default {
         title={ this.title }
         on-after-leave={ this.handleAfterLeave }
         has-close={ false }
-        use-transition={ this.useTransition }
       >
         {
           this.hasClose ?
