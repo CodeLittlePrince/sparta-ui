@@ -26,8 +26,7 @@ export default {
   mixins: [Popper],
 
   inject: ['SpPopupTip'],
-
-
+  
   data() {
     return {
       currentPlacement: 'bottom'

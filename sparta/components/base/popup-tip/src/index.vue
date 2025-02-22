@@ -23,6 +23,7 @@
       ]"
       :placement="placement"
       :popper-scroll-bind-elem="popperScrollBindElem"
+      :append-to-body="appendToBody"
       @mouseenter="handleMouseenter"
       @mouseleave="handleMouseleave"
     >
@@ -89,6 +90,10 @@ export default {
       validator: val => {
         return ['top', 'bottom','left', 'right'].indexOf(val) !== -1
       }
+    },
+    appendToBody: {
+      type: Boolean,
+      default: true
     },
     // 自定义样式
     customClass: {
