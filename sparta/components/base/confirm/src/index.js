@@ -15,6 +15,8 @@ const Comfirm = function (options) {
   })
   instance.vm = instance.$mount()
   instance.vm.visible = true
+
+  return instance.vm
 }
 
 export default Comfirm

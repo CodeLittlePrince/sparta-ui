@@ -58,6 +58,10 @@ export default {
       this.cancel('close')
     },
 
+    close() {
+      this.handleCloseBtnClick()
+    },
+
     cancel(action) {
       this.cancelFunc && this.cancelFunc(this, action)
     },
