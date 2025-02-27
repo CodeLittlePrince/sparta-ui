@@ -110,7 +110,6 @@ export default {
 
 .sp-button {
   display: inline-block;
-  line-height: 1;
   white-space: nowrap;
   cursor: pointer;
   background: $button-default-fill;
@@ -251,6 +250,71 @@ export default {
       border-color: $button-primary-border--focus;
     }
   }
+
+  &--info {
+    background-color: $button-info-fill;
+    border-color: $button-info-border;
+    color: $button-info-color;
+
+    &:hover {
+      background-color: $button-info-fill--hover;
+      border-color: $button-info-border--hover;
+    }
+
+    &:focus,
+    &:active {
+      background-color: $button-info-fill--focus;
+      border-color: $button-info-border--focus;
+    }
+
+    &:active,
+    &:active:focus {
+      background-color: $button-info-fill--active;
+      border-color: $button-info-border--active;
+    }
+
+    &:focus {
+      background-color: $button-info-fill--focus;
+      border-color: $button-info-border--focus;
+    }
+
+    &.is--plain {
+      border-color: $button-info-plain-border;
+      color: $button-info-plain-text;
+      background-color: $button-info-plain-fill;
+
+      &:hover {
+        background-color: $button-info-plain-fill--hover;
+        border-color: $button-info-plain-border--hover;
+        color: $button-info-plain-text;
+      }
+
+      &:focus,
+      &:active {
+        background-color: $button-info-plain-fill--hover;
+        border-color: $button-info-plain-border--hover;
+        color: $button-info-plain-text;
+      }
+
+      &:active,
+      &:active:focus {
+        background-color: $button-info-plain-fill--hover;
+        border-color: $button-info-plain-border--hover;
+        color: $button-info-plain-text;
+      }
+
+      &:focus {
+        background-color: $button-info-plain-fill--hover;
+        border-color: $button-info-plain-border--hover;
+        color: $button-info-plain-text;
+      }
+
+      &.is--loading {
+        color: $button-color--disabled;
+      }
+    }
+  }
+
   &--medium {
     @include button-size($button-medium-font-size, $button-medium-min-width, $button-medium-height);
   }
