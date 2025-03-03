@@ -330,6 +330,7 @@ export default {
   &--text {
     border-color: transparent;
     background: transparent;
+    border: none;
     color: $button-text-color;
     padding: 0;
     min-width: auto;
