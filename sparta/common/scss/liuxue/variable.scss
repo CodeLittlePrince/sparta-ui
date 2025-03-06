@@ -83,6 +83,21 @@ $border-radius-circle: 100%;
 
 /* Button
 -------------------------- */
+$button-info-border: #909399;
+$button-info-color: #fff;
+$button-info-fill: #909399;
+$button-info-fill--hover: #a6a9ad;
+$button-info-border--hover: #a6a9ad;
+$button-info-fill--focus: #a6a9ad;
+$button-info-border--focus: #a6a9ad;
+$button-info-fill--active: #82848a;
+$button-info-border--active: #82848a;
+$button-info-plain-fill: #fff;
+$button-info-plain-text: #666;
+$button-info-plain-border: #eaeaea;
+$button-info-plain-fill--hover: #f7f7f7;
+$button-info-plain-text--hover: #666;
+$button-info-plain-border--hover: #eaeaea;
 $button-font-size: 14px;
 $button-font-weight: normal;
 $button-min-width: 120px;
