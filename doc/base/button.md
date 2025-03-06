@@ -104,7 +104,7 @@
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
 | size     | 尺寸   | string  |   medium / small / mini            |    —     |
-| type     | 类型   | string    |   primary / text/ info |     —    |
+| type     | 类型   | string    |   primary / text/ info / danger |     —    |
 | plain     | 是否朴素按钮   | boolean    | — | false   |
 | loading     | 是否加载中状态   | boolean    | — | false   |
 | disabled  | 是否禁用状态    | boolean   | —   | false   |
