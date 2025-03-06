@@ -539,6 +539,7 @@ describe('time-select', () => {
       await wrapper.setData({ val: ['02:00','18:00'] })
       const input = wrapper.find('input')
       await input.trigger('focus')
+      await input.trigger('click')
       await wrapper.find('.sp-icon-close-bold').trigger('click')
       expect(wrapper.vm.val).to.deep.equal([])
     })
