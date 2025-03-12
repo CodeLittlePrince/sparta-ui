@@ -49,6 +49,7 @@
     <sp-form-item
       prop="password"
       label="支付密码"
+      hide-tip-when-err-show
       :rules="[
         { required: true, message: '支付密码不能为空'}
       ]"
@@ -822,6 +823,7 @@
 | validate-fail-tip | 当有错误信息的时候，是否提示错误信息 | boolean | — | true |
 | scroll-when-error | 当有错误信息的时候，是否滚动定位到对应位置 | boolean | — | false |
 | scroll-offset-top | 如果有scroll-offset-top，说明默认的scrollIntoView滚动方式不满足需求，比如网易跨境顶部有个fixed的head，需要额外滚动一定距离 | number/string | — | 0 |
+| hide-tip-when-err-show | 当有错误信息的时候，是否隐藏tip | boolean | — | false |
 
 ### Form Methods
 
@@ -852,6 +854,7 @@
 | rules    | 表单验证规则 具体的规则文档见：https://github.com/yiminghe/async-validator | object | — | — |
 | error    | 表单域验证错误信息, 设置该值会使表单验证状态变为`error`，并显示该错误信息 | string | — | — |
 | show-message  | 是否显示校验错误信息 | boolean | — | true |
+| hide-tip-when-err-show | 当有错误信息的时候，是否隐藏tip | boolean | — | false |
 
 ### Form-Item Slot
 | name | 说明 |

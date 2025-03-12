@@ -46,6 +46,10 @@ export default {
       type: [Number, String],
       default: 0
     },
+    hideTipWhenErrShow: {
+      type: Boolean,
+      default: false
+    }
   },
 
   data() {

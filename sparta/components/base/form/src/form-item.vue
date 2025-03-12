@@ -41,12 +41,12 @@
       :style="contentStyle"
     >
       <slot></slot>
-      <div v-if="$slots.tip" class="sp-form-item__content__tip">
+      <div v-if="tipShown" class="sp-form-item__content__tip">
         <slot name="tip"></slot>
       </div>
       <div class="sp-form-item__error">
         <transition name="sp-zoom-in-top">
-          <div v-show="validateState === 'error' && showMessage && form.showMessage">
+          <div v-show="errShown">
             <slot
               name="error"
               :error="validateMessage"
@@ -98,6 +98,10 @@ export default {
     forUpload: {
       type: Boolean,
       default: false
+    },
+    hideTipWhenErrShow: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -110,6 +114,15 @@ export default {
     }
   },
   computed: {
+    errShown() {
+      return this.validateState === 'error' && this.showMessage && this.form.showMessage
+    },
+
+    tipShown() {
+      return (this.$slots.tip && !(this.hideTipWhenErrShow || this.form.hideTipWhenErrShow)) ||
+        ( this.$slots.tip && (this.hideTipWhenErrShow || this.form.hideTipWhenErrShow) && !this.errShown )
+    },
+    
     labelFor() {
       return this.for || this.prop
     },
