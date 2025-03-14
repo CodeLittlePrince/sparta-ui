@@ -154,7 +154,7 @@ export default {
       }
       // 处理隐藏元素，不要去校验
       fields = fields.filter(vm => {
-        return vm.$el && window.getComputedStyle(vm.$el).display !== 'none'
+        return !this.isElementHidden(vm.$el)
       })
       fields.forEach(field => {
         field.validate('', (message, field) => {
@@ -227,6 +227,23 @@ export default {
 
     getFirstErrorText() {
       return this.firstErrorText
+    },
+
+    isElementHidden(element) {
+      if (!element) {
+        return false
+      }
+
+      // 获取元素的样式
+      const style = window.getComputedStyle(element)
+
+      // 检查元素的 display 和 visibility 属性
+      if (style.display === 'none' || style.visibility === 'hidden') {
+        return true
+      }
+
+      // 检查父元素
+      return this.isElementHidden(element.parentElement)
     },
 
     _getDistanceToBody(element) {
