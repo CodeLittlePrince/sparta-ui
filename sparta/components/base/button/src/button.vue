@@ -90,7 +90,7 @@ export default {
 
   methods: {
     handleClick(evt) {
-      if (this.frequencyFlag) {
+      if (this.frequencyFlag || this.buttonDisabled || this.loading) {
         return
       }
       // 防止重复点击
