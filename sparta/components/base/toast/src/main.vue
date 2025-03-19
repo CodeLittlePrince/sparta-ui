@@ -66,8 +66,10 @@ export default {
     },
 
     destroyElement() {
+      if (this.$el) {
+        this.$el.parentNode.removeChild(this.$el)
+      }
       this.$destroy(true)
-      this.$el.parentNode.removeChild(this.$el)
     }
   }
 }
