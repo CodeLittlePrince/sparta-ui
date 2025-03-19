@@ -48,6 +48,10 @@
 import PopManage from 'sparta/model/PopManage'
 import ModalManage from 'sparta/model/ModalManage'
 
+// 触发自定义事件
+const eventOfModalShow = new Event('sp-modal--show')
+const eventOfModalHide = new Event('sp-modal--hide')
+
 export default {
   name: 'SpModal',
 
@@ -120,8 +124,12 @@ export default {
       if (newVal) {
         this.visible = newVal
         this.openHandle()
+
+        window.dispatchEvent(eventOfModalShow)
       } else {
         this.closeHandle()
+
+        window.dispatchEvent(eventOfModalHide)
       }
     }
   },

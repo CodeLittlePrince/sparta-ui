@@ -592,6 +592,8 @@ export default{
 | close  | modal 关闭的回调 | — |
 | show  | modal 打开的回调 | — |
 | after-leave  | modal 消失动画结束的回调 | — |
+| sp-modal--show | 自定义事件，modal出现时候全局触发，使用通过`window.addEventListener('sp-modal--show', xx)`来监听 | - |
+| sp-modal--hide | 自定义事件，modal消失时候全局触发，使用通过`window.addEventListener('sp-modal--hide', xx)`来监听 | - |
 
 
 <script>
@@ -680,6 +682,14 @@ export default{
         }
     ]
     }
+  },
+  created() {
+    window.addEventListener('sp-modal--show', () => {
+      console.log('sp-modal--show')
+    })
+    window.addEventListener('sp-modal--hide', () => {
+      console.log('sp-modal--hide')
+    })
   },
   methods: {
     showHandle() {
