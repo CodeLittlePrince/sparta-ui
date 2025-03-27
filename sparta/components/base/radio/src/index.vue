@@ -101,8 +101,8 @@ export default {
   position: relative;
   display: inline-block;
   vertical-align: middle;
-  width: 16px;
-  height: 16px;
+  width: $radio-size;
+  height: $radio-size;
   line-height: 20px;
   white-space: nowrap;
   outline: none;
@@ -132,14 +132,17 @@ export default {
     }
 
     &.is--check {
-      .sp-radio .sp-radio__inner {
-        padding-top: 3px;
-        padding-left: 2px;
-        color: white;
-        line-height: 8px;
-        font-size: 10px;
-        &::after {
-          opacity: 0;
+      .sp-radio {
+        text-align: center;
+
+        .sp-radio__inner {
+          color: white;
+          font-size: 10px;
+          line-height: $radio-size - 2px;
+          font-weight: bold;
+          &::after {
+            opacity: 0;
+          }
         }
       }
     }
@@ -160,22 +163,22 @@ export default {
     border: 1px solid $radio-border-color;
     border-radius: 50%;
     vertical-align: middle;
-    transition: $transition-all;
+    transition: opacity;
     box-sizing: border-box;
     font-size: $radio-font-size;
 
     &::after {
       content: "";
       position: absolute;
-      top: 4px;
-      left: 4px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       width: 6px;
       height: 6px;
       background-color: $radio-inner-background-color;
       border-top: 0;
       border-left: 0;
       border-radius: 50%;
-      transform: scale(0);
       opacity: 0;
       transition: $transition-all;
     }
@@ -186,7 +189,6 @@ export default {
     background-color: $radio-background-color-active;
 
     &::after {
-      transform: scale(1);
       opacity: 1;
     }
   }

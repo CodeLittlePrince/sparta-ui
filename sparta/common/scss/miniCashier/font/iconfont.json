@@ -1,0 +1,44 @@
+{
+  "id": "4871700",
+  "name": "sparta-ui（miniCashier）",
+  "font_family": "sparta-icons",
+  "css_prefix_text": "sp-icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "43269046",
+      "name": "check",
+      "font_class": "check",
+      "unicode": "e63a",
+      "unicode_decimal": 58938
+    },
+    {
+      "icon_id": "43260060",
+      "name": "icon_tips",
+      "font_class": "ques",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "23191309",
+      "name": "loading",
+      "font_class": "loading",
+      "unicode": "e697",
+      "unicode_decimal": 59031
+    },
+    {
+      "icon_id": "23347145",
+      "name": "icon_input_clear",
+      "font_class": "close-bold",
+      "unicode": "e6af",
+      "unicode_decimal": 59055
+    },
+    {
+      "icon_id": "23347172",
+      "name": "icon_upload_clear",
+      "font_class": "close",
+      "unicode": "e6b0",
+      "unicode_decimal": 59056
+    }
+  ]
+}

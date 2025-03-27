@@ -275,7 +275,7 @@ export default {
     overflow: auto;
 
     .sp-modal-content {
-      padding: 20px 20px 0;
+      padding: $modal-content-padding;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -286,6 +286,7 @@ export default {
 
       .sp-modal__head {
         .sp-modal__title {
+          text-align: $modal-head-text-align;
           font-size: $modal-head-font-size;
           line-height: $modal-head-line-height;
           font-weight: 600;
@@ -295,16 +296,16 @@ export default {
 
       .sp-modal__head__close {
         position: absolute;
-        top: 8px;
-        right: 9px;
+        top: $modal-close-top;
+        right: $modal-close-right;
         padding: 0;
         border: none;
         outline: none;
         cursor: pointer;
 
         .sp-icon-close {
-          font-size: 14px;
-          color: $color-text-tip;
+          font-size: $modal-close-font-size;
+          color: $modal-close-font-color;
           font-weight: bold;
         }
       }
@@ -338,50 +339,6 @@ export default {
     bottom: 0;
     left: 0;
     background: $modal-mask-background;
-  }
-
-  &.is--fullscreen {
-
-    .sp-modal-content {
-      padding: 47px 0 54px 40px;
-      top: 0;
-      left: 50%;
-      transform: translate(0, 0);
-      margin-left: -600px; // 为了IE，没法用translate方式
-
-      .sp-form {
-        padding-top: 26px;
-
-        .sp-form-item__label {
-          padding-right: 56px;
-        }
-
-        .sp-form-submit-btns {
-          margin-top: 22px;
-        }
-      }
-    }
-
-    .sp-modal__head {
-      .sp-modal__title {
-        font-size: 20px;
-        line-height: 28px;
-        font-weight: 600;
-        color: $color-text-regular;
-      }
-    }
-
-    .sp-modal__head__close {
-      right: -4px;
-      .sp-icon-close {
-        font-size: 26px;
-        font-weight: normal;
-      }
-    }
-
-    .sp-modal__mask {
-      background-color: #fff;
-    }
   }
 }
 </style>

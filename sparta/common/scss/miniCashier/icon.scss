@@ -1,0 +1,63 @@
+/* stylelint-disable */
+@font-face {
+  font-family: "sparta-icons"; /* Project id 4871700 */
+  src: url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAARUAAsAAAAACTQAAAQIAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHFQGYACDQAqEcIQuATYCJAMYCw4ABCAFhRcHVRsfCBEVnF/JvsC2YU+qZdwYng0UuB8cAA/EAxa8QDEIAAAAiKB+7HXvURBdXEowHgBVdIEUs2pVq6pUpp5U9a8kFip/+ZfvHEt7P5A67u8yu5MKrugKmt6qkhKuMhcAi2vZPvA2YSPMoXw78ugL6VFpTUZCmoFDDtAPFHgAnlDb/7hXOXPZB3nZADD3pIDFYwmGQh1rWUrSq0mFvCrhdRnoDnzwKwK9VgvA3RIRlwYKZwuaa0EHn7MY5I1xtqKsAKRkq9LDCt2GRr2yiOdQSU+5+wCexb8fP8ElpEhq5jzrwPHwYth7if9lHpZE/gjsciM4OqEiY/nB7HGh33seL80ux9PblubbBMx0tyQt2u+z/pdliYBeUl5N3+v+yyMJWVGJxtH2c7g9ucoXji8k8cVHo67rh1mGbglmBbplDKmgLXhEN+ZBDHGoy2VCEe5bR7XVpQ109AxaZrBV8zSxKZ1lz6g1KpujLRRdXHgITjs/R4j48hJhmasrNyJpNTNGHWbKGGZWbHxnNt3GW2RnbDeLXgC260mange9cXeN0ZzjsDsyxG4aeu9etdAJWKxa5vRiaHhKdvKHOPJlfxVi5ugJtkpDM/iY2IjTpskpa8uIj3LvvJKyfjqD1YpLevE00Sgt7iGzrGZZKc7sn5rwLxwdjB7U1h6MGTA1S1Wucuj5udNJzgSjjMtzLbMsurossixzjz1RJMpWZ1nkWh637FlWU5PjkenmlumRc8uLeBEvKs6/Vf9Eo5+ui1uIayjP2fIoMTctxvdquz6oVl82W9bpNT58ONrQctvGPcnHLSuzrBgCNo7IKvafXP7e5byVY8Fd340K/1Jf31L/ilaezr/B7+/Omk+elSM7kxR8vRm8Q+28aafplqICzJuKou49RAhdQUjilUArsOCk/+X/6XXMf7tAvgtI8er45wc8PuQ57tU/5jCd42vSeYp+P919zQWfpL0KNzJd+o3rkKX/jy3nCiyoyJW0gh6ZT8ctwOZoIS7xPxj5SwRHPS6lHyOnCf0lmQRJlxnI+s2iCm4tVH3WQdNvJ/RaBl3fZwyGLEoPZnUzCNPWIRn0AbJpT6iC+4NqMhShmQ5z6HUs/O/WZzY8vQcVowX9B5NJ0XkdTFkVVpXNRS84fPmx6hj/kw8sNKUIXd02FZ4xYpnzHPoeemYHrqQAT0s/D71PkEua0XA9Mudr07i2ndQmBXFfUDFa0H8wmRRduB9TVoWZseo5jF5w+PJsJsJMvPcDJ2in8uagq1si6lkbyRMPuj99Dz2z449zJQV4OrobvZtNkNsPm9FwPU5I52vDzXNUbb2xPrz0S9ArnN02uZJruZFbuZN7Uc2IZtl8fiHtfVJ2isPJ+ERY6eTtNrMIAQ==') format('woff2');
+}
+
+.sparta-icons {
+  font-family: "sparta-icons" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.sp-icon-check:before {
+  content: "\e63a";
+}
+
+.sp-icon-ques:before {
+  content: "\e601";
+}
+
+.sp-icon-loading:before {
+  content: "\e697";
+}
+
+.sp-icon-close-bold:before {
+  content: "\e6af";
+}
+
+.sp-icon-close:before {
+  content: "\e6b0";
+}
+
+[class^="sp-icon-"], [class*=" sp-icon-"] {
+  font-family: sparta-icons !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  vertical-align: baseline;
+  display: inline-block;
+
+  &::before {
+    display: inline-block; /* 解决伪元素在字号为12px的时候，高度会是13的问题 */
+  }
+}
+
+.sp-icon-loading {
+  animation: rotating 0.7s linear infinite;
+}
+
+@keyframes rotating {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}

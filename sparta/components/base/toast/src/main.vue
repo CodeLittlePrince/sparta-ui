@@ -81,18 +81,18 @@ export default {
     position: fixed;
     display: inline-block;
     left: 50%;
-    transform: translateX(-50%);
+    top: $toast-top;
+    transform: $toast-transform;
     min-width: 160px;
     max-width: 680px;
-    border-radius: 4px;
+    border-radius: $toast-border-radius;
     border-style: solid;
     border-width: 1px;
     text-align: center;
     font-size: $toast-font-size;
     box-sizing: border-box;
-    top: 35px;
     .sp-toast__body {
-      padding: 11px;
+      padding: $toast-padding;
       line-height: 1.2;
     }
   }

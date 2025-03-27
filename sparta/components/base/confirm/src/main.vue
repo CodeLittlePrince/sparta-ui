@@ -16,7 +16,7 @@ export default {
       message: '',
       hideAfterCancel: true,
       hideAfterConfirm: true,
-      width: 418,
+      width: 380,
       cancelFunc: noop,
       confirmFunc: noop,
       cancelText: '取消',
@@ -124,6 +124,7 @@ export default {
             this.cancelText ?
               <sp-button
                 plain
+                type="info"
                 size="mini"
                 loading={ this.cancelBtnLoading }
                 onClick={ this.handleCancel }
@@ -154,7 +155,7 @@ export default {
     font-size: $confirm-font-size;
     color: $confirm-body-color;
     line-height: 1.5;
-    padding: 32px 0;
+    padding: $confirm-body-padding;
 
     &.align-left {
       text-align: left;
@@ -171,13 +172,17 @@ export default {
 
   &__foot {
     text-align: center;
-    padding-bottom: 16px;
-    font-size: 0;
-    height: 28px;
+    padding-bottom: $confirm-foot-padding-bottom;
 
     .sp-button {
-      min-width: 72px;
-      height: 28px;
+      min-width: $confirm-foot-button-min-width;
+      height: $confirm-foot-button-height;
+      font-size: $confirm-foot-button-font-size;
+      line-height: 1;
+
+      & + .sp-button {
+        margin-left: $confirm-foot-button-margin;
+      }
     }
   }
 }

@@ -29,6 +29,7 @@
         color="#747d8c"
         theme="blue"
         has-border
+        :placement="labelTipPlacement"
       >
         <i class="sp-icon-ques" />
         <template slot="popup">
@@ -94,6 +95,10 @@ export default {
     labelTipWidth: {
       type: [String, Number],
       default: '230'
+    },
+    labelTipPlacement: {
+      type: String,
+      default: 'bottom'
     },
     forUpload: {
       type: Boolean,
@@ -359,8 +364,8 @@ export default {
     text-align: right;
     vertical-align: middle;
     float: left;
-    font-size: 14px;
-    color: $color-text-secondary;
+    font-size: $form-item-label-font-size;
+    color: $form-item-label-color;
     line-height: $input-height;
     padding-right: $form-item-label-padding-right;
     box-sizing: border-box;
@@ -373,12 +378,12 @@ export default {
     &__tip {
       position: absolute;
       line-height: 1;
-      top: 11px;
+      top: $form-item-ques-top;
+      margin-left: $form-item-ques-margin-left;
 
       .sp-icon-ques {
-        margin-left: 2px;
         color: $color-text-tip;
-        font-size: 13px;
+        font-size: $form-item-ques-font-size;
       }
 
       .sp-popup-tip__modal {
@@ -410,10 +415,10 @@ export default {
     }
 
     &__tip {
-      font-size: 12px;
-      line-height: 18px;
+      font-size: $form-item-tip-font-size;
+      line-height: 1.5;
       color: $color-text-tip;
-      padding-top: 3px;
+      padding-top: $form-item-tip-padding;
     }
 
     .sp-upload {

@@ -159,10 +159,16 @@ $checkbox-checked-color: $color-primary;
 
 /* PasswordInput
 -------------------------- */
-$item-height: 36px;
+$password-input-item-height: 36px;
+$password-input-item-width: 34px;
 $password-input-width: 224px;
+$password-input-caret-color: #333;
+$password-input-caret-width: 1px;
 $password-box-border-focus: $color-primary;
 $password-box-shadow-focus: none;
+$password-input-item-border: $border-base;
+$password-input-item-background: #fff;
+$password-input-caret-height: 60%;
 
 /* Input
 -------------------------- */
@@ -199,6 +205,7 @@ $radio-color: $color-text-primary;
 $radio-background-color-active: transparent;
 $radio-border-color-active: $color-primary;
 $radio-font-size: 14px;
+$radio-size: 16px;
 $radio-border-color: #979797;
 $radio-background-color: #fff;
 $radio-color-disabled: $color-text-disabled;
@@ -240,12 +247,19 @@ $select-input-font-size: 16px;
 /* Form
 -------------------------- */
 $form-item-error-color: $color-danger;
+$form-item-label-color: $color-text-secondary;
+$form-item-label-font-size: 14px;
+$form-item-ques-top: 11px;
+$form-item-ques-margin-left: 2px;
 $form-item-error-font-size: 12px;
+$form-item-ques-font-size: 13px;
 $form-item-label-padding-right: 16px;
 $form-item-label-error-color: $color-danger;
 $form-item-error-min-height: 12px;
 $form-item-error-padding: 4px 0 8px;
 $form-item-error-line-height: 20px;
+$form-item-tip-font-size: 12px;
+$form-item-tip-padding: 3px;
 
 /* Dropdown
 -------------------------- */
@@ -412,8 +426,14 @@ $modal-background: #fff;
 $modal-border-radius: 4px;
 $modal-mask-background: rgb(41 41 51 / 60%);
 $modal-head-font-size: 20px;
+$modal-head-text-align: left;
 $modal-head-line-height: 1;
+$modal-close-font-size: 14px;
+$modal-close-top: 8px;
+$modal-close-right: 9px;
 $modal-icon-font-size: 18px;
+$modal-content-padding: 20px 20px 0;
+$modal-close-font-color: $color-text-tip;
 $modal-icon-color: #666;
 $modal-form-item-label-padding-right: 16px;
 $modal-form-padding-top: 16px;
@@ -422,6 +442,8 @@ $modal-form-padding-bottom: 12px;
 /* Toast
 -------------------------- */
 $toast-font-size: 16px;
+$toast-border-radius: 4px;
+$toast-padding: 11px;
 $toast-color-info: #fff;
 $toast-color-success: $color-success;
 $toast-color-error: $color-danger;
@@ -431,11 +453,19 @@ $toast-background-success: #efe;
 $toast-background-error: #ffedeb;
 $toast-background-warning: #fff6eb;
 $toast-border-raduis: $border-radius-base;
+$toast-top: 35px;
+$toast-transform: translateX(-50%);
 
 /* Confirm
 -------------------------- */
 $confirm-font-size: 14px;
 $confirm-body-color: $color-text-primary;
+$confirm-foot-padding-bottom: 16px;
+$confirm-foot-button-height: 28px;
+$confirm-foot-button-min-width: 72px;
+$confirm-foot-button-font-size: 13px;
+$confirm-foot-button-margin: 10px;
+$confirm-body-padding: 32px 0;
 
 /* Cascader
 -------------------------- */

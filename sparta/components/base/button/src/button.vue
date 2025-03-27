@@ -125,14 +125,13 @@ export default {
   font-weight: $button-font-weight;
   user-select: none;
   padding: 0 10px;
-  border-radius: 4px;
-  font-size: $button-font-size;
+  border-radius: $button-border-radius;
 
   & + & {
     margin-left: 10px;
   }
 
-  @include button-size(font-size, $button-min-width, $button-height);
+  @include button-size($button-font-size, $button-min-width, $button-height);
 
   &:hover {
     background-color: $button-default-fill--hover;
@@ -310,7 +309,7 @@ export default {
       }
 
       &.is--loading {
-        color: $button-color--disabled;
+        color: $color-text-disabled;
       }
     }
   }
