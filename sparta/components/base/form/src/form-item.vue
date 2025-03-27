@@ -45,7 +45,17 @@
       <div v-if="tipShown" class="sp-form-item__content__tip">
         <slot name="tip"></slot>
       </div>
-      <div class="sp-form-item__error">
+      <div v-if="floatError" class="sp-form-item__floatError">
+        <transition name="sp-zoom-in-top">
+          <div v-show="errShown">
+            <slot
+              name="errorFloat"
+              :error="validateMessage"
+            >{{ validateMessage }}</slot>
+          </div>
+        </transition>
+      </div>
+      <div v-else class="sp-form-item__error">
         <transition name="sp-zoom-in-top">
           <div v-show="errShown">
             <slot
@@ -88,6 +98,10 @@ export default {
     error: String,
     validateStatus: String,
     for: String,
+    floatError: {
+      type: Boolean,
+      default: false
+    },
     showMessage: {
       type: Boolean,
       default: true
@@ -488,6 +502,37 @@ export default {
     min-height: $form-item-error-min-height;
     box-sizing: border-box;
     will-change: transform;
+  }
+
+  &__floatError {
+    height: 16px;
+
+    > div {
+      position: absolute;
+      top: $input-height;
+      z-index: 1;
+      background-color: rgb(0 0 0 / 85%);
+      font-size: 16px;
+      line-height: 1.5;
+      color: #fff;
+      text-align: left;
+      margin-top: 10px;
+      padding: 9px 12px;
+      box-sizing: border-box;
+      border-radius: 6px;
+
+      &::before {
+        position: absolute;
+        top: -6px;
+        content: "";
+        left: 15px;
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-bottom: 6px solid rgb(0 0 0 / 85%);
+      }
+    }
   }
 
   &.is--error &__label {

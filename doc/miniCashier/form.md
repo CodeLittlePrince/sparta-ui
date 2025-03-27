@@ -64,6 +64,7 @@
     <sp-form-item
       label="年龄"
       prop="age"
+      float-error
       :rules="[
         { required: true, message: '年龄不能为空'},
         { type: 'number', message: '年龄必须为数字'}
@@ -501,6 +502,7 @@
 | error    | 表单域验证错误信息, 设置该值会使表单验证状态变为`error`，并显示该错误信息 | string | — | — |
 | show-message  | 是否显示校验错误信息 | boolean | — | true |
 | hide-tip-when-err-show | 当有错误信息的时候，是否隐藏tip | boolean | — | false |
+| float-error | 显示错误信息是否用漂浮模式 | boolean | — | false |
 
 ### Form-Item Slot
 | name | 说明 |
