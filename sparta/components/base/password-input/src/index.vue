@@ -209,8 +209,8 @@ export default {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 6px;
-    height: 6px;
+    width: $password-input-dot-size;
+    height: $password-input-dot-size;
     background-color: $color-text-regular;
     border-radius: $border-radius-circle;
     transform: translate(-50%, -50%);

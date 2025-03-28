@@ -520,10 +520,11 @@ export default {
       padding: 9px 12px;
       box-sizing: border-box;
       border-radius: 6px;
+      word-break: break-all;
 
       &::before {
         position: absolute;
-        top: -6px;
+        top: -5.5px;
         content: "";
         left: 15px;
         width: 0;

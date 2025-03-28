@@ -15,7 +15,7 @@ $color-black: #000;
 $color-primary: #e8292c;
 $color-success: #09bb07;
 $color-warning: #e6a23c;
-$color-danger: #f90b0b;
+$color-danger: #e8292c;
 $color-info: #999;
 $color-success-light: mix($color-white, $color-success, 80%);
 $color-warning-light: mix($color-white, $color-warning, 80%);
@@ -25,6 +25,7 @@ $color-success-lighter: mix($color-white, $color-success, 90%);
 $color-warning-lighter: mix($color-white, $color-warning, 90%);
 $color-danger-lighter: mix($color-white, $color-danger, 90%);
 $color-info-lighter: mix($color-white, $color-info, 90%);
+$color-text-error: #f90b0b;
 $color-text-primary: #1a1a1a;
 $color-text-regular: #1a1a1a;
 $color-text-secondary: #808080;
@@ -158,6 +159,7 @@ $password-box-shadow-focus: none;
 $password-input-item-border: 1px solid #f7f7f7;
 $password-input-item-background: #f7f7f7;
 $password-input-caret-height: 50%;
+$password-input-dot-size: 8px;
 
 /* Input
 -------------------------- */
@@ -204,7 +206,7 @@ $radio-inner-background-color: #fff;
 
 /* Form
 -------------------------- */
-$form-item-error-color: $color-danger;
+$form-item-error-color: $color-text-error;
 $form-item-label-color: $color-text-primary;
 $form-item-label-font-size: 18px;
 $form-item-ques-top: 12px;
@@ -212,8 +214,8 @@ $form-item-ques-margin-left: 8px;
 $form-item-error-font-size: 16px;
 $form-item-ques-font-size: 18px;
 $form-item-label-padding-right: 34px;
-$form-item-label-error-color: $color-text-secondary;
-$form-item-error-min-height: 26px;
+$form-item-label-error-color: $color-text-primary;
+$form-item-error-min-height: 31px;
 $form-item-error-padding: 3px 0 6px;
 $form-item-error-line-height: 22px;
 $form-item-tip-font-size: 16px;
@@ -245,7 +247,7 @@ $toast-border-radius: 8px;
 $toast-padding: 19px 24px;
 $toast-color-info: #fff;
 $toast-color-success: $color-success;
-$toast-color-error: $color-danger;
+$toast-color-error: $color-text-error;
 $toast-color-warning: $color-warning;
 $toast-background-info: rgb(0 0 0 / 80%);
 $toast-background-success: #efe;
