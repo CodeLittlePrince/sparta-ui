@@ -176,7 +176,7 @@ export default {
     text-align: center;
     border-radius: $border-radius-base;
     float: left;
-    margin-right: 4px;
+    margin-right: $password-input-item-margin;
     transition: $transition-all;
     background-color: $password-input-item-background;
   }
