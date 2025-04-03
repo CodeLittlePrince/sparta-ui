@@ -6,11 +6,18 @@
   "description": "",
   "glyphs": [
     {
-      "icon_id": "43269046",
-      "name": "check",
+      "icon_id": "43896506",
+      "name": "arrow-r",
+      "font_class": "arrow-right",
+      "unicode": "e641",
+      "unicode_decimal": 58945
+    },
+    {
+      "icon_id": "43895601",
+      "name": "勾选",
       "font_class": "check",
-      "unicode": "e63a",
-      "unicode_decimal": 58938
+      "unicode": "e63e",
+      "unicode_decimal": 58942
     },
     {
       "icon_id": "43260060",

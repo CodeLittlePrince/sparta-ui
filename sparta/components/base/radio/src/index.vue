@@ -137,9 +137,9 @@ export default {
 
         .sp-radio__inner {
           color: white;
-          font-size: 10px;
+          font-size: $radio-inner-font-size;
           line-height: $radio-size - 2px;
-          font-weight: bold;
+          font-weight: $radio-inner-font-weight;
           &::after {
             opacity: 0;
           }
