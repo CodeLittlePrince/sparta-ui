@@ -122,6 +122,9 @@ export default {
     
     modalValue(newVal) {
       if (newVal) {
+        const popManage = PopManage.getInstance()
+        this.modalWrapperZIndex = popManage.getZIndex()
+
         this.visible = newVal
         this.openHandle()
 
