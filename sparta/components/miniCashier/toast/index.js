@@ -1,3 +1,3 @@
-import Toast from 'base/toast'
+import Toast from './src'
 
 export default Toast

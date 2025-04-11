@@ -90,7 +90,7 @@ export default {
             },
             {
               title: 'Toast 全局提示',
-              link: '/base/toast',
+              link: '/miniCashier/toast',
               index: '3-6-2'
             },
             {
