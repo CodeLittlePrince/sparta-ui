@@ -512,7 +512,7 @@ export default {
       top: $input-height;
       z-index: 10;
       background-color: rgb(0 0 0 / 85%);
-      font-size: 16px;
+      font-size: 14px;
       line-height: 1.5;
       color: #fff;
       text-align: left;

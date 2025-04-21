@@ -78,7 +78,7 @@
       >
         <i class="sp-icon-ques"></i>
         <template slot="popup">
-          钱包余额支付时将自动提现至网易支付余额后进<br>行抵扣，将受网易支付支付账户限额管理。
+          钱包余额支付时将自动提现至网易支付余额后进行抵扣，将受网易支付支付账户限额管理。
         </template>
       </sp-popup-tip>
     </p>

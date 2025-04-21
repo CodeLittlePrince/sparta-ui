@@ -205,7 +205,7 @@ export default {
   display: inline-block;
 
   &__wrap {
-    font-size: 16px;
+    font-size: 14px;
     line-height: 1.5;
     color: #fff;
     text-align: left;

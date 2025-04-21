@@ -86,12 +86,12 @@ $border-radius-circle: 100%;
 
 /* Button
 -------------------------- */
-$button-font-size: 18px;
+$button-font-size: 16px;
 $button-font-weight: normal;
 $button-min-width: 120px;
-$button-height: 44px;
+$button-height: 42px;
 $button-border-radius: 6px;
-$button-medium-font-size: 18px;
+$button-medium-font-size: 16px;
 $button-medium-min-width: 108px;
 $button-medium-height: 36px;
 $button-small-font-size: 14px;
@@ -165,7 +165,7 @@ $password-input-item-margin: 6px;
 /* Input
 -------------------------- */
 $input-height: 44px;
-$input-font-size: 16px;
+$input-font-size: 14px;
 $input-color: $color-text-regular;
 $input-background: #fff;
 $input-background-disabled: #ededed;
@@ -191,7 +191,7 @@ $input-mini-height: 28px;
 $radio-color: $color-text-primary;
 $radio-background-color-active: $color-primary;
 $radio-border-color-active: $color-primary;
-$radio-font-size: 18px;
+$radio-font-size: 16px;
 $radio-size: 18px;
 $radio-border-color: $border-color-base;
 $radio-background-color: #fff;
@@ -211,17 +211,17 @@ $radio-inner-font-weight: normal;
 -------------------------- */
 $form-item-error-color: $color-text-error;
 $form-item-label-color: $color-text-primary;
-$form-item-label-font-size: 18px;
-$form-item-ques-top: 12px;
+$form-item-label-font-size: 16px;
+$form-item-ques-top: 14px;
 $form-item-ques-margin-left: 8px;
-$form-item-error-font-size: 16px;
-$form-item-ques-font-size: 18px;
+$form-item-error-font-size: 14px;
+$form-item-ques-font-size: 16px;
 $form-item-label-padding-right: 34px;
 $form-item-label-error-color: $color-text-primary;
 $form-item-error-min-height: 31px;
 $form-item-error-padding: 3px 0 6px;
-$form-item-error-line-height: 22px;
-$form-item-tip-font-size: 16px;
+$form-item-error-line-height: 20px;
+$form-item-tip-font-size: 14px;
 $form-item-tip-padding: 3px;
 
 /* Modal
@@ -229,7 +229,7 @@ $form-item-tip-padding: 3px;
 $modal-background: #fff;
 $modal-border-radius: 10px;
 $modal-mask-background: rgb(41 41 51 / 60%);
-$modal-head-font-size: 18px;
+$modal-head-font-size: 16px;
 $modal-head-text-align: center;
 $modal-head-line-height: 22px;
 $modal-close-font-size: 16px;
@@ -261,12 +261,12 @@ $toast-transform: translate(-50%, -50%);
 
 /* Confirm
 -------------------------- */
-$confirm-font-size: 18px;
+$confirm-font-size: 16px;
 $confirm-body-color: $color-text-secondary;
 $confirm-foot-padding-bottom: 24px;
 $confirm-foot-button-height: 44px;
 $confirm-foot-button-min-width: 152px;
-$confirm-foot-button-font-size: 18px;
+$confirm-foot-button-font-size: 16px;
 $confirm-foot-button-margin: 15px;
 $confirm-body-padding: 13px 0 32px;
 
