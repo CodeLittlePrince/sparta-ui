@@ -4,8 +4,6 @@
       class="sp-toast__box"
       :class="`${toastAnimateClass}`"
       :style="`z-index: ${zIndex};`"
-      @mouseenter="clearTimer"
-      @mouseleave="startTimer"
     >
       <!-- body -->
       <div class="sp-toast__content" :class="`sp-toast-${type}`">
