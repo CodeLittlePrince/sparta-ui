@@ -17,7 +17,7 @@ Vue.prototype.$SPARTA = {
   animation: false
 }
 
-if (process.env.THEME === 'miniCashier') {
+if (['miniCashier', 'plusCashier'].includes(process.env.THEME)) {
   Vue.use(Layout)
   Vue.use(Header)
   Vue.use(Menu)

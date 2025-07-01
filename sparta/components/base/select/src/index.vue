@@ -38,7 +38,7 @@
         </div>
       </template>
       <div v-else-if="groupMultiple">
-        <popup-tip
+        <sp-popup-tip
           ref="popupTip"
           :custom-class="customPopupTipClass"
           color="#0D1233"
@@ -80,7 +80,7 @@
           <template v-if="showGroupMultiPopupTip && !isFocus && groupMultipleSelected && groupMultipleSelected.length" slot="popup">
             <slot name="popupTipContent">{{ groupMultipleSelected.map(item => getGroupMultiTextByValue(item)).join('；') }}</slot>
           </template>
-        </popup-tip>
+        </sp-popup-tip>
       </div>
    
       <!-- 非多选情况-->
@@ -201,13 +201,11 @@
 import Emitter from 'sparta/common/js/mixins/emitter'
 import SpSelectDropdown from './select-dropdown'
 import { debounce } from 'sparta/common/js/utils/tool'
-import PopupTip from '../../popup-tip'
 export default {
   name: 'SpSelect',
 
   components: {
     'sp-select-dropdown': SpSelectDropdown,
-    'popup-tip': PopupTip
   },
 
   mixins: [Emitter],
@@ -225,7 +223,7 @@ export default {
     },
     height: {
       type: [String, Number],
-      default: 36
+      default: 'auto'
     },
     value: {
       type: [Array, Number, String, Boolean, Object],
@@ -1087,7 +1085,7 @@ export default {
     min-height: $select-height;
     background-color: $select-background;
     background-image: none;
-    border-radius: 4px;
+    border-radius: $input-border-radius;
     border: 1px solid $select-input-border-color;
     box-sizing: border-box;
     display: inline-table;
@@ -1112,7 +1110,8 @@ export default {
       }
     }
 
-    .sp-select__input, .sp-select__center {
+    .sp-select__input,
+    .sp-select__center {
       width: 100%;
       vertical-align: middle;
       overflow: hidden;
@@ -1126,7 +1125,7 @@ export default {
       line-height: $select-height - 2;
       padding: 0 10px;
       box-sizing: border-box;
-      border-radius: 4px;
+      border-radius: 0;
       color: inherit;
     }
 
@@ -1136,7 +1135,7 @@ export default {
 
     .sp-select__input--filter {
       background-color: transparent;
-      height: 34px;
+      height: $input-height - 2;
       min-width: 10px;
       padding-right: 46px;
       border: none;
@@ -1255,7 +1254,7 @@ export default {
     .sp-tag-box {
       @include ellipsis;
       right: 85px;
-      line-height: 34px;
+      line-height: $input-height - 2;
       padding-left: 10px;
       padding-bottom: 0;
     }
@@ -1283,7 +1282,7 @@ export default {
     margin: 4px 0;
     padding: 5px 0;
     border: 1px solid $select-dropdown-border-color;
-    border-radius: 4px;
+    border-radius: $input-border-radius;
     box-shadow: $float-box-shadow-box;
     box-sizing: border-box;
     background-color: $select-dropdown-item-background;

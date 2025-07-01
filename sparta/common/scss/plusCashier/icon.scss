@@ -1,0 +1,71 @@
+/* stylelint-disable */
+@font-face {
+  font-family: "sparta-icons"; /* Project id 4871700 */
+  src: url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAATwAAsAAAAACkAAAAShAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHFQGYACDbAqGJIUsATYCJAMgCxIABCAFhRcHdRvxCMgekiQlAgUUKKAAPzRGPDyt0d7fmV0/xBtNrZk3PIlIMkmQjgSJlKjmnSiWCOn+vs18a8qqsOZCslLLwocQgwIVJ61Dzf3ofsut4qdO8p8f+WhtZcQi7UIZdEMIiO/h0tySJhI0C5VIIqm8aftPwVr53n8Rz+JC5TE33iPQWaKa46bmzkHwPa+TLBDBGRsMYmmcZxkduI+tcgc3NIYKejKLx1BSPHJ8AGDU/n78g/xwp1Am7EE7TjZRcNvmYDvtJNtl0jew7q8Ory5QImHBmdnjYbf3ASQfX8BJ1zQ/2weM0yhUe/16ta3Otsl20Hbabgc59VQ96w/jeIwsnbT8Cv/xaqJC8YAZxxM1Px0kIvOzGpH4WYco+LkJUfLzICL4eQpR8fO0VY1pzfoJQIc/ALEdMVbh4GS215weGBIe7BETERVD0gd37jp16UI4YrbpZ5/YsT2ROlzoedC4SQ1GG+Qgar1y1BrK0Bt3hs46Iqem1wsKPaykh2iOWm+paQRzTJ2lEi9fCkIefPGCUDSvXhFW7evXbkIZXJtlosWsahdmq2bxmePUG/J15ea+W6PqS5Az1/cePg66uH9OG3rMwXrTU8k8DN3917PUA7C3fE/PJ1u3HfLa+iUODk83GQntMfWpnDpIHJGfKOmawcPKM2uG9lyqnqsTEbNJPXK+0pMOH1ZC6Ok1tm7bdOjA3ZUsi127/v3e/e+ZWey23+/f+379GsaytIPnfy0vv6R9TEv4mKpMaffjTVyh8iH4Bqy8aiCqCJ4vKKDtMwsePR6sPlZN7NxRUUFUA55k/YSU0eQVK5JHUyY8ERIjCZJ09ISUJw0zGbN5fPFIYeFI8fh3QmIkQZJ2fjf9E0JlZH5hfUGDU17K454Jg+0Vr2/wtZZor3FeuV+7mra1xabcSC/qLS8cHWEoqF6/3QsbTu//xnqnM09csP4WW0VXVNBV7GyniP/g++c7G3Npi3/LUheBX/liuPB5wtKE65gvNl/DhuR7LMGhawRhFz6Yh10vvXBcBSheO74EIF1wtNpR7rwM6T6wnHi2/rTQyRnSfsfXf8Nl5o0WZk3EKv+4e9WnfF+WVEDqtpf/jUhg+Z9uyv0ZxoA8jtNkTfWyZ0xuFfsi967k+9R2vIv/WXCST0Q/GRwlDJliBIXaTEgGsyiZsQxKvTVQGWyHznzE+d5kMiSRW8yyDkGY4QoUxvkKyQyfKZnxD0rTAoPKjEiCzr6oul5vVqxrEJBOQhQ+NgNnSc5CixpJ5HWCpMtaC4j9iJliaigb6Hc0SBBZzoLnZefWpVqQBQm73CNOZfIlicZpgTPjzft+GDKZOJwXOAMipWy9JPHlOTl004dkk5wZGggQHQlCwY2ZAccicSxoPU8i4ukIJGTM6lgm6ocwpjChtgBtUa8G2gKz+eRwebLlAikt2AJueqbZoqkY+fi8hIajCThmuOZzdyMmruUI5puXGSAkSTb9FlFeuRzaiYbi7CPrzS+/4pfekj2jiSJS5CijijqaaI0/IgjctCxKFlqyxjgT5ZW/UWAZveRC6hFpdJ48BYluJk5HsRbGkzRxIgJhl2ABAAAAAA==') format('woff2');
+}
+
+.sparta-icons {
+  font-family: "sparta-icons" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.sp-icon-arrow-down-bold:before {
+  content: "\e6a6";
+}
+
+.sp-icon-arrow-right:before {
+  content: "\e641";
+}
+
+.sp-icon-check:before {
+  content: "\e63e";
+}
+
+.sp-icon-ques:before {
+  content: "\e601";
+}
+
+.sp-icon-loading:before {
+  content: "\e697";
+}
+
+.sp-icon-close-bold:before {
+  content: "\e6af";
+}
+
+.sp-icon-close:before {
+  content: "\e6b0";
+}
+
+[class^="sp-icon-"], [class*=" sp-icon-"] {
+  font-family: sparta-icons !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  vertical-align: baseline;
+  display: inline-block;
+
+  &::before {
+    display: inline-block; /* 解决伪元素在字号为12px的时候，高度会是13的问题 */
+  }
+}
+
+.sp-icon-loading {
+  animation: rotating 0.7s linear infinite;
+}
+
+@keyframes rotating {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}

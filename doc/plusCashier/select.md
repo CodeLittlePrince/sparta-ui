@@ -1,225 +1,5 @@
 # Select 选择器
 
-### 自定义select 自定义前置图标
-适用广泛的基础单选（支持键盘控制）
-
-:::demo 可自定义前置元素，一般是icon或者img
-```vue
-<template>
-  <div class="select-demo">
-    <sp-select v-model="value8">
-      <i slot="prepend" :class="icon"></i>
-      <sp-option
-        v-for="item in list8"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-      ></sp-option>
-    </sp-select>
-  </div>
-</template>
-
-<script>
-export default{
-  data(){
-    return {
-      list8: [
-        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
-        { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
-        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
-      ],
-      value8: ''
-    }
-  },
-  watch: {
-    value8(val) {
-      console.log(val)
-    }
-  },
-  computed: {
-    icon() {
-      return (this.list8.find(item => item.value === this.value8) || {}).icon
-    }
-  }
-}
-</script>
-```
-:::
-
-### 自定义select 自定义前置图标 全部
-适用广泛的基础单选（支持键盘控制）
-
-:::demo 可自定义前置元素，一般是icon或者img
-```vue
-<template>
-  <div class="select-demo">
-    <sp-select v-model="value12" clearable>
-      <i slot="prepend" :class="icon12"></i>
-      <sp-option
-        v-for="item in list12"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-      ></sp-option>
-    </sp-select>
-  </div>
-</template>
-
-<script>
-export default{
-  data(){
-    return {
-      list12: [
-        { label: '全部', value: '' , icon: 'sp-icon-add-bold' },
-        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
-        { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
-        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
-      ],
-      value12: ''
-    }
-  },
-  watch: {
-    value12(val) {
-      console.log(val)
-    }
-  },
-  computed: {
-    icon12() {
-      return (this.list12.find(item => item.value === this.value12) || {}).icon
-    }
-  }
-}
-</script>
-```
-:::
-
-
-### 自定义 select 样式
-适用广泛的基础单选（支持键盘控制）
-
-:::demo `v-model`的值为当前被选中的`sp-option`的 value 属性值，通过覆盖样式
-```vue
-<template>
-  <div class="select-demo">
-    <div class="customer-select">
-      <sp-select v-model="value11"  placeholder="已使用优惠抵扣￥1,000.00">
-        <sp-option
-          v-for="item in list11"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></sp-option>
-      </sp-select>
-    </div>
- </div>
-</template>
-
-<script>
-export default{
-  data(){
-    return {
-      list11: [
-        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
-        { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
-        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
-      ],
-      value11: 1
-    }
-  },
-  watch: {
-    value11(val) {
-      console.log(val)
-    }
-  }
-}
-</script>
-<style>
-  .customer-select {
-    .sp-select__input-box {
-      border: 1px dashed #ee4c4c;
-      background: rgba(238, 76, 76, 0.1);
-      color: #ee4c4c;
-      .sp-select__input-placeholder,.sp-select__input {
-        color: #ee4c4c;
-        background: rgba(238, 76, 76, 0.1);
-      }
-      .sp-select__suffix {
-        background: rgba(238, 76, 76, 0.1);
-        border: 0;
-        color: #ee4c4c;
-      }
-      .isFocus.sp-select__suffix i {
-        color: #ee4c4c;
-      }
-    }
-    .sp-select.isFocus .sp-select__input-box {
-      border-color: #ee4c4c;
-    }
-    .sp-select.isFocus .sp-select__suffix {
-      background: rgba(238, 76, 76, 0.1);
-      i {
-        color: #ee4c4c;
-      }
-    }
-  }
-</style>
-```
-:::
-
-### 自定义center 显示元素
-适用广泛的基础单选（支持键盘控制）
-
-:::demo 可自定义select 显示元素
-```vue
-<template>
-  <div class="select-demo">
-    <sp-select v-model="value10">
-      <i slot="prepend" :class="icon10"></i>
-      <div slot="center">{{ valueText }}</div>
-      <sp-option
-        v-for="item in list10"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-      ></sp-option>
-    </sp-select>
-  </div>
-</template>
-
-<script>
-export default{
-  data(){
-    return {
-      list10: [
-        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
-        { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
-        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
-      ],
-      value10: ''
-    }
-  },
-  watch: {
-    value10(val) {
-      console.log(val)
-    }
-  },
-  computed: {
-    icon() {
-      return (this.list10.find(item => item.value === this.value10) || {}).icon
-    },
-    valueText() {
-      let label = (this.list10.find(item => item.value === this.value10) || {}).label
-      if(label && label.length > 15) {
-        label = `${ label.substr(0,9) }...@163.com`
-      }
-      return label
-    }
-  }
-}
-</script>
-```
-:::
-
 ### 基础用法
 适用广泛的基础单选（支持键盘控制）
 
@@ -686,10 +466,10 @@ export default{
   data(){
     return {
       list9: [
-        { label: '全部', value: '' , icon: 'sp-icon-add-bold' },
-        { label: 'cat', value: 1 , icon: 'sp-icon-file' },
+        { label: '全部', value: '' , icon: 'sp-icon-check' },
+        { label: 'cat', value: 1 , icon: 'sp-icon-ques' },
         { label: 'pig', value: 2 , icon: 'sp-icon-check' },
-        { label: 'dog', value: 3 , icon:'sp-icon-search' },
+        { label: 'dog', value: 3 , icon:'sp-icon-close-bold' },
       ],
       value9: ''
     }
@@ -702,6 +482,226 @@ export default{
   computed: {
     icon9() {
       return (this.list9.find(item => item.value === this.value9) || {}).icon
+    }
+  }
+}
+</script>
+```
+:::
+
+### 自定义select 自定义前置图标
+适用广泛的基础单选（支持键盘控制）
+
+:::demo 可自定义前置元素，一般是icon或者img
+```vue
+<template>
+  <div class="select-demo">
+    <sp-select v-model="value8">
+      <i slot="prepend" :class="icon"></i>
+      <sp-option
+        v-for="item in list8"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      ></sp-option>
+    </sp-select>
+  </div>
+</template>
+
+<script>
+export default{
+  data(){
+    return {
+      list8: [
+        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-ques' },
+        { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
+        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-close-bold' },
+      ],
+      value8: ''
+    }
+  },
+  watch: {
+    value8(val) {
+      console.log(val)
+    }
+  },
+  computed: {
+    icon() {
+      return (this.list8.find(item => item.value === this.value8) || {}).icon
+    }
+  }
+}
+</script>
+```
+:::
+
+### 自定义select 自定义前置图标 全部
+适用广泛的基础单选（支持键盘控制）
+
+:::demo 可自定义前置元素，一般是icon或者img
+```vue
+<template>
+  <div class="select-demo">
+    <sp-select v-model="value12" clearable>
+      <i slot="prepend" :class="icon12"></i>
+      <sp-option
+        v-for="item in list12"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      ></sp-option>
+    </sp-select>
+  </div>
+</template>
+
+<script>
+export default{
+  data(){
+    return {
+      list12: [
+        { label: '全部', value: '' , icon: 'sp-icon-check' },
+        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-ques' },
+        { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
+        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-close-bold' },
+      ],
+      value12: ''
+    }
+  },
+  watch: {
+    value12(val) {
+      console.log(val)
+    }
+  },
+  computed: {
+    icon12() {
+      return (this.list12.find(item => item.value === this.value12) || {}).icon
+    }
+  }
+}
+</script>
+```
+:::
+
+
+### 自定义 select 样式
+适用广泛的基础单选（支持键盘控制）
+
+:::demo `v-model`的值为当前被选中的`sp-option`的 value 属性值，通过覆盖样式
+```vue
+<template>
+  <div class="select-demo">
+    <div class="customer-select">
+      <sp-select v-model="value11"  placeholder="已使用优惠抵扣￥1,000.00">
+        <sp-option
+          v-for="item in list11"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></sp-option>
+      </sp-select>
+    </div>
+ </div>
+</template>
+
+<script>
+export default{
+  data(){
+    return {
+      list11: [
+        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-ques' },
+        { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
+        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-close-bold' },
+      ],
+      value11: 1
+    }
+  },
+  watch: {
+    value11(val) {
+      console.log(val)
+    }
+  }
+}
+</script>
+<style>
+  .customer-select {
+    .sp-select__input-box {
+      border: 1px dashed #ee4c4c;
+      background: rgba(238, 76, 76, 0.1);
+      color: #ee4c4c;
+      .sp-select__input-placeholder,.sp-select__input {
+        color: #ee4c4c;
+        background: rgba(238, 76, 76, 0.1);
+      }
+      .sp-select__suffix {
+        background: rgba(238, 76, 76, 0.1);
+        border: 0;
+        color: #ee4c4c;
+      }
+      .isFocus.sp-select__suffix i {
+        color: #ee4c4c;
+      }
+    }
+    .sp-select.isFocus .sp-select__input-box {
+      border-color: #ee4c4c;
+    }
+    .sp-select.isFocus .sp-select__suffix {
+      background: rgba(238, 76, 76, 0.1);
+      i {
+        color: #ee4c4c;
+      }
+    }
+  }
+</style>
+```
+:::
+
+### 自定义center 显示元素
+适用广泛的基础单选（支持键盘控制）
+
+:::demo 可自定义select 显示元素
+```vue
+<template>
+  <div class="select-demo">
+    <sp-select v-model="value10">
+      <i slot="prepend" :class="icon10"></i>
+      <div slot="center">{{ valueText }}</div>
+      <sp-option
+        v-for="item in list10"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      ></sp-option>
+    </sp-select>
+  </div>
+</template>
+
+<script>
+export default{
+  data(){
+    return {
+      list10: [
+        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-ques' },
+        { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
+        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-close-bold' },
+      ],
+      value10: ''
+    }
+  },
+  watch: {
+    value10(val) {
+      console.log(val)
+    }
+  },
+  computed: {
+    icon() {
+      return (this.list10.find(item => item.value === this.value10) || {}).icon
+    },
+    valueText() {
+      let label = (this.list10.find(item => item.value === this.value10) || {}).label
+      if(label && label.length > 15) {
+        label = `${ label.substr(0,9) }...@163.com`
+      }
+      return label
     }
   }
 }
@@ -822,53 +822,6 @@ export default{
   },
   watch: {
     value6(val) {
-      console.log(val)
-    }
-  }
-}
-</script>
-```
-:::
-
-### 基础多选
-适用性较广的基础多选，用 Tag 展示已选项
-
-:::demo 为`sp-select`设置`multiple`属性即可启用多选，此时`v-model`的值为当前选中值所组成的数组。
-```vue
-<template>
-  <div class="select-demo">
-    <sp-select
-      v-model="value7"
-      multiple
-    >
-      <sp-option
-        v-for="item in list7"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-      >
-        <span style="float: left">{{ item.label }}</span>
-        <span style="float: right;padding-right: 20px;">{{ item.value }}</span>
-      </sp-option>
-    </sp-select>
-  </div>
-</template>
-
-<script>
-export default{
-  data(){
-    return {
-      list7: [
-        { label: '听音乐', value: 'music' },
-        { label: '看电影', value: 'movie' },
-        { label: '绘画', value: 'drawing' },
-        { label: '跑步', value: 'running' }
-      ],
-      value7: []
-    }
-  },
-  watch: {
-    value7(val) {
       console.log(val)
     }
   }
@@ -1334,35 +1287,35 @@ export default{
       ],
       value7: [],
       list8: [
-        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
+        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-ques' },
         { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
-        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
+        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-close-bold' },
       ],
       value8: '',
       list9: [
-        { label: '全部', value: '' , icon: 'sp-icon-add-bold' },
-        { label: 'cat', value: 1 , icon: 'sp-icon-file' },
+        { label: '全部', value: '' , icon: 'sp-icon-check' },
+        { label: 'cat', value: 1 , icon: 'sp-icon-ques' },
         { label: 'pig', value: 2 , icon: 'sp-icon-check' },
-        { label: 'dog', value: 3 , icon:'sp-icon-search' },
+        { label: 'dog', value: 3 , icon:'sp-icon-close-bold' },
       ],
       value9: '',
       list10: [
-        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
+        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-ques' },
         { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
-        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
+        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-close-bold' },
       ],
       value10: '',
       list11: [
-        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
+        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-ques' },
         { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
-        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
+        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-close-bold' },
       ],
       value11: 1,
       list12: [
-        { label: '全部', value: '' , icon: 'sp-icon-add-bold' },
-        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-file' },
+        { label: '全部', value: '' , icon: 'sp-icon-check' },
+        { label: 'TomTomTomTomTomTomTomTom@163.com', value: 1 , icon: 'sp-icon-ques' },
         { label: 'Jerry@163.com', value: 2 , icon: 'sp-icon-check' },
-        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-search' },
+        { label: 'KittyKittyKittyKitty@163.com', value: 3 , icon:'sp-icon-close-bold' },
       ],
       value12: '',
       list4_1: [
