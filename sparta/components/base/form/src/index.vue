@@ -179,7 +179,12 @@ export default {
                 this.firstErrorText = errorTipElem.innerText
                 
                 if (this.validateFailTip && !hasPartFields) {
-                  this.toastError(errorTipElem.innerText)
+                  // 自定义主题的错误提示，没有则用默认
+                  if (this.$sparta?.error) {
+                    this.$sparta.error(errorTipElem.innerText)
+                  } else {
+                    this.toastError(errorTipElem.innerText)
+                  }
                 }
               }
               // 滚动到错误位置;部分校验就不用滚动了(因为场景基本都是输入或者选择完后立马触发)
