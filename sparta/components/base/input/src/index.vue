@@ -981,7 +981,7 @@ export default {
 
   &__format-tip {
     position: absolute;
-    bottom: $input-height + 4px;
+    bottom: $input-height + $input-background-format-space;
     left: 0;
     right: 0;
     background-color: $input-background-format;
