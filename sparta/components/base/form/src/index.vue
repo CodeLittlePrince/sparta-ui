@@ -243,7 +243,14 @@ export default {
       const style = window.getComputedStyle(element)
 
       // 检查元素的 display 和 visibility 属性
-      if (style.display === 'none' || style.visibility === 'hidden') {
+      if (
+        style.display === 'none' ||
+        style.visibility === 'hidden' ||
+        style.display === '' ||
+        style.visibility === '' ||
+        style.display == null ||
+        style.visibility == null
+      ) {
         return true
       }
 
