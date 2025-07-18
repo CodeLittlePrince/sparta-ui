@@ -51,7 +51,7 @@
             <slot
               name="errorFloat"
               :error="validateMessage"
-            >{{ validateMessage }}</slot>
+            ><div v-html="validateMessage"></div></slot>
           </div>
         </transition>
       </div>
@@ -61,7 +61,7 @@
             <slot
               name="error"
               :error="validateMessage"
-            >{{ validateMessage }}</slot>
+            ><div v-html="validateMessage"></div></slot>
           </div>
         </transition>
       </div>
