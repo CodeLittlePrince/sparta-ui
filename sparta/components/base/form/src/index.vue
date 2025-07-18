@@ -140,12 +140,6 @@ export default {
 
       let valid = true
       let count = 0
-      // 如果需要验证的fields为空，调用验证时立刻返回callback
-      if (this.fields.length === 0 && callback) {
-        callback(true)
-      }
-      let invalidFields = {}
-      
       let fields = this.fields
       // 支持部分校验，传入prop的数组即可
       const hasPartFields = partFields && partFields.length
@@ -156,6 +150,11 @@ export default {
       fields = fields.filter(vm => {
         return !this.isElementHidden(vm.$el)
       })
+      // 如果需要验证的fields为空，调用验证时立刻返回callback
+      if (fields.length === 0 && callback) {
+        callback(true)
+      }
+      let invalidFields = {}
       fields.forEach(field => {
         field.validate('', (message, field) => {
           if (message) {
