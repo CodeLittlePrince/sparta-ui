@@ -145,6 +145,11 @@ export default {
         this.closeHandle()
 
         window.dispatchEvent(eventOfModalHide)
+
+        // 为了关闭后重新计算高度，稍微比不计算好些，不用resize是因为性能问题
+        this.$nextTick(() => {
+          this.setModalContentMaxHeight()
+        })
       }
     }
   },
