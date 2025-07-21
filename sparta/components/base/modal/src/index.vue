@@ -48,9 +48,21 @@
 import PopManage from 'sparta/model/PopManage'
 import ModalManage from 'sparta/model/ModalManage'
 
+function createEvent(eventName, params) {
+  params = params || { bubbles: false, cancelable: false }
+  var event
+  if (typeof Event === 'function') {
+    event = new Event(eventName, params)
+  } else {
+    event = document.createEvent('Event')
+    event.initEvent(eventName, params.bubbles, params.cancelable)
+  }
+  return event
+}
+
 // 触发自定义事件
-const eventOfModalShow = new Event('sp-modal--show')
-const eventOfModalHide = new Event('sp-modal--hide')
+const eventOfModalShow = createEvent('sp-modal--show', { bubbles: true, cancelable: true })
+const eventOfModalHide = createEvent('sp-modal--hide', { bubbles: true, cancelable: true })
 
 export default {
   name: 'SpModal',
