@@ -273,7 +273,17 @@ export default {
     },
 
     setModalContentMaxHeight() {
-      this.maxBodyHeightInner = this.maxBodyHeight || `${ Math.round(window.innerHeight * 0.8) }px`
+      if (this.maxBodyHeight) {
+        this.maxBodyHeightInner = this.maxBodyHeight
+        return
+      }
+      
+      if (window.innerHeight == 0) {
+        this.maxBodyHeightInner = 'initial'
+        return
+      }
+      
+      this.maxBodyHeightInner = `${ Math.round(window.innerHeight * 0.8) }px`
     },
   }
 }

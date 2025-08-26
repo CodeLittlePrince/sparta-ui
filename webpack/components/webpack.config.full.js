@@ -38,13 +38,7 @@ const config = smp.wrap(Object.assign(webpackConfigBase.config, {
   },
   optimization: {
     // 压缩js
-    minimizer: [
-      new TerserPlugin({
-        cache: true,
-        parallel: true
-      }),
-      new OptimizeCSSAssetsPlugin()
-    ]
+    minimize: false
   },
   stats: 'errors-warnings',
   // loaders处理
