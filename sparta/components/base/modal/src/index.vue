@@ -333,6 +333,7 @@ export default {
           font-size: $modal-close-font-size;
           color: $modal-close-font-color;
           font-weight: bold;
+          line-height: 1;
         }
       }
 

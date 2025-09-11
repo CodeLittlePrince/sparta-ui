@@ -1,3 +1,25 @@
-import Confirm from 'base/confirm'
+import Vue from 'vue'
+import Main from 'base/confirm/src/main.vue'
+let ComfirmConstructor = Vue.extend(Main)
 
-export default Confirm
+const Comfirm = function (options) {
+  if (typeof options === 'string') {
+    options = {
+      message: options,
+    }
+  }
+  // 如果是直接字符串，那直接赋值给message就好了
+  // 实例化
+  const instance = new ComfirmConstructor({
+    data: {
+      width: 400,
+      ...options,
+    }
+  })
+  instance.vm = instance.$mount()
+  instance.vm.visible = true
+
+  return instance.vm
+}
+
+export default Comfirm
