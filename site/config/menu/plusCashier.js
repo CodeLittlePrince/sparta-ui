@@ -43,6 +43,17 @@ export default {
           ]
         },
         {
+          group: '导航',
+          index: '3-3',
+          child: [
+            {
+              title: 'Dropdown 下拉菜单',
+              link: '/base/dropdown',
+              index: '3-3-3'
+            },
+          ]
+        },
+        {
           group: '数据录入',
           index: '3-4',
           child: [

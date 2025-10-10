@@ -17,6 +17,8 @@ import Option from './option'
 import Checkbox from './checkbox'
 import CheckboxGroup from './checkbox-group'
 import Tag from './tag'
+import Dropdown from './dropdown'
+import DropdownItem from './dropdown-item'
 
 const components = [
   Row,
@@ -37,6 +39,8 @@ const components = [
   Checkbox,
   CheckboxGroup,
   Tag,
+  Dropdown,
+  DropdownItem,
 ]
 
 let Sparta = {}

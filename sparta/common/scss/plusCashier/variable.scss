@@ -324,6 +324,18 @@ $confirm-foot-button-font-size: 16px;
 $confirm-foot-button-margin: 12px;
 $confirm-body-padding: 12px 0 28px;
 
+/* Dropdown
+-------------------------- */
+$dropdown-background: #fff;
+$dropdown-background-disabled: #f5f6f7;
+$dropdown-item-color-hover: $color-primary;
+$dropdown-item-background: #fff;
+$dropdown-item-background-hover: #f5f6f7;
+$dropdown-border-radius: $border-radius-base;
+$dropdown-border-color: $border-color-base;
+$dropdown-color: $color-text-regular;
+$dropdown-color-disabled: $color-text-disabled;
+
 /* Break-point
 -------------------------- */
 $sm: 768px;
