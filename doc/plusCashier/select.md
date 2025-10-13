@@ -1174,7 +1174,7 @@ export default{
 | limitDropdownWidth | 是否限制下拉框宽度成1.5倍 | boolean | — | true |
 | popperScrollBindElem | popper浮动定位的锚点元素 | string/Element | — | - |
 | show-group-multi-popup-tip | 显示多选popupTip | boolean | — | false |
-| custom-popup-tip-class | 自定义popupTip的样式 | string | — | - |
+| dropdown-class | 自定义dropdown的样式 | string | — | - |
 
 ### Select Slots
 |   name  | 说明     |

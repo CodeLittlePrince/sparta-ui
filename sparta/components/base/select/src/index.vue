@@ -169,6 +169,7 @@
     <sp-select-dropdown
       ref="sp-select-dropdown"
       v-model="visible"
+      :custom-class="dropdownClass"
       :popper-scroll-bind-elem="popperScrollBindElem"
     >
       <transition name="sp-zoom-in-top">
@@ -293,6 +294,11 @@ export default {
     },
     // 自定义popup-tip的class
     customPopupTipClass: {
+      type: String,
+      default: ''
+    },
+    // 下拉class
+    dropdownClass: {
       type: String,
       default: ''
     }
