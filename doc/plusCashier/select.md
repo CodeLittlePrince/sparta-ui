@@ -181,6 +181,7 @@ export default{
       v-model="value4"
       filterable
       clearable
+      @filter="handleFilter"
     >
       <sp-option
         v-for="item in list4"
@@ -415,6 +416,9 @@ export default{
       }
       this.list4_1_filtered = this.list4_1.filter(item => item.label.includes(value))
     },
+    handleFilter(data) {
+      console.log('handleFilter', data)
+    },
     myFilterMethod(value) {
       console.log('myFilterMethod', value)
       if(!value) {
@@ -483,7 +487,7 @@ export default{
     icon9() {
       return (this.list9.find(item => item.value === this.value9) || {}).icon
     }
-  }
+  },
 }
 </script>
 ```
@@ -1188,6 +1192,8 @@ export default{
 |   事件名称 | 说明     |
 |---------|---------|
 | change | 选中 option 时，调用此函数 |
+| filter | 过滤时触发，回调函数({ options, length }), opitions为过滤后的条目，length为长度 |
+
 ### Option Group Attributes
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
@@ -1659,6 +1665,9 @@ export default{
         return
       }
       this.list19_filter = this.list19.filter(item => item.label.includes(value))
+    },
+    handleFilter(data) {
+      console.log('handleFilter', data)
     },
     filterMethod(value) {
       console.log('filterMethod', value)

@@ -74,7 +74,7 @@
               @keydown.esc.stop.prevent="visible = false"
               @compositionstart="handleComposition"
               @compositionupdate="handleComposition"
-              @compositionend="handleComposition;"
+              @compositionend="handleComposition"
             />
           </div>
           <template v-if="showGroupMultiPopupTip && !isFocus && groupMultipleSelected && groupMultipleSelected.length" slot="popup">
@@ -624,13 +624,19 @@ export default {
       }
       //
       const filterKeyword = this.isGroupMultipleFilterable ? this.groupFilterValue : this.inputText
+      const visibleOptions = []
       for (let i = 0, len = this.spOptions.length; i < len; i++) {
         if (this.spOptions[i].label.indexOf(filterKeyword) !== -1) {
           this.spOptions[i].visible = true
+          visibleOptions.push(this.spOptions[i])
         } else {
           this.spOptions[i].visible = false
         }
       }
+      this.$emit('filter', {
+        options: visibleOptions,
+        length: visibleOptions.length,
+      })
     },
     updateTagboxHeight() {
       this.$nextTick(() => {
