@@ -1106,7 +1106,7 @@ export default {
     overflow: hidden;
 
     .sp-select__input {
-      background-color: white;
+      background-color: $select-background;
       &-placeholder {
         position: absolute;
         left: 0;
@@ -1217,7 +1217,7 @@ export default {
   }
 
   .sp-selectInput__show {
-    background-color: #fff;
+    background-color: $select-background;
   }
 
   &.isFocus &__input-box {

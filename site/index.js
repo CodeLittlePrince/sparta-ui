@@ -17,12 +17,10 @@ Vue.prototype.$SPARTA = {
   animation: false
 }
 
-if (['miniCashier', 'plusCashier'].includes(process.env.THEME)) {
-  Vue.use(Layout)
-  Vue.use(Header)
-  Vue.use(Menu)
-  Vue.use(Col)
-}
+Vue.use(Layout)
+Vue.use(Header)
+Vue.use(Menu)
+Vue.use(Col)
 
 Vue.use(Sparta)
 

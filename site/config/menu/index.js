@@ -4,6 +4,7 @@ import abroad from './abroad'
 import browser from './browser'
 import miniCashier from './miniCashier'
 import plusCashier from './plusCashier'
+import sdkBaoxue from './sdkBaoxue'
 
 export default {
   globalpay,
@@ -12,4 +13,5 @@ export default {
   browser,
   miniCashier,
   plusCashier,
+  sdkBaoxue,
 }
