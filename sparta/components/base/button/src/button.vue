@@ -156,12 +156,13 @@ export default {
   }
 
   &.is--plain {
+    color: $button-plain-color;
     border-color: $button-plain-border;
     background-color: $button-plain-fill;
 
     &:hover {
       background: $button-plain-fill--hover;
-      color: $color-primary;
+      color: $button-plain-color--hover;
       opacity: $button-plain-opacity--hover;
     }
 
@@ -172,7 +173,7 @@ export default {
     }
 
     &:focus {
-      background-color: $button-plain-fill--focus;
+      background-color: $button-plain-fill;
     }
   }
 
@@ -191,7 +192,7 @@ export default {
       &,
       &:hover,
       &:focus {
-        background-color: #fff;
+        background-color: $button-plain-fill--disabled;
         border-color: $button-plain-border--disabled;
         color: $button-plain-color--disabled;
         opacity: 1;
@@ -290,22 +291,22 @@ export default {
 
       &:focus,
       &:active {
-        background-color: $button-info-plain-fill--hover;
+        background-color: $button-info-plain-fill--active;
         border-color: $button-info-plain-border--hover;
         color: $button-info-plain-text;
       }
 
       &:active,
       &:active:focus {
-        background-color: $button-info-plain-fill--hover;
+        background-color: $button-info-plain-fill--active;
         border-color: $button-info-plain-border--hover;
         color: $button-info-plain-text;
       }
 
       &:focus {
-        background-color: $button-info-plain-fill--hover;
-        border-color: $button-info-plain-border--hover;
+        border-color: $button-info-plain-border;
         color: $button-info-plain-text;
+        background-color: $button-info-plain-fill;
       }
 
       &.is--loading {
