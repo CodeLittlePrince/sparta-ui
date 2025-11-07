@@ -10,6 +10,11 @@
   .sp-input__inner {
     background-color: transparent;
   }
+
+  .sp-input__clear.sp-icon-close-bold {
+    color: #14181d;
+    background-color: rgb(255 255 255 / 40%);
+  }
 }
 
 .sp-modal-wrap .sp-modal-content {
