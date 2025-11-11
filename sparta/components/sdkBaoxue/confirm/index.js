@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Main from 'base/confirm/src/main.vue'
+import Main from './main.vue'
 let ComfirmConstructor = Vue.extend(Main)
 
 const Comfirm = function (options) {
