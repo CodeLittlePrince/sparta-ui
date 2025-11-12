@@ -19,7 +19,7 @@ class PopLayerManage {
     return this.instance = new PopLayerManage()
   }
 
-  static getQueue() {
+  getQueue() {
     return this.quene
   }
 
