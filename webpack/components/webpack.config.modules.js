@@ -34,6 +34,7 @@ const config = Object.assign(webpackConfigBase.config, {
     ...componentEntryMap,
     'ModalManage': webpackConfigBase.resolve('sparta/model/ModalManage'),
     'PopManage': webpackConfigBase.resolve('sparta/model/PopManage'),
+    'PopLayerManage': webpackConfigBase.resolve('sparta/model/PopLayerManage'),
   },
   output: {
     path: webpackConfigBase.resolve('lib'),
@@ -41,6 +42,7 @@ const config = Object.assign(webpackConfigBase.config, {
       return [
         'ModalManage',
         'PopManage',
+        'PopLayerManage',
       ].includes(pathData.chunk.name) ?
         'model/[name].js':
         `${THEME}/[name]/index.js`
@@ -59,6 +61,7 @@ const config = Object.assign(webpackConfigBase.config, {
     },
     'sparta/model/ModalManage': 'sparta-ui/lib/model/ModalManage',
     'sparta/model/PopManage': 'sparta-ui/lib/model/PopManage',
+    'sparta/model/PopLayerManage': 'sparta-ui/lib/model/PopLayerManage',
   },
   optimization: {
     // 压缩js
