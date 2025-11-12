@@ -69,8 +69,8 @@ export default {
     },
     
     _destroyElement() {
-      this.$destroy(true)
       PopLayerManage.getInstance().remove(this)
+      this.$destroy(true)
     },
     
     _handleInput(val) {

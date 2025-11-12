@@ -1,6 +1,7 @@
 <script>
 import SpModal from 'base/modal'
 import { noop } from 'sparta/common/js/utils/tool'
+import PopLayerManage from 'sparta/model/PopLayerManage'
 
 export default {
   name: 'SpMessage',
@@ -33,6 +34,7 @@ export default {
 
   mounted() {
     this._addUrlChangeListener()
+    PopLayerManage.getInstance().add(this, 'confirm')
   },
 
   methods: {
@@ -68,6 +70,7 @@ export default {
     },
     
     _destroyElement() {
+      PopLayerManage.getInstance().remove(this)
       this.$destroy(true)
     },
     
@@ -104,6 +107,7 @@ export default {
         title={ this.title }
         on-after-leave={ this.handleAfterLeave }
         has-close={ false }
+        is-confirm={ true }
       >
         {
           this.hasClose ?
