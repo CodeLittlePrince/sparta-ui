@@ -17,12 +17,12 @@
   }
 
   .sp-input-group__format-tip {
-    border: 1px solid #4d4d4d;
+    border: 1px solid #3d3d3d;
   }
 }
 
 .sp-modal-wrap .sp-modal-content {
-  border: 1px solid #4d4d4d;
+  border: 1px solid #3d3d3d;
   box-shadow: 0 5px 5px -3px rgb(0 0 0 / 20%), 0 8px 10px 1px rgb(0 0 0 / 14%), 0 3px 14px 2px rgb(0 0 0 / 12%);
 }
 
@@ -35,6 +35,6 @@
 
 .sp-password-input__item {
   &.is--focus {
-    background-color: #2c2d2e;
+    background-color: #2c2c30;
   }
 }
