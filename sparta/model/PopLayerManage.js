@@ -38,7 +38,7 @@ class PopLayerManage {
       if (item.type === 'confirm') {
         item.close()
       } else {
-        item.visible = false
+        item.closeHandle()
       }
     })
   }
