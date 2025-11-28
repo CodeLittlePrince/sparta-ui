@@ -219,6 +219,7 @@ export default {
     text-align: center;
     line-height: 24px;
     border-radius: 50%;
+    font-size: 0;
 
     .sp-icon-close {
       font-size: 12px;
