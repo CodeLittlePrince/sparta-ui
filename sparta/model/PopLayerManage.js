@@ -35,7 +35,7 @@ class PopLayerManage {
 
   hideAll() {
     this.quene.forEach(item => {
-      if (item.type === 'confirm') {
+      if (item.popLayerType === 'confirm') {
         item.close()
       } else {
         item.closeHandle()
