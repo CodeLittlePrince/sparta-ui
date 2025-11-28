@@ -266,7 +266,7 @@ export default {
         left: -12px;
         border-top: 10px solid transparent;
         border-bottom: 10px solid transparent;
-        border-right: 12px solid #848181;
+        border-right: 12px solid #3d3d3d;
       }
       &::after {
         left: -11px;
@@ -289,7 +289,7 @@ export default {
         right: -12px;
         border-top: 10px solid transparent;
         border-bottom: 10px solid transparent;
-        border-left: 12px solid #848181;
+        border-left: 12px solid #3d3d3d;
       }
       &::after {
         right: -11px;
