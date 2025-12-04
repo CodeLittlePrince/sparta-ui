@@ -215,7 +215,7 @@ export default {
     box-sizing: border-box;
     border-radius: 6px;
     box-shadow: $float-box-shadow-box;
-    background-color: #252627;
+    background-color: #24252a;
 
     &::before,
     &::after {
@@ -228,11 +228,11 @@ export default {
       height: 0;
       border-left: 8px solid transparent;
       border-right: 8px solid transparent;
-      border-bottom: 12px solid #4d4d4d;
+      border-bottom: 12px solid #3d3d3d;
     }
     &::after {
       top: -11px;
-      border-bottom: 12px solid #252627;
+      border-bottom: 12px solid #24252a;
     }
 
     &.arrow--bottom {
@@ -244,11 +244,11 @@ export default {
         border: none;
         border-left: 10px solid transparent;
         border-right: 10px solid transparent;
-        border-top: 12px solid #4d4d4d;
+        border-top: 12px solid #3d3d3d;
       }
       &::after {
         bottom: -11px;
-        border-top: 12px solid #252627;
+        border-top: 12px solid #24252a;
       }
     }
     &.arrow--left {
@@ -266,11 +266,11 @@ export default {
         left: -12px;
         border-top: 10px solid transparent;
         border-bottom: 10px solid transparent;
-        border-right: 12px solid #848181;
+        border-right: 12px solid #3d3d3d;
       }
       &::after {
         left: -11px;
-        border-right: 12px solid #252627;
+        border-right: 12px solid #24252a;
       }
     }
     &.arrow--right {
@@ -289,11 +289,11 @@ export default {
         right: -12px;
         border-top: 10px solid transparent;
         border-bottom: 10px solid transparent;
-        border-left: 12px solid #848181;
+        border-left: 12px solid #3d3d3d;
       }
       &::after {
         right: -11px;
-        border-left: 12px solid #252627;
+        border-left: 12px solid #24252a;
       }
     }
 
@@ -308,7 +308,7 @@ export default {
   }
 
   &__popup {
-    border: 1px solid #4d4d4d;
+    border: 1px solid #3d3d3d;
     box-shadow: $float-box-shadow-box;
   }
 }

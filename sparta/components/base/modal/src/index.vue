@@ -47,6 +47,7 @@
 <script>
 import PopManage from 'sparta/model/PopManage'
 import ModalManage from 'sparta/model/ModalManage'
+import PopLayerManage from 'sparta/model/PopLayerManage'
 
 function createEvent(eventName, params) {
   params = params || { bubbles: false, cancelable: false }
@@ -104,6 +105,10 @@ export default {
     'maxBodyHeight': {
       type: String,
       default: ''
+    },
+    'isConfirm': {
+      type: Boolean,
+      default: false
     }
   },
   
@@ -160,6 +165,10 @@ export default {
     // 控制唯一弹窗或者弹窗优先级
     this.modalManage = ModalManage.getInstance()
     this.modalManage.add(this)
+    // 为了业务侧能统一处理弹层类的组件
+    if (!this.isConfirm) {
+      PopLayerManage.getInstance().add(this, 'modal')
+    }
   },
 
   mounted() {
@@ -168,6 +177,10 @@ export default {
 
   beforeDestroy() {
     this.modalManage.remove(this)
+    // 为了业务侧能统一处理弹层类的组件
+    if (!this.isConfirm) {
+      PopLayerManage.getInstance().remove(this)
+    }
 
     if(this.visible) {
       this.closeHandle()

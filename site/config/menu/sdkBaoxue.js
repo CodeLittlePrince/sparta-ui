@@ -100,7 +100,7 @@ export default {
             },
             {
               title: 'Confirm 全局确认',
-              link: '/base/confirm',
+              link: '/sdkBaoxue/confirm',
               index: '3-6-3'
             },
           ]

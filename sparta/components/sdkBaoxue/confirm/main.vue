@@ -15,6 +15,7 @@ export default {
       visible: false,
       title: '提示',
       message: '',
+      style: 'noraml', // normal, error
       hideAfterCancel: true,
       hideAfterConfirm: true,
       width: 380,
@@ -27,7 +28,7 @@ export default {
       confirmBtnLoading: false,
       closeOnHashChange: true,
       closeOnPopstate: true,
-      hasClose: true,
+      hasClose: false,
     }
   },
 
@@ -102,7 +103,7 @@ export default {
         value={ this.visible }
         on-input={ this._handleInput }
         width={ this.width }
-        class="sp-confirm"
+        class={ 'sp-confirm' + (this.style ? (' is--' + this.style) : '') }
         title={ this.title }
         on-after-leave={ this.handleAfterLeave }
         has-close={ false }
@@ -114,6 +115,13 @@ export default {
               class="sp-modal__head__close"
               on-click={ this.handleCloseBtnClick }
             >
+              <i class="sp-icon-close"></i>
+            </div>
+            : ''
+        }
+        {
+          this.style === 'error' ?
+            <div class="sp-confirm__error">
               <i class="sp-icon-close"></i>
             </div>
             : ''
@@ -187,6 +195,35 @@ export default {
       & + .sp-button {
         margin-left: $confirm-foot-button-margin;
       }
+    }
+  }
+
+  &.is--error {
+    .sp-modal__title {
+      margin-top: 13px;
+      margin-left: 34px;
+    }
+
+    .sp-confirm__body {
+      margin-left: 34px;
+    }
+  }
+
+  &__error {
+    position: absolute;
+    top: 29px;
+    left: 18px;
+    width: 24px;
+    height: 24px;
+    background-color: #d83024;
+    text-align: center;
+    line-height: 24px;
+    border-radius: 50%;
+    font-size: 0;
+
+    .sp-icon-close {
+      font-size: 12px;
+      font-weight: bold;
     }
   }
 }
