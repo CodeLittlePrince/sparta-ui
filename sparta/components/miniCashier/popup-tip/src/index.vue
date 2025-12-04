@@ -160,7 +160,7 @@ export default {
      * 点击其他区域触发事件
      */
     handleOtherAreaClick(e) {
-      if (!this.hideOnlyByCall || !this.$el.contains(e.target)) {
+      if (!this.hideOnlyByCall && !this.$el.contains(e.target)) {
         this.hide()
       }
     },
