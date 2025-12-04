@@ -212,6 +212,7 @@
 | hide-by-click-out | 消失通过click其它区域触发,mouseleave将失效 | boolean | — | false |
 | freeze | freeze开启，mouseenter和mouseleave不再有效果，只能通过show方法显示 | boolean | — | false |
 | trigger | 触发行为 | string | click/hover | hover |
+| hideOnlyByCall | 是否只有调用hide方法才能隐藏 | boolean | — | false |
 | append-to-body | 是否将弹出层添加到 body 中，默认是添加到 body 的最底部 | boolean	 | — | true |
 
 ### Form Methods
@@ -220,6 +221,7 @@
 |---------- |-------------- | --------------
 | show |  显示 tip | —
 | hide |  隐藏 tip | —
+| updatePopper |  更新浮动位置 | —
 
 ### Slot
 | name | 说明 |

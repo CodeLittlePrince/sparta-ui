@@ -86,7 +86,10 @@ export default {
       type: Boolean,
       default: false
     },
-
+    hideOnlyByCall: {
+      type: Boolean,
+      default: false
+    },
     trigger: {
       type: String,
       default: 'hover',
@@ -157,36 +160,36 @@ export default {
      * 点击其他区域触发事件
      */
     handleOtherAreaClick(e) {
-      if (!this.$el.contains(e.target)) {
+      if (!this.hideOnlyByCall || !this.$el.contains(e.target)) {
         this.hide()
       }
     },
 
+    updatePopper() {
+      this.broadcast('SpPopupTipWrap', 'updatePopper')
+    },
+
     showHandle() {
-      if (this.freeze) {
+      if (this.freeze || this.hideOnlyByCall) {
         return
       }
 
       if(this.showPopupTipWhenSlot && !this.$slots.popup) {
         return
       }
-
-      this._clearTimeId()
       
       this.show()
     },
 
     hideHandle() {
-      if (this.hideByClickOut || this.freeze) {
+      if (this.hideByClickOut || this.freeze || this.hideOnlyByCall) {
         return
       }
       this.hide()
     },
 
     hide() {
-      this.timeId = setTimeout(() => {
-        this.visible = false
-      }, 200)
+      this.visible = false
     },
 
     show() {
