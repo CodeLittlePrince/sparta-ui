@@ -131,29 +131,32 @@ export default {
         >
           { this.message }
         </div>
-        <div class="sp-confirm__foot">
-          {
-            this.cancelText ?
-              <sp-button
-                plain
-                type="info"
-                size="mini"
-                loading={ this.cancelBtnLoading }
-                onClick={ this.handleCancel }
-              >{ this.cancelText }</sp-button>
-              : ''
-          }
-          {
-            this.confirmText ?
-              <sp-button
-                type="primary"
-                size="mini"
-                loading={ this.confirmBtnLoading }
-                onClick={ this.handleConfirm }
-              >{ this.confirmText }</sp-button>
-              : ''
-          }
-        </div>
+        {
+          this.cancelText || this.confirmText ?
+            <div class="sp-confirm__foot">
+              {
+                this.cancelText ?
+                  <sp-button
+                    plain
+                    type="info"
+                    size="mini"
+                    loading={ this.cancelBtnLoading }
+                    onClick={ this.handleCancel }
+                  >{ this.cancelText }</sp-button>
+                  : ''
+              }
+              {
+                this.confirmText ?
+                  <sp-button
+                    type="primary"
+                    size="mini"
+                    loading={ this.confirmBtnLoading }
+                    onClick={ this.handleConfirm }
+                  >{ this.confirmText }</sp-button>
+                  : ''
+              }
+            </div>: ''
+        }
       </sp-modal>
     )
   }
