@@ -1,0 +1,74 @@
+/* stylelint-disable */
+@font-face {
+  font-family: "sparta-icons"; /* Project id 4871700 */
+  src:
+    url("./font/iconfont.woff2?t=1628055677570") format("woff2"),
+    url("./font/iconfont.woff?t=1628055677570") format("woff"),
+    url("./font/iconfont.ttf?t=1628055677570") format("truetype");
+}
+
+.sparta-icons {
+  font-family: "sparta-icons" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.sp-icon-arrow-down-bold:before {
+  content: "\e6a6";
+}
+
+.sp-icon-arrow-right:before {
+  content: "\e641";
+}
+
+.sp-icon-check:before {
+  content: "\e63e";
+}
+
+.sp-icon-ques:before {
+  content: "\e601";
+}
+
+.sp-icon-loading:before {
+  content: "\e697";
+}
+
+.sp-icon-close-bold:before {
+  content: "\e6af";
+}
+
+.sp-icon-close:before {
+  content: "\e6b0";
+}
+
+[class^="sp-icon-"], [class*=" sp-icon-"] {
+  font-family: sparta-icons !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  vertical-align: baseline;
+  display: inline-block;
+
+  &::before {
+    display: inline-block; /* 解决伪元素在字号为12px的时候，高度会是13的问题 */
+  }
+}
+
+.sp-icon-loading {
+  animation: rotating 0.7s linear infinite;
+}
+
+@keyframes rotating {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}

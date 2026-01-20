@@ -4,6 +4,7 @@
     :class="[
       { 'is--disabled': disabled },
       { 'is--checked': checked },
+      { 'is--check': isCheck },
     ]"
     @click="handleClick"
   >
@@ -17,7 +18,7 @@
         @change="handleChange"
         @click.stop
       >
-      <span class="sp-radio__inner" />
+      <span class="sp-radio__inner" :class="{'sp-icon-check': checked && isCheck }" />
     </span>
     <span class="sp-radio__text"><slot></slot></span>
   </label>
@@ -38,7 +39,14 @@ export default {
     disabled: {
       type: Boolean,
       default: false
-    }
+    },
+    type: {
+      type: String,
+      default: 'round',
+      validator(val) {
+        return ['check', 'round'].indexOf(val) !== -1
+      }
+    },
   },
   computed: {
     checked() {
@@ -56,6 +64,9 @@ export default {
         }
       }
       return false
+    },
+    isCheck() {
+      return this.type === 'check'
     },
     model: {
       get() {
@@ -90,8 +101,8 @@ export default {
   position: relative;
   display: inline-block;
   vertical-align: middle;
-  width: 16px;
-  height: 16px;
+  width: $radio-size;
+  height: $radio-size;
   line-height: 20px;
   white-space: nowrap;
   outline: none;
@@ -119,6 +130,22 @@ export default {
     &:last-child {
       margin-right: 0;
     }
+
+    &.is--check {
+      .sp-radio {
+        text-align: center;
+
+        .sp-radio__inner {
+          color: white;
+          font-size: $radio-inner-font-size;
+          line-height: $radio-size - 2px;
+          font-weight: $radio-inner-font-weight;
+          &::after {
+            opacity: 0;
+          }
+        }
+      }
+    }
   }
 
   input {
@@ -136,22 +163,22 @@ export default {
     border: 1px solid $radio-border-color;
     border-radius: 50%;
     vertical-align: middle;
-    transition: $transition-all;
+    transition: opacity;
     box-sizing: border-box;
     font-size: $radio-font-size;
 
     &::after {
       content: "";
       position: absolute;
-      top: 4px;
-      left: 4px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       width: 6px;
       height: 6px;
       background-color: $radio-inner-background-color;
       border-top: 0;
       border-left: 0;
       border-radius: 50%;
-      transform: scale(0);
       opacity: 0;
       transition: $transition-all;
     }
@@ -162,7 +189,6 @@ export default {
     background-color: $radio-background-color-active;
 
     &::after {
-      transform: scale(1);
       opacity: 1;
     }
   }

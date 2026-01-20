@@ -1,0 +1,92 @@
+$namespace: "sp";
+$element-separator: "__";
+$modifier-separator: "--";
+$state-prefix: "is-";
+
+// 多倍屏背景图
+@mixin bg-image($url, $format: "png") {
+  background-image: url($url + "." + $format);
+
+  // https://github.com/postcss/autoprefixer/issues/521
+  @media (min-resolution: 2dppx) and (max-resolution: 3dppx) {
+    background-image: url($url + "@2x." + $format);
+  }
+  @media (min-resolution: 3dppx) {
+    background-image: url($url + "@3x." + $format);
+  }
+}
+
+// 不换行
+@mixin ellipsis() {
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@mixin clearfix() {
+  zoom: 1;
+  &::after {
+    content: " ";
+    display: block;
+    clear: both;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+  }
+}
+
+/* button 辅助
+ -------------------------- */
+@mixin button-size($font-size, $button-min-width, $button-height) {
+  min-width: $button-min-width;
+  height: $button-height;
+  font-size: $font-size;
+}
+
+/* BEM
+ -------------------------- */
+@mixin b($block) {
+  $B: $namespace + "-" + $block !global;
+
+  .#{$B} {
+    @content;
+  }
+}
+
+@mixin when($state) {
+  @at-root {
+    &.#{$state-prefix + $state} {
+      @content;
+    }
+  }
+}
+
+@mixin m($modifier) {
+  $selector: &;
+  $currentSelector: "";
+  @each $unit in $modifier {
+    $currentSelector: #{$currentSelector + & + $modifier-separator + $unit + ","};
+  }
+
+  @at-root {
+    #{$currentSelector} {
+      @content;
+    }
+  }
+}
+
+@mixin e($element) {
+  $E: $element !global;
+  $selector: &;
+  $currentSelector: "";
+  @each $unit in $element {
+    $currentSelector: #{$currentSelector + "." + $B + $element-separator + $unit + ","};
+  }
+
+  @at-root {
+    #{$currentSelector} {
+      @content;
+    }
+  }
+}

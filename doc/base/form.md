@@ -49,6 +49,7 @@
     <sp-form-item
       prop="password"
       label="支付密码"
+      hide-tip-when-err-show
       :rules="[
         { required: true, message: '支付密码不能为空'}
       ]"
@@ -338,6 +339,10 @@
           type="primary"
           @click="validateFormPart('validateForm1')"
         >部分提交</sp-button>
+        <sp-button
+          plain
+          @click="handleResetForm1Part"
+        >部分重置</sp-button>
       </sp-form-item>
     </sp-form-submit-btns>
   </sp-form>
@@ -501,6 +506,9 @@
       handleResetForm1() {
         this.resetForm('validateForm1')
         console.log(this.validateForm1)
+      },
+      handleResetForm1Part() {
+        this.$refs['validateForm1'].resetFields(['name', 'password'])
       },
       handleFilesChange(allFiles) {
         this.validateForm1.files = allFiles
@@ -815,13 +823,14 @@
 | validate-fail-tip | 当有错误信息的时候，是否提示错误信息 | boolean | — | true |
 | scroll-when-error | 当有错误信息的时候，是否滚动定位到对应位置 | boolean | — | false |
 | scroll-offset-top | 如果有scroll-offset-top，说明默认的scrollIntoView滚动方式不满足需求，比如网易跨境顶部有个fixed的head，需要额外滚动一定距离 | number/string | — | 0 |
+| hide-tip-when-err-show | 当有错误信息的时候，是否隐藏tip | boolean | — | false |
 
 ### Form Methods
 
 | 方法名      | 说明          | 参数
 |---------- |-------------- | --------------
 | validate | 对整个表单进行校验的方法，参数为一个回调函数。该回调函数会在校验结束后被调用，并传入2个参数：是否校验成功和未通过校验的字段。若不传入回调函数，则会返回一个 promise；validate的第二个参数为支持部分字段校验，不传则为全部字段校验 | Function(callback: Function(boolean, object), partFields)
-| resetFields | 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果 | —
+| resetFields | 对整个表单进行重置，将所有字段值重置为初始值并移除校验结果。传入待移除的表单项的 prop 属性或者 prop 组成的数组，如不传则重置整个表单 | Function(props: array | string)
 | clearValidate | 移除表单项的校验结果。传入待移除的表单项的 prop 属性或者 prop 组成的数组，如不传则移除整个表单的校验结果果 | Function(props: array | string)
 | getFirstErrorText | 获取第一个报错元素的错误文案 | —
 | showErrors | 根据prop进行自定义的报错提示 | Function(errors: object)
@@ -845,6 +854,7 @@
 | rules    | 表单验证规则 具体的规则文档见：https://github.com/yiminghe/async-validator | object | — | — |
 | error    | 表单域验证错误信息, 设置该值会使表单验证状态变为`error`，并显示该错误信息 | string | — | — |
 | show-message  | 是否显示校验错误信息 | boolean | — | true |
+| hide-tip-when-err-show | 当有错误信息的时候，是否隐藏tip | boolean | — | false |
 
 ### Form-Item Slot
 | name | 说明 |
@@ -1050,6 +1060,9 @@
       handleResetForm1() {
         this.resetForm('validateForm1')
         console.log(this.validateForm1)
+      },
+      handleResetForm1Part() {
+        this.$refs['validateForm1'].resetFields(['name', 'password'])
       },
       handleFilesChange(allFiles) {
         this.validateForm1.files = allFiles

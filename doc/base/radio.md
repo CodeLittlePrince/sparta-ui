@@ -38,6 +38,32 @@ export default {
 
 :::
 
+### 勾选形状
+
+通过Attributes`type`设置形状。
+:::demo 通过`v-model`绑定变量
+
+```vue
+<template>
+  <div class="sp-radio-demo">
+    <sp-radio label="apple" v-model="value12" type="check">苹果</sp-radio>
+    <sp-radio label="banana" v-model="value12" type="check" @click="hanldeClick">香蕉</sp-radio>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      value12: ""
+    };
+  }
+};
+</script>
+```
+
+:::
+
 ### 禁用状态
 
 :::demo 通过设置`disabled`禁用
@@ -124,6 +150,7 @@ export default {
 | -------- | -------------- | ------------------------- | ------ | ------ |
 | label    | Radio 的 value | string / number / boolean | —      | —      |
 | disabled | 是否禁用       | boolean                   | —      | false  |
+| type | 选中形状       | string                   | check/round      | round  |
 
 ### Radio Events
 
@@ -154,6 +181,7 @@ export default{
       value2: 'apple',
       value3: 'apple',
       value4: 'Europe',
+      value12: ''
     }
   },
   watch: {

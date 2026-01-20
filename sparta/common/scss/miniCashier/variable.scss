@@ -1,0 +1,305 @@
+/* Transition
+-------------------------- */
+$transition-all: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+$transition-all-quick: all 0.1 cubic-bezier(0.645, 0.045, 0.355, 1);
+$transition-fade: opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+$transition-fade-linear: opacity 0.2s linear;
+$transition-md-fade: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+$transition-border-base: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+$transition-color-base: color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+/* Colors
+-------------------------- */
+$color-white: #fff;
+$color-black: #000;
+$color-primary: #e8292c;
+$color-success: #09bb07;
+$color-warning: #e6a23c;
+$color-danger: #e8292c;
+$color-info: #999;
+$color-success-light: mix($color-white, $color-success, 80%);
+$color-warning-light: mix($color-white, $color-warning, 80%);
+$color-danger-light: mix($color-white, $color-danger, 80%);
+$color-info-light: mix($color-white, $color-info, 80%);
+$color-success-lighter: mix($color-white, $color-success, 90%);
+$color-warning-lighter: mix($color-white, $color-warning, 90%);
+$color-danger-lighter: mix($color-white, $color-danger, 90%);
+$color-info-lighter: mix($color-white, $color-info, 90%);
+$color-text-error: #f90b0b;
+$color-text-primary: #1a1a1a;
+$color-text-regular: #1a1a1a;
+$color-text-secondary: #808080;
+$color-text-placeholder: #bfbfbf;
+$color-text-tip: #ccc;
+$color-text-disabled: #bfbfbf;
+$color-divider-line: #dbdbdb;
+$color-primary-light-1: mix($color-white, $color-primary, 10%);
+$color-primary-light-2: mix($color-white, $color-primary, 20%);
+$color-primary-light-3: mix($color-white, $color-primary, 30%);
+$color-primary-light-4: mix($color-white, $color-primary, 40%);
+$color-primary-light-5: mix($color-white, $color-primary, 50%);
+$color-primary-light-6: mix($color-white, $color-primary, 60%);
+$color-primary-light-7: mix($color-white, $color-primary, 70%);
+$color-primary-light-8: mix($color-white, $color-primary, 80%);
+$color-primary-light-9: mix($color-white, $color-primary, 90%);
+$color-danger-light-1: mix($color-white, $color-danger, 10%);
+$color-danger-light-2: mix($color-white, $color-danger, 20%);
+$color-danger-light-3: mix($color-white, $color-danger, 30%);
+$color-danger-light-4: mix($color-white, $color-danger, 40%);
+$color-danger-light-5: mix($color-white, $color-danger, 50%);
+$color-danger-light-6: mix($color-white, $color-danger, 60%);
+$color-danger-light-7: mix($color-white, $color-danger, 70%);
+$color-danger-light-8: mix($color-white, $color-danger, 80%);
+$color-danger-light-9: mix($color-white, $color-danger, 90%);
+
+/* Shadow
+-------------------------- */
+$float-box-shadow-box: 0 2px 10px 0 rgb(0 53 111 / 10%);
+
+/* Disable base
+-------------------------- */
+$disabled-color-base: $color-text-placeholder !default;
+$disabled-background-base: #ededed;
+
+// Background
+$background-color-base: #ffe9e6;
+
+/* Scrollbar
+-------------------------- */
+$scrollbar-background: #f5f5f5;
+$scrollbar-track-color: #f5f5f5;
+$scrollbar-thumb-color: #d7d9df;
+
+/* Border
+-------------------------- */
+$border-width-base: 1px;
+$border-style-base: solid;
+$border-color-base: #eaeaea;
+$border-color-light: #e4e7ed;
+$border-color-lighter: #ebeef5;
+$border-color-extra-light: #f2f6fc;
+$border-color-hover: $color-text-placeholder;
+$border-base: $border-width-base $border-style-base $border-color-base;
+$border-radius-base: 6px;
+$border-radius-small: 2px;
+$border-radius-circle: 100%;
+
+/* Button
+-------------------------- */
+$button-font-size: 16px;
+$button-font-weight: normal;
+$button-min-width: 120px;
+$button-height: 42px;
+$button-border-radius: 6px;
+$button-medium-font-size: 16px;
+$button-medium-min-width: 108px;
+$button-medium-height: 36px;
+$button-small-font-size: 14px;
+$button-small-min-width: 96px;
+$button-small-height: 32px;
+$button-mini-font-size: 13px;
+$button-mini-min-width: 84px;
+$button-mini-height: 28px;
+$button-default-color: $color-primary;
+$button-default-fill: #ffe9e6;
+$button-default-border: #ffe9e6;
+$button-default-fill--hover: #fbe1de;
+$button-default-fill--focus: $button-default-fill;
+$button-default-fill--active: #fbe1de;
+$button-color--disabled: #fff;
+$button-fill--disabled: #f6aaab;
+$button-border--disabled: $border-color-lighter;
+$button-plain-fill: #fff;
+$button-plain-color: $color-primary;
+$button-plain-color--hover: $color-primary;
+$button-plain-border: $color-primary;
+$button-plain-fill--hover: $color-primary;
+$button-plain-fill--focus: $color-primary;
+$button-plain-fill--disabled: #fff;
+$button-plain-fill--hover: #ffe9e6;
+$button-plain-fill--focus: $button-plain-fill;
+$button-plain-fill--active: #fbe1de;
+$button-plain-border--disabled: #ededed;
+$button-plain-color--disabled: $color-text-disabled;
+$button-plain-opacity--hover: 1;
+$button-primary-border: $color-primary;
+$button-primary-color: #fff;
+$button-primary-fill: $color-primary;
+$button-primary-fill--hover: #d71b1e;
+$button-primary-border--hover: #d71b1e;
+$button-primary-fill--focus: $button-primary-fill;
+$button-primary-border--focus: $button-primary-border;
+$button-primary-fill--active: #d71b1e;
+$button-primary-border--active: #d71b1e;
+$button-info-border: #909399;
+$button-info-color: #fff;
+$button-info-fill: #909399;
+$button-info-fill--hover: #a6a9ad;
+$button-info-border--hover: #a6a9ad;
+$button-info-fill--focus: #a6a9ad;
+$button-info-border--focus: #a6a9ad;
+$button-info-fill--active: #82848a;
+$button-info-border--active: #82848a;
+$button-info-plain-fill: #fff;
+$button-info-plain-text: #808080;
+$button-info-plain-border: #eaeaea;
+$button-info-plain-fill--hover: #f7f7f7;
+$button-info-plain-fill--active: #f7f7f7;
+$button-info-plain-text--hover: #808080;
+$button-info-plain-border--hover: #eaeaea;
+$button-text-color: #1167dc;
+$button-text-color--hover: #1062d1;
+$button-text-color--focus: $button-text-color;
+$button-text-color--active: #0f5dc7;
+$button-text-color--disabled: $color-text-disabled;
+
+/* PasswordInput
+-------------------------- */
+$password-input-item-height: 44px;
+$password-input-item-width: 44px;
+$password-input-width: auto;
+$password-input-caret-color: $color-primary;
+$password-input-caret-width: 2px;
+$password-box-border-focus: #f7f7f7;
+$password-box-shadow-focus: none;
+$password-input-item-border: 1px solid #f7f7f7;
+$password-input-item-background: #f7f7f7;
+$password-input-caret-height: 50%;
+$password-input-dot-size: 8px;
+$password-input-item-margin: 6px;
+
+/* Input
+-------------------------- */
+$input-height: 44px;
+$input-font-size: 14px;
+$input-color: $color-text-regular;
+$input-background: #fff;
+$input-background-disabled: #ededed;
+$input-background-readonly: #f7f7f7;
+$input-background-append: #fff;
+$input-background-format: #ffe9e6;
+$input-background-format-space: 4px;
+$input-color-append: $color-text-secondary;
+$input-border: $border-base;
+$input-box-shadow-focus: none;
+$input-box-shadow-focus-error: none;
+$input-box-border-focus: #ccc;
+$input-box-border-hover: #ccc;
+$input-border-radius: 6px;
+$input-medium-font-size: 16px;
+$input-medium-height: 44px;
+$input-small-font-size: 13px;
+$input-small-height: 32px;
+$input-mini-font-size: 12px;
+$input-mini-height: 28px;
+
+/* Radio
+-------------------------- */
+$radio-color: $color-text-primary;
+$radio-background-color-active: $color-primary;
+$radio-border-color-active: $color-primary;
+$radio-font-size: 16px;
+$radio-size: 18px;
+$radio-border-color: $border-color-base;
+$radio-background-color: #fff;
+$radio-color-disabled: $color-text-disabled;
+$radio-border-color-disabled: $border-color-base;
+$radio-background-color-disabled: #ededed;
+$radio-button-background-color-active: #ffe9e6;
+$radio-button-border-color-disabled: #e4e8ef;
+$radio-button-text-hover: $color-text-secondary;
+$radio-button-background-color-hover: #ffe9e6;
+$radio-button-color: $color-text-secondary;
+$radio-inner-background-color: #fff;
+$radio-inner-font-size: 16px;
+$radio-inner-font-weight: normal;
+
+/* Form
+-------------------------- */
+$form-item-error-color: $color-text-error;
+$form-item-label-color: $color-text-primary;
+$form-item-label-font-size: 16px;
+$form-item-ques-top: 14px;
+$form-item-ques-margin-left: 8px;
+$form-item-error-font-size: 14px;
+$form-item-ques-font-size: 16px;
+$form-item-label-padding-right: 34px;
+$form-item-label-error-color: $color-text-primary;
+$form-item-error-min-height: 31px;
+$form-item-error-padding: 3px 0 6px;
+$form-item-error-line-height: 20px;
+$form-item-tip-font-size: 14px;
+$form-item-tip-padding: 3px;
+
+/* Modal
+-------------------------- */
+$modal-background: #fff;
+$modal-border-radius: 10px;
+$modal-mask-background: rgb(41 41 51 / 60%);
+$modal-head-font-size: 16px;
+$modal-head-text-align: center;
+$modal-head-line-height: 22px;
+$modal-close-font-size: 16px;
+$modal-close-top: 12px;
+$modal-close-right: 12px;
+$modal-icon-font-size: 18px;
+$modal-content-padding: 24px 30px 0;
+$modal-close-font-color: #999;
+$modal-icon-color: #808080;
+$modal-form-item-label-padding-right: 36px;
+$modal-form-padding-top: 20px;
+$modal-form-padding-bottom: 24px;
+
+/* Toast
+-------------------------- */
+$toast-font-size: 14px;
+$toast-border-radius: 8px;
+$toast-padding: 15px 24px;
+$toast-color-info: #fff;
+$toast-color-success: $color-success;
+$toast-color-error: $color-text-error;
+$toast-color-warning: $color-warning;
+$toast-background-info: rgb(0 0 0 / 80%);
+$toast-background-success: #efe;
+$toast-background-error: #ffedeb;
+$toast-background-warning: #fff6eb;
+$toast-top: 50%;
+$toast-transform: translate(-50%, -50%);
+
+/* Confirm
+-------------------------- */
+$confirm-font-size: 16px;
+$confirm-body-color: $color-text-secondary;
+$confirm-foot-padding-bottom: 24px;
+$confirm-foot-button-height: 42px;
+$confirm-foot-button-min-width: 152px;
+$confirm-foot-button-font-size: 16px;
+$confirm-foot-button-margin: 15px;
+$confirm-body-padding: 12px 0 28px;
+
+/* Break-point
+-------------------------- */
+$sm: 768px;
+$md: 992px;
+$lg: 1200px;
+$xl: 1920px;
+$breakpoints: (
+  "xs" : (max-width: $sm),
+  "sm" : (min-width: $sm),
+  "md" : (min-width: $md),
+  "lg" : (min-width: $lg),
+  "xl" : (min-width: $xl)
+);
+$breakpoints-spec: (
+  "xs-only" : (max-width: $sm - 1),
+  "sm-and-up" : (min-width: $sm),
+  "sm-only": (min-width: #{$sm}) and (max-width: #{$md} - 1),
+  "sm-and-down": (max-width: $md - 1),
+  "md-and-up" : (min-width: $md),
+  "md-only": (min-width: #{$md}) and (max-width: #{$lg } - 1),
+  "md-and-down": (max-width: $lg - 1),
+  "lg-and-up" : (min-width: $lg),
+  "lg-only": (min-width: #{$lg}) and (max-width: #{$xl } - 1),
+  "lg-and-down": (max-width: $xl - 1),
+  "xl-only" : (min-width: $xl),
+);

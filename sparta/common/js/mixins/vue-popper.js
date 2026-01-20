@@ -3,6 +3,7 @@ import PopManage from 'sparta/model/PopManage'
 import popper from '../utils/popper'
 const PopperJS = Vue.prototype.$isServer ? function() {} : popper
 const stop = e => e.stopPropagation()
+const popManage = PopManage.getInstance()
 
 export default {
   props: {
@@ -55,6 +56,9 @@ export default {
     value: {
       immediate: true,
       handler(val) {
+        if (val) {
+          this.zIndex = popManage.getZIndex()
+        }
         this.showPopper = val
         this.$emit('input', val)
       }
@@ -70,7 +74,6 @@ export default {
   },
 
   created() {
-    const popManage = PopManage.getInstance()
     this.zIndex = popManage.getZIndex()
   },
 

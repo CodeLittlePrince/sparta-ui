@@ -246,6 +246,10 @@ export default {
       type: String,
       default: '',
       validator: val => ['', 'upper', 'lower'].includes(val)
+    },
+    useFakePlaceholder: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -297,7 +301,7 @@ export default {
         (this.isFocus || this.isHover)
     },
     isIE() {
-      return window.ActiveXObject || 'ActiveXObject' in window
+      return this.useFakePlaceholder || window.ActiveXObject || 'ActiveXObject' in window
     },
     placeholderText() {
       // IE10和IE11上，如果有placeholder，input显示以后IE辣鸡浏览器会自动触发input事件
@@ -977,7 +981,7 @@ export default {
 
   &__format-tip {
     position: absolute;
-    bottom: $input-height + 4px;
+    bottom: $input-height + $input-background-format-space;
     left: 0;
     right: 0;
     background-color: $input-background-format;

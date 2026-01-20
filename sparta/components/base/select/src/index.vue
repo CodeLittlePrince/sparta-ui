@@ -38,7 +38,7 @@
         </div>
       </template>
       <div v-else-if="groupMultiple">
-        <popup-tip
+        <sp-popup-tip
           ref="popupTip"
           :custom-class="customPopupTipClass"
           color="#0D1233"
@@ -74,13 +74,13 @@
               @keydown.esc.stop.prevent="visible = false"
               @compositionstart="handleComposition"
               @compositionupdate="handleComposition"
-              @compositionend="handleComposition;"
+              @compositionend="handleComposition"
             />
           </div>
           <template v-if="showGroupMultiPopupTip && !isFocus && groupMultipleSelected && groupMultipleSelected.length" slot="popup">
             <slot name="popupTipContent">{{ groupMultipleSelected.map(item => getGroupMultiTextByValue(item)).join('；') }}</slot>
           </template>
-        </popup-tip>
+        </sp-popup-tip>
       </div>
    
       <!-- 非多选情况-->
@@ -169,6 +169,7 @@
     <sp-select-dropdown
       ref="sp-select-dropdown"
       v-model="visible"
+      :custom-class="dropdownClass"
       :popper-scroll-bind-elem="popperScrollBindElem"
     >
       <transition name="sp-zoom-in-top">
@@ -201,13 +202,11 @@
 import Emitter from 'sparta/common/js/mixins/emitter'
 import SpSelectDropdown from './select-dropdown'
 import { debounce } from 'sparta/common/js/utils/tool'
-import PopupTip from '../../popup-tip'
 export default {
   name: 'SpSelect',
 
   components: {
     'sp-select-dropdown': SpSelectDropdown,
-    'popup-tip': PopupTip
   },
 
   mixins: [Emitter],
@@ -225,7 +224,7 @@ export default {
     },
     height: {
       type: [String, Number],
-      default: 36
+      default: 'auto'
     },
     value: {
       type: [Array, Number, String, Boolean, Object],
@@ -295,6 +294,11 @@ export default {
     },
     // 自定义popup-tip的class
     customPopupTipClass: {
+      type: String,
+      default: ''
+    },
+    // 下拉class
+    dropdownClass: {
       type: String,
       default: ''
     }
@@ -620,13 +624,19 @@ export default {
       }
       //
       const filterKeyword = this.isGroupMultipleFilterable ? this.groupFilterValue : this.inputText
+      const visibleOptions = []
       for (let i = 0, len = this.spOptions.length; i < len; i++) {
         if (this.spOptions[i].label.indexOf(filterKeyword) !== -1) {
           this.spOptions[i].visible = true
+          visibleOptions.push(this.spOptions[i])
         } else {
           this.spOptions[i].visible = false
         }
       }
+      this.$emit('filter', {
+        options: visibleOptions,
+        length: visibleOptions.length,
+      })
     },
     updateTagboxHeight() {
       this.$nextTick(() => {
@@ -1087,7 +1097,7 @@ export default {
     min-height: $select-height;
     background-color: $select-background;
     background-image: none;
-    border-radius: 4px;
+    border-radius: $input-border-radius;
     border: 1px solid $select-input-border-color;
     box-sizing: border-box;
     display: inline-table;
@@ -1096,7 +1106,7 @@ export default {
     overflow: hidden;
 
     .sp-select__input {
-      background-color: white;
+      background-color: $select-background;
       &-placeholder {
         position: absolute;
         left: 0;
@@ -1112,7 +1122,8 @@ export default {
       }
     }
 
-    .sp-select__input, .sp-select__center {
+    .sp-select__input,
+    .sp-select__center {
       width: 100%;
       vertical-align: middle;
       overflow: hidden;
@@ -1126,7 +1137,7 @@ export default {
       line-height: $select-height - 2;
       padding: 0 10px;
       box-sizing: border-box;
-      border-radius: 4px;
+      border-radius: 0;
       color: inherit;
     }
 
@@ -1136,7 +1147,7 @@ export default {
 
     .sp-select__input--filter {
       background-color: transparent;
-      height: 34px;
+      height: $input-height - 2;
       min-width: 10px;
       padding-right: 46px;
       border: none;
@@ -1206,7 +1217,7 @@ export default {
   }
 
   .sp-selectInput__show {
-    background-color: #fff;
+    background-color: $select-background;
   }
 
   &.isFocus &__input-box {
@@ -1255,7 +1266,7 @@ export default {
     .sp-tag-box {
       @include ellipsis;
       right: 85px;
-      line-height: 34px;
+      line-height: $input-height - 2;
       padding-left: 10px;
       padding-bottom: 0;
     }
@@ -1283,7 +1294,7 @@ export default {
     margin: 4px 0;
     padding: 5px 0;
     border: 1px solid $select-dropdown-border-color;
-    border-radius: 4px;
+    border-radius: $input-border-radius;
     box-shadow: $float-box-shadow-box;
     box-sizing: border-box;
     background-color: $select-dropdown-item-background;

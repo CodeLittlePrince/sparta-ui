@@ -10,6 +10,7 @@
       <sp-button>默认按钮</sp-button>
       <sp-button type="primary">主要按钮</sp-button>
       <sp-button plain>较弱按钮</sp-button>
+      <sp-button type="info" plain>信息按钮</sp-button>
     </sp-row>
   </div>
 </template>
@@ -27,6 +28,7 @@
       <sp-button disabled>默认按钮</sp-button>
       <sp-button type="primary" disabled>主要按钮</sp-button>
       <sp-button plain disabled>朴素按钮</sp-button>
+      <sp-button disabled type="info" plain>信息按钮</sp-button>
     </sp-row>
   </div>
 </template>
@@ -74,6 +76,7 @@
 <template>
   <div class="md-demo-button">
     <sp-button type="primary" :loading="true">加载中</sp-button>
+    <sp-button loading type="info" plain>信息按钮</sp-button>
   </div>
 </template>
 ```
@@ -101,7 +104,7 @@
 | 参数      | 说明    | 类型      | 可选值       | 默认值   |
 |---------- |-------- |---------- |-------------  |-------- |
 | size     | 尺寸   | string  |   medium / small / mini            |    —     |
-| type     | 类型   | string    |   primary / text |     —    |
+| type     | 类型   | string    |   primary / text/ info |     —    |
 | plain     | 是否朴素按钮   | boolean    | — | false   |
 | loading     | 是否加载中状态   | boolean    | — | false   |
 | disabled  | 是否禁用状态    | boolean   | —   | false   |

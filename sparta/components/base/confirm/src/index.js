@@ -5,7 +5,7 @@ let ComfirmConstructor = Vue.extend(Main)
 const Comfirm = function (options) {
   if (typeof options === 'string') {
     options = {
-      message: options
+      message: options,
     }
   }
   // 如果是直接字符串，那直接赋值给message就好了
@@ -15,6 +15,8 @@ const Comfirm = function (options) {
   })
   instance.vm = instance.$mount()
   instance.vm.visible = true
+
+  return instance.vm
 }
 
 export default Comfirm

@@ -167,6 +167,11 @@ export default{
 | closeOnPopstate    | 是否在 活动历史记录条目更改 时关闭   | boolean | -  |     true   |
 | hasClose   | 右上角是否有关闭按钮   | boolean | -  |     true    |
 
+### Methods
+| 方法名      | 说明          | 参数
+|---------- |-------------- | --------------
+| close | 关闭弹窗   | —
+
 <script>
 export default{
   methods: {

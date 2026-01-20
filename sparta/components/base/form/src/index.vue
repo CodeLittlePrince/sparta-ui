@@ -46,6 +46,10 @@ export default {
       type: [Number, String],
       default: 0
     },
+    hideTipWhenErrShow: {
+      type: Boolean,
+      default: false
+    }
   },
 
   data() {
@@ -88,13 +92,19 @@ export default {
       }
     },
 
-    resetFields() {
+    resetFields(props = []) {
       if (!this.model) {
         process.env.NODE_ENV !== 'production' &&
           console.warn('[Sparta Warn][Form]model is required for resetFields to work.')
         return
       }
-      this.fields.forEach(field => {
+      const fields = props.length
+        ? (typeof props === 'string'
+          ? this.fields.filter(field => props === field.prop)
+          : this.fields.filter(field => props.indexOf(field.prop) > -1)
+        ) : this.fields
+
+      fields.forEach(field => {
         field.resetField()
       })
     },
@@ -130,12 +140,6 @@ export default {
 
       let valid = true
       let count = 0
-      // 如果需要验证的fields为空，调用验证时立刻返回callback
-      if (this.fields.length === 0 && callback) {
-        callback(true)
-      }
-      let invalidFields = {}
-      
       let fields = this.fields
       // 支持部分校验，传入prop的数组即可
       const hasPartFields = partFields && partFields.length
@@ -144,8 +148,13 @@ export default {
       }
       // 处理隐藏元素，不要去校验
       fields = fields.filter(vm => {
-        return vm.$el && window.getComputedStyle(vm.$el).display !== 'none'
+        return !this.isElementHidden(vm.$el)
       })
+      // 如果需要验证的fields为空，调用验证时立刻返回callback
+      if (fields.length === 0 && callback) {
+        callback(true)
+      }
+      let invalidFields = {}
       fields.forEach(field => {
         field.validate('', (message, field) => {
           if (message) {
@@ -169,7 +178,12 @@ export default {
                 this.firstErrorText = errorTipElem.innerText
                 
                 if (this.validateFailTip && !hasPartFields) {
-                  this.toastError(errorTipElem.innerText)
+                  // 自定义主题的错误提示，没有则用默认
+                  if (this.$sparta?.error) {
+                    this.$sparta.error(errorTipElem.innerText)
+                  } else {
+                    this.toastError(errorTipElem.innerText)
+                  }
                 }
               }
               // 滚动到错误位置;部分校验就不用滚动了(因为场景基本都是输入或者选择完后立马触发)
@@ -217,6 +231,30 @@ export default {
 
     getFirstErrorText() {
       return this.firstErrorText
+    },
+
+    isElementHidden(element) {
+      if (!element) {
+        return false
+      }
+
+      // 获取元素的样式
+      const style = window.getComputedStyle(element)
+
+      // 检查元素的 display 和 visibility 属性
+      if (
+        style.display === 'none' ||
+        style.visibility === 'hidden' ||
+        style.display === '' ||
+        style.visibility === '' ||
+        style.display == null ||
+        style.visibility == null
+      ) {
+        return true
+      }
+
+      // 检查父元素
+      return this.isElementHidden(element.parentElement)
     },
 
     _getDistanceToBody(element) {

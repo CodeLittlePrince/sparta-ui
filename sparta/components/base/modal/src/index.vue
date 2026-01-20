@@ -27,7 +27,7 @@
             </slot>
           </div>
           <!-- body -->
-          <div class="sp-modal__body" :style="{ 'max-height': fullscreen ? `calc(100vh - 47px - 54px)` : maxBodyHeight }">
+          <div class="sp-modal__body" :style="{ 'max-height': fullscreen ? `calc(100vh - 47px - 54px)` : maxBodyHeightInner }">
             <slot></slot>
           </div>
         </div>
@@ -47,6 +47,23 @@
 <script>
 import PopManage from 'sparta/model/PopManage'
 import ModalManage from 'sparta/model/ModalManage'
+import PopLayerManage from 'sparta/model/PopLayerManage'
+
+function createEvent(eventName, params) {
+  params = params || { bubbles: false, cancelable: false }
+  var event
+  if (typeof Event === 'function') {
+    event = new Event(eventName, params)
+  } else {
+    event = document.createEvent('Event')
+    event.initEvent(eventName, params.bubbles, params.cancelable)
+  }
+  return event
+}
+
+// 触发自定义事件
+const eventOfModalShow = createEvent('sp-modal--show', { bubbles: true, cancelable: true })
+const eventOfModalHide = createEvent('sp-modal--hide', { bubbles: true, cancelable: true })
 
 export default {
   name: 'SpModal',
@@ -84,6 +101,14 @@ export default {
     'beforeClose': {
       type: Function,
       default: null
+    },
+    'maxBodyHeight': {
+      type: String,
+      default: ''
+    },
+    'isConfirm': {
+      type: Boolean,
+      default: false
     }
   },
   
@@ -93,7 +118,7 @@ export default {
       modalValue: this.value,
       modalWrapperZIndex: 1,
       modalMaskZIndex: 1,
-      maxBodyHeight: 'initial'
+      maxBodyHeightInner: this.maxBodyHeight || 'initial'
     }
   },
   
@@ -114,10 +139,20 @@ export default {
     
     modalValue(newVal) {
       if (newVal) {
+        const popManage = PopManage.getInstance()
+        this.modalWrapperZIndex = popManage.getZIndex()
+
+        // 重新计算高度，不用resize是因为性能问题
+        this.setModalContentMaxHeight()
+        
         this.visible = newVal
         this.openHandle()
+
+        window.dispatchEvent(eventOfModalShow)
       } else {
         this.closeHandle()
+
+        window.dispatchEvent(eventOfModalHide)
       }
     }
   },
@@ -130,16 +165,22 @@ export default {
     // 控制唯一弹窗或者弹窗优先级
     this.modalManage = ModalManage.getInstance()
     this.modalManage.add(this)
+    // 为了业务侧能统一处理弹层类的组件
+    if (!this.isConfirm) {
+      PopLayerManage.getInstance().add(this, 'modal')
+    }
   },
 
   mounted() {
-    this.setModalContentMaxHeight()
-
     document.body.appendChild(this.$el)
   },
 
   beforeDestroy() {
     this.modalManage.remove(this)
+    // 为了业务侧能统一处理弹层类的组件
+    if (!this.isConfirm) {
+      PopLayerManage.getInstance().remove(this)
+    }
 
     if(this.visible) {
       this.closeHandle()
@@ -245,7 +286,17 @@ export default {
     },
 
     setModalContentMaxHeight() {
-      this.maxBodyHeight = `${ Math.round(window.innerHeight * 0.8) }px`
+      if (this.maxBodyHeight) {
+        this.maxBodyHeightInner = this.maxBodyHeight
+        return
+      }
+      
+      if (window.innerHeight == 0) {
+        this.maxBodyHeightInner = 'initial'
+        return
+      }
+      
+      this.maxBodyHeightInner = `${ Math.round(window.innerHeight * 0.8) }px`
     },
   }
 }
@@ -263,7 +314,7 @@ export default {
     overflow: auto;
 
     .sp-modal-content {
-      padding: 20px 20px 0;
+      padding: $modal-content-padding;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -274,6 +325,7 @@ export default {
 
       .sp-modal__head {
         .sp-modal__title {
+          text-align: $modal-head-text-align;
           font-size: $modal-head-font-size;
           line-height: $modal-head-line-height;
           font-weight: 600;
@@ -283,17 +335,18 @@ export default {
 
       .sp-modal__head__close {
         position: absolute;
-        top: 8px;
-        right: 9px;
+        top: $modal-close-top;
+        right: $modal-close-right;
         padding: 0;
         border: none;
         outline: none;
         cursor: pointer;
 
         .sp-icon-close {
-          font-size: 14px;
-          color: $color-text-tip;
+          font-size: $modal-close-font-size;
+          color: $modal-close-font-color;
           font-weight: bold;
+          line-height: 1;
         }
       }
 
@@ -326,50 +379,6 @@ export default {
     bottom: 0;
     left: 0;
     background: $modal-mask-background;
-  }
-
-  &.is--fullscreen {
-
-    .sp-modal-content {
-      padding: 47px 0 54px 40px;
-      top: 0;
-      left: 50%;
-      transform: translate(0, 0);
-      margin-left: -600px; // 为了IE，没法用translate方式
-
-      .sp-form {
-        padding-top: 26px;
-
-        .sp-form-item__label {
-          padding-right: 56px;
-        }
-
-        .sp-form-submit-btns {
-          margin-top: 22px;
-        }
-      }
-    }
-
-    .sp-modal__head {
-      .sp-modal__title {
-        font-size: 20px;
-        line-height: 28px;
-        font-weight: 600;
-        color: $color-text-regular;
-      }
-    }
-
-    .sp-modal__head__close {
-      right: -4px;
-      .sp-icon-close {
-        font-size: 26px;
-        font-weight: normal;
-      }
-    }
-
-    .sp-modal__mask {
-      background-color: #fff;
-    }
   }
 }
 </style>

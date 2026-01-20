@@ -687,7 +687,7 @@ export default{
 ### Select Attributes
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
-| height | 设置高度 | string/number | — | 36 |
+| height | 设置高度 | string/number | — | 'auto' |
 | readonly | 设置是否只读 | boolean | — | false |
 | multiple | 是否多选 | boolean | — | false |
 | disabled | 是否禁用 | boolean | — | false |

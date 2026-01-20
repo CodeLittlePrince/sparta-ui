@@ -44,7 +44,7 @@ export default {
       type: String,
       default: 'default',
       validator(val) {
-        return ['default', 'primary', 'danger', 'text'].indexOf(val) > -1
+        return ['default', 'primary', 'danger', 'text', 'info'].indexOf(val) > -1
       }
     },
     size: {
@@ -90,7 +90,7 @@ export default {
 
   methods: {
     handleClick(evt) {
-      if (this.frequencyFlag) {
+      if (this.frequencyFlag || this.buttonDisabled || this.loading) {
         return
       }
       // 防止重复点击
@@ -110,7 +110,6 @@ export default {
 
 .sp-button {
   display: inline-block;
-  line-height: 1;
   white-space: nowrap;
   cursor: pointer;
   background: $button-default-fill;
@@ -126,14 +125,13 @@ export default {
   font-weight: $button-font-weight;
   user-select: none;
   padding: 0 10px;
-  border-radius: 4px;
-  font-size: $button-font-size;
+  border-radius: $button-border-radius;
 
   & + & {
     margin-left: 10px;
   }
 
-  @include button-size(font-size, $button-min-width, $button-height);
+  @include button-size($button-font-size, $button-min-width, $button-height);
 
   &:hover {
     background-color: $button-default-fill--hover;
@@ -158,12 +156,13 @@ export default {
   }
 
   &.is--plain {
+    color: $button-plain-color;
     border-color: $button-plain-border;
     background-color: $button-plain-fill;
 
     &:hover {
       background: $button-plain-fill--hover;
-      color: $color-primary;
+      color: $button-plain-color--hover;
       opacity: $button-plain-opacity--hover;
     }
 
@@ -174,7 +173,7 @@ export default {
     }
 
     &:focus {
-      background-color: $button-plain-fill--focus;
+      background-color: $button-plain-fill;
     }
   }
 
@@ -193,7 +192,7 @@ export default {
       &,
       &:hover,
       &:focus {
-        background-color: #fff;
+        background-color: $button-plain-fill--disabled;
         border-color: $button-plain-border--disabled;
         color: $button-plain-color--disabled;
         opacity: 1;
@@ -251,6 +250,71 @@ export default {
       border-color: $button-primary-border--focus;
     }
   }
+
+  &--info {
+    background-color: $button-info-fill;
+    border-color: $button-info-border;
+    color: $button-info-color;
+
+    &:hover {
+      background-color: $button-info-fill--hover;
+      border-color: $button-info-border--hover;
+    }
+
+    &:focus,
+    &:active {
+      background-color: $button-info-fill--focus;
+      border-color: $button-info-border--focus;
+    }
+
+    &:active,
+    &:active:focus {
+      background-color: $button-info-fill--active;
+      border-color: $button-info-border--active;
+    }
+
+    &:focus {
+      background-color: $button-info-fill--focus;
+      border-color: $button-info-border--focus;
+    }
+
+    &.is--plain {
+      border-color: $button-info-plain-border;
+      color: $button-info-plain-text;
+      background-color: $button-info-plain-fill;
+
+      &:hover {
+        background-color: $button-info-plain-fill--hover;
+        border-color: $button-info-plain-border--hover;
+        color: $button-info-plain-text;
+      }
+
+      &:focus,
+      &:active {
+        background-color: $button-info-plain-fill--active;
+        border-color: $button-info-plain-border--hover;
+        color: $button-info-plain-text;
+      }
+
+      &:active,
+      &:active:focus {
+        background-color: $button-info-plain-fill--active;
+        border-color: $button-info-plain-border--hover;
+        color: $button-info-plain-text;
+      }
+
+      &:focus {
+        border-color: $button-info-plain-border;
+        color: $button-info-plain-text;
+        background-color: $button-info-plain-fill;
+      }
+
+      &.is--loading {
+        color: $color-text-disabled;
+      }
+    }
+  }
+
   &--medium {
     @include button-size($button-medium-font-size, $button-medium-min-width, $button-medium-height);
   }

@@ -1,6 +1,7 @@
 <script>
 import SpModal from 'base/modal'
 import { noop } from 'sparta/common/js/utils/tool'
+import PopLayerManage from 'sparta/model/PopLayerManage'
 
 export default {
   name: 'SpMessage',
@@ -16,7 +17,7 @@ export default {
       message: '',
       hideAfterCancel: true,
       hideAfterConfirm: true,
-      width: 418,
+      width: 380,
       cancelFunc: noop,
       confirmFunc: noop,
       cancelText: '取消',
@@ -32,6 +33,7 @@ export default {
 
   mounted() {
     this._addUrlChangeListener()
+    PopLayerManage.getInstance().add(this, 'confirm')
   },
 
   methods: {
@@ -58,11 +60,16 @@ export default {
       this.cancel('close')
     },
 
+    close() {
+      this.handleCloseBtnClick()
+    },
+
     cancel(action) {
       this.cancelFunc && this.cancelFunc(this, action)
     },
     
     _destroyElement() {
+      PopLayerManage.getInstance().remove(this)
       this.$destroy(true)
     },
     
@@ -99,6 +106,7 @@ export default {
         title={ this.title }
         on-after-leave={ this.handleAfterLeave }
         has-close={ false }
+        is-confirm={ true }
       >
         {
           this.hasClose ?
@@ -120,6 +128,7 @@ export default {
             this.cancelText ?
               <sp-button
                 plain
+                type="info"
                 size="mini"
                 loading={ this.cancelBtnLoading }
                 onClick={ this.handleCancel }
@@ -150,7 +159,7 @@ export default {
     font-size: $confirm-font-size;
     color: $confirm-body-color;
     line-height: 1.5;
-    padding: 32px 0;
+    padding: $confirm-body-padding;
 
     &.align-left {
       text-align: left;
@@ -167,13 +176,17 @@ export default {
 
   &__foot {
     text-align: center;
-    padding-bottom: 16px;
-    font-size: 0;
-    height: 28px;
+    padding-bottom: $confirm-foot-padding-bottom;
 
     .sp-button {
-      min-width: 72px;
-      height: 28px;
+      min-width: $confirm-foot-button-min-width;
+      height: $confirm-foot-button-height;
+      font-size: $confirm-foot-button-font-size;
+      line-height: 1;
+
+      & + .sp-button {
+        margin-left: $confirm-foot-button-margin;
+      }
     }
   }
 }

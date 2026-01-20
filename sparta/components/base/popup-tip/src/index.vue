@@ -8,6 +8,7 @@
     ]"
     @mouseenter="handleMouseenter"
     @mouseleave="handleMouseleave"
+    @click="handleToggleClick"
   >
     <div class="sp-popup-tip__content">
       <slot></slot>
@@ -22,6 +23,7 @@
       ]"
       :placement="placement"
       :popper-scroll-bind-elem="popperScrollBindElem"
+      :append-to-body="appendToBody"
       @mouseenter="handleMouseenter"
       @mouseleave="handleMouseleave"
     >
@@ -81,8 +83,12 @@ export default {
       type: String,
       default: 'bottom',
       validator: val => {
-        return ['top', 'bottom'].indexOf(val) !== -1
+        return ['top', 'bottom','left', 'right'].indexOf(val) !== -1
       }
+    },
+    appendToBody: {
+      type: Boolean,
+      default: true
     },
     // 自定义样式
     customClass: {
@@ -102,7 +108,15 @@ export default {
     freeze: {
       type: Boolean,
       default: false
-    }
+    },
+
+    trigger: {
+      type: String,
+      default: 'hover',
+      validator(val) {
+        return ['hover', 'click'].indexOf(val) !== -1
+      }
+    },
   },
 
   data() {
@@ -117,8 +131,12 @@ export default {
       if (val) {
         // 为了每次弹出PopupTipWrap，都会根据处的环境做适应
         this.broadcast('SpPopupTipWrap', 'updatePopper')
+
+        this.$emit('show')
       } else {
         this.broadcast('SpPopupTipWrap', 'destroyPopper')
+
+        this.$emit('hide')
       }
     }
   },
@@ -134,6 +152,40 @@ export default {
 
   methods: {
     handleMouseenter() {
+      if(this.trigger !== 'hover') {
+        return
+      }
+
+      this.showHandle()
+    },
+    handleMouseleave() {
+      if(this.trigger !== 'hover') {
+        return
+      }
+
+      this.hideHandle()
+    },
+
+    handleToggleClick() {
+      if (this.trigger === 'click') {
+        if(this.visible) {
+          this.hideHandle()
+          return
+        }
+        this.showHandle()
+      }
+    },
+
+    /**
+     * 点击其他区域触发事件
+     */
+    handleOtherAreaClick(e) {
+      if (!this.$el.contains(e.target)) {
+        this.hide()
+      }
+    },
+
+    showHandle() {
       if (this.freeze) {
         return
       }
@@ -146,21 +198,12 @@ export default {
       
       this.show()
     },
-    handleMouseleave() {
+
+    hideHandle() {
       if (this.hideByClickOut || this.freeze) {
         return
       }
-
       this.hide()
-    },
-
-    /**
-     * 点击其他区域触发事件
-     */
-    handleOtherAreaClick(e) {
-      if (!this.$el.contains(e.target)) {
-        this.hide()
-      }
     },
 
     hide() {
@@ -277,6 +320,93 @@ export default {
         }
         &::after {
           border-top-color: #ffeceb;
+        }
+      }
+    }
+    &.arrow--left {
+      margin-left: 9px;
+      margin-bottom: 8px;
+      &::before, &::after {
+        position: absolute;
+        content: "";
+        width: 0;
+        height: 0;
+        border: none;
+        top: 50%;
+        transform: translateY(-50%);
+        left: -6px;
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+      }
+      &::before {
+        border-right: 6px solid $border-color-base;
+      }
+      &::after {
+        border-right: 6px solid #fff;
+      }
+      &.has--border {
+        &::after {
+          left: -4px;
+        }
+        &::before {
+          border-right-color: $border-color-base;
+        }
+      }
+      &.is--theme-blue {
+        &::after {
+          border-right-color: #f0f3f7;
+        }
+      }
+      &.is--theme-red {
+        &::before {
+          border-right-color: #fb791b;
+        }
+        &::after {
+          border-right-color: #ffeceb;
+        }
+      }
+    }
+    &.arrow--right {
+      margin-right: 8px;
+      margin-bottom: 6px;
+      &::before, &::after {
+        position: absolute;
+        content: "";
+        width: 0;
+        height: 0;
+        border: none;
+        top: 50%;
+        left: auto;
+        transform: translateY(-50%);
+        right: -6px;
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+      }
+      &::before {
+        border-left: 6px solid $border-color-base;
+      }
+      &::after {
+        border-left: 6px solid #fff;
+      }
+      &.has--border {
+        &::after {
+          right: -4px;
+        }
+        &::before {
+          border-left-color: $border-color-base;
+        }
+      }
+      &.is--theme-blue {
+        &::after {
+          border-left-color: #f0f3f7;
+        }
+      }
+      &.is--theme-red {
+        &::before {
+          border-left-color: #fb791b;
+        }
+        &::after {
+          border-left-color: #ffeceb;
         }
       }
     }

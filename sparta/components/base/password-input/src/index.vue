@@ -156,7 +156,7 @@ export default {
   position: relative;
   user-select: none;
   width: $password-input-width;
-  height: $item-height;
+  height: $password-input-item-height;
 
   &__security {
     @include clearfix;
@@ -165,18 +165,20 @@ export default {
   }
 
   &__item {
+    user-select: none;
     box-sizing: border-box;
     position: relative;
-    height: $item-height;
-    width: 34px;
-    border: $border-base;
-    line-height: $item-height;
+    height: $password-input-item-height;
+    width: $password-input-item-width;
+    border: $password-input-item-border;
+    line-height: $password-input-item-height;
     font-size: 18px;
     text-align: center;
     border-radius: $border-radius-base;
     float: left;
-    margin-right: 4px;
+    margin-right: $password-input-item-margin;
     transition: $transition-all;
+    background-color: $password-input-item-background;
   }
 
   &__item:last-child {
@@ -207,8 +209,8 @@ export default {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 6px;
-    height: 6px;
+    width: $password-input-dot-size;
+    height: $password-input-dot-size;
     background-color: $color-text-regular;
     border-radius: $border-radius-circle;
     transform: translate(-50%, -50%);
@@ -218,11 +220,12 @@ export default {
     display: block;
     position: absolute;
     left: 50%;
-    top: 20%;
-    width: 1px;
-    height: 60%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: $password-input-caret-width;
+    height: $password-input-caret-height;
     content: "";
-    background-color: #333;
+    background-color: $password-input-caret-color;
     animation-name: coruscate;
     animation-duration: 1s;
     animation-iteration-count: infinite;

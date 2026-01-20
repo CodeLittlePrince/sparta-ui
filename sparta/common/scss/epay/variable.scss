@@ -109,7 +109,12 @@ $button-color--disabled: $color-text-disabled;
 $button-fill--disabled: #ededed;
 $button-border--disabled: $border-color-lighter;
 $button-plain-fill: #fff;
+$button-plain-color: $color-primary;
+$button-plain-color--hover: $color-primary;
 $button-plain-border: $color-primary;
+$button-plain-fill--hover: $color-primary;
+$button-plain-fill--focus: $color-primary;
+$button-plain-fill--disabled: #fff;
 $button-plain-fill--hover: #ffe9e6;
 $button-plain-fill--focus: $button-plain-fill;
 $button-plain-fill--active: #fbe1de;
@@ -125,6 +130,22 @@ $button-primary-fill--focus: $button-primary-fill;
 $button-primary-border--focus: $button-primary-border;
 $button-primary-fill--active: #ec3f25;
 $button-primary-border--active: #ec3f25;
+$button-info-border: #909399;
+$button-info-color: #fff;
+$button-info-fill: #909399;
+$button-info-fill--hover: #a6a9ad;
+$button-info-border--hover: #a6a9ad;
+$button-info-fill--focus: #a6a9ad;
+$button-info-border--focus: #a6a9ad;
+$button-info-fill--active: #82848a;
+$button-info-border--active: #82848a;
+$button-info-plain-fill: #fff;
+$button-info-plain-text: #666;
+$button-info-plain-border: #eaeaea;
+$button-info-plain-fill--hover: #f7f7f7;
+$button-info-plain-fill--active: #f7f7f7;
+$button-info-plain-text--hover: #666;
+$button-info-plain-border--hover: #eaeaea;
 $button-text-color: #1167dc;
 $button-text-color--hover: #1062d1;
 $button-text-color--focus: $button-text-color;
@@ -144,10 +165,18 @@ $checkbox-checked-color: $color-primary;
 
 /* PasswordInput
 -------------------------- */
-$item-height: 36px;
+$password-input-item-height: 36px;
+$password-input-item-width: 34px;
 $password-input-width: 224px;
+$password-input-caret-color: #333;
+$password-input-caret-width: 1px;
 $password-box-border-focus: #999;
 $password-box-shadow-focus: none;
+$password-input-item-border: $border-base;
+$password-input-item-background: #fff;
+$password-input-caret-height: 60%;
+$password-input-dot-size: 6px;
+$password-input-item-margin: 4px;
 
 /* Input
 -------------------------- */
@@ -159,6 +188,7 @@ $input-background-disabled: #ededed;
 $input-background-readonly: #f7f7f7;
 $input-background-append: #fff;
 $input-background-format: #ffe9e6;
+$input-background-format-space: 4px;
 $input-color-append: $color-text-secondary;
 $input-border: $border-base;
 $input-box-shadow-focus: none;
@@ -184,6 +214,7 @@ $radio-color: $color-text-primary;
 $radio-background-color-active: $color-primary;
 $radio-border-color-active: $color-primary;
 $radio-font-size: 14px;
+$radio-size: 16px;
 $radio-border-color: $border-color-base;
 $radio-background-color: #fff;
 $radio-color-disabled: $color-text-disabled;
@@ -195,6 +226,8 @@ $radio-button-text-hover: $color-text-secondary;
 $radio-button-background-color-hover: #ffe9e6;
 $radio-button-color: $color-text-secondary;
 $radio-inner-background-color: #fff;
+$radio-inner-font-size: 10px;
+$radio-inner-font-weight: bold;
 
 /* Select
 -------------------------- */
@@ -222,12 +255,19 @@ $select-prepend-color: $color-text-tip;
 /* Form
 -------------------------- */
 $form-item-error-color: $color-danger;
+$form-item-label-color: $color-text-secondary;
+$form-item-label-font-size: 14px;
+$form-item-ques-top: 11px;
+$form-item-ques-margin-left: 2px;
 $form-item-error-font-size: 12px;
+$form-item-ques-font-size: 13px;
 $form-item-label-padding-right: 56px;
 $form-item-label-error-color: $color-text-secondary;
 $form-item-error-min-height: 26px;
 $form-item-error-padding: 3px 0 6px;
 $form-item-error-line-height: 17px;
+$form-item-tip-font-size: 12px;
+$form-item-tip-padding: 3px;
 
 /* Dropdown
 -------------------------- */
@@ -394,8 +434,14 @@ $modal-background: #fff;
 $modal-border-radius: 4px;
 $modal-mask-background: rgb(41 41 51 / 60%);
 $modal-head-font-size: 16px;
+$modal-head-text-align: left;
 $modal-head-line-height: 22px;
+$modal-close-font-size: 14px;
+$modal-close-top: 8px;
+$modal-close-right: 9px;
 $modal-icon-font-size: 18px;
+$modal-content-padding: 20px 20px 0;
+$modal-close-font-color: $color-text-tip;
 $modal-icon-color: #666;
 $modal-form-item-label-padding-right: 36px;
 $modal-form-padding-top: 20px;
@@ -404,6 +450,8 @@ $modal-form-padding-bottom: 14px;
 /* Toast
 -------------------------- */
 $toast-font-size: 16px;
+$toast-border-radius: 4px;
+$toast-padding: 11px;
 $toast-color-info: #fff;
 $toast-color-success: $color-success;
 $toast-color-error: $color-danger;
@@ -413,11 +461,19 @@ $toast-background-success: #efe;
 $toast-background-error: #ffedeb;
 $toast-background-warning: #fff6eb;
 $toast-border-raduis: $border-radius-base;
+$toast-top: 35px;
+$toast-transform: translateX(-50%);
 
 /* Confirm
 -------------------------- */
 $confirm-font-size: 14px;
 $confirm-body-color: $color-text-primary;
+$confirm-foot-padding-bottom: 16px;
+$confirm-foot-button-height: 28px;
+$confirm-foot-button-min-width: 72px;
+$confirm-foot-button-font-size: 13px;
+$confirm-foot-button-margin: 10px;
+$confirm-body-padding: 32px 0;
 
 /* Cascader
 -------------------------- */

@@ -2,6 +2,7 @@
   <div
     v-show="value"
     class="sp-select-dropdown"
+    :class="customClass"
     :style="{ minWidth, maxWidth }"
   >
     <slot></slot>
@@ -34,6 +35,11 @@ export default {
     appendToBody: {
       type: Boolean,
       default: true
+    },
+
+    customClass: {
+      type: String,
+      default: ''
     }
   },
   
