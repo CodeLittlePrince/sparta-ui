@@ -40,7 +40,7 @@ export default function upload(option) {
   const formData = new FormData()
   if (option.data) {
     Object.keys(option.data).forEach(key => {
-      formData.append(key, option.data[key])
+      formData.append(key, option.data[ key ])
     })
   }
   formData.append(option.filename, option.file, option.file.name)
@@ -50,18 +50,22 @@ export default function upload(option) {
     option.onError(e)
   }
   // 加载回调
-  xhr.onload = () => {
+  xhr.onload = async () => {
     if (xhr.status < 200 || xhr.status >= 300) {
       return option.onError(getError(action, option, xhr))
     }
     const response = getBody(xhr)
 
     if (response) {
-      const validateResult = option.responseValidate(response)
-      if (validateResult.pass) {
-        option.onSuccess(response)
-      } else {
-        option.onError(validateResult.errMsg)
+      try {
+        const validateResult = await Promise.resolve(option.responseValidate(response))
+        if (validateResult?.pass) {
+          option.onSuccess(response)
+        } else {
+          option.onError(validateResult?.errMsg || '上传失败')
+        }
+      } catch (e) {
+        option.onError(e?.errMsg || '上传失败')
       }
     }
   }
@@ -85,8 +89,8 @@ export default function upload(option) {
   // 设置http header
   const headers = option.headers || {}
   for (let item in headers) {
-    if (headers.hasOwnProperty(item) && headers[item] !== null) {
-      xhr.setRequestHeader(item, headers[item])
+    if (headers.hasOwnProperty(item) && headers[ item ] !== null) {
+      xhr.setRequestHeader(item, headers[ item ])
     }
   }
   xhr.send(formData)
