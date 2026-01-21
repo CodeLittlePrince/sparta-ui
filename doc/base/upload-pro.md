@@ -371,6 +371,7 @@ export default{
       example-big-image="https://i.epay.126.net/a/ge/static/img/eg_vat_big.932d392b.png"
       :onExceed="onExceed1"
       @change="handleChange"
+      :response-validate="handleOcrCheck"
     >添加图片</sp-upload-pro>
   </div>
 </template>
@@ -392,6 +393,21 @@ export default{
     onExceed1() {
       this.$sparta.error('最多上传1张图片')
     },
+    handleOcrCheck(file) {
+      console.log('handleOcrCheck', file)
+      return new Promise((resolve, reject) => {
+        if(file) {
+          resolve({
+            pass: true,
+          })
+        } else {
+          reject({
+            pass: false,
+            errMsg: '上传失败'
+          })
+        }
+      })
+    }
   }
 }
 </script>
@@ -594,6 +610,21 @@ export default{
     onOversize() {
       console.log('oversize')
     },
+    handleOcrCheck(file) {
+      console.log('handleOcrCheck', file)
+      return new Promise((resolve, reject) => {
+        if(file) {
+          resolve({
+            pass: true,
+          })
+        } else {
+          reject({
+            pass: false,
+            errMsg: '上传失败'
+          })
+        }
+      })
+    }
   }
 }
 </script>
