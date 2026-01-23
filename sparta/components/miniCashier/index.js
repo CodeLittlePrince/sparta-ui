@@ -11,6 +11,7 @@ import Toast from './toast'
 import confirm from './confirm'
 import PasswordInput from './password-input'
 import PopupTip from './popup-tip'
+import PopLayerManage from 'sparta/model/PopLayerManage'
 
 const components = [
   Row,
@@ -42,6 +43,7 @@ Sparta.install = Vue => {
   Vue.prototype.$sparta.warning = Toast('warning')
   Vue.prototype.$sparta.info = Toast('info')
   Vue.prototype.$sparta.confirm = confirm
+  Vue.prototype.$sparta.popLayerManage = PopLayerManage.getInstance()
 }
 
 
