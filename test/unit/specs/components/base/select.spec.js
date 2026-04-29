@@ -355,6 +355,7 @@ describe('Select', () => {
         await select.navigateOptions('next')
         await wrapper.vm.$nextTick()
         select.handleInputEnter()
+        await wrapper.find('.sp-select__focus-helper').trigger('focus')
         await wrapper.vm.$nextTick()
         await wrapper.vm.$nextTick()
 
@@ -362,13 +363,19 @@ describe('Select', () => {
         expect(wrapper.vm.$children[1].inputText).to.be.equal('pig')
         expect(wrapper.vm.val).to.be.equal(3)
         expect(wrapper.vm.icon).to.be.equal('sp-icon-search')
-        expect(wrapper.find('.sp-select__prepend').isVisible()).to.be.true
+
+        // 模拟用户完全失焦后的状态：oldInputText 被清空，prepend 显示
+        select.oldInputText = null
+        select.isFocus = false
+        await wrapper.vm.$nextTick()
+        expect(wrapper.find('.sp-select__prepend').element.style.display).to.not.be.equal('none')
 
         await select.navigateOptions('next')
         await wrapper.vm.$nextTick()
+        await wrapper.vm.$nextTick()
         expect(wrapper.find('.sp-select-dropdown').isVisible()).to.be.true
         expect(getVisibleOptionsLength(wrapper).length).to.be.equal(1)
-        expect(wrapper.find('.sp-select-list .is--selected').exists()).to.be.true
+        expect(getSelectedVisibleOptions(wrapper).length).to.be.equal(1)
       })
     })
 
@@ -408,13 +415,14 @@ describe('Select', () => {
 
         expect(wrapper.find('.sp-select-dropdown').isVisible()).to.be.true
         expect(getVisibleOptionsLength(wrapper).length).to.be.equal(1)
-        expect(wrapper.find('.sp-select-list .is--selected').exists()).to.be.true
+        expect(getSelectedVisibleOptions(wrapper).length).to.be.equal(1)
 
         await setSelectVal(wrapper, 'pig')
         await wrapper.vm.$nextTick()
         await select.navigateOptions('next')
         await wrapper.vm.$nextTick()
         select.handleInputEnter()
+        await wrapper.find('.sp-select__focus-helper').trigger('focus')
         await wrapper.vm.$nextTick()
         await wrapper.vm.$nextTick()
 
@@ -422,7 +430,12 @@ describe('Select', () => {
         expect(wrapper.vm.$children[1].inputText).to.be.equal('pig')
         expect(wrapper.vm.val).to.be.equal(3)
         expect(wrapper.vm.icon).to.be.equal('sp-icon-search')
-        expect(wrapper.find('.sp-select__prepend').isVisible()).to.be.true
+
+        // 模拟用户完全失焦后的状态：oldInputText 被清空，prepend 显示
+        select.oldInputText = null
+        select.isFocus = false
+        await wrapper.vm.$nextTick()
+        expect(wrapper.find('.sp-select__prepend').element.style.display).to.not.be.equal('none')
       })
     })
     after(() => {
@@ -1432,6 +1445,10 @@ function handelOtherClick(wrapper) {
  */
 function getVisibleOptionsLength(wrapper) {
   return wrapper.findAll('.sp-select-list .sp-option').filter(item => item.element.style.display!== 'none')
+}
+
+function getSelectedVisibleOptions(wrapper) {
+  return getVisibleOptionsLength(wrapper).filter(item => item.classes().includes('is--selected'))
 }
 
 /**
